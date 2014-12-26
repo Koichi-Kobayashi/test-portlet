@@ -37,53 +37,14 @@ public class TestResultData implements ALData {
   /** Test ID */
   private ALNumberField test_id;
 
-  /** カテゴリID */
-//  private ALNumberField category_id;
-
-  /** 状態 */
-//  private ALNumberField state;
-
-  /** 優先度 */
-//  private ALNumberField priority;
-
-  /** 担当者 */
-//  private ALStringField user_name;
-
-  /** 作成者 */
-//  private ALStringField create_user_name;
 
   /** タイトル */
   private ALStringField test_name;
 
-  /** カテゴリ名 */
-//  private ALStringField category_name;
-
-  /** 開始日 */
-//  private ALStringField start_date;
-
-  /** 締切日 */
-//  private ALStringField end_date;
 
   /** メモ */
   private ALStringField note;
 
-  /** 公開/非公開フラグ */
-//  private boolean is_public;
-
-  /** スケジュール表示フラグ */
-//  private boolean addon_schedule_flg;
-
-  /** 優先度画像名 */
-//  private ALStringField priority_image;
-
-  /** 優先度（文字列） */
-//  private ALStringField priority_string;
-
-  /** 状態画像名 */
-//  private ALStringField state_image;
-
-  /** 状態（文字列） */
-//  private ALStringField state_string;
 
   /** 登録日 */
   private ALStringField create_date;
@@ -114,67 +75,13 @@ public class TestResultData implements ALData {
   @Override
   public void initField() {
     test_id = new ALNumberField();
-//    category_id = new ALNumberField();
-//    state = new ALNumberField();
-//    priority = new ALNumberField();
-//    user_name = new ALStringField();
     test_name = new ALStringField();
-//    category_name = new ALStringField();
     note = new ALStringField();
     note.setTrim(false);
-//    start_date = new ALStringField();
-//    end_date = new ALStringField();
-//    priority_image = new ALStringField();
-//    priority_string = new ALStringField();
-//    state_image = new ALStringField();
-//    state_string = new ALStringField();
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
-//    limit_state = new ALNumberField();
-//    create_user_name = new ALStringField();
-//    is_public = true;
-//    addon_schedule_flg = true;
     is_self_test = false;
   }
-
-  /**
-   * @return
-   */
-//  public ALNumberField getCategoryId() {
-//    return category_id;
-//  }
-
-  /**
-   * @return
-   */
-//  public String getCategoryName() {
-//    return category_name.toString();
-//  }
-//
-//  public String getCategoryNameHtml() {
-//    return ALCommonUtils.replaceToAutoCR(category_name.toString());
-//  }
-
-  /**
-   * @return
-   */
-//  public ALStringField getEndDate() {
-//    return end_date;
-//  }
-
-  /**
-   * @return
-   */
-//  public ALNumberField getPriority() {
-//    return priority;
-//  }
-
-  /**
-   * @return
-   */
-//  public ALNumberField getState() {
-//    return state;
-//  }
 
   /**
    * @return
@@ -189,41 +96,6 @@ public class TestResultData implements ALData {
   public String getTestName() {
     return ALCommonUtils.replaceToAutoCR(test_name.toString());
   }
-
-  /**
-   * @param i
-   */
-//  public void setCategoryId(long i) {
-//    category_id.setValue(i);
-//  }
-
-  /**
-   * @param string
-   */
-//  public void setCategoryName(String string) {
-//    category_name.setValue(string);
-//  }
-
-  /**
-   * @param string
-   */
-//  public void setEndDate(String string) {
-//    end_date.setValue(string);
-//  }
-
-  /**
-   * @param i
-   */
-//  public void setPriority(int i) {
-//    priority.setValue(i);
-//  }
-
-  /**
-   * @param i
-   */
-//  public void setState(int i) {
-//    state.setValue(i);
-//  }
 
   /**
    * @param i
@@ -247,98 +119,11 @@ public class TestResultData implements ALData {
   }
 
   /**
-   * @return
-   */
-//  public ALStringField getStartDate() {
-//    return start_date;
-//  }
-
-  /**
-   * 公開/非公開フラグ．
-   *
-   * @return
-   */
-//  public boolean isPublic() {
-//    return is_public;
-//  }
-
-  /**
    * @param string
    */
   public void setNote(String string) {
     note.setValue(string);
   }
-
-  /**
-   * @return
-   */
-//  public void setPublicFlag(boolean bool) {
-//    is_public = bool;
-//  }
-
-  /**
-   * @param string
-   */
-//  public void setStartDate(String string) {
-//    start_date.setValue(string);
-//  }
-
-  /**
-   * @return
-   */
-//  public ALStringField getPriorityImage() {
-//    return priority_image;
-//  }
-
-  /**
-   * @return
-   */
-//  public ALStringField getPriorityString() {
-//    return priority_string;
-//  }
-
-  /**
-   * @param string
-   */
-//  public void setPriorityImage(String string) {
-//    priority_image.setValue(string);
-//  }
-
-  /**
-   * @param string
-   */
-//  public void setPriorityString(String string) {
-//    priority_string.setValue(string);
-//  }
-
-  /**
-   * @return
-   */
-//  public ALStringField getStateString() {
-//    return state_string;
-//  }
-
-  /**
-   * @param string
-   */
-//  public void setStateString(String string) {
-//    state_string.setValue(string);
-//  }
-
-  /**
-   * @param string
-   */
-//  public void setStateImage(String string) {
-//    state_image.setValue(string);
-//  }
-
-  /**
-   *
-   * @return
-   */
-//  public ALStringField getStateImage() {
-//    return state_image;
-//  }
 
   /**
    * @return
@@ -370,58 +155,6 @@ public class TestResultData implements ALData {
     }
     this.update_date.setValue(date);
   }
-
-  /**
-   *
-   * @return
-   */
-//  public ALNumberField getLimitState() {
-//    return limit_state;
-//  }
-
-  /**
-   *
-   * @param value
-   */
-//  public void setLimitState(int value) {
-//    limit_state.setValue(value);
-//  }
-
-//  public void setAddonScheduleFlg(boolean bool) {
-//    addon_schedule_flg = bool;
-//  }
-
-//  public boolean addonScheduleFlg() {
-//    return addon_schedule_flg;
-//  }
-
-//  public void setUserName(String user_name) {
-//    this.user_name.setValue(user_name);
-//  }
-
-//  public ALStringField getUserName() {
-//    return user_name;
-//  }
-
-//  public String getUserNameHtml() {
-//    return ALCommonUtils.replaceToAutoCR(user_name.toString());
-//  }
-
-//  public void setCreateUserName(String create_user_name) {
-//    this.create_user_name.setValue(create_user_name);
-//  }
-
-//  public ALStringField getCreateUserName() {
-//    return create_user_name;
-//  }
-
-//  public boolean isSelfTest() {
-//    return is_self_test;
-//  }
-
-//  public void setIsSelfTest(boolean is_self_test) {
-//    this.is_self_test = is_self_test;
-//  }
 
   /**
    * hasAclEditTestOtherを取得します。

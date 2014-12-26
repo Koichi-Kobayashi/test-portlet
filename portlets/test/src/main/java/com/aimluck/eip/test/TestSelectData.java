@@ -77,9 +77,6 @@ public class TestSelectData extends
   /** 現在選択されているタブ */
   private String currentTab;
 
-  /** カテゴリ一覧 */
-//  private List<TestCategoryResultData> categoryList;
-
   /** 部署一覧 */
   private List<ALEipGroup> postList;
 
@@ -105,9 +102,6 @@ public class TestSelectData extends
 
   /** カテゴリの初期値を取得する */
   private String filterType = "";
-
-  /** カテゴリ　ID */
-//  private String categoryId = "";
 
   /** ターゲット　 */
   private ALStringField target_keyword;
@@ -172,36 +166,10 @@ public class TestSelectData extends
     // My グループの一覧を取得する．
     postList = ALEipUtils.getMyGroups(rundata);
 
-    // カテゴリの初期値を取得する
-//    try {
-//      filterType = rundata.getParameters().getString("filtertype", "");
-//      if (filterType.equals("category")) {
-//        String categoryId = rundata.getParameters().getString("filter", "");
-//        if (!categoryId.equals("")) {
-//          this.categoryId = categoryId;
-//        } else {
-//          VelocityPortlet portlet = ALEipUtils.getPortlet(rundata, context);
-//          this.categoryId =
-//            portlet.getPortletConfig().getInitParameter("p3a-category");
-//        }
-//      }
-//    } catch (Exception ex) {
-//      logger.error("test", ex);
-//    }
-
     target_keyword = new ALStringField();
     super.init(action, rundata, context);
 
   }
-
-  /**
-   *
-   * @param rundata
-   * @param context
-   */
-//  public void loadCategoryList(RunData rundata) {
-//    categoryList = TestUtils.getCategoryList(rundata);
-//  }
 
   /**
    * 一覧データを取得します。 <BR>
@@ -327,33 +295,6 @@ public class TestSelectData extends
         .orExp(exp6));
     }
 
-//    if ("list".equals(currentTab)) {
-//      Expression exp3 =
-//        ExpressionFactory.noMatchExp(EipTTest.STATE_PROPERTY, Short
-//          .valueOf((short) 100));
-//      query.andQualifier(exp3);
-//    } else if ("complete".equals(currentTab)) {
-//      Expression exp4 =
-//        ExpressionFactory.matchExp(EipTTest.STATE_PROPERTY, Short
-//          .valueOf((short) 100));
-//      query.andQualifier(exp4);
-//    }
-
-    // 公開ならば無条件に閲覧
-    // 非公開ならuserIDが一致していれば閲覧可能
-//    Expression exp5 =
-//      ExpressionFactory.matchExp(EipTTest.PUBLIC_FLAG_PROPERTY, "T");
-//    if (target_user_id != null
-//      && (target_user_id.equals("all") || target_user_id.equals(String
-//        .valueOf(login_user_id)))) {
-//      Expression exp6 =
-//        ExpressionFactory.matchExp(EipTTest.PUBLIC_FLAG_PROPERTY, "F");
-//      Expression exp7 =
-//        ExpressionFactory.matchExp(EipTTest.USER_ID_PROPERTY, login_user_id);
-//      query.andQualifier(exp5.orExp(exp6.andExp(exp7)));
-//    } else {
-//      query.andQualifier(exp5);
-//    }
 
     return buildSelectQueryForFilter(query, rundata, context);
   }
@@ -405,34 +346,6 @@ public class TestSelectData extends
       query.andQualifier(exp);
     }
 
-    // String search = ALEipUtils.getTemp(rundata, context, LIST_SEARCH_STR);
-    // if (search != null && !"".equals(search)) {
-    // current_search = search;
-    // Expression ex1 =
-    // ExpressionFactory.likeExp(EipTTest.NOTE_PROPERTY, "%" + search + "%");
-    // Expression ex2 =
-    // ExpressionFactory.likeExp(EipTTest.TODO_NAME_PROPERTY, "%"
-    // + search
-    // + "%");
-    // SelectQuery<EipTTest> q = Database.query(EipTTest.class);
-    // q.andQualifier(ex1.orExp(ex2));
-    // List<EipTTest> queryList = q.fetchList();
-    // List<Integer> resultid = new ArrayList<Integer>();
-    // for (EipTTest item : queryList) {
-    // if (item.getParentId() != 0 && !resultid.contains(item.getParentId())) {
-    // resultid.add(item.getParentId());
-    // } else if (!resultid.contains(item.getTestId())) {
-    // resultid.add(item.getTestId());
-    // }
-    // }
-    // if (resultid.size() == 0) {
-    // // 検索結果がないことを示すために-1を代入
-    // resultid.add(-1);
-    // }
-    // Expression ex =
-    // ExpressionFactory.inDbExp(EipTTest.TODO_ID_PK_COLUMN, resultid);
-    // query.andQualifier(ex);
-    // }
     return query;
   }
 
@@ -445,49 +358,14 @@ public class TestSelectData extends
   @Override
   protected Object getResultData(EipTTest record) {
     try {
-      // For data inconsistencies
-//      EipTTestCategory category = record.getEipTTestCategory();
-//      if (category == null) {
-//        return null;
-//      }
 
       TestResultData rd = new TestResultData();
       rd.initField();
       rd.setTestId(record.getTestId().intValue());
-//      rd.setCategoryId((int) category.getCategoryId().longValue());
-//      rd.setCategoryName(ALCommonUtils.compressString(record
-//        .getEipTTestCategory()
-//        .getCategoryName(), getStrLength()));
-//      rd.setUserName(ALEipUtils
-//        .getALEipUser(record.getUserId())
-//        .getAliasName()
-//        .getValue());
       rd.setTestName(ALCommonUtils.compressString(
         record.getTestName(),
         getStrLength()));
-//      if (!TestUtils.isEmptyDate(record.getStartDate())) {
-//        rd.setStartDate(ALDateUtil
-//          .format(record.getStartDate(), "yyyy年M月d日(E)"));
-//      }
-//      if (!TestUtils.isEmptyDate(record.getEndDate())) {
-//        rd.setEndDate(ALDateUtil.format(record.getEndDate(), "yyyy年M月d日(E)"));
-//      }
-//      rd.setState(record.getState().intValue());
-//      rd.setStateImage(TestUtils.getStateImage(record.getState().intValue()));
-//      rd.setStateString(TestUtils.getStateString(record.getState().intValue()));
-//      rd.setPriority(record.getPriority().intValue());
-//      rd.setPriorityImage(TestUtils.getPriorityImage(record
-//        .getPriority()
-//        .intValue()));
-//      rd.setPriorityString(TestUtils.getPriorityString(record
-//        .getPriority()
-//        .intValue()));
       rd.setUpdateDate(record.getUpdateDate());
-
-      // 公開/非公開を設定する．
-//      rd.setPublicFlag("T".equals(record.getPublicFlag()));
-      // 期限状態を設定する．
-//      rd.setLimitState(TestUtils.getLimitState(record.getEndDate()));
 
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);
@@ -548,39 +426,10 @@ public class TestSelectData extends
       rd.initField();
       rd.setTestName(record.getTestName());
       rd.setTestId(record.getTestId().longValue());
-//      rd
-//        .setCategoryId(record.getEipTTestCategory().getCategoryId().longValue());
-//      rd.setCategoryName(record.getEipTTestCategory().getCategoryName());
-//      rd.setUserName(ALEipUtils
-//        .getALEipUser(record.getUserId())
-//        .getAliasName()
-//        .getValue());
-//      if (!TestUtils.isEmptyDate(record.getStartDate())) {
-//        rd.setStartDate(ALDateUtil
-//          .format(record.getStartDate(), "yyyy年M月d日(E)"));
-//      }
-//      if (!TestUtils.isEmptyDate(record.getEndDate())) {
-//        rd.setEndDate(ALDateUtil.format(record.getEndDate(), "yyyy年M月d日(E)"));
-//      }
-//      rd.setStateString(TestUtils.getStateString(record.getState().intValue()));
-//      rd.setPriorityString(TestUtils.getPriorityString(record
-//        .getPriority()
-//        .intValue()));
       rd.setNote(record.getNote());
-//      rd.setCreateUserName(ALEipUtils
-//        .getALEipUser(record.getCreateUserId())
-//        .getAliasName()
-//        .getValue());
-      // 公開/非公開を設定する．
-//      rd.setPublicFlag("T".equals(record.getPublicFlag()));
-//      rd.setAddonScheduleFlg("T".equals(record.getAddonScheduleFlg()));
       rd.setCreateDate(ALDateUtil
         .format(record.getCreateDate(), "yyyy年M月d日(E)"));
       rd.setUpdateDate(record.getUpdateDate());
-
-      // 自身のTestかを設定する
-//      rd.setIsSelfTest(record.getUserId() == login_user_id);
-
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);
       return rd;
@@ -590,13 +439,6 @@ public class TestSelectData extends
     }
   }
 
-  /**
-   *
-   * @return
-   */
-//  public List<TestCategoryResultData> getCategoryList() {
-//    return categoryList;
-//  }
 
   /**
    * 現在選択されているタブを取得します。 <BR>
@@ -624,16 +466,6 @@ public class TestSelectData extends
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
     map.putValue("test_name", EipTTest.TEST_NAME_PROPERTY);
-//    map.putValue("state", EipTTest.STATE_PROPERTY);
-//    map.putValue("priority", EipTTest.PRIORITY_PROPERTY);
-//    map.putValue("end_date", EipTTest.END_DATE_PROPERTY);
-//    map.putValue("category_name", EipTTest.EIP_TTEST_CATEGORY_PROPERTY
-//      + "."
-//      + EipTTestCategory.CATEGORY_NAME_PROPERTY);
-//    map.putValue("category", EipTTestCategory.CATEGORY_ID_PK_COLUMN);
-//    map.putValue("user_name", EipTTestCategory.TURBINE_USER_PROPERTY
-//      + "."
-//      + TurbineUser.LAST_NAME_KANA_PROPERTY);
     map.putValue(EipTTest.UPDATE_DATE_PROPERTY, EipTTest.UPDATE_DATE_PROPERTY);
     return map;
   }
@@ -762,7 +594,4 @@ public class TestSelectData extends
       .getInitParameter("p12g-filtertypes"));
   }
 
-//  public String getCategoryId() {
-//    return categoryId;
-//  }
 }

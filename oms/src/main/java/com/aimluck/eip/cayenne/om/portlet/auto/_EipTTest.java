@@ -11,6 +11,7 @@ public class _EipTTest extends org.apache.cayenne.CayenneDataObject {
     public static final String NOTE_PROPERTY = "note";
     public static final String TEST_NAME_PROPERTY = "testName";
     public static final String UPDATE_DATE_PROPERTY = "updateDate";
+    public static final String URL_PROPERTY = "url";
     public static final String USER_ID_PROPERTY = "userId";
     public static final String TURBINE_USER_PROPERTY = "turbineUser";
 
@@ -45,6 +46,14 @@ public class _EipTTest extends org.apache.cayenne.CayenneDataObject {
     }
     public java.util.Date getUpdateDate() {
         return (java.util.Date)readProperty("updateDate");
+    }
+    
+    
+    public void setUrl(String url) {
+        writeProperty("url", url);
+    }
+    public String getUrl() {
+        return (String)readProperty("url");
     }
     
     
