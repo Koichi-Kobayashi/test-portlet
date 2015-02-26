@@ -542,7 +542,6 @@ public class ThreadPoolingDataSource implements DataSource {
    * @return
    * @throws SQLFeatureNotSupportedException
    */
-  @Override
   public Logger getParentLogger() {
     throw new UnsupportedOperationException();
   }
