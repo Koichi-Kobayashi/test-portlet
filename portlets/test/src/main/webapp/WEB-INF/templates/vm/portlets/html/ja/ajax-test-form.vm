@@ -51,14 +51,13 @@
 
 #ALtdcaption("#ALrequired($!result.getFieldName('test_name'))")
 #ALtditem("#ALtextfieldw100('test_name' $!result.TestName 50 'active')")
-
 #ALtdcaption($!result.getFieldName("note"))
 #ALtditemheader()
 #ALtextarea('note' $!result.Note 10 40)
+#ALtdcaption($!result.getFieldName("url"))
+#ALtditem("#ALtextfieldw100('url' $!result.Url 50 'active')")
 #ALtditemfooter()
-
 #ALtablefooter()
-
 #ALbuttonheader()
 #ALsubmit($event_submit $action_str)#ALajaxbuttonClose()
 #ALbuttonfooter()

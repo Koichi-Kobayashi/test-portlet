@@ -186,7 +186,7 @@ public class TestFormData extends ALAbstractFormData {
     // URL
     url = new ALStringField();
     url.setFieldName(ALLocalizationUtils.getl10n("TEST_URL"));
-    url.setTrim(true);
+    url.setTrim(false);
   }
 
 
@@ -257,7 +257,7 @@ public class TestFormData extends ALAbstractFormData {
       test_name.setValue(test.getTestName());
       // メモ
       note.setValue(test.getNote());
-       // url
+      // URL
       url.setValue(test.getUrl());
 
 
@@ -475,7 +475,7 @@ public class TestFormData extends ALAbstractFormData {
    *
    * @return
    */
-  public ALStringField getTestURL() {
+  public ALStringField getUrl() {
     return url;
   }
 
