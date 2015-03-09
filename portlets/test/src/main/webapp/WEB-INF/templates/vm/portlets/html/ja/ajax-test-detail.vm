@@ -35,8 +35,11 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.UpdateDate)
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
-#ALtdcaption($l10n.TEST_URL)
-#ALtditem($!result.Detail.Url)
+#ALtdcaption($l10n.TEST_URL) ##タイトルを表示
+#ALtditem($!result.Detail.Url) ##URLをリンクで表示
+#ALtdcaption("サムネイル") ##サムネイルのタイトルを表示
+##以下サムネイル表示コード
+<td><a href="$!result.Detail.Url"><img src="http://capture.heartrails.com/free?$!result.Detail.Url"	 width="200" height="300" /></a></td>
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
