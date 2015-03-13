@@ -168,6 +168,12 @@ public class TestFormData extends ALAbstractFormData {
     test_name.setFieldName(ALLocalizationUtils
       .getl10n("TODO_SETFIELDNAME_TITLE"));
     test_name.setTrim(true);
+    
+    // URL
+    test_url = new ALStringField();
+    test_url.setFieldName(ALLocalizationUtils
+      .getl10n("TODO_SETFIELDNAME_URL"));
+    test_url.setTrim(true);
 
     // 担当者ID
     user_id = new ALNumberField();
