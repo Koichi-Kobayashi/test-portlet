@@ -423,7 +423,7 @@
 	</db-entity>
 	<db-entity name="eip_t_test">
 		<db-attribute name="CREATE_DATE" type="DATE" length="4"/>
-		<db-attribute name="NOTE" type="CLOB"/>
+		<db-attribute name="NOTE" type="VARCHAR"/>
 		<db-attribute name="TEST_ID" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="4"/>
 		<db-attribute name="TEST_NAME" type="VARCHAR" length="99"/>
 		<db-attribute name="UPDATE_DATE" type="TIMESTAMP" length="8"/>
@@ -969,8 +969,8 @@
 		<obj-attribute name="note" type="java.lang.String" db-attribute-path="NOTE"/>
 		<obj-attribute name="testName" type="java.lang.String" db-attribute-path="TEST_NAME"/>
 		<obj-attribute name="updateDate" type="java.util.Date" db-attribute-path="UPDATE_DATE"/>
-		<obj-attribute name="userId" type="java.lang.Integer" db-attribute-path="USER_ID"/>
 		<obj-attribute name="url" type="java.lang.String" db-attribute-path="URL"/>
+		<obj-attribute name="userId" type="java.lang.Integer" db-attribute-path="USER_ID"/>
 	</obj-entity>
 	<obj-entity name="EipTTimecard" className="com.aimluck.eip.cayenne.om.portlet.EipTTimecard" dbEntityName="eip_t_timecard">
 		<obj-attribute name="createDate" type="java.util.Date" db-attribute-path="CREATE_DATE"/>

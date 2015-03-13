@@ -79,10 +79,11 @@ public class TestFormData extends ALAbstractFormData {
   /** タイトル */
   private ALStringField test_name;
 
+  /** URL */
+  private ALStringField url;
 
   /** 担当者ID */
   private ALNumberField user_id;
-
 
   /** メモ */
   private ALStringField note;
@@ -170,10 +171,10 @@ public class TestFormData extends ALAbstractFormData {
     test_name.setTrim(true);
     
     // URL
-    test_url = new ALStringField();
-    test_url.setFieldName(ALLocalizationUtils
+    url = new ALStringField();
+    url.setFieldName(ALLocalizationUtils
       .getl10n("TODO_SETFIELDNAME_URL"));
-    test_url.setTrim(true);
+    url.setTrim(true);
 
     // 担当者ID
     user_id = new ALNumberField();
@@ -197,6 +198,8 @@ public class TestFormData extends ALAbstractFormData {
     test_name.setNotNull(true);
     // タイトルの文字数制限
     test_name.limitMaxLength(50);
+    // URLの文字数制限
+    url.limitMaxLength(1000);
     // メモの文字数制限
     note.limitMaxLength(1000);
 
@@ -224,6 +227,8 @@ public class TestFormData extends ALAbstractFormData {
     boolean isStartDate = false;
     // タイトル
     test_name.validate(msgList);
+    // URL
+    url.validate(msgList);
     // メモ
     note.validate(msgList);
 
@@ -251,6 +256,8 @@ public class TestFormData extends ALAbstractFormData {
       }
       // タイトル
       test_name.setValue(test.getTestName());
+      // URL
+      url.setValue(test.getUrl());
       // メモ
       note.setValue(test.getNote());
 
@@ -328,6 +335,8 @@ public class TestFormData extends ALAbstractFormData {
 
       // タイトル
       test.setTestName(test_name.getValue());
+      // URL
+      test.setUrl(url.getValue());
       // ユーザーID
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
@@ -396,6 +405,8 @@ public class TestFormData extends ALAbstractFormData {
 
       // タイトル
       test.setTestName(test_name.getValue());
+      // URL
+      test.setUrl(url.getValue());
 
       // ユーザーID
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
@@ -460,6 +471,14 @@ public class TestFormData extends ALAbstractFormData {
     return test_name;
   }
 
+  /**
+   * URLを取得します。 <BR>
+   *
+   * @return
+   */
+  public ALStringField getTestUrl() {
+    return url;
+  }
 
   /**
    * アクセス権限チェック用メソッド。<br />
