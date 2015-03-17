@@ -108,9 +108,11 @@ unread
 
 #ALtdcellheaderAtt('class="auiMTCheck"')
 <input name='check$!record.NoteId' type='checkbox' value='$!record.NoteId'/>
+
 #ALtdcellfooter()
 #ALtdcellheaderAtt('class="auiMTCaption"')
 <div><a href="javascript:void(0);" onclick="aipo.common.showDialog('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","NoteDetailScreen").addQueryData("entityid",$record.NoteId))');">$!{record.ClientName}#if($record.CompanyName != "")（$!record.CompanyName）#end</a></div>
+#ALtdcellheaderAtt('class="auiMTCaption"')
 #ALtdcellfooter()
 
 #ALtdcellheader()<div>$!subject</div>#ALtdcellfooter()

@@ -101,6 +101,7 @@
 #ALtdcellfooter()
 #ALtdcellAtt("<div>$!record.CategoryNameHtml</div>" '')
 #ALtdcellAtt("<div>$!record.userNameHtml</div>" '')
+#ALtdcellAtt("<div>$!record.url</div>" '')
 #ALtdcellAtt("<div>$!record.UpdateDate</div>" 'class="right" nowrap="nowrap"')
 </tr>
 #end
@@ -120,7 +121,10 @@
 <a href="javascript:void(0);" onclick="aipo.common.showDialog('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","TestDetailScreen").addQueryData("entityid",$record.TestId))');">$!record.TestName</a>
 </div>
 #ALtdcellfooter()
+
+#ALtdcellAtt("$!record.Url" 'class="left" nowrap="nowrap"')
 #ALtdcellAtt("<div>$!record.UpdateDate</div>" 'class="right" nowrap="nowrap"')
+
 </tr>
 #end
 </tbody>

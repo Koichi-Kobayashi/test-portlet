@@ -58,6 +58,11 @@ public class TestResultData implements ALData {
   /** URL */
   private ALStringField url;
 
+  /** IMG */
+  private ALStringField img;
+
+
+
 
   /**
    * 期限状態（期限前/期限当日/期限後）． <br>
@@ -72,6 +77,9 @@ public class TestResultData implements ALData {
 
   private boolean hasAclDeleteTestOther;
 
+
+
+
   /**
    *
    *
@@ -84,8 +92,11 @@ public class TestResultData implements ALData {
     note.setTrim(false);
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
-    is_self_test = false;
     url = new ALStringField();
+    img = new ALStringField();
+
+    is_self_test = false;
+
   }
 
   /**
@@ -94,6 +105,8 @@ public class TestResultData implements ALData {
   public ALNumberField getTestId() {
     return test_id;
   }
+
+
 
   /**
    * @return
@@ -134,7 +147,7 @@ public class TestResultData implements ALData {
    * @return
    */
   public String getUrl() {
-    return ALEipUtils.getMessageList(url.getValue());
+    return "<a href="+url.getValue()+" target='_blank'>"+url.getValue()+"</a>";
   }
 
   /**
@@ -142,6 +155,20 @@ public class TestResultData implements ALData {
    */
   public void setUrl(String string) {
     url.setValue(string);
+  }
+
+  /**
+   * @return
+   */
+//  public String getImg() {
+//    return "<img src"=+url.getValue()+>";
+//  }
+
+  /**
+   * @param string
+   */
+  public void setImg(String string) {
+    img.setValue(string);
   }
 
   /**
@@ -157,6 +184,8 @@ public class TestResultData implements ALData {
   public ALDateTimeField getUpdateDate() {
     return ALEipUtils.getFormattedTime(update_date);
   }
+
+
 
   /**
    * @param string
@@ -174,6 +203,8 @@ public class TestResultData implements ALData {
     }
     this.update_date.setValue(date);
   }
+
+
 
   /**
    * hasAclEditTestOtherを取得します。
@@ -212,4 +243,6 @@ public class TestResultData implements ALData {
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
+
+
 }
