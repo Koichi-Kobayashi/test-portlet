@@ -169,12 +169,11 @@ public class TestFormData extends ALAbstractFormData {
     test_name.setFieldName(ALLocalizationUtils
       .getl10n("TODO_SETFIELDNAME_TITLE"));
     test_name.setTrim(true);
-    
+
     // URL
     url = new ALStringField();
-    url.setFieldName(ALLocalizationUtils
-      .getl10n("TODO_SETFIELDNAME_URL"));
-    url.setTrim(true);
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
+    url.setTrim(false);
 
     // 担当者ID
     user_id = new ALNumberField();
@@ -335,12 +334,11 @@ public class TestFormData extends ALAbstractFormData {
 
       // タイトル
       test.setTestName(test_name.getValue());
-      // URL
-      test.setUrl(url.getValue());
       // ユーザーID
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
-
+      // URL
+      test.setUrl(url.getValue());
       // メモ
       test.setNote(note.getValue());
       // 作成日
@@ -405,12 +403,11 @@ public class TestFormData extends ALAbstractFormData {
 
       // タイトル
       test.setTestName(test_name.getValue());
-      // URL
-      test.setUrl(url.getValue());
-
       // ユーザーID
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
+      // URL
+      test.setUrl(url.getValue());
       // メモ
       test.setNote(note.getValue());
       // 更新日
@@ -476,7 +473,7 @@ public class TestFormData extends ALAbstractFormData {
    *
    * @return
    */
-  public ALStringField getTestUrl() {
+  public ALStringField getUrl() {
     return url;
   }
 

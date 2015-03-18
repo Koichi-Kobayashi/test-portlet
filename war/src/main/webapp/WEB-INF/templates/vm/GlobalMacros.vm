@@ -154,8 +154,6 @@
 </table>
 #end
 
-
-
 #macro(ALthtd $text1 $text2)
 <tr><th>$text1</th><td>$text2</td></tr>
 #end
@@ -238,6 +236,19 @@
 #macro(ALtditem $text)
       <td>$text</td>
     </tr>
+#end
+
+#macro(ALtdThumbnail $text)
+      <script language="JavaScript" type="text/javascript">
+      　function(){
+      　var link1 = "http://capture.heartrails.com/free";
+      　var link2 = $text;
+　　　　　var thumb_url = link1 + link2;
+
+      　document.getElementById("test_thumbnail").src = thumb_url;
+      　}
+      </script>
+      <img　id="test_thumbnail" src="#" width="200" height="300" />
 #end
 
 #macro(ALtdcell $text)
@@ -715,7 +726,7 @@ $item.get(0)
 				<tr>
 					<td class="roundBlockTitle wide">$title</td>
 					<td class="roundBlockIcon last"><div style="float:right">#ALdialogCloseButton($js)</div></td>
-				</tr>
+
 			</tbody>
 		</table>
 		<div class="roundBlockContent">

@@ -33,6 +33,12 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.CreateDate)
 #ALtdcaption($l10n.TODO_UPDATE_DATE)
 #ALtditem($!result.Detail.UpdateDate)
+#ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
+#ALtditem($!result.Detail.Url)
+#ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL)
+#ALtditemheader()
+<img src="http://capture.heartrails.com/free?$!result.Detail.Url2" width="200" height="300" />
+#ALtditemfooter()
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
 #ALtablefooter()
