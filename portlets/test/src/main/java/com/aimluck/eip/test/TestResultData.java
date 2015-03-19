@@ -58,8 +58,7 @@ public class TestResultData implements ALData {
   /** URL */
   private ALStringField url;
 
-  /** IMG */
-  private ALStringField img;
+
 
 
 
@@ -93,7 +92,7 @@ public class TestResultData implements ALData {
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     url = new ALStringField();
-    img = new ALStringField();
+
 
     is_self_test = false;
 
@@ -160,16 +159,12 @@ public class TestResultData implements ALData {
   /**
    * @return
    */
-//  public String getImg() {
-//    return "<img src"=+url.getValue()+>";
-//  }
-
-  /**
-   * @param string
-   */
-  public void setImg(String string) {
-    img.setValue(string);
+  public String getUrl2() {
+    return url.getValue();
   }
+
+
+
 
   /**
    * @return
