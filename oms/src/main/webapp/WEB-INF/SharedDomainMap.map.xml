@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<data-map project-version="2.0">
+<data-map xmlns="http://cayenne.apache.org/schema/3.0/modelMap"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cayenne.apache.org/schema/3.0/modelMap http://cayenne.apache.org/schema/3.0/modelMap.xsd"
+  project-version="3.0.0.1">
 	<property name="defaultPackage" value="com.aimluck.eip.cayenne.om.portlet"/>
+	<db-entity name="UntitledDbEntity">
+	</db-entity>
 	<db-entity name="eip_facility_group">
 		<db-attribute name="FACILITY_ID" type="INTEGER" isMandatory="true" length="4"/>
 		<db-attribute name="GROUP_ID" type="INTEGER" isMandatory="true" length="4"/>
@@ -969,7 +974,14 @@
 		<obj-attribute name="note" type="java.lang.String" db-attribute-path="NOTE"/>
 		<obj-attribute name="testName" type="java.lang.String" db-attribute-path="TEST_NAME"/>
 		<obj-attribute name="updateDate" type="java.util.Date" db-attribute-path="UPDATE_DATE"/>
+		<obj-attribute name="url" type="java.lang.String" db-attribute-path="URL"/>
 		<obj-attribute name="userId" type="java.lang.Integer" db-attribute-path="USER_ID"/>
+	</obj-entity>
+	<obj-entity name="EipTTest1" className="com.aimluck.eip.cayenne.om.portlet.EipTTest1" dbEntityName="eip_t_test">
+		<obj-attribute name="createDate" type="java.util.Date" db-attribute-path="CREATE_DATE"/>
+		<obj-attribute name="note" type="java.lang.String" db-attribute-path="NOTE"/>
+		<obj-attribute name="testName" type="java.lang.String" db-attribute-path="TEST_NAME"/>
+		<obj-attribute name="updateDate" type="java.util.Date" db-attribute-path="UPDATE_DATE"/>
 		<obj-attribute name="url" type="java.lang.String" db-attribute-path="URL"/>
 	</obj-entity>
 	<obj-entity name="EipTTimecard" className="com.aimluck.eip.cayenne.om.portlet.EipTTimecard" dbEntityName="eip_t_timecard">
@@ -1430,6 +1442,7 @@
 	<obj-relationship name="eipTSchedule" source="EipTScheduleMap" target="EipTSchedule" db-relationship-path="eipTSchedule"/>
 	<obj-relationship name="turbineUserGroupRole" source="EipTScheduleMap" target="TurbineUserGroupRole" db-relationship-path="turbineUserGroupRole"/>
 	<obj-relationship name="turbineUser" source="EipTTest" target="TurbineUser" db-relationship-path="turbineUser"/>
+	<obj-relationship name="turbineUser" source="EipTTest1" target="TurbineUser" deleteRule="Nullify" db-relationship-path="turbineUser"/>
 	<obj-relationship name="eipTTimelineFile" source="EipTTimeline" target="EipTTimelineFile" deleteRule="Nullify" db-relationship-path="eipTTimelineFile"/>
 	<obj-relationship name="eipTTimelineLike" source="EipTTimeline" target="EipTTimelineLike" deleteRule="Nullify" db-relationship-path="eipTTimelineLike"/>
 	<obj-relationship name="turbineUser" source="EipTTimeline" target="TurbineUser" db-relationship-path="turbineUser"/>

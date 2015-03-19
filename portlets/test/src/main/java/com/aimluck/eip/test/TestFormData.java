@@ -103,6 +103,8 @@ public class TestFormData extends ALAbstractFormData {
   /** 他人のTest編集権限を持つかどうか */
   private boolean hasAclInsertTestOther;
 
+private ALStringField url;
+
   /**
    *
    * @param action
@@ -178,6 +180,11 @@ public class TestFormData extends ALAbstractFormData {
     note = new ALStringField();
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
+
+    // URL
+    url = new ALStringField();
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
+    url.setTrim(false);
 
   }
 
