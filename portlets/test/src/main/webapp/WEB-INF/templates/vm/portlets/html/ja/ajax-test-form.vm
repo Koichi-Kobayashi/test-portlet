@@ -53,8 +53,11 @@
 #ALtdcaption($!result.getFieldName("note"))
 #ALtditemheader()
 #ALtextarea('note' $!result.Note 10 40)
+##URLの追加
 #ALtdcaption($!result.getFieldName("url"))
+#ALtditemheader()
 #ALtextarea('url' $!result.url 1 5)
+
 #ALtditemfooter()
 #ALtablefooter()
 #ALbuttonheader()

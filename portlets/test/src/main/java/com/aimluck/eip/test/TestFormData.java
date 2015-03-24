@@ -252,6 +252,8 @@ public class TestFormData extends ALAbstractFormData {
       }
       // タイトル
       test_name.setValue(test.getTestName());
+      // URL
+      //url.setValue(test.getURL());
       // メモ
       note.setValue(test.getNote());
 
@@ -459,6 +461,16 @@ public class TestFormData extends ALAbstractFormData {
    */
   public ALStringField getTestName() {
     return test_name;
+  }
+
+
+  /**
+   * URLを取得します。 <BR>
+   *
+   * @return
+   */
+  public ALStringField getURL() {
+    return url;
   }
 
 
