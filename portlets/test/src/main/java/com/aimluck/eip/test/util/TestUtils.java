@@ -731,6 +731,9 @@ public class TestUtils {
 //    if (test.getNote().toString().length() > 0) {
 //      body.append("[メモ]").append(CR).append(test.getNote().toString()).append(
 //        CR);
+//	  if (test.getUrl().toString().length() > 0) {
+//      body.append("[URL]").append(CR).append(test.getUrl().toString()).append(
+//        CR);
 //    }
 //    body.append(CR);
 //    body
