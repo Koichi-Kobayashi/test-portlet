@@ -55,7 +55,7 @@
 #ALtextarea('note' $!result.Note 10 40)
 #ALtdcaption($!result.getFieldName("url"))
 #ALtditemheader()
-#ALtextarea('url' $!result.Url 3 40)
+#ALtextarea('url' $!result.url 3 40)
 #ALtditemfooter()
 #ALtablefooter()
 #ALbuttonheader()
