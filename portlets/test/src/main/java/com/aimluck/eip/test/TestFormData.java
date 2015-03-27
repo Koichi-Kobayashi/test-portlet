@@ -253,7 +253,7 @@ public class TestFormData extends ALAbstractFormData {
       // タイトル
       test_name.setValue(test.getTestName());
       // URL
-      //url.setValue(test.getURL());
+      url.setValue(test.getUrl());
       // メモ
       note.setValue(test.getNote());
 
@@ -334,7 +334,8 @@ public class TestFormData extends ALAbstractFormData {
       // ユーザーID
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
-
+      //URL
+      test.setUrl(url.getValue());
       // メモ
       test.setNote(note.getValue());
       // 作成日
@@ -403,6 +404,8 @@ public class TestFormData extends ALAbstractFormData {
       // ユーザーID
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
+      //URL
+      test.setUrl(url.getValue());
       // メモ
       test.setNote(note.getValue());
       // 更新日
@@ -469,7 +472,7 @@ public class TestFormData extends ALAbstractFormData {
    *
    * @return
    */
-  public ALStringField getURL() {
+  public ALStringField getUrl() {
     return url;
   }
 
