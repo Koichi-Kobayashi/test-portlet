@@ -41,6 +41,9 @@ public class TestResultData implements ALData {
   /** タイトル */
   private ALStringField test_name;
 
+  /** URL */
+  private ALStringField url;
+
 
   /** メモ */
   private ALStringField note;
@@ -76,6 +79,8 @@ public class TestResultData implements ALData {
   public void initField() {
     test_id = new ALNumberField();
     test_name = new ALStringField();
+    url = new ALStringField();
+    url.setTrim(false);
     note = new ALStringField();
     note.setTrim(false);
     create_date = new ALStringField();
@@ -110,7 +115,19 @@ public class TestResultData implements ALData {
   public void setTestName(String string) {
     test_name.setValue(string);
   }
+  /**
+   * @return
+   */
+  public String getUrl() {
+    return ALEipUtils.getMessageList(url.getValue());//ここ怪しい
+  }
 
+  /**
+   * @param string
+   */
+  public void setUrl(String string) {
+    url.setValue(string);
+  }
   /**
    * @return
    */

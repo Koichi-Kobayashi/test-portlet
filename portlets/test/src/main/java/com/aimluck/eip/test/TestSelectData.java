@@ -426,6 +426,7 @@ public class TestSelectData extends
       rd.initField();
       rd.setTestName(record.getTestName());
       rd.setTestId(record.getTestId().longValue());
+      rd.setUrl(record.getUrl());
       rd.setNote(record.getNote());
       rd.setCreateDate(ALDateUtil
         .format(record.getCreateDate(), "yyyy年M月d日(E)"));
