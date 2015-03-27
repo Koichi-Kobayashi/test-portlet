@@ -145,7 +145,7 @@ public class TestResultData implements ALData {
   public void setCreateDate(String string) {
     create_date.setValue(string);
   }
-
+  
   /**
    * @param string
    */
