@@ -366,6 +366,9 @@ public class TestSelectData extends
         record.getTestName(),
         getStrLength()));
       rd.setUpdateDate(record.getUpdateDate());
+      rd.setUrlName(currentTab);
+      rd.getUrlName();
+      
 
       /*
       rd.setUrl(ALCommonUtils.compressString(

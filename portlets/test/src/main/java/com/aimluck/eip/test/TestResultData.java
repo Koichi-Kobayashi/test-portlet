@@ -198,6 +198,7 @@ public class TestResultData implements ALData {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
 
+  //３月２７日作成
 public void setUrlName(String compressString) {
 	// TODO 自動生成されたメソッド・スタブ
 	url.setValue(toString());
