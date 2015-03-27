@@ -44,6 +44,9 @@ public class TestResultData implements ALData {
 
   /** メモ */
   private ALStringField note;
+  
+  /** URL */
+  private ALStringField url;
 
 
   /** 登録日 */
@@ -54,6 +57,7 @@ public class TestResultData implements ALData {
 
   /** ユーザID */
   private ALStringField user_id;
+  
 
   /**
    * 期限状態（期限前/期限当日/期限後）． <br>
@@ -192,5 +196,14 @@ public class TestResultData implements ALData {
    */
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
+  }
+
+public void setUrlName(String compressString) {
+	// TODO 自動生成されたメソッド・スタブ
+	url.setValue(toString());
+	}
+
+public String getUrlName() {
+    return ALCommonUtils.replaceToAutoCR(url.toString());
   }
 }
