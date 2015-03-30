@@ -130,6 +130,19 @@ public class TestResultData implements ALData {
   public void setNote(String string) {
     note.setValue(string);
   }
+  /**
+   * @return
+   */
+  public String getUrl() {
+    return url.getValue();
+  }
+
+  /**
+   * @param string
+   */
+  public void setUrl(String string) {
+    url.setValue(string);
+  }
 
   /**
    * @return
