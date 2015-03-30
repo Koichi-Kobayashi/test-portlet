@@ -36,9 +36,9 @@ $!result.Detail.TestName
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
 #ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
-#ALtditem($!result.Detail.Url)
+#ALtditem($!result.Url)
 #ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL)
-<td><a href="$!result.Detail.Url"><img title="$!result.Detail.Url" src="http://hack.aipo.com/wp-content/plugins/lazy-load/images/1x1.trans.gif"  data-lazy-src="http://capture.heartrails.com/free?$!result.Detail.Url" alt="$!result.Detail.Url" width="200" height="300" /></a></tb>
+<td><a href="$!result.Url"><img title="$!result.Url" src="http://capture.heartrails.com/medium?$!result.Url"  data-lazy-src="http://capture.heartrails.com/free?$!result.Url" alt="$!result.Url" width="200" height="150" /></a></tb>
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
