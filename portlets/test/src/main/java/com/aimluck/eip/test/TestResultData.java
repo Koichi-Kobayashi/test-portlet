@@ -119,9 +119,14 @@ public class TestResultData implements ALData {
    * @return
    */
   public String getUrl() {
-    return ALEipUtils.getMessageList(url.getValue());//ここ怪しい
+    return (url.getValue());//ここ怪しい→メソッドを消してただ入力値を返すだけにしてみた。
   }
-
+  /**
+   * @return
+   */
+  public String getUrlOnLink() {
+    return ALEipUtils.getMessageList(url.getValue());//URLをリンク付きでまた長すぎた時の対処として
+  }
   /**
    * @param string
    */

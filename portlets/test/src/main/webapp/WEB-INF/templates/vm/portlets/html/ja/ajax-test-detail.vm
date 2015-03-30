@@ -31,7 +31,7 @@ $!result.Detail.TestName
 #ALtditemfooter()
 ##URL追加
 #ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
-#ALtditem($!result.Detail.Url)
+#ALtditem($!result.Detail.UrlOnLink)
 ##サムネイル追加
 #ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL)
 <td><a href="$!result.Detail.Url"><img title="$!result.Detail.Url" src="http://capture.heartrails.com/free?$!result.Detail.Url" alt="$!result.Detail.Url" width="200" height="300" /></a></td>
