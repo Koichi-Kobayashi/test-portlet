@@ -50,11 +50,11 @@
 #ALtableheaderWide()
 #ALtdcaption("#ALrequired($!result.getFieldName('test_name'))")
 #ALtditem("#ALtextfieldw100('test_name' $!result.TestName 50 'active')")
+#ALtdcaption($!result.getFieldName("note"))
 
-#ALtdcaption("#ALrequired("$!result.getFieldName('url'))")
+#ALtdcaption("#ALrequired(")
 #ALtditem("#ALtextfieldw100('url' $!result.TestName 50 'active')")
 
-#ALtdcaption($!result.getFieldName("note"))
 #ALtditemheader()
 #ALtextarea('note' $!result.Note 10 40)
 #ALtditemfooter()
