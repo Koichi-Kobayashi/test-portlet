@@ -218,6 +218,8 @@ public class TestFormData extends ALAbstractFormData {
     test_name.validate(msgList);
     // メモ
     note.validate(msgList);
+    //URL
+    url.validate(msgList);
 
     return (msgList.size() == 0);
 
@@ -245,6 +247,8 @@ public class TestFormData extends ALAbstractFormData {
       test_name.setValue(test.getTestName());
       // メモ
       note.setValue(test.getNote());
+      //URL
+      url.setValue(test.getUrl());
 
 
       // 担当者
@@ -452,6 +456,15 @@ public class TestFormData extends ALAbstractFormData {
     return test_name;
   }
 
+  /**
+   * URLを取得します。 <BR>
+   *
+   * @return
+   */
+  public ALStringField getURL() {
+    return url;
+  }
+  
 
   /**
    * アクセス権限チェック用メソッド。<br />
