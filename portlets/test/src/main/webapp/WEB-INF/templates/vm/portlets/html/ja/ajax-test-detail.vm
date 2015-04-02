@@ -35,8 +35,10 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.UpdateDate)
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
-#ALtdcaption($l10n.TODO_URL)
-#ALtditem($!result.Detail.Url)
+#ALtdcaption($l10n.TODO_SETFIELDNAME_URL) ##４月２日追加
+#ALtditem($!result.Detail.Url)  ##４月２日作成
+#ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL)  ##４月２日作成
+<td><a href="$!result.Detail.Url"><img title="$!result.Detail.Url" src="http://hack.aipo.com/wp-content/plugins/lazy-load/images/1x1.trans.gif"  data-lazy-src="http://capture.heartrails.com/free?$!result.Detail.Url"  alt="$!result.Detail.Url" width="200" height="300" /><noscript><img title="$!result.Detail.Url" src="http://capture.heartrails.com/free?$!result.Detail.Url"  alt="$!result.Detail.Url" width="200" height="300" /></noscript></a></td>
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
