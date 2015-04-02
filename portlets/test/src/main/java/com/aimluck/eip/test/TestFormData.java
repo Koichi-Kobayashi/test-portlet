@@ -393,6 +393,9 @@ public class TestFormData extends ALAbstractFormData {
       // タイトル
       test.setTestName(test_name.getValue());
 
+      //URL
+      test.setUrl(url.getValue());
+
       // ユーザーID
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
@@ -464,7 +467,7 @@ public class TestFormData extends ALAbstractFormData {
   public ALStringField getURL() {
     return url;
   }
-  
+
 
   /**
    * アクセス権限チェック用メソッド。<br />
