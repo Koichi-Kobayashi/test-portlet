@@ -26,9 +26,7 @@
 #ALajaxdetailformheader("ToDo")
 #ALtableheaderWide()
 #ALtdcaption("タイトル")
-#ALtditemheader()
-$!result.Detail.TestName
-#ALtditemfooter()
+#ALtditem($!result.Detail.TestName)
 #ALtdcaption($l10n.TODO_CREATE_DATE)
 #ALtditem($!result.Detail.CreateDate)
 #ALtdcaption($l10n.TODO_UPDATE_DATE)
@@ -36,9 +34,9 @@ $!result.Detail.TestName
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
 #ALtdcaption($l10n.TODO_SETFIELDNAME_URL) ##４月２日追加
-#ALtditem($!result.Detail.Url)  ##４月２日作成
+#ALtditem($!result.Detail.UrlOnLink)  ##４月２日作成
 #ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL)  ##４月２日作成
-<td><a href="$!result.Detail.Url"><img title="$!result.Detail.Url" src="http://hack.aipo.com/wp-content/plugins/lazy-load/images/1x1.trans.gif"  data-lazy-src="http://capture.heartrails.com/free?$!result.Detail.Url"  alt="$!result.Detail.Url" width="200" height="300" /><noscript><img title="$!result.Detail.Url" src="http://capture.heartrails.com/free?$!result.Detail.Url"  alt="$!result.Detail.Url" width="200" height="300" /></noscript></a></td>
+<td><a href="$!result.Detail.Url"><noscript><img title="$!result.Detail.Url" src="http://capture.heartrails.com/free?$!result.Detail.Url2"  alt="$!result.Detail.Url" width="200" height="300" /></noscript><img src="http://capture.heartrails.com/free?$!result.Detail.Url2" width="200" height="300" /></a></td>  ##４月２日追加
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())

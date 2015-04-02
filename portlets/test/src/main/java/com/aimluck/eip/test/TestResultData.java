@@ -26,7 +26,7 @@ public class TestResultData implements ALData {
 
   /** メモ */
   private ALStringField note;
-  
+
   /** URL */
   private ALStringField url;
 
@@ -39,7 +39,7 @@ public class TestResultData implements ALData {
 
   /** ユーザID */
   private ALStringField user_id;
-  
+
 
   /**
    * 期限状態（期限前/期限当日/期限後）． <br>
@@ -68,6 +68,7 @@ public class TestResultData implements ALData {
     update_date = new ALDateTimeField();
     is_self_test = false;
     url = new ALStringField();  //４月２日追加
+    url.setTrim(false);  //４月２日追加
   }
 
   /**
@@ -132,7 +133,7 @@ public class TestResultData implements ALData {
   public void setCreateDate(String string) {
     create_date.setValue(string);
   }
-  
+
   /**
    * @param string
    */
@@ -193,14 +194,22 @@ public String getUrlName() {
 
  //４月２追加
 public String getUrl() {
-    return ALEipUtils.getMessageList(url.getValue());
+    return (url.getValue());
   }
- 
+
+public String getUrl2() {
+	 return url.getValue();
+  }
+
+public String getUrlOnLink() {
+    return ALEipUtils.getMessageList(url.getValue());
+   }
+
    /**
    * @param string
    */
   public void setUrl(String string) {
     url.setValue(string);
   }
-  
+
 }
