@@ -52,6 +52,9 @@ import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineRole;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
 import com.aimluck.eip.util.ALEipUtils;
@@ -123,7 +126,7 @@ public class ALGroupManagement extends TurbineBaseService implements
     }
 
     Expression exp =
-      ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, user
+      ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, user
         .getUserId());
     SelectQuery<TurbineUserGroupRole> query =
       Database.query(TurbineUserGroupRole.class, exp);
@@ -232,7 +235,7 @@ public class ALGroupManagement extends TurbineBaseService implements
 
       if (cascadeDelete) {
         Expression exp =
-          ExpressionFactory.matchDbExp(TurbineGroup.GROUP_ID_PK_COLUMN, Integer
+          ExpressionFactory.matchDbExp(_TurbineGroup.GROUP_ID_PK_COLUMN, Integer
             .valueOf(group.getId()));
         SelectQuery<TurbineUserGroupRole> query =
           Database.query(TurbineUserGroupRole.class, exp);
@@ -317,13 +320,13 @@ public class ALGroupManagement extends TurbineBaseService implements
       Role role = JetspeedSecurity.getRole(rolename);
 
       Expression exp1 =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
           .valueOf(user.getUserId()));
       Expression exp2 =
-        ExpressionFactory.matchDbExp(TurbineGroup.GROUP_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineGroup.GROUP_ID_PK_COLUMN, Integer
           .valueOf(group.getId()));
       Expression exp3 =
-        ExpressionFactory.matchDbExp(TurbineRole.ROLE_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineRole.ROLE_ID_PK_COLUMN, Integer
           .valueOf(role.getId()));
       SelectQuery<TurbineUserGroupRole> query =
         Database.query(TurbineUserGroupRole.class);
@@ -357,10 +360,10 @@ public class ALGroupManagement extends TurbineBaseService implements
       Group group = this.getGroup(groupname);
 
       Expression exp1 =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, user
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, user
           .getUserId());
       Expression exp2 =
-        ExpressionFactory.matchDbExp(TurbineGroup.GROUP_ID_PK_COLUMN, group
+        ExpressionFactory.matchDbExp(_TurbineGroup.GROUP_ID_PK_COLUMN, group
           .getId());
 
       SelectQuery<TurbineUserGroupRole> query =
@@ -383,7 +386,7 @@ public class ALGroupManagement extends TurbineBaseService implements
     List<TurbineGroup> groups;
     try {
       Expression exp =
-        ExpressionFactory.matchExp(TurbineGroup.GROUP_NAME_PROPERTY, groupname);
+        ExpressionFactory.matchExp(_TurbineGroup.GROUP_NAME_PROPERTY, groupname);
 
       SelectQuery<TurbineGroup> query = Database.query(TurbineGroup.class, exp);
 
@@ -424,7 +427,7 @@ public class ALGroupManagement extends TurbineBaseService implements
     List<TurbineGroup> groups;
     try {
       Expression exp =
-        ExpressionFactory.matchExp(TurbineGroup.GROUP_NAME_PROPERTY, groupName);
+        ExpressionFactory.matchExp(_TurbineGroup.GROUP_NAME_PROPERTY, groupName);
 
       groups = Database.query(TurbineGroup.class, exp).fetchList();
     } catch (Exception e) {

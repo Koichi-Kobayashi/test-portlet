@@ -65,7 +65,8 @@ public abstract class PortletAction
       {
       }
 
-    public void doPerform(RunData data)
+    @Override
+	public void doPerform(RunData data)
                    throws Exception
       {
 

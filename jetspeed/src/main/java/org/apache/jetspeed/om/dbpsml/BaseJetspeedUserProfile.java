@@ -1,24 +1,17 @@
 package org.apache.jetspeed.om.dbpsml;
 
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.BaseObject;
-import org.apache.torque.om.ComboKey;
-import org.apache.torque.om.DateKey;
 import org.apache.torque.om.NumberKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
-import org.apache.torque.om.StringKey;
-import org.apache.torque.om.Persistent;
-import org.apache.torque.util.Criteria;
 import org.apache.torque.util.Transaction;
 
 
@@ -269,7 +262,8 @@ public abstract class BaseJetspeedUserProfile extends BaseObject
      * Retrieves a field from the object by name passed in
      * as a String.
      */
-    public Object getByName(String name)
+    @Override
+	public Object getByName(String name)
     {
           if (name.equals("PsmlId"))
         {
@@ -307,33 +301,34 @@ public abstract class BaseJetspeedUserProfile extends BaseObject
      * as a String.  The String must be one of the static
      * Strings defined in this Class' Peer.
      */
-    public Object getByPeerName(String name)
+    @Override
+	public Object getByPeerName(String name)
     {
-          if (name.equals(JetspeedUserProfilePeer.PSML_ID ))
+          if (name.equals(BaseJetspeedUserProfilePeer.PSML_ID ))
         {
                 return new Integer(getPsmlId());
             }
-          if (name.equals(JetspeedUserProfilePeer.USER_NAME ))
+          if (name.equals(BaseJetspeedUserProfilePeer.USER_NAME ))
         {
                 return getUserName();
             }
-          if (name.equals(JetspeedUserProfilePeer.MEDIA_TYPE ))
+          if (name.equals(BaseJetspeedUserProfilePeer.MEDIA_TYPE ))
         {
                 return getMediaType();
             }
-          if (name.equals(JetspeedUserProfilePeer.LANGUAGE ))
+          if (name.equals(BaseJetspeedUserProfilePeer.LANGUAGE ))
         {
                 return getLanguage();
             }
-          if (name.equals(JetspeedUserProfilePeer.COUNTRY ))
+          if (name.equals(BaseJetspeedUserProfilePeer.COUNTRY ))
         {
                 return getCountry();
             }
-          if (name.equals(JetspeedUserProfilePeer.PAGE ))
+          if (name.equals(BaseJetspeedUserProfilePeer.PAGE ))
         {
                 return getPage();
             }
-          if (name.equals(JetspeedUserProfilePeer.PROFILE ))
+          if (name.equals(BaseJetspeedUserProfilePeer.PROFILE ))
         {
                 return getProfile();
             }
@@ -344,7 +339,8 @@ public abstract class BaseJetspeedUserProfile extends BaseObject
      * Retrieves a field from the object by Position as specified
      * in the xml schema.  Zero-based.
      */
-    public Object getByPosition(int pos)
+    @Override
+	public Object getByPosition(int pos)
     {
             if ( pos == 0 )
         {
@@ -381,9 +377,10 @@ public abstract class BaseJetspeedUserProfile extends BaseObject
      * Stores the object in the database.  If the object is new,
      * it inserts it; otherwise an update is performed.
      */
-    public void save() throws Exception
+    @Override
+	public void save() throws Exception
     {
-          save(JetspeedUserProfilePeer.getMapBuilder()
+          save(BaseJetspeedUserProfilePeer.getMapBuilder()
                 .getDatabaseMap().getName());
       }
 
@@ -394,7 +391,8 @@ public abstract class BaseJetspeedUserProfile extends BaseObject
      * auto-generated conditionally and therefore needs to be
      * in this file instead of in the super class, BaseObject.
        */
-    public void save(String dbName) throws TorqueException
+    @Override
+	public void save(String dbName) throws TorqueException
     {
         Connection con = null;
           try
@@ -420,7 +418,8 @@ public abstract class BaseJetspeedUserProfile extends BaseObject
      * the save() method and the connection details will be handled
      * internally
      */
-    public void save(Connection con) throws TorqueException
+    @Override
+	public void save(Connection con) throws TorqueException
     {
           if (!alreadyInSave)
         {
@@ -433,17 +432,17 @@ public abstract class BaseJetspeedUserProfile extends BaseObject
             {
                 if (isNew())
                 {
-                    JetspeedUserProfilePeer.doInsert((JetspeedUserProfile)this, con);
+                    BaseJetspeedUserProfilePeer.doInsert((JetspeedUserProfile)this, con);
                     setNew(false);
                 }
                 else
                 {
-                    JetspeedUserProfilePeer.doUpdate((JetspeedUserProfile)this, con);
+                    BaseJetspeedUserProfilePeer.doUpdate((JetspeedUserProfile)this, con);
                 }
 
                       if (isCacheOnSave())
                 {
-                    JetspeedUserProfileManager.putInstance(this);
+                    BaseJetspeedUserProfileManager.putInstance(this);
                 }
               }
 
@@ -466,7 +465,8 @@ public abstract class BaseJetspeedUserProfile extends BaseObject
      *
      * @param ObjectKey psmlId
      */
-    public void setPrimaryKey(ObjectKey psmlId)
+    @Override
+	public void setPrimaryKey(ObjectKey psmlId)
          {
             setPsmlId(((NumberKey)psmlId).intValue());
         }
@@ -474,7 +474,8 @@ public abstract class BaseJetspeedUserProfile extends BaseObject
     /**
      * Set the PrimaryKey using a String.
      */
-    public void setPrimaryKey(String key) 
+    @Override
+	public void setPrimaryKey(String key) 
     {
             setPsmlId(Integer.parseInt(key));
         }
@@ -484,7 +485,8 @@ public abstract class BaseJetspeedUserProfile extends BaseObject
      * returns an id that differentiates this object from others
      * of its class.
      */
-    public ObjectKey getPrimaryKey()
+    @Override
+	public ObjectKey getPrimaryKey()
     {
           return SimpleKey.keyFor(getPsmlId());
       }

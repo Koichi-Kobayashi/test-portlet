@@ -47,6 +47,10 @@ import com.aimluck.eip.cayenne.om.portlet.EipTBlogComment;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogEntry;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogThema;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogComment;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogEntry;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogThema;
 import com.aimluck.eip.common.ALAbstractMultiFilterSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -147,15 +151,15 @@ public class BlogEntryLatestSelectData extends
 
     SelectQuery<EipTBlogFile> query = Database.query(EipTBlogFile.class);
     Expression exp01 =
-      ExpressionFactory.likeExp(EipTBlogFile.TITLE_PROPERTY, "%" + ext[0]);
+      ExpressionFactory.likeExp(_EipTBlogFile.TITLE_PROPERTY, "%" + ext[0]);
     query.setQualifier(exp01);
     for (int i = 1; i < ext.length; i++) {
       Expression exp02 =
-        ExpressionFactory.likeExp(EipTBlogFile.TITLE_PROPERTY, "%" + ext[i]);
+        ExpressionFactory.likeExp(_EipTBlogFile.TITLE_PROPERTY, "%" + ext[i]);
       query.orQualifier(exp02);
     }
 
-    query.orderDesending(EipTBlogFile.UPDATE_DATE_PROPERTY);
+    query.orderDesending(_EipTBlogFile.UPDATE_DATE_PROPERTY);
     query.limit(5);
     List<EipTBlogFile> list = query.fetchList();
     if (list != null && list.size() > 0) {
@@ -181,11 +185,11 @@ public class BlogEntryLatestSelectData extends
       Database.query(EipTBlogComment.class);
     // ユーザーがコメントした記事のリストをEntryId順に作成
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTBlogComment.OWNER_ID_PROPERTY, thisUserId);
+      ExpressionFactory.matchExp(_EipTBlogComment.OWNER_ID_PROPERTY, thisUserId);
     comment_query.setQualifier(exp1);
     Expression exp2 =
       ExpressionFactory.greaterExp(
-        EipTBlogComment.UPDATE_DATE_PROPERTY,
+        _EipTBlogComment.UPDATE_DATE_PROPERTY,
         reduceDate(Calendar.getInstance().getTime(), DELETE_DATE));
     comment_query.andQualifier(exp2);
     comment_query.orderAscending("eipTBlogEntry");
@@ -215,12 +219,12 @@ public class BlogEntryLatestSelectData extends
 
           SelectQuery<EipTBlogComment> cquery =
             Database.query(EipTBlogComment.class).select(
-              EipTBlogComment.COMMENT_ID_PK_COLUMN);
+              _EipTBlogComment.COMMENT_ID_PK_COLUMN);
           Expression cexp =
             ExpressionFactory.matchDbExp(
-              EipTBlogComment.EIP_TBLOG_ENTRY_PROPERTY
+              _EipTBlogComment.EIP_TBLOG_ENTRY_PROPERTY
                 + "."
-                + EipTBlogEntry.ENTRY_ID_PK_COLUMN,
+                + _EipTBlogEntry.ENTRY_ID_PK_COLUMN,
               entry.getEntryId());
           cquery.setQualifier(cexp);
           List<EipTBlogComment> list = cquery.fetchList();
@@ -273,7 +277,7 @@ public class BlogEntryLatestSelectData extends
 
       SelectQuery<EipTBlogEntry> query = getSelectQuery(rundata, context);
       buildSelectQueryForListView(query);
-      query.orderDesending(EipTBlogEntry.CREATE_DATE_PROPERTY);
+      query.orderDesending(_EipTBlogEntry.CREATE_DATE_PROPERTY);
       ResultList<EipTBlogEntry> list = query.getResultList();
       // エントリーの総数をセットする．
       entrySum = list.getTotalCount();
@@ -326,7 +330,7 @@ public class BlogEntryLatestSelectData extends
         userIds.add(-1);
       }
       Expression exp =
-        ExpressionFactory.inExp(EipTBlogEntry.OWNER_ID_PROPERTY, userIds);
+        ExpressionFactory.inExp(_EipTBlogEntry.OWNER_ID_PROPERTY, userIds);
       query.andQualifier(exp);
     }
 
@@ -335,11 +339,11 @@ public class BlogEntryLatestSelectData extends
     if (search != null && !"".equals(search)) {
       current_search = search;
       Expression ex1 =
-        ExpressionFactory.likeExp(EipTBlogEntry.NOTE_PROPERTY, "%"
+        ExpressionFactory.likeExp(_EipTBlogEntry.NOTE_PROPERTY, "%"
           + search
           + "%");
       Expression ex2 =
-        ExpressionFactory.likeExp(EipTBlogEntry.TITLE_PROPERTY, "%"
+        ExpressionFactory.likeExp(_EipTBlogEntry.TITLE_PROPERTY, "%"
           + search
           + "%");
       SelectQuery<EipTBlogEntry> q = Database.query(EipTBlogEntry.class);
@@ -360,7 +364,7 @@ public class BlogEntryLatestSelectData extends
         resultid.add(-1);
       }
       Expression ex =
-        ExpressionFactory.inDbExp(EipTBlogEntry.ENTRY_ID_PK_COLUMN, resultid);
+        ExpressionFactory.inDbExp(_EipTBlogEntry.ENTRY_ID_PK_COLUMN, resultid);
       query.andQualifier(ex);
     }
     return query;
@@ -482,8 +486,8 @@ public class BlogEntryLatestSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("thema", EipTBlogThema.THEMA_ID_PK_COLUMN);
-    map.putValue("update", EipTBlogFile.UPDATE_DATE_PROPERTY);
+    map.putValue("thema", _EipTBlogThema.THEMA_ID_PK_COLUMN);
+    map.putValue("update", _EipTBlogFile.UPDATE_DATE_PROPERTY);
     return map;
   }
 

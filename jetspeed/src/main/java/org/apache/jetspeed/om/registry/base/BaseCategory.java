@@ -35,7 +35,8 @@ public class BaseCategory implements Category, java.io.Serializable
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object==null)
         {
@@ -78,7 +79,8 @@ public class BaseCategory implements Category, java.io.Serializable
     }
 
     /** @return the string Name */
-    public String getName()
+    @Override
+	public String getName()
     {
         return name;
     }
@@ -87,13 +89,15 @@ public class BaseCategory implements Category, java.io.Serializable
      *
      * @param value the new Name value
      */
-    public void setName(String name)
+    @Override
+	public void setName(String name)
     {
         this.name = name;
     }
 
     /** @return the string Group */
-    public String getGroup()
+    @Override
+	public String getGroup()
     {
         return group;
     }
@@ -102,7 +106,8 @@ public class BaseCategory implements Category, java.io.Serializable
      *
      * @param value the new Group value
      */
-    public void setGroup(String group)
+    @Override
+	public void setGroup(String group)
     {
         this.group = group;
     }

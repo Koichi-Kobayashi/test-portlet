@@ -67,15 +67,18 @@ public class ALPop3MailReceiverContext implements ALMailReceiverContext {
 
   }
 
-  public String getOrgId() {
+  @Override
+public String getOrgId() {
     return org_id;
   }
 
-  public int getUserId() {
+  @Override
+public int getUserId() {
     return user_id;
   }
 
-  public int getAccountId() {
+  @Override
+public int getAccountId() {
     return account_id;
   }
 

@@ -32,6 +32,8 @@ import org.apache.jetspeed.services.registry.RegistryService;
 //turbine stuff
 import org.apache.turbine.services.TurbineServices;
 
+import org.apache.turbine.services.resources.TurbineResources;
+
 //java stuff
 import java.io.Reader;
 import java.util.Vector;
@@ -103,7 +105,7 @@ public class FeedDaemon implements Daemon
     */
     public static Feed[] getFeeds() 
     {
-        Vector v = JetspeedResources.getVector( "contentfeeds.feed.name" );
+        Vector v = TurbineResources.getVector( "contentfeeds.feed.name" );
         Vector found = new Vector();
         
         for( int i = 0; i < v.size(); ++i) {
@@ -130,7 +132,8 @@ public class FeedDaemon implements Daemon
     
     /**
     */
-    public void run() 
+    @Override
+	public void run() 
     {
         try 
         {
@@ -240,7 +243,8 @@ public class FeedDaemon implements Daemon
     /**
     Init this Daemon from the DaemonFactory
     */
-    public void init( DaemonConfig config, DaemonEntry entry ) 
+    @Override
+	public void init( DaemonConfig config, DaemonEntry entry ) 
     {
         this.config = config;
         this.entry = entry;
@@ -248,14 +252,16 @@ public class FeedDaemon implements Daemon
     
     /**
     */
-    public DaemonConfig getDaemonConfig() 
+    @Override
+	public DaemonConfig getDaemonConfig() 
     {
         return this.config;
     }
 
     /**
     */
-    public DaemonEntry getDaemonEntry() 
+    @Override
+	public DaemonEntry getDaemonEntry() 
     {
         return this.entry;
     }
@@ -267,7 +273,8 @@ public class FeedDaemon implements Daemon
     @see Daemon#STATUS_PROCESSED
     @see Daemon#STATUS_PROCESSING
     */
-    public int getStatus() 
+    @Override
+	public int getStatus() 
     {
         return this.status;
     }
@@ -279,7 +286,8 @@ public class FeedDaemon implements Daemon
     @see #STATUS_PROCESSED
     @see #STATUS_PROCESSING
     */
-    public void setStatus(int status) 
+    @Override
+	public void setStatus(int status) 
     {
         this.status = status;
     }
@@ -287,7 +295,8 @@ public class FeedDaemon implements Daemon
     /**
     @see Daemon#getResult()
     */
-    public int getResult() 
+    @Override
+	public int getResult() 
     {
         return this.result;
     }
@@ -295,7 +304,8 @@ public class FeedDaemon implements Daemon
     /**
     @see Daemon#setResult(int result)
     */
-    public void setResult( int result ) 
+    @Override
+	public void setResult( int result ) 
     {
         this.result = result;
     }
@@ -303,7 +313,8 @@ public class FeedDaemon implements Daemon
     /**
     @see Daemon#getMessage()
     */
-    public String getMessage() 
+    @Override
+	public String getMessage() 
     {
         return "Total number of content feeds found: " + getCount();
     }

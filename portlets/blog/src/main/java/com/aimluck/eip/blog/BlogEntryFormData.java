@@ -41,6 +41,8 @@ import com.aimluck.eip.cayenne.om.portlet.EipTBlog;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogEntry;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogThema;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogEntry;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogFile;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -272,9 +274,9 @@ public class BlogEntryFormData extends ALAbstractFormData {
 
       SelectQuery<EipTBlogFile> filequery = Database.query(EipTBlogFile.class);
       Expression fileexp =
-        ExpressionFactory.matchDbExp(EipTBlogFile.EIP_TBLOG_ENTRY_PROPERTY
+        ExpressionFactory.matchDbExp(_EipTBlogFile.EIP_TBLOG_ENTRY_PROPERTY
           + "."
-          + EipTBlogEntry.ENTRY_ID_PK_COLUMN, entry.getEntryId());
+          + _EipTBlogEntry.ENTRY_ID_PK_COLUMN, entry.getEntryId());
       filequery.setQualifier(fileexp);
       List<EipTBlogFile> files = filequery.fetchList();
       FileuploadLiteBean filebean = null;

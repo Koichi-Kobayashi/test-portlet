@@ -31,7 +31,7 @@ import org.apache.jetspeed.services.logging.JetspeedLogger;
  * Monitors a Registry directory and notifies the associated Registry
  * of file updates.
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: RegistryWatcher.java,v 1.10 2004/02/23 03:31:50 jford Exp $
  */
 public class RegistryWatcher extends Thread
@@ -234,7 +234,8 @@ public class RegistryWatcher extends Thread
      * The algorithm used does not guarantee a constant refresh rate
      * between invocations.
      */
-    public void run()
+    @Override
+	public void run()
     {
         try
         {
@@ -383,7 +384,7 @@ public class RegistryWatcher extends Thread
                     i = fragments.keySet().iterator();
                     while(i.hasNext())
                     {
-                        RegistryFragment frag = (RegistryFragment)fragments.get((String)i.next());
+                        RegistryFragment frag = (RegistryFragment)fragments.get(i.next());
                         frag.setDirty(false);
                         frag.setChanged(false);
                     }

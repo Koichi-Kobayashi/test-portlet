@@ -103,7 +103,8 @@ public class ProxyRewriter implements Rewriter
      *
      * @exception MalformedURLException a servlet exception.
      */
-    public String generateNewUrl( String targetURL, HTML.Tag tag, HTML.Attribute attribute)
+    @Override
+	public String generateNewUrl( String targetURL, HTML.Tag tag, HTML.Attribute attribute)
                                 //  String  targetURL, 
                                 // String     baseURL,
                                 // String     proxyURL,
@@ -139,12 +140,14 @@ public class ProxyRewriter implements Rewriter
      *
      * @return true if all URLs are rewritten back to proxy server.
      */
-    public boolean proxyAllTags()
+    @Override
+	public boolean proxyAllTags()
     {
         return true; //false;
     }
 
-    public String rewrite(Reader input, String baseURL)
+    @Override
+	public String rewrite(Reader input, String baseURL)
                                throws MalformedURLException
     {
         String rewrittenHTML = "";
@@ -267,12 +270,14 @@ public class ProxyRewriter implements Rewriter
     /*
      * Simple Tag Events
      */
-    public boolean enterSimpleTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
+    @Override
+	public boolean enterSimpleTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
     {
         return true;
     }
 
-    public String exitSimpleTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
+    @Override
+	public String exitSimpleTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
     {
         return null;
     }
@@ -280,12 +285,14 @@ public class ProxyRewriter implements Rewriter
     /*
      * Start Tag Events
      */
-    public boolean enterStartTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
+    @Override
+	public boolean enterStartTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
     {
         return true;
     }
 
-    public String exitStartTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
+    @Override
+	public String exitStartTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
     {
         return null;
     }
@@ -293,12 +300,14 @@ public class ProxyRewriter implements Rewriter
     /*
      * Exit Tag Events
      */
-    public boolean enterEndTagEvent(HTML.Tag tag)
+    @Override
+	public boolean enterEndTagEvent(HTML.Tag tag)
     {
         return true;
     }
 
-    public String exitEndTagEvent(HTML.Tag tag)
+    @Override
+	public String exitEndTagEvent(HTML.Tag tag)
     {
         return null;
     }
@@ -307,10 +316,12 @@ public class ProxyRewriter implements Rewriter
     /*
      * Convert Tag Events
      */
-    public void convertTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
+    @Override
+	public void convertTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
     {
     }
 
+	@Override
 	public boolean enterText(char[] values, int param)
 	{
 		return false;

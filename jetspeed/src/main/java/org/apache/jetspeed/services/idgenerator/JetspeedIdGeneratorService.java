@@ -66,7 +66,8 @@ public class JetspeedIdGeneratorService extends TurbineBaseService
      * @exception throws a <code>InitializationException</code> if the service
      * fails to initialize
      */
-    public synchronized void init(ServletConfig conf) throws InitializationException {
+    @Override
+	public synchronized void init(ServletConfig conf) throws InitializationException {
 
         // already initialized
         if (getInit()) return;
@@ -84,7 +85,8 @@ public class JetspeedIdGeneratorService extends TurbineBaseService
      * @exception throws a <code>InitializationException</code> if the service
      * fails to initialize
      */
-    public void init() throws InitializationException {
+    @Override
+	public void init() throws InitializationException {
         logger.info( "Late init for JetspeedIdGeneratorService called" );        
         while( !getInit() ) {
             //Not yet...
@@ -101,7 +103,8 @@ public class JetspeedIdGeneratorService extends TurbineBaseService
      * This is the shutdown method called by the 
      * Turbine <code>Service</code> framework
      */
-    public void shutdown() 
+    @Override
+	public void shutdown() 
     {
         logger.info( "Shutdown for JetspeedIdGeneratorService called. idCounter = "
              + idCounter + " (" + Long.toHexString(idCounter) + ")" ); 
@@ -136,7 +139,8 @@ public class JetspeedIdGeneratorService extends TurbineBaseService
      * Generate a Unique PEID
      * @return Unique PEID
      */
-    public String getNextPeid()
+    @Override
+	public String getNextPeid()
     {
         long newid;
 

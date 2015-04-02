@@ -62,7 +62,7 @@ import org.apache.jetspeed.services.logging.JetspeedLogger;
  *     They may override the previously defined default variables
  *  </p>
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: VariableResourcesService.java,v 1.15 2004/02/23 03:29:53 jford Exp $
  */
 public class VariableResourcesService extends TurbineResourceService
@@ -90,7 +90,8 @@ public class VariableResourcesService extends TurbineResourceService
     /**
      * Late init. Don't return control until early init says we're done.
      */
-    public void init( )
+    @Override
+	public void init( )
     {
         while( !getInit() ) {
             try {
@@ -107,7 +108,8 @@ public class VariableResourcesService extends TurbineResourceService
      *
      * @param config a ServletConfig object
      */
-    public synchronized void init(ServletConfig config) throws InitializationException
+    @Override
+	public synchronized void init(ServletConfig config) throws InitializationException
     {        
         if (getInit()) return;
         String props = config.getInitParameter(TurbineServices.PROPERTIES_PATH_KEY);
@@ -231,7 +233,8 @@ public class VariableResourcesService extends TurbineResourceService
      * @param name The resource name.
      * @return The value of the resource as a string.
      */
-    public String getString(String name)
+    @Override
+	public String getString(String name)
     {
         String std = (String)strings.get(name);
         
@@ -251,7 +254,8 @@ public class VariableResourcesService extends TurbineResourceService
      * @param def The default value of the resource.
      * @return The value of the resource as a string.
      */
-    public String getString(String name,
+    @Override
+	public String getString(String name,
                                    String def)
     {
         String std = getString(name);
@@ -269,7 +273,8 @@ public class VariableResourcesService extends TurbineResourceService
      * @param name The resource name.
      * @return The value of the resource as a string array.
      */
-    public String[] getStringArray(String name)
+    @Override
+	public String[] getStringArray(String name)
     {
         String[] std = (String[])arrays.get(name);
         if (std==null) {
@@ -292,7 +297,8 @@ public class VariableResourcesService extends TurbineResourceService
      * @param name The resource name.
      * @return The value of the resource as a vector.
      */
-    public Vector getVector(String name)
+    @Override
+	public Vector getVector(String name)
     {
         Vector std = (Vector)vectors.get(name);
         
@@ -320,7 +326,8 @@ public class VariableResourcesService extends TurbineResourceService
      * @param def The default value of the resource.
      * @return The value of the resource as a vector.
      */
-    public Vector getVector(String name,
+    @Override
+	public Vector getVector(String name,
                                    Vector def)
     {
         Vector std = getVector(name); 
@@ -345,7 +352,8 @@ public class VariableResourcesService extends TurbineResourceService
      * @param prefix the common name prefix
      * @return A ResourceService providing the subset of configuration.
      */
-    public ResourceService getResources(String prefix)
+    @Override
+	public ResourceService getResources(String prefix)
     {
         Configuration config = getConfiguration().subset(prefix);
         
@@ -364,7 +372,7 @@ public class VariableResourcesService extends TurbineResourceService
             logger.error( "Unable to init resources for " + prefix, e );
         }
         res.setVariables(this.variables);
-        return (ResourceService)res;
+        return res;
     }
 
 

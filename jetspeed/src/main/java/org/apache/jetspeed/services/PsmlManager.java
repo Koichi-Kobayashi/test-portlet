@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Static accessor for the PsmlManagerService
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: PsmlManager.java,v 1.10 2004/02/23 04:00:57 jford Exp $
  */
 public class PsmlManager
@@ -57,7 +57,8 @@ public class PsmlManager
      * @deprecated
      * @param name the name of the document to retrieve
      */
-    public static PSMLDocument getDocument( String name )
+    @Deprecated
+	public static PSMLDocument getDocument( String name )
     {
         return getService().getDocument(name);
     }
@@ -97,7 +98,8 @@ public class PsmlManager
      * @deprecated
      * @param doc the document to save
      */
-    public static boolean saveDocument(PSMLDocument doc)
+    @Deprecated
+	public static boolean saveDocument(PSMLDocument doc)
     {
         return getService().saveDocument(doc);
     }
@@ -108,7 +110,8 @@ public class PsmlManager
      * or an absolute filepath
      * @param doc the document to save
      */
-    public static boolean saveDocument(String fileOrUrl, PSMLDocument doc)
+    @Deprecated
+	public static boolean saveDocument(String fileOrUrl, PSMLDocument doc)
     {
         return getService().saveDocument(fileOrUrl, doc);
     }

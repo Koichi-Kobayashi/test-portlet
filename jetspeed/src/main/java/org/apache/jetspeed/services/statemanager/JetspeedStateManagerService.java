@@ -50,7 +50,8 @@ public class JetspeedStateManagerService
     /**
     * Initialize the states storage.
     */
-    protected void initStates()
+    @Override
+	protected void initStates()
     {
         // create our states map synchronized
         m_states = Collections.synchronizedMap(new HashMap());
@@ -60,7 +61,8 @@ public class JetspeedStateManagerService
     /**
     * Cleanup the states storage.
     */
-    protected void shutdownStates()
+    @Override
+	protected void shutdownStates()
     {
         m_states.clear();
         m_states = null;
@@ -72,7 +74,8 @@ public class JetspeedStateManagerService
     * @param key The state key.
     * @return The Map which is the set of attributes for a state.
     */
-    protected Map getState( String key )
+    @Override
+	protected Map getState( String key )
     {
         return (Map) m_states.get(key);
 
@@ -83,7 +86,8 @@ public class JetspeedStateManagerService
     * @param key The state key.
     * @param state The Map which is the set of attributes for the state.
     */
-    protected void addState( String key, Map state )
+    @Override
+	protected void addState( String key, Map state )
     {
         m_states.put(key, state);
 
@@ -93,7 +97,8 @@ public class JetspeedStateManagerService
     * Remove a state from the states we are managing.
     * @param key The state key.
     */
-    protected void removeState( String key )
+    @Override
+	protected void removeState( String key )
     {
         m_states.remove(key);
 
@@ -104,7 +109,8 @@ public class JetspeedStateManagerService
     * @param start The starting string used to select the keys.
     * @return an array of the keys of all states managed.
     */
-    protected String[] getStateKeys( String start )
+    @Override
+	protected String[] getStateKeys( String start )
     {
         // collect for return
         Vector rv = new Vector();

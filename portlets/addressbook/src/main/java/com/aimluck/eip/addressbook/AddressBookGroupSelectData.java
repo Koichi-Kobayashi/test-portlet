@@ -32,6 +32,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.addressbook.util.AddressBookUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressGroup;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressGroup;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALPageNotFoundException;
@@ -148,7 +149,7 @@ public class AddressBookGroupSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("group_name", EipMAddressGroup.GROUP_NAME_PROPERTY);
+    map.putValue("group_name", _EipMAddressGroup.GROUP_NAME_PROPERTY);
     return map;
   }
 
@@ -165,7 +166,7 @@ public class AddressBookGroupSelectData extends
       Database.query(EipMAddressGroup.class);
 
     Expression exp =
-      ExpressionFactory.matchExp(EipMAddressGroup.OWNER_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipMAddressGroup.OWNER_ID_PROPERTY, Integer
         .valueOf(ALEipUtils.getUserId(rundata)));
     query.setQualifier(exp);
 

@@ -57,7 +57,8 @@ public class NoRoleManagement
      * @exception RoleException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Iterator getRoles(String username)
+    @Override
+	public Iterator getRoles(String username)
         throws JetspeedSecurityException
     {
         // give everyone the "user" role
@@ -80,7 +81,8 @@ public class NoRoleManagement
      * @exception RoleException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Iterator getRoles()
+    @Override
+	public Iterator getRoles()
         throws JetspeedSecurityException
     {
         return new Vector().iterator();
@@ -95,7 +97,8 @@ public class NoRoleManagement
      * @exception RoleException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void addRole(Role role)
+    @Override
+	public void addRole(Role role)
         throws JetspeedSecurityException
     {
     }
@@ -109,7 +112,8 @@ public class NoRoleManagement
      * @exception RoleException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void saveRole(Role role)
+    @Override
+	public void saveRole(Role role)
         throws JetspeedSecurityException
     {
     }
@@ -124,7 +128,8 @@ public class NoRoleManagement
      * @exception RoleException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void removeRole(String rolename)
+    @Override
+	public void removeRole(String rolename)
         throws JetspeedSecurityException
     {
     }
@@ -138,11 +143,13 @@ public class NoRoleManagement
      * @exception RoleException when the security provider has a general failure retrieving roles.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void grantRole(String username, String rolename)
+    @Override
+	public void grantRole(String username, String rolename)
         throws JetspeedSecurityException
     {
     }
 
+	@Override
 	public void grantRole(String username, String rolename, String groupname)
 		throws JetspeedSecurityException
 	{
@@ -171,7 +178,8 @@ public class NoRoleManagement
      * @exception RoleException when the security provider has a general failure retrieving roles.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void revokeRole(String username, String rolename)
+    @Override
+	public void revokeRole(String username, String rolename)
         throws JetspeedSecurityException
     {
     }
@@ -185,7 +193,8 @@ public class NoRoleManagement
      * @exception RoleException when the security provider has a general failure retrieving roles.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void revokeRole(String username, String rolename, String groupname)
+    @Override
+	public void revokeRole(String username, String rolename, String groupname)
         throws JetspeedSecurityException
     {
     }
@@ -199,7 +208,8 @@ public class NoRoleManagement
      * @exception RoleException when the security provider has a general failure retrieving roles.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public boolean hasRole(String username, String rolename)
+    @Override
+	public boolean hasRole(String username, String rolename)
         throws JetspeedSecurityException
     {
         // give everyone the "user" role
@@ -208,6 +218,7 @@ public class NoRoleManagement
         return false;
     }
 
+	@Override
 	public boolean hasRole(String username, String rolename, String groupname)
 		throws JetspeedSecurityException
 	{
@@ -229,7 +240,8 @@ public class NoRoleManagement
      * @exception RoleException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Role getRole(String rolename)
+    @Override
+	public Role getRole(String rolename)
         throws JetspeedSecurityException
     {
         BaseJetspeedRole r = new BaseJetspeedRole();

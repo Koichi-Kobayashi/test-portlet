@@ -32,6 +32,8 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroupMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroupMap;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -173,11 +175,11 @@ public class FacilitySelectData extends
     if (crt_key == null) {
       return query;
     }
-    if (crt_key.equals(EipMFacilityGroupMap.GROUP_ID_PROPERTY)) {
+    if (crt_key.equals(_EipMFacilityGroupMap.GROUP_ID_PROPERTY)) {
       SelectQuery<EipMFacilityGroupMap> mapquery =
         Database.query(EipMFacilityGroupMap.class);
       mapquery.where(Operations.eq(
-        EipMFacilityGroupMap.GROUP_ID_PROPERTY,
+        _EipMFacilityGroupMap.GROUP_ID_PROPERTY,
         Integer.valueOf(filter)));
       List<EipMFacilityGroupMap> facilityGroupMapList = mapquery.fetchList();
       List<Integer> facilityIdList = new ArrayList<Integer>();
@@ -192,7 +194,7 @@ public class FacilitySelectData extends
 
       Expression exp =
         ExpressionFactory.inDbExp(
-          EipMFacility.FACILITY_ID_PK_COLUMN,
+          _EipMFacility.FACILITY_ID_PK_COLUMN,
           facilityIdList);
       query.andQualifier(exp);
 
@@ -265,9 +267,9 @@ public class FacilitySelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("facility_name", EipMFacility.FACILITY_NAME_PROPERTY);
-    map.putValue("group_id", EipMFacilityGroupMap.GROUP_ID_PROPERTY);
-    map.putValue("sort", EipMFacility.SORT_PROPERTY);
+    map.putValue("facility_name", _EipMFacility.FACILITY_NAME_PROPERTY);
+    map.putValue("group_id", _EipMFacilityGroupMap.GROUP_ID_PROPERTY);
+    map.putValue("sort", _EipMFacility.SORT_PROPERTY);
     return map;
   }
 

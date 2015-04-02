@@ -92,10 +92,16 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.account.AipoLicense;
 import com.aimluck.eip.cayenne.om.account.EipMCompany;
 import com.aimluck.eip.cayenne.om.account.EipMUserPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMCompany;
+import com.aimluck.eip.cayenne.om.account.auto._EipMUserPosition;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroup;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -646,9 +652,9 @@ public class ALEipUtils {
     try {
       List<TurbineUser> ulist =
         query.orderAscending(
-          TurbineUser.EIP_MUSER_POSITION_PROPERTY
+          _TurbineUser.EIP_MUSER_POSITION_PROPERTY
             + "."
-            + EipMUserPosition.POSITION_PROPERTY).fetchList();
+            + _EipMUserPosition.POSITION_PROPERTY).fetchList();
 
       for (TurbineUser record : ulist) {
         ALEipUser user = new ALEipUser();
@@ -791,7 +797,7 @@ public class ALEipUtils {
       tuser =
         Database
           .query(TurbineUser.class)
-          .where(Operations.eq(TurbineUser.LOGIN_NAME_PROPERTY, login_name))
+          .where(Operations.eq(_TurbineUser.LOGIN_NAME_PROPERTY, login_name))
           .fetchSingle();
       ALEipManager.getInstance().setTurbineUser(login_name, tuser);
     } else {
@@ -883,7 +889,7 @@ public class ALEipUtils {
     List<ALEipGroup> ulist = new ArrayList<ALEipGroup>();
     try {
       Expression exp =
-        ExpressionFactory.matchExp(TurbineGroup.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_TurbineGroup.OWNER_ID_PROPERTY, Integer
           .valueOf(getUserId(rundata)));
       List<TurbineGroup> list =
         Database.query(TurbineGroup.class, exp).fetchList();
@@ -935,7 +941,7 @@ public class ALEipUtils {
         Database.query(EipMFacilityGroup.class);
 
       List<EipMFacilityGroup> facility_list =
-        query.orderAscending(EipMFacilityGroup.GROUP_NAME_PROPERTY).fetchList();
+        query.orderAscending(_EipMFacilityGroup.GROUP_NAME_PROPERTY).fetchList();
 
       for (EipMFacilityGroup record : facility_list) {
         ALEipGroup bean = new ALEipGroup();
@@ -957,7 +963,7 @@ public class ALEipUtils {
         Database.query(EipMFacilityGroup.class);
 
       List<EipMFacilityGroup> facility_list =
-        query.orderAscending(EipMFacilityGroup.GROUP_NAME_PROPERTY).fetchList();
+        query.orderAscending(_EipMFacilityGroup.GROUP_NAME_PROPERTY).fetchList();
 
       for (EipMFacilityGroup record : facility_list) {
         ALEipGroup bean = new ALEipGroup();
@@ -982,7 +988,7 @@ public class ALEipUtils {
     String companyName = null;
     try {
       Expression exp =
-        ExpressionFactory.matchDbExp(EipMCompany.COMPANY_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipMCompany.COMPANY_ID_PK_COLUMN, Integer
           .valueOf(id));
       List<EipMCompany> list =
         Database.query(EipMCompany.class, exp).select(
@@ -1510,7 +1516,7 @@ public class ALEipUtils {
    */
   public static EipMCompany getEipMCompany(String id) {
     Expression exp =
-      ExpressionFactory.matchDbExp(EipMCompany.COMPANY_ID_PK_COLUMN, Integer
+      ExpressionFactory.matchDbExp(_EipMCompany.COMPANY_ID_PK_COLUMN, Integer
         .valueOf(id));
     List<EipMCompany> list = Database.query(EipMCompany.class, exp).fetchList();
     if (list == null || list.size() == 0) {
@@ -1776,16 +1782,16 @@ public class ALEipUtils {
       Database.query(TurbineUserGroupRole.class);
     Expression exp1 =
       ExpressionFactory.matchExp(
-        TurbineUserGroupRole.TURBINE_USER_PROPERTY,
+        _TurbineUserGroupRole.TURBINE_USER_PROPERTY,
         Integer.valueOf(id));
     Expression exp2 =
       ExpressionFactory.greaterExp(
-        TurbineUserGroupRole.TURBINE_GROUP_PROPERTY,
+        _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY,
         Integer.valueOf(3));
     Expression exp3 =
-      ExpressionFactory.matchExp(TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+      ExpressionFactory.matchExp(_TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
         + "."
-        + TurbineGroup.OWNER_ID_PROPERTY, Integer.valueOf(1));
+        + _TurbineGroup.OWNER_ID_PROPERTY, Integer.valueOf(1));
     query.setQualifier(exp1);
     query.andQualifier(exp2);
     query.andQualifier(exp3);
@@ -1813,16 +1819,16 @@ public class ALEipUtils {
       Database.query(TurbineUserGroupRole.class);
     Expression exp1 =
       ExpressionFactory.matchExp(
-        TurbineUserGroupRole.TURBINE_USER_PROPERTY,
+        _TurbineUserGroupRole.TURBINE_USER_PROPERTY,
         Integer.valueOf(id));
     Expression exp2 =
       ExpressionFactory.greaterExp(
-        TurbineUserGroupRole.TURBINE_GROUP_PROPERTY,
+        _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY,
         Integer.valueOf(3));
     Expression exp3 =
-      ExpressionFactory.matchExp(TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+      ExpressionFactory.matchExp(_TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
         + "."
-        + TurbineGroup.OWNER_ID_PROPERTY, Integer.valueOf(1));
+        + _TurbineGroup.OWNER_ID_PROPERTY, Integer.valueOf(1));
     query.setQualifier(exp1);
     query.andQualifier(exp2);
     query.andQualifier(exp3);
@@ -1912,7 +1918,7 @@ public class ALEipUtils {
       // RES_USER_NUMは3だが2として計算しないといけない。
 
       Expression exp =
-        ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+        ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
 
       List<TurbineUser> list =
         Database.query(TurbineUser.class, exp).fetchList();
@@ -1944,7 +1950,7 @@ public class ALEipUtils {
       // RES_USER_NUMは3だが2として計算しないといけない。
 
       Expression exp =
-        ExpressionFactory.noMatchExp(TurbineUser.DISABLED_PROPERTY, "T");
+        ExpressionFactory.noMatchExp(_TurbineUser.DISABLED_PROPERTY, "T");
 
       List<TurbineUser> list =
         Database.query(TurbineUser.class, exp).fetchList();
@@ -1976,9 +1982,9 @@ public class ALEipUtils {
         Database
           .query(TurbineUserGroupRole.class)
           .where(
-            Operations.eq(TurbineUserGroupRole.TURBINE_ROLE_PROPERTY, adminrole
+            Operations.eq(_TurbineUserGroupRole.TURBINE_ROLE_PROPERTY, adminrole
               .getId()),
-            Operations.eq(TurbineUserGroupRole.TURBINE_USER_PROPERTY, uid))
+            Operations.eq(_TurbineUserGroupRole.TURBINE_USER_PROPERTY, uid))
           .fetchSingle();
       res = role != null;
     } catch (JetspeedSecurityException e) {

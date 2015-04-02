@@ -25,7 +25,7 @@ import org.apache.jetspeed.om.profile.*;
  * Base simple bean-like implementation of the ConfigElement interface
  * suitable for Castor XML serialization.
  * 
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:taylor@apache.org">David Sean Taylor</a>
  * @version $Id: PsmlConfigElement.java,v 1.6 2004/02/23 03:02:54 jford Exp $
  */
@@ -41,13 +41,15 @@ public /*abstract*/ class PsmlConfigElement implements ConfigElement, java.io.Se
     {}
          
     /** @see org.apache.jetspeed.om.registry.RegistryEntry#getName */
-    public String getName()
+    @Override
+	public String getName()
     {
         return this.name;
     }
                                 
     /** @see org.apache.jetspeed.om.registry.RegistryEntry#setName */
-    public void setName( String name )
+    @Override
+	public void setName( String name )
     {
         this.name = name;
     }
@@ -66,7 +68,8 @@ public /*abstract*/ class PsmlConfigElement implements ConfigElement, java.io.Se
         this.parameters = parameters;
     }
 
-    public String getParameterValue(String name)
+    @Override
+	public String getParameterValue(String name)
     {
         if (parameters == null)
             return null;
@@ -80,7 +83,8 @@ public /*abstract*/ class PsmlConfigElement implements ConfigElement, java.io.Se
         return null;
    }
 
-    public Parameter getParameter(String name)
+    @Override
+	public Parameter getParameter(String name)
     {
         if (parameters == null)
             return null;
@@ -94,12 +98,14 @@ public /*abstract*/ class PsmlConfigElement implements ConfigElement, java.io.Se
         return null;
    }
 
-    public Iterator getParameterIterator()
+    @Override
+	public Iterator getParameterIterator()
     {
         return parameters.iterator();
     }
 
-    public Parameter getParameter(int index)
+    @Override
+	public Parameter getParameter(int index)
         throws java.lang.IndexOutOfBoundsException
     {
         //-- check bounds for index
@@ -110,24 +116,28 @@ public /*abstract*/ class PsmlConfigElement implements ConfigElement, java.io.Se
         return (Parameter) parameters.elementAt(index);
     } //-- Parameter getParameter(int) 
 
-    public int getParameterCount()
+    @Override
+	public int getParameterCount()
     {
         return parameters.size();
     } //-- int getParameterCount() 
 
-    public void removeAllParameter()
+    @Override
+	public void removeAllParameter()
     {
         parameters.removeAllElements();
     } //-- void removeAllParameter() 
 
-    public Parameter removeParameter(int index)
+    @Override
+	public Parameter removeParameter(int index)
     {
         Object obj = parameters.elementAt(index);
         parameters.removeElementAt(index);
         return (Parameter) obj;
     } //-- Parameter removeParameter(int) 
 
-    public void setParameter(int index, Parameter vParameter)
+    @Override
+	public void setParameter(int index, Parameter vParameter)
         throws java.lang.IndexOutOfBoundsException
     {
         //-- check bounds for index
@@ -137,7 +147,8 @@ public /*abstract*/ class PsmlConfigElement implements ConfigElement, java.io.Se
         parameters.setElementAt(vParameter, index);
     } //-- void setParameter(int, Parameter) 
 
-    public Parameter[] getParameter()
+    @Override
+	public Parameter[] getParameter()
     {
         int size = parameters.size();
         Parameter[] mArray = new Parameter[size];
@@ -147,7 +158,8 @@ public /*abstract*/ class PsmlConfigElement implements ConfigElement, java.io.Se
         return mArray;
     } //-- Parameter[] getParameter() 
 
-    public void addParameter(Parameter vParameter)
+    @Override
+	public void addParameter(Parameter vParameter)
         throws java.lang.IndexOutOfBoundsException
     {
         parameters.addElement(vParameter);
@@ -156,7 +168,8 @@ public /*abstract*/ class PsmlConfigElement implements ConfigElement, java.io.Se
     /**
      * Create a clone of this object
      */
-    public Object clone()
+    @Override
+	public Object clone()
         throws java.lang.CloneNotSupportedException
     {
         Object cloned = super.clone();
@@ -168,7 +181,7 @@ public /*abstract*/ class PsmlConfigElement implements ConfigElement, java.io.Se
             Iterator it = this.parameters.iterator();
             while (it.hasNext())
             {
-                ((PsmlConfigElement)cloned).parameters.add((Parameter) ((Parameter)it.next()).clone());
+                ((PsmlConfigElement)cloned).parameters.add(((Parameter)it.next()).clone());
             }
         }
         

@@ -37,7 +37,10 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cabinet.util.CabinetUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTCabinetFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTCabinetFolder;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCabinetFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCabinetFolder;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -350,7 +353,7 @@ public class CabinetSelectData extends
     if (selected_folderinfo != null) {
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
+          _EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
           Integer.valueOf(selected_folderinfo.getFolderId()));
       query.setQualifier(exp);
     } else {
@@ -360,18 +363,18 @@ public class CabinetSelectData extends
         ids.add(-1);
       }
       Expression exp =
-        ExpressionFactory.inExp(EipTCabinetFile.FOLDER_ID_PROPERTY, ids);
+        ExpressionFactory.inExp(_EipTCabinetFile.FOLDER_ID_PROPERTY, ids);
       query.andQualifier(exp);
     }
     if ((target_keyword != null) && (!target_keyword.getValue().equals(""))) {
       // 選択したキーワードを指定する．
       String keyword = "%" + target_keyword.getValue() + "%";
       Expression target_exp1 =
-        ExpressionFactory.likeExp(EipTCabinetFile.FILE_NAME_PROPERTY, keyword);
+        ExpressionFactory.likeExp(_EipTCabinetFile.FILE_NAME_PROPERTY, keyword);
       Expression target_exp2 =
-        ExpressionFactory.likeExp(EipTCabinetFile.FILE_TITLE_PROPERTY, keyword);
+        ExpressionFactory.likeExp(_EipTCabinetFile.FILE_TITLE_PROPERTY, keyword);
       Expression target_exp3 =
-        ExpressionFactory.likeExp(EipTCabinetFile.NOTE_PROPERTY, keyword);
+        ExpressionFactory.likeExp(_EipTCabinetFile.NOTE_PROPERTY, keyword);
       query.andQualifier(target_exp1.orExp(target_exp2.orExp(target_exp3)));
     }
 
@@ -384,7 +387,7 @@ public class CabinetSelectData extends
       userIds.addAll(userId);
       Expression exp =
         ExpressionFactory.inExp(
-          EipTCabinetFile.CREATE_USER_ID_PROPERTY,
+          _EipTCabinetFile.CREATE_USER_ID_PROPERTY,
           userIds);
       query.andQualifier(exp);
     }
@@ -508,14 +511,14 @@ public class CabinetSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("file_title", EipTCabinetFile.FILE_TITLE_PROPERTY);
-    map.putValue("file_name", EipTCabinetFile.FILE_NAME_PROPERTY);
-    map.putValue("update_date", EipTCabinetFile.UPDATE_DATE_PROPERTY);
-    map.putValue("file_size", EipTCabinetFile.FILE_SIZE_PROPERTY);
-    map.putValue("counter", EipTCabinetFile.COUNTER_PROPERTY);
-    map.putValue("update_user", EipTCabinetFile.TURBINE_USER_PROPERTY
+    map.putValue("file_title", _EipTCabinetFile.FILE_TITLE_PROPERTY);
+    map.putValue("file_name", _EipTCabinetFile.FILE_NAME_PROPERTY);
+    map.putValue("update_date", _EipTCabinetFile.UPDATE_DATE_PROPERTY);
+    map.putValue("file_size", _EipTCabinetFile.FILE_SIZE_PROPERTY);
+    map.putValue("counter", _EipTCabinetFile.COUNTER_PROPERTY);
+    map.putValue("update_user", _EipTCabinetFile.TURBINE_USER_PROPERTY
       + "."
-      + TurbineUser.LAST_NAME_KANA_PROPERTY);
+      + _TurbineUser.LAST_NAME_KANA_PROPERTY);
 
     return map;
   }

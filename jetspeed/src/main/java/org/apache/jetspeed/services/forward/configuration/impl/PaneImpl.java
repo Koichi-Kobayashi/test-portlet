@@ -31,7 +31,8 @@ public class PaneImpl implements Pane, java.io.Serializable
     private String id;
 
 
-    public String getName()
+    @Override
+	public String getName()
     {
         return this.name;
     }
@@ -41,7 +42,8 @@ public class PaneImpl implements Pane, java.io.Serializable
         this.name = name;
     }
 
-    public String getId()
+    @Override
+	public String getId()
     {
         return this.id;
     }

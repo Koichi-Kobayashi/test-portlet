@@ -34,7 +34,9 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.cabinet.util.CabinetUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTCabinetFolder;
 import com.aimluck.eip.cayenne.om.portlet.EipTCabinetFolderMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCabinetFolderMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipUser;
@@ -309,7 +311,7 @@ public class CabinetFolderSelectData extends
         Database.query(EipTCabinetFolderMap.class);
       Expression mapexp =
         ExpressionFactory.matchDbExp(
-          EipTCabinetFolderMap.EIP_TCABINET_FOLDER_PROPERTY,
+          _EipTCabinetFolderMap.EIP_TCABINET_FOLDER_PROPERTY,
           access_control_folder_id);
       mapquery.setQualifier(mapexp);
       List<EipTCabinetFolderMap> list = mapquery.fetchList();
@@ -321,9 +323,9 @@ public class CabinetFolderSelectData extends
       }
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
-        ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, users);
+        ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, users);
       Expression nonDisabledexp =
-        ExpressionFactory.noMatchExp(TurbineUser.DISABLED_PROPERTY, "T");
+        ExpressionFactory.noMatchExp(_TurbineUser.DISABLED_PROPERTY, "T");
       query.setQualifier(exp.andExp(nonDisabledexp));
       members.addAll(ALEipUtils.getUsersFromSelectQuery(query));
 

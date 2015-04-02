@@ -47,7 +47,8 @@ public class TimecardSettingsResultData implements ALData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     timecard_settings_id = new ALNumberField();
     start_time = new ALStringField();
     end_time = new ALStringField();

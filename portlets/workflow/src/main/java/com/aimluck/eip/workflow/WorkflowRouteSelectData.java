@@ -28,6 +28,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.utils.ALDateUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRoute;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowRoute;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -194,8 +195,8 @@ public class WorkflowRouteSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("route_name", EipTWorkflowRoute.ROUTE_NAME_PROPERTY);
-    map.putValue("route", EipTWorkflowRoute.ROUTE_PROPERTY);
+    map.putValue("route_name", _EipTWorkflowRoute.ROUTE_NAME_PROPERTY);
+    map.putValue("route", _EipTWorkflowRoute.ROUTE_PROPERTY);
     return map;
   }
 

@@ -45,7 +45,8 @@ public class AddressBookGroup implements ALData {
   /**
    * 初期化処理。
    */
-  public void initField() {
+  @Override
+public void initField() {
     group_id = new ALNumberField();
     group_name = new ALStringField();
   }

@@ -61,7 +61,8 @@ public class GenericMVCAction
       }
 
     // override what you need to here
-    protected void perform(RunData rundata)
+    @Override
+	protected void perform(RunData rundata)
                     throws Exception
       {
 
@@ -127,7 +128,8 @@ public class GenericMVCAction
           }
       }
 
-    public void doPerform(RunData rundata, Context context)
+    @Override
+	public void doPerform(RunData rundata, Context context)
                    throws Exception
       {
 
@@ -175,7 +177,8 @@ public class GenericMVCAction
      * build specific content when maximized. Default behavior is
      * to do the same as normal content.
      */
-    protected void buildMaximizedContext(Portlet portlet, Context context, RunData rundata)
+    @Override
+	protected void buildMaximizedContext(Portlet portlet, Context context, RunData rundata)
                                   throws Exception
       {
         buildNormalContext(portlet, context, rundata);
@@ -186,7 +189,8 @@ public class GenericMVCAction
      * provide their own customization behavior.
      * Default is to use Portal base customizer action
      */
-    protected void buildConfigureContext(Portlet portlet, Context context, RunData rundata)
+    @Override
+	protected void buildConfigureContext(Portlet portlet, Context context, RunData rundata)
                                   throws Exception
       {
 
@@ -197,7 +201,8 @@ public class GenericMVCAction
      * Subclasses must override this method to provide default behavior
      * for the portlet action
      */
-    protected void buildNormalContext(Portlet portlet, Context context, RunData rundata)
+    @Override
+	protected void buildNormalContext(Portlet portlet, Context context, RunData rundata)
                                throws Exception
       {
       }

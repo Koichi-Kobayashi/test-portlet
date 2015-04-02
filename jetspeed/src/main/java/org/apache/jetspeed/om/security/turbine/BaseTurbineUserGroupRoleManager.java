@@ -2,8 +2,6 @@
 
 package org.apache.jetspeed.om.security.turbine;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.torque.Torque;
@@ -12,7 +10,6 @@ import org.apache.torque.manager.AbstractBaseManager;
 import org.apache.torque.manager.CacheListener;
 import org.apache.torque.manager.MethodResultCache;
 import org.apache.torque.om.ObjectKey;
-import org.apache.torque.om.SimpleKey;
 import org.apache.torque.om.Persistent;
 import org.apache.torque.util.Criteria;
 
@@ -45,8 +42,8 @@ public abstract class BaseTurbineUserGroupRoleManager
     public static TurbineUserGroupRoleManager getManager()
     {
         return (TurbineUserGroupRoleManager)
-            Torque.getManager(TurbineUserGroupRoleManager.MANAGED_CLASS,
-                TurbineUserGroupRoleManager.DEFAULT_MANAGER_CLASS);
+            Torque.getManager(BaseTurbineUserGroupRoleManager.MANAGED_CLASS,
+                BaseTurbineUserGroupRoleManager.DEFAULT_MANAGER_CLASS);
     }
 
     /**
@@ -230,16 +227,17 @@ public abstract class BaseTurbineUserGroupRoleManager
     protected boolean existsImpl(TurbineUserGroupRole om)
         throws TorqueException
     {
-        Criteria crit = TurbineUserGroupRolePeer
-            .buildCriteria((TurbineUserGroupRole)om);
-        return TurbineUserGroupRolePeer.doSelect(crit).size() > 0;
+        Criteria crit = BaseTurbineUserGroupRolePeer
+            .buildCriteria(om);
+        return BaseTurbineUserGroupRolePeer.doSelect(crit).size() > 0;
     }
 
 
-    protected Persistent retrieveStoredOM(ObjectKey id)
+    @Override
+	protected Persistent retrieveStoredOM(ObjectKey id)
         throws TorqueException
     {
-        return TurbineUserGroupRolePeer.retrieveByPK(id);
+        return BaseTurbineUserGroupRolePeer.retrieveByPK(id);
     }
 
     /**
@@ -249,9 +247,10 @@ public abstract class BaseTurbineUserGroupRoleManager
      * @return a <code>List</code> value
      * @exception TorqueException if an error occurs
      */
-    protected List retrieveStoredOMs(List ids)
+    @Override
+	protected List retrieveStoredOMs(List ids)
         throws TorqueException
     {
-        return TurbineUserGroupRolePeer.retrieveByPKs(ids);
+        return BaseTurbineUserGroupRolePeer.retrieveByPKs(ids);
     }
 }

@@ -65,7 +65,7 @@ to generate output.
 </p>
 
 @author <A HREF="mailto:burton@apache.org">Kevin A. Burton</A>
-@author <A HREF="mailto:raphael@apache.org">Raphaël Luta</A>
+@author <A HREF="mailto:raphael@apache.org">Raphaï¿½l Luta</A>
 @author <A HREF="mailto:sgala@apache.org">Santiago Gala</A>
 @author <A HREF="mailto:paulsp@apache.org">Paul Spencer</A>
 @author <A HREF="mailto:morciuch@apache.org">Mark Orciuch</A>
@@ -165,7 +165,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * This method should be implement in cachable portlets
      */
-    public void refresh() {
+    @Override
+	public void refresh() {
         /*
          * The following message is here to add in debugging.  It is
          * expected the any portlet type that is refreshable will
@@ -185,7 +186,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      * @return <CODE>true</CODE> Cachable<BR>
      * <CODE>false</CODE> Not cachable
      */
-    public boolean isCacheable() {
+    @Override
+	public boolean isCacheable() {
         return this.cacheable;
     }
 
@@ -195,7 +197,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      * @param cacheable <CODE>true</CODE> Portlet is cachable<BR>
      * <CODE>false</CODE> Portlet is NOT cachable
      */
-    public void setCacheable(boolean cacheable) {
+    @Override
+	public void setCacheable(boolean cacheable) {
         this.cacheable = cacheable;
     }
 
@@ -205,7 +208,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @return Expire
      */
-    public Expire getExpire() {
+    @Override
+	public Expire getExpire() {
         try {
             return ExpireFactory.getExpire( this, ExpireFactory.NO_EXPIRE );
         } catch ( JetspeedException e ) {
@@ -223,7 +227,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @return Cache handle (key)
      */
-    public final String getHandle() {
+    @Override
+	public final String getHandle() {
         return this.handle;
     }
 
@@ -235,7 +240,9 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @deprecated cacheable classes should now implement a static getHandle(config) method
      */
-    public final void setHandle( String handle ) {
+    @Deprecated
+	@Override
+	public final void setHandle( String handle ) {
         this.handle = handle;
     }
 
@@ -244,7 +251,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @return Expiration time in milliseconds since epoch, or null if the expiration was not set.
      */
-    public Long getExpirationMillis() {
+    @Override
+	public Long getExpirationMillis() {
       return this.expirationMillis;
     }
 
@@ -255,7 +263,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @param expirationMillis setExpirationMillis Expiration in milliseconds since epoch
      */
-    public void setExpirationMillis( long expirationMillis) {
+    @Override
+	public void setExpirationMillis( long expirationMillis) {
       this.expirationMillis = new Long(expirationMillis);
 
       if (cachedObject != null)  {
@@ -317,7 +326,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @param cachedObject Cached Object associated to this portlet
      */
-     public void setCachedObject(CachedObject cachedObject) {
+     @Override
+	public void setCachedObject(CachedObject cachedObject) {
         this.cachedObject = cachedObject;
     }
 
@@ -330,7 +340,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @return Name of the portlet
      */
-    public String getName()
+    @Override
+	public String getName()
     {
 
         if ( name == null )
@@ -357,7 +368,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @param name Name of the portlet
      */
-    public void setName( String name ) {
+    @Override
+	public void setName( String name ) {
         this.name = name;
     }
 
@@ -366,21 +378,24 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @return PortletConfig Portlet
      */
-    public PortletConfig getPortletConfig() {
+    @Override
+	public PortletConfig getPortletConfig() {
         return this.pc;
     }
 
     /**
      * Set's the configuration of this servlet.
      */
-    public void setPortletConfig( PortletConfig pc ) {
+    @Override
+	public void setPortletConfig( PortletConfig pc ) {
         this.pc = pc;
     }
 
     /**
      * @param rundata The RunData object for the current request
      */
-    public ConcreteElement getContent( RunData rundata ) {
+    @Override
+	public ConcreteElement getContent( RunData rundata ) {
 
         return getContent( rundata, null , true );
     }
@@ -441,7 +456,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @return a null entry if the user hasn't defined anything
      */
-    public String getDescription() {
+    @Override
+	public String getDescription() {
         if (getPortletConfig()!=null)
             if (getPortletConfig().getMetainfo()!=null)
                 return getPortletConfig().getMetainfo().getDescription();
@@ -454,7 +470,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @return a null if entry AND portlet have not defined a description
      */
-    public String getDescription(String instanceDescription)
+    @Override
+	public String getDescription(String instanceDescription)
     {
       if (instanceDescription != null)
           return instanceDescription;
@@ -463,7 +480,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
 
     /**
      */
-    public void setDescription( String description ) {
+    @Override
+	public void setDescription( String description ) {
         PortletConfig pc = getPortletConfig();
         if (pc==null) {
             pc = new BasePortletConfig();
@@ -486,7 +504,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @return a null entry if the user hasn't defined anything
      */
-    public String getTitle()
+    @Override
+	public String getTitle()
     {
         if (getPortletConfig()!=null)
             if (getPortletConfig().getMetainfo()!=null)
@@ -500,7 +519,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @return a null if entry AND portlet have not defined a title
      */
-    public String getTitle(String instanceTitle)
+    @Override
+	public String getTitle(String instanceTitle)
     {
       if (instanceTitle != null)
           return instanceTitle;
@@ -511,7 +531,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      * Set the title for this Portlet.
      * @param title Portlet title.
      */
-    public void setTitle( String title ) {
+    @Override
+	public void setTitle( String title ) {
         PortletConfig pc = getPortletConfig();
         if (pc==null) {
             pc = new BasePortletConfig();
@@ -545,14 +566,16 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      * Getter for property image.
      * @return a null if entry AND portlet have not defined an icon.
      */
-    public String getImage(String instanceImage)
+    @Override
+	public String getImage(String instanceImage)
     {
       if (instanceImage != null)
           return instanceImage;
       return getImage();
     }
 
-    public void setImage( String image )
+    @Override
+	public void setImage( String image )
     {
         PortletConfig pc = getPortletConfig();
         if (pc==null) {
@@ -575,7 +598,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      * @return <CODE>true</CODE> Editing is allow
      * <CODE>false</CODE> Editing is NOT alowed
      */
-    public boolean getAllowEdit( RunData rundata )
+    @Override
+	public boolean getAllowEdit( RunData rundata )
     {
         return allowCustomize(rundata);
     }
@@ -588,7 +612,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      * 
      * Override this method to control your own View behavior
      */
-    public boolean getAllowView( RunData rundata )
+    @Override
+	public boolean getAllowView( RunData rundata )
     {
         return allowView( rundata );
     }
@@ -599,7 +624,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      * @return <CODE>true</CODE> Portlet can be maximized<br>
      * <CODE>false</CODE> Portlet can NOT be maximized
      */
-    public boolean getAllowMaximize( RunData rundata )
+    @Override
+	public boolean getAllowMaximize( RunData rundata )
     {
         return allowMaximize( rundata );
     }
@@ -607,7 +633,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
     /**
      * By default don't provide any initialization
      */
-    public void init( ) throws PortletException
+    @Override
+	public void init( ) throws PortletException
     {
         // make sure to clean all content
         clearContent();
@@ -615,19 +642,22 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
 
     /**
      */
-    public long getCreationTime() {
+    @Override
+	public long getCreationTime() {
         return this.creationTime;
     }
 
     /**
      */
-    public void setCreationTime( long creationTime ) {
+    @Override
+	public void setCreationTime( long creationTime ) {
         this.creationTime = creationTime;
     }
 
     /**
      */
-    public boolean supportsType( MimeType mimeType )
+    @Override
+	public boolean supportsType( MimeType mimeType )
     {
         PortletEntry entry = (PortletEntry)Registry.getEntry(Registry.PORTLET, getName() );
         String baseType = mimeType.toString();
@@ -659,7 +689,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @param rundata The RunData object for the current request
      */
-    public boolean allowClose( RunData rundata )
+    @Override
+	public boolean allowClose( RunData rundata )
     {
         //Security will not allow this call to succeed if there are
         //not enough permissions
@@ -671,7 +702,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @param rundata The RunData object for the current request
      */
-    public boolean isClosed(RunData rundata)
+    @Override
+	public boolean isClosed(RunData rundata)
     {
         return this.getAttribute("_display", "normal", rundata ).equals("closed");
     }
@@ -682,7 +714,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      * @param minimized the new portlet state
      * @param rundata The RunData object for the current request
      */
-    public void setClosed(boolean close, RunData rundata)
+    @Override
+	public void setClosed(boolean close, RunData rundata)
     {
         if( allowClose( rundata ) )
         {
@@ -696,7 +729,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @param rundata The RunData object for the current request
      */
-    public boolean allowInfo( RunData rundata )
+    @Override
+	public boolean allowInfo( RunData rundata )
     {
         //Security will not allow this call to succeed if there are
         //not enough permissions
@@ -709,7 +743,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @param rundata The RunData object for the current request
      */
-    public boolean allowCustomize( RunData rundata )
+    @Override
+	public boolean allowCustomize( RunData rundata )
     {
         //Security will not allow this call to succeed if there are
         //not enough permissions
@@ -722,7 +757,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @param rundata The RunData object for the current request
      */
-    public boolean allowMaximize( RunData rundata )
+    @Override
+	public boolean allowMaximize( RunData rundata )
     {
         //Security will not allow this call to succeed if there are
         //not enough permissions
@@ -735,7 +771,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @param rundata The RunData object for the current request
      */
-    public boolean allowMinimize( RunData rundata )
+    @Override
+	public boolean allowMinimize( RunData rundata )
     {
         //Security will not allow this call to succeed if there are
         //not enough permissions
@@ -761,7 +798,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @param rundata The RunData object for the current request
      */
-    public boolean allowPrintFriendly( RunData rundata )
+    @Override
+	public boolean allowPrintFriendly( RunData rundata )
     {
         //Security will not allow this call to succeed if there are
         //not enough permissions
@@ -773,7 +811,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @param rundata The RunData object for the current request
      */
-    public boolean isMinimized(RunData rundata)
+    @Override
+	public boolean isMinimized(RunData rundata)
     {
         return this.getAttribute("_display", "normal", rundata ).equals("minimized");
     }
@@ -784,7 +823,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      * @param minimize True if the portlet change to minimized
      * @param rundata The RunData object for the current request
      */
-    public void setMinimized( boolean minimize, RunData rundata )
+    @Override
+	public void setMinimized( boolean minimize, RunData rundata )
     {
         if( allowMinimize( rundata ) )
         {
@@ -798,7 +838,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      *
      * @param rundata The RunData object for the current request
      */
-    public boolean isShowTitleBar(RunData rundata)
+    @Override
+	public boolean isShowTitleBar(RunData rundata)
     {
         if (getPortletConfig()!=null)
         {
@@ -817,7 +858,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      * @param rundata The RunData object for the current request
      * @return The attribute value
      */
-    public String getAttribute( String attrName, String attrDefValue, RunData rundata )
+    @Override
+	public String getAttribute( String attrName, String attrDefValue, RunData rundata )
     {
         String attrValue = null ;
 
@@ -834,7 +876,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      * @paarm attrValue The value to store
      * @param rundata The RunData object for the current request
      */
-    public void setAttribute( String attrName, String attrValue, RunData rundata )
+    @Override
+	public void setAttribute( String attrName, String attrValue, RunData rundata )
     {
         try
         {
@@ -854,7 +897,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
      * @param rundata The RunData object for the current request
      * @return PortletInstance
      */
-    public PortletInstance getInstance(RunData rundata)
+    @Override
+	public PortletInstance getInstance(RunData rundata)
     {
         return PersistenceManager.getInstance(this, rundata);
     }
@@ -862,12 +906,14 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
     //
     // DST: Shouldn't getID and setID be deprecated and added to PortletInstance...
     //
-    public String getID()
+    @Override
+	public String getID()
     {
         return id;
     }
 
-    public void setID(String id)
+    @Override
+	public void setID(String id)
     {
         this.id = id;
     }
@@ -875,7 +921,8 @@ public abstract class AbstractPortlet implements Portlet, PortletState, Cacheabl
     /**
     * @return true if the portlet does its own customization
     */
-    public boolean providesCustomization()
+    @Override
+	public boolean providesCustomization()
     {
         return false;
     }

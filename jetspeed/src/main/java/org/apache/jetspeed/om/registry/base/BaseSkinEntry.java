@@ -25,7 +25,7 @@ import java.util.*;
  * interface suitable for Castor XML serialization
  *
  * @see org.apache.jetspeed.om.registry.SkinEntry
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BaseSkinEntry.java,v 1.4 2004/02/23 03:08:26 jford Exp $
  */
 public class BaseSkinEntry extends BaseRegistryEntry implements SkinEntry
@@ -39,7 +39,8 @@ public class BaseSkinEntry extends BaseRegistryEntry implements SkinEntry
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object==null)
         {
@@ -79,7 +80,8 @@ public class BaseSkinEntry extends BaseRegistryEntry implements SkinEntry
     }
 
     /** @return an enumeration of this entry parameter names */
-    public Iterator getParameterNames()
+    @Override
+	public Iterator getParameterNames()
     {
         synchronized (parameter)
         {
@@ -98,7 +100,8 @@ public class BaseSkinEntry extends BaseRegistryEntry implements SkinEntry
      *  @return the parameter object for a given parameter name
      *  @param name the parameter name to look for
      */
-    public Parameter getParameter( String name )
+    @Override
+	public Parameter getParameter( String name )
     {
         synchronized (parameter)
         {
@@ -125,7 +128,8 @@ public class BaseSkinEntry extends BaseRegistryEntry implements SkinEntry
     /** Returns a map of parameter values keyed on the parameter names
      *  @return the parameter values map
      */
-    public Map getParameterMap()
+    @Override
+	public Map getParameterMap()
     {
         Hashtable params = new Hashtable();
         Enumeration en = parameter.elements();
@@ -143,7 +147,8 @@ public class BaseSkinEntry extends BaseRegistryEntry implements SkinEntry
      *  @param name the new parameter name
      *  @param value the new parameter value
      */
-    public void addParameter( String name, String value )
+    @Override
+	public void addParameter( String name, String value )
     {
         if (name != null)
         {
@@ -164,7 +169,8 @@ public class BaseSkinEntry extends BaseRegistryEntry implements SkinEntry
     /** Adds a new parameter for this entry
      *  @param parameter the new parameter to add
      */
-    public void addParameter( Parameter param )
+    @Override
+	public void addParameter( Parameter param )
     {
         synchronized (parameter)
         {
@@ -178,7 +184,8 @@ public class BaseSkinEntry extends BaseRegistryEntry implements SkinEntry
      *
      * @param name the parameter name to remove
      */
-    public void removeParameter( String name )
+    @Override
+	public void removeParameter( String name )
     {
         if (name == null) return;
 

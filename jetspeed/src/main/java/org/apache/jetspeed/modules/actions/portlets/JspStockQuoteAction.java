@@ -61,7 +61,8 @@ public class JspStockQuoteAction extends JspPortletAction implements Comparable
      * @param portlet The jsp-based portlet that is being built.
      * @param rundata The turbine rundata context for this request.
      */
-    protected void buildNormalContext(Portlet portlet, RunData rundata)
+    @Override
+	protected void buildNormalContext(Portlet portlet, RunData rundata)
     {
 
         // We always fetch the most current quotes so might as well call refresh from here
@@ -142,7 +143,8 @@ public class JspStockQuoteAction extends JspPortletAction implements Comparable
      * @param entry2 The second <code>StockQuoteEntry</code> object.
      * @return An <code>int</code> indicating the result of the comparison.
      */
-    public int compare(Object entry1, Object entry2)
+    @Override
+	public int compare(Object entry1, Object entry2)
     {
         if (this.sort.equalsIgnoreCase("price"))
         {

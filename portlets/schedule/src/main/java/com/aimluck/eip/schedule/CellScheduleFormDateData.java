@@ -32,7 +32,10 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.EipTSchedule;
 import com.aimluck.eip.cayenne.om.portlet.EipTScheduleMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTScheduleMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.common.ALPageNotFoundException;
@@ -115,7 +118,7 @@ public class CellScheduleFormDateData extends AbstractCellScheduleFormData {
     SelectQuery<EipTScheduleMap> mapquery =
       Database.query(EipTScheduleMap.class);
     Expression mapexp =
-      ExpressionFactory.matchExp(EipTScheduleMap.SCHEDULE_ID_PROPERTY, record
+      ExpressionFactory.matchExp(_EipTScheduleMap.SCHEDULE_ID_PROPERTY, record
         .getScheduleId());
     mapquery.setQualifier(mapexp);
     List<EipTScheduleMap> list = mapquery.fetchList();
@@ -134,7 +137,7 @@ public class CellScheduleFormDateData extends AbstractCellScheduleFormData {
     if (users.size() > 0) {
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
-        ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, users);
+        ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, users);
       query.setQualifier(exp);
       form_data.getMemberList().addAll(
         ALEipUtils.getUsersFromSelectQuery(query));
@@ -143,7 +146,7 @@ public class CellScheduleFormDateData extends AbstractCellScheduleFormData {
       SelectQuery<EipMFacility> fquery = Database.query(EipMFacility.class);
       Expression fexp =
         ExpressionFactory.inDbExp(
-          EipMFacility.FACILITY_ID_PK_COLUMN,
+          _EipMFacility.FACILITY_ID_PK_COLUMN,
           facilityIds);
       fquery.setQualifier(fexp);
       form_data.getFacilityMemberList().addAll(

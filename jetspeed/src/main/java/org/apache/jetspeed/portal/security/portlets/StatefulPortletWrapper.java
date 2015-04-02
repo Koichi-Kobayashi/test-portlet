@@ -66,7 +66,8 @@ public class StatefulPortletWrapper extends PortletWrapper implements PortletSta
      *
      * @param rundata the RunData object for the current request
      */
-    public final boolean allowClose( RunData rundata )
+    @Override
+	public final boolean allowClose( RunData rundata )
     {
         return checkPermission(rundata, 
                                JetspeedSecurity.PERMISSION_CLOSE );
@@ -75,7 +76,8 @@ public class StatefulPortletWrapper extends PortletWrapper implements PortletSta
     /**
      * Returns true if this portlet is currently closed
      */
-    public final boolean isClosed(RunData rundata)
+    @Override
+	public final boolean isClosed(RunData rundata)
     {
         return wrappedState.isClosed( rundata );
     }
@@ -86,7 +88,8 @@ public class StatefulPortletWrapper extends PortletWrapper implements PortletSta
      * @param minimized the new portlet state
      * @param data the RunData for this request
      */
-    public final void setClosed(boolean close, RunData rundata)
+    @Override
+	public final void setClosed(boolean close, RunData rundata)
     {
         if( allowClose( rundata ) )
         {
@@ -100,7 +103,8 @@ public class StatefulPortletWrapper extends PortletWrapper implements PortletSta
      *
      * @param rundata the RunData object for the current request
      */
-    public final boolean allowInfo( RunData rundata )
+    @Override
+	public final boolean allowInfo( RunData rundata )
     {
         return checkPermission(rundata, 
                                JetspeedSecurity.PERMISSION_INFO );
@@ -112,7 +116,8 @@ public class StatefulPortletWrapper extends PortletWrapper implements PortletSta
      *
      * @param rundata the RunData object for the current request
      */
-    public final boolean allowCustomize( RunData rundata )
+    @Override
+	public final boolean allowCustomize( RunData rundata )
     {
         return checkPermission(rundata, 
                                JetspeedSecurity.PERMISSION_CUSTOMIZE );
@@ -124,7 +129,8 @@ public class StatefulPortletWrapper extends PortletWrapper implements PortletSta
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowMaximize( RunData rundata )
+    @Override
+	public boolean allowMaximize( RunData rundata )
     {
         return checkPermission(rundata, 
                                JetspeedSecurity.PERMISSION_MAXIMIZE );
@@ -136,7 +142,8 @@ public class StatefulPortletWrapper extends PortletWrapper implements PortletSta
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowMinimize( RunData rundata )
+    @Override
+	public boolean allowMinimize( RunData rundata )
     {
         return checkPermission(rundata, 
                                JetspeedSecurity.PERMISSION_MINIMIZE );
@@ -145,7 +152,8 @@ public class StatefulPortletWrapper extends PortletWrapper implements PortletSta
     /**
      * Returns true if this portlet is currently minimized
      */
-    public boolean isMinimized(RunData rundata)
+    @Override
+	public boolean isMinimized(RunData rundata)
     {
         return wrappedState.isMinimized( rundata );
     }
@@ -156,7 +164,8 @@ public class StatefulPortletWrapper extends PortletWrapper implements PortletSta
     @param minimize True if the portlet change to minimized
     @param rundata A RunData object
     */
-    public void setMinimized( boolean minimize, RunData rundata )
+    @Override
+	public void setMinimized( boolean minimize, RunData rundata )
     {
         if( allowMinimize( rundata ) )
         {
@@ -170,7 +179,8 @@ public class StatefulPortletWrapper extends PortletWrapper implements PortletSta
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowPrintFriendly( RunData rundata )
+    @Override
+	public boolean allowPrintFriendly( RunData rundata )
     {
         return checkPermission(rundata, 
                                JetspeedSecurity.PERMISSION_PRINT_FRIENDLY );

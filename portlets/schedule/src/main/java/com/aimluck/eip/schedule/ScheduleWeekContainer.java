@@ -39,7 +39,8 @@ public class ScheduleWeekContainer implements ALData {
   /*
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     dayList = new ArrayList<ScheduleDayContainer>();
   }
 

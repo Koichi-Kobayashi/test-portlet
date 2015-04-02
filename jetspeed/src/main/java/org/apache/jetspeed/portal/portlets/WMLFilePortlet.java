@@ -54,7 +54,7 @@ import org.xml.sax.helpers.ParserFactory;
  * class conflicts in Tomcat 3.2, so this portlet can only currently
  * serve fragments of WML documents, without the <wml> tag</strong>
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: WMLFilePortlet.java,v 1.11 2004/02/23 04:03:33 jford Exp $ 
  */
 public class WMLFilePortlet extends FileWatchPortlet 
@@ -69,13 +69,15 @@ public class WMLFilePortlet extends FileWatchPortlet
     /**
       * @see Portlet#supportsType
       */
-    public boolean supportsType( MimeType type ) {
+    @Override
+	public boolean supportsType( MimeType type ) {
         return type.equals(MimeType.WML);
     }
  
     /** Initialize the content of the portlet
     */
-    public void init() throws PortletException {
+    @Override
+	public void init() throws PortletException {
 
         PortletConfig config = this.getPortletConfig();
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -101,7 +103,8 @@ public class WMLFilePortlet extends FileWatchPortlet
         }
     }
 
-    public ConcreteElement getContent( RunData data ) {
+    @Override
+	public ConcreteElement getContent( RunData data ) {
         return content;
     }
     
@@ -130,11 +133,13 @@ public class WMLFilePortlet extends FileWatchPortlet
             }
         }
 
-        public void processingInstruction(String target, String data) {        
+        @Override
+		public void processingInstruction(String target, String data) {        
             //filter all PIs
         }
 
-        public void startElement(String name, AttributeList attrs) {
+        @Override
+		public void startElement(String name, AttributeList attrs) {
 
             // strip <wml>
             if (name.equals("wml")) return;
@@ -155,15 +160,18 @@ public class WMLFilePortlet extends FileWatchPortlet
             out.print('>');    
         }
 
-        public void characters(char ch[], int start, int length) {
+        @Override
+		public void characters(char ch[], int start, int length) {
             out.print(normalize(new String(ch, start, length)));
         }
 
-        public void ignorableWhitespace(char ch[], int start, int length) {
+        @Override
+		public void ignorableWhitespace(char ch[], int start, int length) {
             characters(ch, start, length);
         }
 
-        public void endElement(String name) {
+        @Override
+		public void endElement(String name) {
             //filter <wml>
             if (name.equals("wml")) return;
             
@@ -173,19 +181,23 @@ public class WMLFilePortlet extends FileWatchPortlet
             out.print('>');
         }
 
-        public void endDocument() {
+        @Override
+		public void endDocument() {
             out.flush();
         }
 
-        public void warning(SAXParseException ex) {
+        @Override
+		public void warning(SAXParseException ex) {
             logger.info(getLocationString(ex)+": "+ex.getMessage());
         }
 
-        public void error(SAXParseException ex) {
+        @Override
+		public void error(SAXParseException ex) {
             logger.error(getLocationString(ex)+": "+ex, ex);
         }
 
-        public void fatalError(SAXParseException ex) throws SAXException {
+        @Override
+		public void fatalError(SAXParseException ex) throws SAXException {
             logger.error(getLocationString(ex)+": "+ex, ex);
             throw ex;
         }

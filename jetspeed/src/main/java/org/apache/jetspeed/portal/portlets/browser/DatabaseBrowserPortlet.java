@@ -26,6 +26,7 @@ import org.apache.jetspeed.portal.portlets.CustomizerVelocityPortlet;
  * @version $Id: DatabaseBrowserPortlet.java,v 1.4 2004/02/23 03:26:43 jford Exp $
  * @deprecated As of version 1.4-b5
  */
+@Deprecated
 public class DatabaseBrowserPortlet extends CustomizerVelocityPortlet
 {
 }

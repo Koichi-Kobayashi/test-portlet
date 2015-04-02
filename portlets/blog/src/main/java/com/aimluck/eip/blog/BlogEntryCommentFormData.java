@@ -43,6 +43,7 @@ import com.aimluck.eip.blog.util.BlogUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogComment;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogEntry;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -381,7 +382,7 @@ public class BlogEntryCommentFormData extends ALAbstractFormData {
     // ユーザーIDからユーザー情報を取得する。
     SelectQuery<TurbineUser> userQuery = Database.query(TurbineUser.class);
     Expression userExp =
-      ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, userIdList);
+      ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, userIdList);
     userQuery.setQualifier(userExp);
     return ALEipUtils.getUsersFromSelectQuery(userQuery);
 

@@ -34,6 +34,7 @@ import org.apache.jetspeed.services.logging.JetspeedLogFactoryService;
 import org.apache.jetspeed.services.logging.JetspeedLogger;
 import org.apache.jetspeed.services.resources.JetspeedResources;
 import org.apache.turbine.services.TurbineBaseService;
+import org.apache.turbine.services.resources.TurbineResources;
 
 /**
  * 
@@ -71,7 +72,8 @@ public class JetspeedDaemonFactoryService extends TurbineBaseService implements
   /**
    * Late init. Don't return control until early init says we're done.
    */
-  public void init() {
+  @Override
+public void init() {
     logger.info("Late init for DaemonFactory called");
     while (!getInit()) {
       try {
@@ -87,7 +89,8 @@ public class JetspeedDaemonFactoryService extends TurbineBaseService implements
    * Perform initialization of the DaemonFactory. Note that this should return
    * right away so that processing can continue (IE thread off everything)
    */
-  public synchronized void init(ServletConfig config) {
+  @Override
+public synchronized void init(ServletConfig config) {
 
     // already initialized
     if (getInit())
@@ -98,7 +101,7 @@ public class JetspeedDaemonFactoryService extends TurbineBaseService implements
     this.context = new DaemonContext();
 
     // init daemons from config file
-    Vector raw = JetspeedResources.getVector(JetspeedResources.DAEMON_ENTRY);
+    Vector raw = TurbineResources.getVector(JetspeedResources.DAEMON_ENTRY);
     this.entries = new DaemonEntry[raw.size()];
 
     for (int i = 0; i < raw.size(); ++i) {
@@ -132,7 +135,8 @@ public class JetspeedDaemonFactoryService extends TurbineBaseService implements
    * so before calling start()
    * </p>
    */
-  public void start() {
+  @Override
+public void start() {
 
     logger.info("DaemonFactory:  Starting up necessary daemons.");
 
@@ -200,7 +204,8 @@ public class JetspeedDaemonFactoryService extends TurbineBaseService implements
    * Allows a Daemon to define its Thread priority through a factory. The Thread
    * that this object should return should be an implementation of itself.
    */
-  public Daemon getDaemon(DaemonEntry entry) throws DaemonException {
+  @Override
+public Daemon getDaemon(DaemonEntry entry) throws DaemonException {
 
     // FIX ME: before instantiating a daemon ... find out if it is already setup
 
@@ -243,7 +248,8 @@ public class JetspeedDaemonFactoryService extends TurbineBaseService implements
    * 
    * @see #getDaemon( DaemonEntry entry )
    */
-  public Daemon getDaemon(String classname) throws DaemonException {
+  @Override
+public Daemon getDaemon(String classname) throws DaemonException {
 
     DaemonEntry[] entries = this.getDaemonEntries();
 
@@ -259,7 +265,8 @@ public class JetspeedDaemonFactoryService extends TurbineBaseService implements
 
   /**
    */
-  public DaemonContext getDaemonContext() {
+  @Override
+public DaemonContext getDaemonContext() {
     return this.context;
   }
 
@@ -267,7 +274,8 @@ public class JetspeedDaemonFactoryService extends TurbineBaseService implements
    * Kicks of processing of a Daemon. Does the same thing as getDaemon() but
    * also creates a thread and runs the daemon.
    */
-  public void process(DaemonEntry entry) throws DaemonException {
+  @Override
+public void process(DaemonEntry entry) throws DaemonException {
 
     DaemonThread dt = (DaemonThread) this.threads.get(entry);
 
@@ -296,7 +304,8 @@ public class JetspeedDaemonFactoryService extends TurbineBaseService implements
 
   /**
    */
-  public int getStatus(DaemonEntry entry) {
+  @Override
+public int getStatus(DaemonEntry entry) {
 
     try {
       Daemon daemon = this.getDaemon(entry);
@@ -310,7 +319,8 @@ public class JetspeedDaemonFactoryService extends TurbineBaseService implements
   /**
    * Get the last known result of the given DaemonEntry's processing
    */
-  public int getResult(DaemonEntry entry) {
+  @Override
+public int getResult(DaemonEntry entry) {
 
     try {
       Daemon daemon = this.getDaemon(entry);
@@ -325,7 +335,8 @@ public class JetspeedDaemonFactoryService extends TurbineBaseService implements
   /**
    * Get the last known message of the given DaemonEntry's processing
    */
-  public String getMessage(DaemonEntry entry) {
+  @Override
+public String getMessage(DaemonEntry entry) {
 
     try {
       Daemon daemon = this.getDaemon(entry);
@@ -339,14 +350,16 @@ public class JetspeedDaemonFactoryService extends TurbineBaseService implements
   /**
    * Get the current known DaemonEntries within the DaemonFactory
    */
-  public DaemonEntry[] getDaemonEntries() {
+  @Override
+public DaemonEntry[] getDaemonEntries() {
     return this.entries;
   }
 
   /**
    * Given the name of a DaemonEntry... get it from the DaemonFactory
    */
-  public DaemonEntry getDaemonEntry(String name) throws DaemonNotFoundException {
+  @Override
+public DaemonEntry getDaemonEntry(String name) throws DaemonNotFoundException {
 
     DaemonEntry[] entries = this.getDaemonEntries();
     for (int i = 0; i < entries.length; ++i) {

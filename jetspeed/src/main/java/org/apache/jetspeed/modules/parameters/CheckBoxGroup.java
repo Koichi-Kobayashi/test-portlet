@@ -56,7 +56,8 @@ public class CheckBoxGroup extends ParameterPresentationStyle
     /**
      * Returns presentation control
      */
-    public String getContent(RunData data, String name, String value, Map parms)
+    @Override
+	public String getContent(RunData data, String name, String value, Map parms)
     {
 
         ElementContainer result = new ElementContainer();

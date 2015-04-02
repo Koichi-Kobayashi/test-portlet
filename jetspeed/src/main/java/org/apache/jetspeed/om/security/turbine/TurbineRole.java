@@ -17,22 +17,26 @@ public  class TurbineRole
     extends org.apache.jetspeed.om.security.turbine.BaseTurbineRole
     implements Persistent, org.apache.jetspeed.om.security.Role
 {
-    public String getName()
+    @Override
+	public String getName()
     {
         return getRoleName();
     }
 
-    public void setName(String name)
+    @Override
+	public void setName(String name)
     {
         setRoleName(name);
     }
 
-    public String getId()
+    @Override
+	public String getId()
     {
         return String.valueOf(this.getRoleId());
     }
 
-    public void setId(String id)
+    @Override
+	public void setId(String id)
     {
     }
 }

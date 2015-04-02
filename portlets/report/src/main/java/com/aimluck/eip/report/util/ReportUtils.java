@@ -56,6 +56,11 @@ import com.aimluck.eip.cayenne.om.portlet.EipTReport;
 import com.aimluck.eip.cayenne.om.portlet.EipTReportFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTReportMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTReportMemberMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTReport;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTReportFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTReportMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTReportMemberMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.common.ALActivity;
 import com.aimluck.eip.common.ALBaseUser;
@@ -152,7 +157,7 @@ public class ReportUtils {
 
       SelectQuery<EipTReport> query = Database.query(EipTReport.class);
       Expression exp1 =
-        ExpressionFactory.matchDbExp(EipTReport.REPORT_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipTReport.REPORT_ID_PK_COLUMN, Integer
           .valueOf(reportid));
       query.setQualifier(exp1);
       query.distinct(true);
@@ -200,13 +205,13 @@ public class ReportUtils {
 
       SelectQuery<EipTReport> query = Database.query(EipTReport.class);
       Expression exp1 =
-        ExpressionFactory.matchDbExp(EipTReport.REPORT_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipTReport.REPORT_ID_PK_COLUMN, Integer
           .valueOf(reportid));
       query.setQualifier(exp1);
 
       if (!isSuperUser) {
         Expression exp2 =
-          ExpressionFactory.matchExp(EipTReport.USER_ID_PROPERTY, Integer
+          ExpressionFactory.matchExp(_EipTReport.USER_ID_PROPERTY, Integer
             .valueOf(ALEipUtils.getUserId(rundata)));
         query.andQualifier(exp2);
       }
@@ -229,7 +234,7 @@ public class ReportUtils {
       List<String> fpaths) throws ALFileNotRemovedException {
     ALDeleteFileUtil.deleteFiles(
       timelineId,
-      EipTReportFile.EIP_TREPORT_PROPERTY,
+      _EipTReportFile.EIP_TREPORT_PROPERTY,
       getSaveDirPath(orgId, uid),
       fpaths,
       EipTReportFile.class);
@@ -257,7 +262,7 @@ public class ReportUtils {
       SelectQuery<EipTReportFile> dbquery =
         Database.query(EipTReportFile.class);
       dbquery.andQualifier(ExpressionFactory.matchDbExp(
-        EipTReportFile.EIP_TREPORT_PROPERTY,
+        _EipTReportFile.EIP_TREPORT_PROPERTY,
         report.getReportId()));
       List<EipTReportFile> existsFiles = dbquery.fetchList();
       List<EipTReportFile> delFiles = new ArrayList<EipTReportFile>();
@@ -358,7 +363,7 @@ public class ReportUtils {
 
       SelectQuery<EipTReport> query = Database.query(EipTReport.class);
       Expression exp1 =
-        ExpressionFactory.matchDbExp(EipTReport.REPORT_ID_PK_COLUMN, requestid);
+        ExpressionFactory.matchDbExp(_EipTReport.REPORT_ID_PK_COLUMN, requestid);
       query.setQualifier(exp1);
 
       List<EipTReport> requests = query.fetchList();
@@ -394,7 +399,7 @@ public class ReportUtils {
       SelectQuery<EipTReport> query = Database.query(EipTReport.class);
 
       Expression exp =
-        ExpressionFactory.matchExp(EipTReport.REPORT_ID_PK_COLUMN, report);
+        ExpressionFactory.matchExp(_EipTReport.REPORT_ID_PK_COLUMN, report);
 
       query.setQualifier(exp);
 
@@ -426,7 +431,7 @@ public class ReportUtils {
 
       SelectQuery<EipTReportFile> query = Database.query(EipTReportFile.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTReportFile.FILE_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipTReportFile.FILE_ID_PK_COLUMN, Integer
           .valueOf(attachmentIndex));
       query.andQualifier(exp);
       List<EipTReportFile> files = query.fetchList();
@@ -453,9 +458,9 @@ public class ReportUtils {
     try {
       SelectQuery<EipTReportFile> query = Database.query(EipTReportFile.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTReportFile.EIP_TREPORT_PROPERTY
+        ExpressionFactory.matchDbExp(_EipTReportFile.EIP_TREPORT_PROPERTY
           + "."
-          + EipTReport.REPORT_ID_PK_COLUMN, report.getReportId());
+          + _EipTReport.REPORT_ID_PK_COLUMN, report.getReportId());
       query.setQualifier(exp);
 
       List<EipTReportFile> maps = query.fetchList();
@@ -483,9 +488,9 @@ public class ReportUtils {
     try {
       SelectQuery<EipTReportMap> query = Database.query(EipTReportMap.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTReportMap.EIP_TREPORT_PROPERTY
+        ExpressionFactory.matchDbExp(_EipTReportMap.EIP_TREPORT_PROPERTY
           + "."
-          + EipTReport.REPORT_ID_PK_COLUMN, report.getReportId());
+          + _EipTReport.REPORT_ID_PK_COLUMN, report.getReportId());
       query.setQualifier(exp);
 
       List<EipTReportMap> maps = query.fetchList();
@@ -515,9 +520,9 @@ public class ReportUtils {
       SelectQuery<EipTReportMemberMap> query =
         Database.query(EipTReportMemberMap.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTReportMemberMap.EIP_TREPORT_PROPERTY
+        ExpressionFactory.matchDbExp(_EipTReportMemberMap.EIP_TREPORT_PROPERTY
           + "."
-          + EipTReport.REPORT_ID_PK_COLUMN, report.getReportId());
+          + _EipTReport.REPORT_ID_PK_COLUMN, report.getReportId());
       query.setQualifier(exp);
 
       List<EipTReportMemberMap> members = query.fetchList();
@@ -644,7 +649,7 @@ public class ReportUtils {
   public static SelectQuery<EipTReportFile> getSelectQueryForFiles(int requestid) {
     SelectQuery<EipTReportFile> query = Database.query(EipTReportFile.class);
     Expression exp =
-      ExpressionFactory.matchDbExp(EipTReport.REPORT_ID_PK_COLUMN, Integer
+      ExpressionFactory.matchDbExp(_EipTReport.REPORT_ID_PK_COLUMN, Integer
         .valueOf(requestid));
     query.setQualifier(exp);
     return query;
@@ -660,7 +665,7 @@ public class ReportUtils {
   public static SelectQuery<EipTReport> getSelectQueryForCoReports(int requestid) {
     SelectQuery<EipTReport> query = Database.query(EipTReport.class);
     Expression exp =
-      ExpressionFactory.matchDbExp(EipTReport.PARENT_ID_PROPERTY, Integer
+      ExpressionFactory.matchDbExp(_EipTReport.PARENT_ID_PROPERTY, Integer
         .valueOf(requestid));
     query.setQualifier(exp);
     return query;
@@ -774,7 +779,7 @@ public class ReportUtils {
           Database.query(EipTReportFile.class);
         Expression reqexp1 =
           ExpressionFactory.inDbExp(
-            EipTBlogFile.FILE_ID_PK_COLUMN,
+            _EipTBlogFile.FILE_ID_PK_COLUMN,
             hadfileidsValue);
         reqquery.setQualifier(reqexp1);
         List<EipTReportFile> requests = reqquery.fetchList();
@@ -834,13 +839,13 @@ public class ReportUtils {
 
       SelectQuery<EipTReport> query = Database.query(EipTReport.class);
       Expression exp1 =
-        ExpressionFactory.matchDbExp(EipTReport.REPORT_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipTReport.REPORT_ID_PK_COLUMN, Integer
           .valueOf(reportid));
       query.setQualifier(exp1);
 
       if (!isSuperUser) {
         Expression exp2 =
-          ExpressionFactory.matchExp(EipTReport.USER_ID_PROPERTY, Integer
+          ExpressionFactory.matchExp(_EipTReport.USER_ID_PROPERTY, Integer
             .valueOf(ALEipUtils.getUserId(rundata)));
         query.andQualifier(exp2);
       }
@@ -1337,7 +1342,7 @@ public class ReportUtils {
     if (rundata.getParameters().getStringKey("entityid") != null) {
       SelectQuery<EipTReportMap> q = Database.query(EipTReportMap.class);
       Expression exp1 =
-        ExpressionFactory.matchExp(EipTReportMap.REPORT_ID_PROPERTY, rundata
+        ExpressionFactory.matchExp(_EipTReportMap.REPORT_ID_PROPERTY, rundata
           .getParameters()
           .getStringKey("entityid")
           .toString());
@@ -1356,7 +1361,7 @@ public class ReportUtils {
   public static List<EipTReport> getChildReports(Integer reportId) {
     SelectQuery<EipTReport> rquery = Database.query(EipTReport.class);
     rquery.andQualifier(ExpressionFactory.matchExp(
-      EipTReport.PARENT_ID_PROPERTY,
+      _EipTReport.PARENT_ID_PROPERTY,
       reportId));
     return rquery.fetchList();
   }
@@ -1364,7 +1369,7 @@ public class ReportUtils {
   public static List<EipTReportFile> getFiles(Integer reportId) {
     SelectQuery<EipTReportFile> fquery = Database.query(EipTReportFile.class);
     fquery.andQualifier(ExpressionFactory.matchExp(
-      EipTReportFile.EIP_TREPORT_PROPERTY,
+      _EipTReportFile.EIP_TREPORT_PROPERTY,
       reportId));
     return fquery.fetchList();
   }

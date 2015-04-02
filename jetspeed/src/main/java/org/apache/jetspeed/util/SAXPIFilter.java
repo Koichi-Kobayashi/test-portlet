@@ -42,7 +42,7 @@ It uses SAX-1 API and outputs text to an
 output stream.
 WARNING: This behavior will be modified in the future.
 
-@author <A HREF="mailto:raphael@apache.org">Raphaël Luta</A>
+@author <A HREF="mailto:raphael@apache.org">Raphaï¿½l Luta</A>
 @version $Id: SAXPIFilter.java,v 1.8 2004/02/23 03:23:42 jford Exp $
 */
 public class SAXPIFilter extends HandlerBase 
@@ -180,7 +180,8 @@ public class SAXPIFilter extends HandlerBase
     /**
     SAX Handler implementation
     */
-    public void processingInstruction(String target, String data) {
+    @Override
+	public void processingInstruction(String target, String data) {
 
         
         if ( ! stripExistingPI ) {
@@ -219,7 +220,8 @@ public class SAXPIFilter extends HandlerBase
     /**
     SAX Handler implementation
     */
-    public void startDocument() {
+    @Override
+	public void startDocument() {
 
         if ( pi != null ) {
             out.print( pi );
@@ -230,7 +232,8 @@ public class SAXPIFilter extends HandlerBase
     /**
     SAX Handler implementation
     */
-    public void startElement(String name, AttributeList attrs) {
+    @Override
+	public void startElement(String name, AttributeList attrs) {
 
         out.print('<');
         out.print(name);
@@ -251,7 +254,8 @@ public class SAXPIFilter extends HandlerBase
     /**
     SAX Handler implementation
     */
-    public void characters(char ch[], int start, int length) {
+    @Override
+	public void characters(char ch[], int start, int length) {
 
         out.print(normalize(new String(ch, start, length)));
 
@@ -260,7 +264,8 @@ public class SAXPIFilter extends HandlerBase
     /**
     SAX Handler implementation
     */
-    public void ignorableWhitespace(char ch[], int start, int length) {
+    @Override
+	public void ignorableWhitespace(char ch[], int start, int length) {
 
         characters(ch, start, length);
 
@@ -269,7 +274,8 @@ public class SAXPIFilter extends HandlerBase
     /**
     SAX Handler implementation
     */
-    public void endElement(String name) {
+    @Override
+	public void endElement(String name) {
 
         out.print("</");
         out.print(name);
@@ -280,7 +286,8 @@ public class SAXPIFilter extends HandlerBase
     /**
     SAX Handler implementation
     */
-    public void endDocument() {
+    @Override
+	public void endDocument() {
 
         out.flush();
 
@@ -289,7 +296,8 @@ public class SAXPIFilter extends HandlerBase
     /**
     SAX Handler implementation
     */
-    public void warning(SAXParseException ex) {
+    @Override
+	public void warning(SAXParseException ex) {
         System.err.println("[Warning] "+
                            getLocationString(ex)+": "+
                            ex.getMessage());
@@ -298,7 +306,8 @@ public class SAXPIFilter extends HandlerBase
     /**
     SAX Handler implementation
     */
-    public void error(SAXParseException ex) {
+    @Override
+	public void error(SAXParseException ex) {
         System.err.println("[Error] "+
                            getLocationString(ex)+": "+
                            ex.getMessage());
@@ -307,7 +316,8 @@ public class SAXPIFilter extends HandlerBase
     /**
     SAX Handler implementation
     */
-    public void fatalError(SAXParseException ex) throws SAXException {
+    @Override
+	public void fatalError(SAXParseException ex) throws SAXException {
         System.err.println("[Fatal Error] "+
                            getLocationString(ex)+": "+
                            ex.getMessage());

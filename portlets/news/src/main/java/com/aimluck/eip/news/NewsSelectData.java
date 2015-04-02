@@ -31,6 +31,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.account.AipoLicense;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.license.util.LicenseUtils;
 import com.aimluck.eip.orm.Database;
@@ -72,7 +73,7 @@ public class NewsSelectData extends
     // ユーザ数
     SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
     Expression exp =
-      ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+      ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
     query.setQualifier(exp);
 
     List<TurbineUser> list = query.fetchList();

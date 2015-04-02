@@ -32,7 +32,8 @@ public class BaseJetspeedGroupRole implements GroupRole
      *
      * @return the group.
      */
-    public Group getGroup()
+    @Override
+	public Group getGroup()
     {
         return group;
     }
@@ -42,7 +43,8 @@ public class BaseJetspeedGroupRole implements GroupRole
      *
      * @param group the Group.
      */
-    public void setGroup(Group group)
+    @Override
+	public void setGroup(Group group)
     {
         this.group = group;
     }
@@ -52,7 +54,8 @@ public class BaseJetspeedGroupRole implements GroupRole
      *
      * @return the role.
      */
-    public Role getRole()
+    @Override
+	public Role getRole()
     {
         return role;
     }
@@ -62,7 +65,8 @@ public class BaseJetspeedGroupRole implements GroupRole
      *
      * @param group the Role.
      */
-    public void setRole(Role role)
+    @Override
+	public void setRole(Role role)
     {
         this.role = role;
     }

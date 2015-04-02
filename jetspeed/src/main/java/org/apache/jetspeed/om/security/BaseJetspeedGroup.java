@@ -45,7 +45,8 @@ public class BaseJetspeedGroup implements Group
      *
      * @return the name of the group.
      */
-    public String getName()
+    @Override
+	public String getName()
     {
         return name;
     }
@@ -55,7 +56,8 @@ public class BaseJetspeedGroup implements Group
      *
      * @param groupName the name of the Group.
      */
-    public void setName(String groupName)
+    @Override
+	public void setName(String groupName)
     {
         name = groupName;
     }
@@ -65,7 +67,8 @@ public class BaseJetspeedGroup implements Group
      *
      * @return the id of the group.
      */
-    public String getId()
+    @Override
+	public String getId()
     {
         return id;
     }
@@ -75,7 +78,8 @@ public class BaseJetspeedGroup implements Group
      *
      * @param id the new id for the group
      */
-    public void setId(String id)
+    @Override
+	public void setId(String id)
     {      
         if (this.id == null)
         {

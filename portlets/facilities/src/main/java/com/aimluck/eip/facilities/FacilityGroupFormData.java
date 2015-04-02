@@ -33,6 +33,9 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroup;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroupMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroup;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroupMap;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -132,7 +135,7 @@ public class FacilityGroupFormData extends ALAbstractFormData {
           SelectQuery<EipMFacility> fquery = Database.query(EipMFacility.class);
           Expression fexp =
             ExpressionFactory.inDbExp(
-              EipMFacility.FACILITY_ID_PK_COLUMN,
+              _EipMFacility.FACILITY_ID_PK_COLUMN,
               facilityIds);
           fquery.setQualifier(fexp);
           List<EipMFacility> facilities = fquery.fetchList();
@@ -167,18 +170,18 @@ public class FacilityGroupFormData extends ALAbstractFormData {
       if (ALEipConstants.MODE_INSERT.equals(getMode())) {
         Expression exp =
           ExpressionFactory.matchExp(
-            EipMFacilityGroup.GROUP_NAME_PROPERTY,
+            _EipMFacilityGroup.GROUP_NAME_PROPERTY,
             facility_group_name.getValue());
         query.setQualifier(exp);
       } else if (ALEipConstants.MODE_UPDATE.equals(getMode())) {
         Expression exp1 =
           ExpressionFactory.matchExp(
-            EipMFacilityGroup.GROUP_NAME_PROPERTY,
+            _EipMFacilityGroup.GROUP_NAME_PROPERTY,
             facility_group_name.getValue());
         query.setQualifier(exp1);
         Expression exp2 =
           ExpressionFactory.noMatchDbExp(
-            EipMFacilityGroup.GROUP_ID_PK_COLUMN,
+            _EipMFacilityGroup.GROUP_ID_PK_COLUMN,
             Integer.valueOf(facilitygroupid));
         query.andQualifier(exp2);
       }
@@ -225,7 +228,7 @@ public class FacilityGroupFormData extends ALAbstractFormData {
         Database.query(EipMFacilityGroupMap.class);
       Expression mapexp =
         ExpressionFactory.matchExp(
-          EipMFacilityGroupMap.GROUP_ID_PROPERTY,
+          _EipMFacilityGroupMap.GROUP_ID_PROPERTY,
           facility.getGroupId());
       mapquery.setQualifier(mapexp);
       List<EipMFacilityGroupMap> FacilityMaps = mapquery.fetchList();
@@ -237,7 +240,7 @@ public class FacilityGroupFormData extends ALAbstractFormData {
         SelectQuery<EipMFacility> fquery = Database.query(EipMFacility.class);
         Expression fexp =
           ExpressionFactory.inDbExp(
-            EipMFacility.FACILITY_ID_PK_COLUMN,
+            _EipMFacility.FACILITY_ID_PK_COLUMN,
             facilityIds);
         fquery.setQualifier(fexp);
         facilityList.addAll(FacilitiesUtils
@@ -272,7 +275,7 @@ public class FacilityGroupFormData extends ALAbstractFormData {
         Database.query(EipMFacilityGroupMap.class);
       Expression fexp =
         ExpressionFactory.matchExp(
-          EipMFacilityGroupMap.GROUP_ID_PROPERTY,
+          _EipMFacilityGroupMap.GROUP_ID_PROPERTY,
           facility.getGroupId());
       fmaps.setQualifier(fexp);
       fmaps.deleteAll();
@@ -346,7 +349,7 @@ public class FacilityGroupFormData extends ALAbstractFormData {
         Database.query(EipMFacilityGroupMap.class);
       Expression fexp =
         ExpressionFactory.matchExp(
-          EipMFacilityGroupMap.GROUP_ID_PROPERTY,
+          _EipMFacilityGroupMap.GROUP_ID_PROPERTY,
           facilityGroup.getGroupId());
       fmaps.setQualifier(fexp);
       List<EipMFacilityGroupMap> oldMapList = fmaps.fetchList();
@@ -369,9 +372,9 @@ public class FacilityGroupFormData extends ALAbstractFormData {
         SelectQuery<EipMFacilityGroupMap> remove =
           Database.query(EipMFacilityGroupMap.class);
         remove.where(Operations.and(Operations.eq(
-          EipMFacilityGroupMap.GROUP_ID_PROPERTY,
+          _EipMFacilityGroupMap.GROUP_ID_PROPERTY,
           facilityGroup.getGroupId()), Operations.in(
-          EipMFacilityGroupMap.FACILITY_ID_PROPERTY,
+          _EipMFacilityGroupMap.FACILITY_ID_PROPERTY,
           oldMapIdList)));
         remove.deleteAll();
       }

@@ -65,7 +65,8 @@ public class AccountPostResultData implements ALData {
    * 
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     post_id = new ALNumberField();
     company_id = new ALNumberField();
     post_name = new ALStringField();

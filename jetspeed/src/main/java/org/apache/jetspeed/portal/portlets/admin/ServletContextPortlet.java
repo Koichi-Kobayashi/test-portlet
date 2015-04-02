@@ -53,7 +53,8 @@ public class ServletContextPortlet extends AbstractPortlet
      */    
     private static final JetspeedLogger logger = JetspeedLogFactoryService.getLogger(ServletContextPortlet.class.getName());
     
-    public ConcreteElement getContent( RunData rundata ) {
+    @Override
+	public ConcreteElement getContent( RunData rundata ) {
 
         Table table = new Table().setWidth("100%");
 
@@ -109,18 +110,21 @@ public class ServletContextPortlet extends AbstractPortlet
     @author <a href="mailto:tkuebler@cisco.com">Todd Kuebler</a>
     @version $Id: ServletContextPortlet.java,v 1.4 2004/02/23 03:26:19 jford Exp $ 
     */
-    public void init() throws PortletException {
+    @Override
+	public void init() throws PortletException {
 
         this.setTitle("Java Servlet Context");
         this.setDescription("Attributes of your Servlet Context");
 
     }
 
-    public boolean getAllowEdit(RunData rundata) {
+    @Override
+	public boolean getAllowEdit(RunData rundata) {
         return false;
     }
 
-    public boolean getAllowMaximize(RunData rundata) {
+    @Override
+	public boolean getAllowMaximize(RunData rundata) {
         return false;
     }
     

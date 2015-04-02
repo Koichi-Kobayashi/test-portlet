@@ -33,6 +33,8 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTTimecard;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimecardSettings;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimecard;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimecardSettings;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -94,11 +96,11 @@ public class TimecardUtils {
       SelectQuery<EipTTimecard> query = Database.query(EipTTimecard.class);
       Expression exp11 =
         ExpressionFactory.matchDbExp(
-          EipTTimecard.TIMECARD_ID_PK_COLUMN,
+          _EipTTimecard.TIMECARD_ID_PK_COLUMN,
           timecardid);
       query.setQualifier(exp11);
       Expression exp21 =
-        ExpressionFactory.matchExp(EipTTimecard.USER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipTTimecard.USER_ID_PROPERTY, Integer
           .valueOf(ALEipUtils.getUserId(rundata)));
       query.andQualifier(exp21);
 
@@ -134,11 +136,11 @@ public class TimecardUtils {
         Database.query(EipTTimecardSettings.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTTimecardSettings.TIMECARD_SETTINGS_ID_PK_COLUMN,
+          _EipTTimecardSettings.TIMECARD_SETTINGS_ID_PK_COLUMN,
           settingid);
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipTTimecardSettings.USER_ID_PROPERTY,
+          _EipTTimecardSettings.USER_ID_PROPERTY,
           Integer.valueOf(1));
 
       query.setQualifier(exp1.andExp(exp2));

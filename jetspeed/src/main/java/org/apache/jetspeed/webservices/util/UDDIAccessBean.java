@@ -225,7 +225,8 @@ public class UDDIAccessBean extends Object implements Serializable
     }
     
     /** called before object is garbage collected */
-    public void finalize() {
+    @Override
+	public void finalize() {
         proxy = null;
         queryURL = null;
     }

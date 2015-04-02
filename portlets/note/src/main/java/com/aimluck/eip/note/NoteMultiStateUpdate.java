@@ -30,6 +30,8 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTNote;
 import com.aimluck.eip.cayenne.om.portlet.EipTNoteMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTNote;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTNoteMap;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALPageNotFoundException;
@@ -63,10 +65,10 @@ public class NoteMultiStateUpdate extends ALAbstractCheckList {
     try {
 
       Expression exp1 =
-        ExpressionFactory.matchExp(EipTNoteMap.USER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipTNoteMap.USER_ID_PROPERTY, Integer
           .valueOf(ALEipUtils.getUserId(rundata)));
       Expression exp2 =
-        ExpressionFactory.inDbExp(EipTNote.NOTE_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipTNote.NOTE_ID_PK_COLUMN, values);
 
       List<EipTNoteMap> list =
         Database.query(EipTNoteMap.class, exp1).andQualifier(exp2).fetchList();

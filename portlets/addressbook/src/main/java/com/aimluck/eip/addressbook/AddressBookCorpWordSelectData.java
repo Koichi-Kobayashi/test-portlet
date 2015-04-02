@@ -35,6 +35,9 @@ import com.aimluck.eip.addressbook.util.AddressBookUtils;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipGroup;
 import com.aimluck.eip.common.ALPageNotFoundException;
@@ -142,12 +145,12 @@ public class AddressBookCorpWordSelectData extends
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
 
-    map.putValue("corp_group", TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
+    map.putValue("corp_group", _TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
       + "."
-      + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+      + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
       + "."
       + TurbineGroup.GROUP_NAME_COLUMN);
-    map.putValue("name_kana", TurbineUser.LAST_NAME_KANA_PROPERTY);
+    map.putValue("name_kana", _TurbineUser.LAST_NAME_KANA_PROPERTY);
 
     return map;
   }
@@ -169,87 +172,87 @@ public class AddressBookCorpWordSelectData extends
     query = Database.query(TurbineUser.class);
 
     Expression exp_exclude_my_group =
-      ExpressionFactory.matchExp(TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
+      ExpressionFactory.matchExp(_TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
         + "."
-        + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+        + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
         + "."
-        + TurbineGroup.OWNER_ID_PROPERTY, 1);
+        + _TurbineGroup.OWNER_ID_PROPERTY, 1);
 
     Expression exp01 =
-      ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+      ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
     query.setQualifier(exp01);
 
     Expression exp02 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .valueOf(1));
     Expression exp03 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .valueOf(2));
     Expression exp04 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .valueOf(3));
     query.andQualifier(exp02.andExp(exp03).andExp(exp04));
 
     Expression exp11 =
-      ExpressionFactory.likeExp(TurbineUser.FIRST_NAME_PROPERTY, "%"
+      ExpressionFactory.likeExp(_TurbineUser.FIRST_NAME_PROPERTY, "%"
         + word
         + "%");
     Expression exp12 =
-      ExpressionFactory.likeExp(TurbineUser.LAST_NAME_PROPERTY, "%"
+      ExpressionFactory.likeExp(_TurbineUser.LAST_NAME_PROPERTY, "%"
         + word
         + "%");
     Expression exp13 =
-      ExpressionFactory.likeExp(TurbineUser.FIRST_NAME_KANA_PROPERTY, "%"
+      ExpressionFactory.likeExp(_TurbineUser.FIRST_NAME_KANA_PROPERTY, "%"
         + word
         + "%");
     Expression exp14 =
-      ExpressionFactory.likeExp(TurbineUser.LAST_NAME_KANA_PROPERTY, "%"
+      ExpressionFactory.likeExp(_TurbineUser.LAST_NAME_KANA_PROPERTY, "%"
         + word
         + "%");
     Expression exp15 =
-      ExpressionFactory.likeExp(TurbineUser.EMAIL_PROPERTY, "%" + word + "%");
+      ExpressionFactory.likeExp(_TurbineUser.EMAIL_PROPERTY, "%" + word + "%");
     Expression exp16 =
-      ExpressionFactory.likeExp(TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
+      ExpressionFactory.likeExp(_TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
         + "."
-        + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+        + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
         + "."
-        + TurbineGroup.GROUP_ALIAS_NAME_PROPERTY, "%" + word + "%");
+        + _TurbineGroup.GROUP_ALIAS_NAME_PROPERTY, "%" + word + "%");
     exp16 = exp16.andExp(exp_exclude_my_group);
     Expression exp21 =
-      ExpressionFactory.likeExp(TurbineUser.OUT_TELEPHONE_PROPERTY, "%"
+      ExpressionFactory.likeExp(_TurbineUser.OUT_TELEPHONE_PROPERTY, "%"
         + word
         + "%");
     Expression exp22 =
-      ExpressionFactory.likeExp(TurbineUser.IN_TELEPHONE_PROPERTY, "%"
+      ExpressionFactory.likeExp(_TurbineUser.IN_TELEPHONE_PROPERTY, "%"
         + word
         + "%");
     Expression exp23 =
-      ExpressionFactory.likeExp(TurbineUser.CELLULAR_PHONE_PROPERTY, "%"
+      ExpressionFactory.likeExp(_TurbineUser.CELLULAR_PHONE_PROPERTY, "%"
         + word
         + "%");
 
     Expression exp31 =
-      ExpressionFactory.likeExp(TurbineUser.FIRST_NAME_PROPERTY, "%"
+      ExpressionFactory.likeExp(_TurbineUser.FIRST_NAME_PROPERTY, "%"
         + transWord
         + "%");
     Expression exp32 =
-      ExpressionFactory.likeExp(TurbineUser.LAST_NAME_PROPERTY, "%"
+      ExpressionFactory.likeExp(_TurbineUser.LAST_NAME_PROPERTY, "%"
         + transWord
         + "%");
     Expression exp33 =
-      ExpressionFactory.likeExp(TurbineUser.FIRST_NAME_KANA_PROPERTY, "%"
+      ExpressionFactory.likeExp(_TurbineUser.FIRST_NAME_KANA_PROPERTY, "%"
         + transWord
         + "%");
     Expression exp34 =
-      ExpressionFactory.likeExp(TurbineUser.LAST_NAME_KANA_PROPERTY, "%"
+      ExpressionFactory.likeExp(_TurbineUser.LAST_NAME_KANA_PROPERTY, "%"
         + transWord
         + "%");
     Expression exp35 =
-      ExpressionFactory.likeExp(TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
+      ExpressionFactory.likeExp(_TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
         + "."
-        + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+        + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
         + "."
-        + TurbineGroup.GROUP_ALIAS_NAME_PROPERTY, "%" + transWord + "%");
+        + _TurbineGroup.GROUP_ALIAS_NAME_PROPERTY, "%" + transWord + "%");
     exp35 = exp35.andExp(exp_exclude_my_group);
     if (word != null && !"".equals(word)) {
       query.andQualifier(exp11

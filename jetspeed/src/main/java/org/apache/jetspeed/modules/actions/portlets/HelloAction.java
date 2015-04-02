@@ -31,7 +31,7 @@ import org.apache.velocity.context.Context;
  * <p>Don't call it from the URL, the Portlet and the Action are automatically
  * associated through the registry PortletName
  * 
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  */
 public class HelloAction extends VelocityPortletAction
 {
@@ -41,7 +41,8 @@ public class HelloAction extends VelocityPortletAction
      * build specific content when maximized. Default behavior is
      * to do the same as normal content.
      */
-    protected void buildMaximizedContext( VelocityPortlet portlet, 
+    @Override
+	protected void buildMaximizedContext( VelocityPortlet portlet, 
                                           Context context,
                                           RunData rundata )
     {
@@ -62,7 +63,8 @@ public class HelloAction extends VelocityPortletAction
      * provide their own customization behavior.
      * Default is to use Portal base customizer action
      */
-    protected void buildConfigureContext( VelocityPortlet portlet, 
+    @Override
+	protected void buildConfigureContext( VelocityPortlet portlet, 
                                           Context context,
                                           RunData rundata )
     {
@@ -77,7 +79,8 @@ public class HelloAction extends VelocityPortletAction
      * Subclasses must override this method to provide default behavior 
      * for the portlet action
      */
-    protected void buildNormalContext( VelocityPortlet portlet, 
+    @Override
+	protected void buildNormalContext( VelocityPortlet portlet, 
                                        Context context,
                                        RunData rundata )
     {

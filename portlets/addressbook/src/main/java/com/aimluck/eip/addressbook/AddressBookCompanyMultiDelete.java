@@ -31,6 +31,8 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.addressbook.util.AddressBookUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressbook;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressbookCompany;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressbook;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressbookCompany;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -72,9 +74,9 @@ public class AddressBookCompanyMultiDelete extends ALAbstractCheckList {
         Database.query(EipMAddressbook.class);
       Expression addrexp =
         ExpressionFactory.inDbExp(
-          EipMAddressbook.EIP_MADDRESSBOOK_COMPANY_PROPERTY
+          _EipMAddressbook.EIP_MADDRESSBOOK_COMPANY_PROPERTY
             + "."
-            + EipMAddressbookCompany.COMPANY_ID_PK_COLUMN,
+            + _EipMAddressbookCompany.COMPANY_ID_PK_COLUMN,
           values);
       addrquery.setQualifier(addrexp);
 
@@ -98,7 +100,7 @@ public class AddressBookCompanyMultiDelete extends ALAbstractCheckList {
         Database.query(EipMAddressbookCompany.class);
       Expression exp =
         ExpressionFactory.inDbExp(
-          EipMAddressbookCompany.COMPANY_ID_PK_COLUMN,
+          _EipMAddressbookCompany.COMPANY_ID_PK_COLUMN,
           values);
       query.setQualifier(exp);
 

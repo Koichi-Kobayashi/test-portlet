@@ -67,7 +67,8 @@ public class ValidationParameterParser
      * @param bean An Object.
      * @exception Exception, a generic exception.
      */
-    public void setProperties(Object bean)
+    @Override
+	public void setProperties(Object bean)
         throws Exception
     {
         Class beanClass = bean.getClass();

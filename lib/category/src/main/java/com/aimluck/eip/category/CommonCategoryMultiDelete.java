@@ -31,6 +31,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.category.util.CommonCategoryUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTCommonCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCommonCategory;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.orm.Database;
@@ -86,13 +87,13 @@ public class CommonCategoryMultiDelete extends ALAbstractCheckList {
       if (!hasAuthorityOtherDelete) {
         Expression exp1 =
           ExpressionFactory.matchExp(
-            EipTCommonCategory.CREATE_USER_ID_PROPERTY,
+            _EipTCommonCategory.CREATE_USER_ID_PROPERTY,
             Integer.valueOf(loginuserid));
         query.andQualifier(exp1);
       }
       Expression exp2 =
         ExpressionFactory.inDbExp(
-          EipTCommonCategory.COMMON_CATEGORY_ID_PK_COLUMN,
+          _EipTCommonCategory.COMMON_CATEGORY_ID_PK_COLUMN,
           values);
       query.andQualifier(exp2);
 

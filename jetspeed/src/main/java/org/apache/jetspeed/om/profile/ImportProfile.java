@@ -50,7 +50,8 @@ public class ImportProfile  extends BaseProfile implements Profile
      * @see Object#clone
      * @return an instance copy of this object
      */    
-    public Object clone() throws java.lang.CloneNotSupportedException
+    @Override
+	public Object clone() throws java.lang.CloneNotSupportedException
     {
         return super.clone();
     }
@@ -60,7 +61,8 @@ public class ImportProfile  extends BaseProfile implements Profile
 
        @return The root portlet set for this profile.
      */
-    public PSMLDocument getDocument()
+    @Override
+	public PSMLDocument getDocument()
     {
         synchronized (this)
         {
@@ -77,7 +79,8 @@ public class ImportProfile  extends BaseProfile implements Profile
 
        @throws ProfileException if an error occurs storing the profile
     */
-    public void store() throws ProfileException
+    @Override
+	public void store() throws ProfileException
     {
         if (document != null)
         {

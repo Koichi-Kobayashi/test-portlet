@@ -60,7 +60,8 @@ public class NoAuthentication
      * @exception AccountExpiredException when the subject's account is expired.
      * @exception CredentialExpiredException when the subject's credential is expired.
      */
-    public JetspeedUser login(String username, String password)
+    @Override
+	public JetspeedUser login(String username, String password)
         throws LoginException
     {
         // we let anyone in!
@@ -82,7 +83,8 @@ public class NoAuthentication
      * @return a <code>JetspeedUser</code> object representing the authenticated subject.
      * @exception LoginException if the authentication fails.
      */
-    public JetspeedUser getAnonymousUser()
+    @Override
+	public JetspeedUser getAnonymousUser()
         throws LoginException
     {
         // create a user object with this username for Jetspeed use
@@ -104,7 +106,8 @@ public class NoAuthentication
      *
      * @exception LoginException if the logout fails.
      */
-    public void logout()
+    @Override
+	public void logout()
         throws LoginException
     {
         // revert to the anon. user as the current user
@@ -121,7 +124,8 @@ public class NoAuthentication
     *
     * @exception InitializationException, if initialization of this class was not successful.
     */
-    public synchronized void init() 
+    @Override
+	public synchronized void init() 
         throws InitializationException 
     {
         super.init();

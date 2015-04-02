@@ -58,7 +58,8 @@ public class BaseSecurityAllow implements SecurityAllow, java.io.Serializable
     /** Getter for property role.
      * @return Value of property role.
      */
-    public String getRole()
+    @Override
+	public String getRole()
     {
         return role;
     }
@@ -66,7 +67,8 @@ public class BaseSecurityAllow implements SecurityAllow, java.io.Serializable
     /** Setter for property role.
      * @param role New value of property role.
      */
-    public void setRole(String role)
+    @Override
+	public void setRole(String role)
     {
         this.role = role;
     }
@@ -74,6 +76,7 @@ public class BaseSecurityAllow implements SecurityAllow, java.io.Serializable
 	/** Getter for property group.
 	 * @return Value of property group.
 	 */
+	@Override
 	public String getGroup()
 	{
 		return group;
@@ -82,6 +85,7 @@ public class BaseSecurityAllow implements SecurityAllow, java.io.Serializable
 	/** Setter for property group.
 	 * @param role New value of property group.
 	 */
+	@Override
 	public void setGroup(String group)
 	{
 		this.group = group;
@@ -90,7 +94,8 @@ public class BaseSecurityAllow implements SecurityAllow, java.io.Serializable
     /** Getter for property user.
      * @return Value of property user.
      */
-    public String getUser()
+    @Override
+	public String getUser()
     {
         return user;
     }
@@ -98,7 +103,8 @@ public class BaseSecurityAllow implements SecurityAllow, java.io.Serializable
     /** Setter for property user.
      * @param user New value of property user.
      */
-    public void setUser(String user)
+    @Override
+	public void setUser(String user)
     {
         this.user = user;
     }
@@ -106,7 +112,8 @@ public class BaseSecurityAllow implements SecurityAllow, java.io.Serializable
     /** Getter for property owner.
      * @return Value of property owner.
      */
-    public boolean isOwner()
+    @Override
+	public boolean isOwner()
     {
         return this.owner;
     }
@@ -114,7 +121,8 @@ public class BaseSecurityAllow implements SecurityAllow, java.io.Serializable
     /** Setter for property owner.
      * @param owner New value of property owner.
      */
-    public void setOwner(boolean owner)
+    @Override
+	public void setOwner(boolean owner)
     {
         this.owner = owner;
     }

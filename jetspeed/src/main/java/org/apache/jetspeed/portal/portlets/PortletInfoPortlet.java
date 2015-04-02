@@ -76,7 +76,8 @@ public class PortletInfoPortlet extends AbstractPortlet
 
     /**
     */
-    public boolean getAllowEdit( RunData rundata ) {
+    @Override
+	public boolean getAllowEdit( RunData rundata ) {
         //NOTE:  it is important that this ALWAYS return false.  The
         //PortletInfoPortlet will try to work with itself and get confused.
         return false;
@@ -84,7 +85,8 @@ public class PortletInfoPortlet extends AbstractPortlet
 
     /**
     */
-    public boolean getAllowMaximize( RunData rundata ) {
+    @Override
+	public boolean getAllowMaximize( RunData rundata ) {
         //NOTE:  it is important that this ALWAYS return false.  The
         //PortletInfoPortlet will try to work with itself and get confused.
         return false;
@@ -93,7 +95,8 @@ public class PortletInfoPortlet extends AbstractPortlet
 
     /**
     */
-    public ConcreteElement getContent( RunData rundata ) {
+    @Override
+	public ConcreteElement getContent( RunData rundata ) {
 
         String portletName = ((JetspeedRunData)rundata).getPortlet();
 
@@ -211,7 +214,7 @@ public class PortletInfoPortlet extends AbstractPortlet
         while ( names.hasNext() ) {
                 
             String name = (String)names.next();
-            String value = (String)portlet.getPortletConfig().getInitParameter( name );
+            String value = portlet.getPortletConfig().getInitParameter( name );
 
             t.addElement( new TR()
                 .addElement( new TD( name + ":  " + value ) ) );

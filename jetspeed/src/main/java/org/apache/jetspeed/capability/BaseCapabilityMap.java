@@ -32,7 +32,7 @@ import java.util.Enumeration;
  * Read only wrapper around a ClientEntry registry entry that
  * implements the CapabilityMap interface
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BaseCapabilityMap.java,v 1.8 2004/02/23 02:46:39 jford Exp $
  */
 public class BaseCapabilityMap implements CapabilityMap
@@ -50,7 +50,8 @@ public class BaseCapabilityMap implements CapabilityMap
     /**
     @see CapabilityMap#getPreferredType
     */
-    public MimeType getPreferredType()
+    @Override
+	public MimeType getPreferredType()
     {
         return entry.getMimetypeMap().getPreferredMimetype();
     }
@@ -58,7 +59,8 @@ public class BaseCapabilityMap implements CapabilityMap
     /**
     Returns the preferred media type for the current user-agent
     */
-    public String getPreferredMediaType()
+    @Override
+	public String getPreferredMediaType()
     {
         Iterator i = listMediaTypes();
 
@@ -74,7 +76,8 @@ public class BaseCapabilityMap implements CapabilityMap
      * Returns an ordered list of supported media-types, from most preferred
      * to least preferred
      */
-    public Iterator listMediaTypes()
+    @Override
+	public Iterator listMediaTypes()
     {
         Vector results = new Vector();
         Vector types = new Vector();
@@ -117,7 +120,8 @@ public class BaseCapabilityMap implements CapabilityMap
     /**
     @see CapabilityMap#getAgent
     */
-    public String getAgent()
+    @Override
+	public String getAgent()
     {
         return this.useragent;
     }
@@ -125,7 +129,8 @@ public class BaseCapabilityMap implements CapabilityMap
     /**
     @see CapabilityMap#hasCapability
     */
-    public boolean hasCapability( int cap )
+    @Override
+	public boolean hasCapability( int cap )
     {
         return false;
     }
@@ -133,7 +138,8 @@ public class BaseCapabilityMap implements CapabilityMap
     /**
     @see CapabilityMap#hasCapability
     */
-    public boolean hasCapability( String capability )
+    @Override
+	public boolean hasCapability( String capability )
     {
         Iterator i = entry.getCapabilityMap().getCapabilities();
 
@@ -153,7 +159,8 @@ public class BaseCapabilityMap implements CapabilityMap
     /**
     @see CapabilityMap#getMimeTypes
     */
-    public MimeType[] getMimeTypes()
+    @Override
+	public MimeType[] getMimeTypes()
     {
         Vector v = new Vector();
         Iterator i = entry.getMimetypeMap().getMimetypes();
@@ -170,7 +177,8 @@ public class BaseCapabilityMap implements CapabilityMap
     /**
     @see CapabilityMap#supportsMimeType
     */
-    public boolean supportsMimeType( MimeType mimeType )
+    @Override
+	public boolean supportsMimeType( MimeType mimeType )
     {
         Iterator i = entry.getMimetypeMap().getMimetypes();
 
@@ -191,7 +199,8 @@ public class BaseCapabilityMap implements CapabilityMap
     /**
     @see CapabilityMap#supportsMimeType
     */
-    public boolean supportsMediaType( String media )
+    @Override
+	public boolean supportsMediaType( String media )
     {
         if (media == null)
         {
@@ -212,7 +221,8 @@ public class BaseCapabilityMap implements CapabilityMap
     /**
     Create a map string representation
     */
-    public String toString()
+    @Override
+	public String toString()
     {
         StringBuffer desc = new StringBuffer(entry.getName());
 

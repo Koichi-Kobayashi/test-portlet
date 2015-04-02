@@ -51,7 +51,13 @@ import com.aimluck.eip.cayenne.om.portlet.EipTTimeline;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimelineFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimelineLike;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimelineUrl;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimeline;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimelineFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimelineLike;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimelineUrl;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.common.ALFileNotRemovedException;
@@ -151,9 +157,9 @@ public class TimelineUtils {
     SelectQuery<EipTTimeline> query = Database.query(EipTTimeline.class);
 
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTTimeline.PARENT_ID_PROPERTY, timeline_id);
+      ExpressionFactory.matchExp(_EipTTimeline.PARENT_ID_PROPERTY, timeline_id);
     Expression exp2 =
-      ExpressionFactory.matchExp(EipTTimeline.TIMELINE_TYPE_PROPERTY, "T");
+      ExpressionFactory.matchExp(_EipTTimeline.TIMELINE_TYPE_PROPERTY, "T");
     query.setQualifier(exp1.andExp(exp2));
 
     return query.getCount();
@@ -176,10 +182,10 @@ public class TimelineUtils {
 
       Expression exp02 =
         ExpressionFactory.matchDbExp(
-          EipTTimeline.TIMELINE_ID_PK_COLUMN,
+          _EipTTimeline.TIMELINE_ID_PK_COLUMN,
           topicid);
       Expression exp03 =
-        ExpressionFactory.matchExp(EipTTimeline.PARENT_ID_PROPERTY, topicid);
+        ExpressionFactory.matchExp(_EipTTimeline.PARENT_ID_PROPERTY, topicid);
 
       query.andQualifier((exp02).orExp(exp03));
 
@@ -220,10 +226,10 @@ public class TimelineUtils {
           .valueOf(userid));
       Expression exp02 =
         ExpressionFactory.matchDbExp(
-          EipTTimeline.TIMELINE_ID_PK_COLUMN,
+          _EipTTimeline.TIMELINE_ID_PK_COLUMN,
           topicid);
       Expression exp03 =
-        ExpressionFactory.matchExp(EipTTimeline.PARENT_ID_PROPERTY, topicid);
+        ExpressionFactory.matchExp(_EipTTimeline.PARENT_ID_PROPERTY, topicid);
 
       // scheduleの時
       String del_member_value = null;
@@ -395,7 +401,7 @@ public class TimelineUtils {
         user.initField();
         user.setUserId((Integer) Database.getFromDataRow(
           dataRow,
-          TurbineUser.USER_ID_PK_COLUMN));
+          _TurbineUser.USER_ID_PK_COLUMN));
         user.setName((String) Database.getFromDataRow(
           dataRow,
           TurbineUser.LOGIN_NAME_COLUMN));
@@ -494,7 +500,7 @@ public class TimelineUtils {
       SelectQuery<EipTTimeline> query = Database.query(EipTTimeline.class);
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTTimeline.TIMELINE_ID_PK_COLUMN,
+          _EipTTimeline.TIMELINE_ID_PK_COLUMN,
           Integer.valueOf(entryid));
       query.setQualifier(exp);
       List<EipTTimeline> entrys = query.fetchList();
@@ -632,7 +638,7 @@ public class TimelineUtils {
           Database.query(EipTTimelineFile.class);
         Expression reqexp1 =
           ExpressionFactory.inDbExp(
-            EipTBlogFile.FILE_ID_PK_COLUMN,
+            _EipTBlogFile.FILE_ID_PK_COLUMN,
             hadfileidsValue);
         reqquery.setQualifier(reqexp1);
         List<EipTTimelineFile> requests = reqquery.fetchList();
@@ -676,7 +682,7 @@ public class TimelineUtils {
         Database.query(EipTTimelineFile.class);
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTTimelineFile.FILE_ID_PK_COLUMN,
+          _EipTTimelineFile.FILE_ID_PK_COLUMN,
           Integer.valueOf(attachmentIndex));
       query.andQualifier(exp);
 
@@ -715,7 +721,7 @@ public class TimelineUtils {
       SelectQuery<EipTTimelineUrl> query =
         Database.query(EipTTimelineUrl.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTTimelineUrl.URL_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipTTimelineUrl.URL_ID_PK_COLUMN, Integer
           .valueOf(attachmentIndex));
       query.andQualifier(exp);
 
@@ -757,7 +763,7 @@ public class TimelineUtils {
     SelectQuery<EipTTimelineFile> query =
       Database.query(EipTTimelineFile.class);
     Expression exp =
-      ExpressionFactory.matchDbExp(EipTTimeline.TIMELINE_ID_PK_COLUMN, Integer
+      ExpressionFactory.matchDbExp(_EipTTimeline.TIMELINE_ID_PK_COLUMN, Integer
         .valueOf(requestid));
     query.setQualifier(exp);
     return query;
@@ -767,7 +773,7 @@ public class TimelineUtils {
       List<String> fpaths) throws ALFileNotRemovedException {
     ALDeleteFileUtil.deleteFiles(
       timelineId,
-      EipTTimelineFile.EIP_TTIMELINE_PROPERTY,
+      _EipTTimelineFile.EIP_TTIMELINE_PROPERTY,
       getSaveDirPath(orgId, uid),
       fpaths,
       EipTTimelineFile.class);
@@ -777,7 +783,7 @@ public class TimelineUtils {
     SelectQuery<EipTTimelineLike> query =
       Database.query(EipTTimelineLike.class);
     query.andQualifier(ExpressionFactory.matchDbExp(
-      EipTTimelineLike.EIP_TTIMELINE_PROPERTY,
+      _EipTTimelineLike.EIP_TTIMELINE_PROPERTY,
       timelineId));
     List<EipTTimelineLike> likes = query.fetchList();
     Database.deleteAll(likes);
@@ -1113,9 +1119,9 @@ public class TimelineUtils {
       String appId, String ExternalId) throws ALFileNotRemovedException {
     SelectQuery<EipTTimeline> query = Database.query(EipTTimeline.class);
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTTimeline.APP_ID_PROPERTY, appId);
+      ExpressionFactory.matchExp(_EipTTimeline.APP_ID_PROPERTY, appId);
     Expression exp2 =
-      ExpressionFactory.matchExp(EipTTimeline.EXTERNAL_ID_PROPERTY, ExternalId);
+      ExpressionFactory.matchExp(_EipTTimeline.EXTERNAL_ID_PROPERTY, ExternalId);
     query.setQualifier(exp1.andExp(exp2));
 
     EipTTimeline parent = query.fetchSingle();
@@ -1172,7 +1178,7 @@ public class TimelineUtils {
       SelectQuery<EipTTimeline> query = Database.query(EipTTimeline.class);
       Expression exp =
         ExpressionFactory.inDbExp(
-          EipTTimeline.TIMELINE_ID_PK_COLUMN,
+          _EipTTimeline.TIMELINE_ID_PK_COLUMN,
           topicIdList);
       query.setQualifier(exp);
 
@@ -1241,7 +1247,7 @@ public class TimelineUtils {
     SelectQuery<EipTTimeline> dQuery = Database.query(EipTTimeline.class);
 
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTTimeline.PARENT_ID_PROPERTY, topicparent);
+      ExpressionFactory.matchExp(_EipTTimeline.PARENT_ID_PROPERTY, topicparent);
     dQuery.andQualifier(exp1);
     dQuery.distinct(true);
     List<EipTTimeline> tList = dQuery.fetchList();
@@ -1250,7 +1256,7 @@ public class TimelineUtils {
       SelectQuery<EipTTimeline> ddQuery = Database.query(EipTTimeline.class);
       Expression exp2 =
         ExpressionFactory.matchDbExp(
-          EipTTimeline.TIMELINE_ID_PK_COLUMN,
+          _EipTTimeline.TIMELINE_ID_PK_COLUMN,
           topicparent);
       ddQuery.setQualifier(exp2);
 

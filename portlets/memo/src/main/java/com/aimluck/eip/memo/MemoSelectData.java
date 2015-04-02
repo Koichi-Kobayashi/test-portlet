@@ -32,6 +32,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTMemo;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMemo;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -164,11 +165,11 @@ public class MemoSelectData extends ALAbstractSelectData<EipTMemo, EipTMemo>
     if (search != null && !search.equals("")) {
       current_search = search;
       Expression ex1 =
-        ExpressionFactory.likeExp(EipTMemo.MEMO_NAME_PROPERTY, "%"
+        ExpressionFactory.likeExp(_EipTMemo.MEMO_NAME_PROPERTY, "%"
           + search
           + "%");
       Expression ex2 =
-        ExpressionFactory.likeExp(EipTMemo.NOTE_PROPERTY, "%" + search + "%");
+        ExpressionFactory.likeExp(_EipTMemo.NOTE_PROPERTY, "%" + search + "%");
       SelectQuery<EipTMemo> q = Database.query(EipTMemo.class);
       q.andQualifier(ex1.orExp(ex2));
       List<EipTMemo> queryList = q.fetchList();
@@ -181,7 +182,7 @@ public class MemoSelectData extends ALAbstractSelectData<EipTMemo, EipTMemo>
         resultid.add(-1);
       }
       Expression ex =
-        ExpressionFactory.inDbExp(EipTMemo.MEMO_ID_PK_COLUMN, resultid);
+        ExpressionFactory.inDbExp(_EipTMemo.MEMO_ID_PK_COLUMN, resultid);
       query.andQualifier(ex);
     }
     return query;
@@ -204,7 +205,7 @@ public class MemoSelectData extends ALAbstractSelectData<EipTMemo, EipTMemo>
 
     SelectQuery<EipTMemo> query = Database.query(EipTMemo.class);
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTMemo.OWNER_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTMemo.OWNER_ID_PROPERTY, Integer
         .valueOf(ALEipUtils.getUserId(rundata)));
     query.setQualifier(exp1);
 
@@ -291,9 +292,9 @@ public class MemoSelectData extends ALAbstractSelectData<EipTMemo, EipTMemo>
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("memo_name", EipTMemo.MEMO_NAME_PROPERTY);
-    map.putValue("update_date", EipTMemo.UPDATE_DATE_PROPERTY);
-    map.putValue("create_date", EipTMemo.CREATE_DATE_PROPERTY);
+    map.putValue("memo_name", _EipTMemo.MEMO_NAME_PROPERTY);
+    map.putValue("update_date", _EipTMemo.UPDATE_DATE_PROPERTY);
+    map.putValue("create_date", _EipTMemo.CREATE_DATE_PROPERTY);
     return map;
   }
 

@@ -44,7 +44,8 @@ public class BaseJetspeedPermission implements Permission
      *
      * @return the name of the permission.
      */
-    public String getName()
+    @Override
+	public String getName()
     {
         return name;
     }
@@ -54,7 +55,8 @@ public class BaseJetspeedPermission implements Permission
      *
      * @param permissionName the name of the Permission.
      */
-    public void setName(String permissionName)
+    @Override
+	public void setName(String permissionName)
     {
         name = permissionName;
     }
@@ -64,7 +66,8 @@ public class BaseJetspeedPermission implements Permission
      *
      * @return the id of the permission.
      */
-    public String getId()
+    @Override
+	public String getId()
     {
         return id;
     }
@@ -74,7 +77,8 @@ public class BaseJetspeedPermission implements Permission
      *
      * @param id the new id for the permission
      */
-    public void setId(String id)
+    @Override
+	public void setId(String id)
     {      
         if (this.id == null)
         {

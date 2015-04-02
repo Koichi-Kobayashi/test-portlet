@@ -47,8 +47,11 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.eip.cayenne.om.portlet.EipTNote;
 import com.aimluck.eip.cayenne.om.portlet.EipTNoteMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTNote;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTNoteMap;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALActivity;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -124,10 +127,10 @@ public class NoteUtils {
 
     // アクセス権の判定
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTNoteMap.NOTE_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTNoteMap.NOTE_ID_PROPERTY, Integer
         .valueOf(noteId));
     Expression exp2 =
-      ExpressionFactory.matchExp(EipTNoteMap.USER_ID_PROPERTY, uid);
+      ExpressionFactory.matchExp(_EipTNoteMap.USER_ID_PROPERTY, uid);
 
     List<EipTNoteMap> maps =
       Database.query(EipTNoteMap.class, exp1.andExp(exp2)).fetchList();
@@ -147,7 +150,7 @@ public class NoteUtils {
       }
 
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTNote.NOTE_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipTNote.NOTE_ID_PK_COLUMN, Integer
           .valueOf(noteId));
 
       List<EipTNote> notes = query.andQualifier(exp).fetchList();
@@ -188,9 +191,9 @@ public class NoteUtils {
       }
 
       Expression exp1 =
-        ExpressionFactory.matchDbExp(EipTNote.NOTE_ID_PK_COLUMN, noteId);
+        ExpressionFactory.matchDbExp(_EipTNote.NOTE_ID_PK_COLUMN, noteId);
       Expression exp2 =
-        ExpressionFactory.matchExp(EipTNoteMap.DEL_FLG_PROPERTY, "F");
+        ExpressionFactory.matchExp(_EipTNoteMap.DEL_FLG_PROPERTY, "F");
 
       List<EipTNoteMap> maps =
         query.andQualifier(exp1).andQualifier(exp2).fetchList();
@@ -226,26 +229,26 @@ public class NoteUtils {
       SelectQuery<EipTNoteMap> query = Database.query(EipTNoteMap.class);
 
       Expression exp1 =
-        ExpressionFactory.inDbExp(EipTNote.NOTE_ID_PK_COLUMN, nodeIds);
+        ExpressionFactory.inDbExp(_EipTNote.NOTE_ID_PK_COLUMN, nodeIds);
       query.setQualifier(exp1);
 
       if (tabReceive) {
         Expression exp2 =
-          ExpressionFactory.matchExp(EipTNoteMap.USER_ID_PROPERTY, userid);
+          ExpressionFactory.matchExp(_EipTNoteMap.USER_ID_PROPERTY, userid);
         query.andQualifier(exp2);
         Expression exp3 =
-          ExpressionFactory.noMatchExp(EipTNoteMap.EIP_TNOTE_PROPERTY
+          ExpressionFactory.noMatchExp(_EipTNoteMap.EIP_TNOTE_PROPERTY
             + "."
-            + EipTNote.OWNER_ID_PROPERTY, userid);
+            + _EipTNote.OWNER_ID_PROPERTY, userid);
         query.andQualifier(exp3);
       } else {
         Expression exp2 =
-          ExpressionFactory.matchExp(EipTNoteMap.USER_ID_PROPERTY, userid);
+          ExpressionFactory.matchExp(_EipTNoteMap.USER_ID_PROPERTY, userid);
         query.andQualifier(exp2);
         Expression exp3 =
-          ExpressionFactory.matchExp(EipTNoteMap.EIP_TNOTE_PROPERTY
+          ExpressionFactory.matchExp(_EipTNoteMap.EIP_TNOTE_PROPERTY
             + "."
-            + EipTNote.OWNER_ID_PROPERTY, userid);
+            + _EipTNote.OWNER_ID_PROPERTY, userid);
         query.andQualifier(exp3);
       }
 
@@ -279,7 +282,7 @@ public class NoteUtils {
     try {
       Expression exp =
         ExpressionFactory.matchExp(
-          TurbineUser.LOGIN_NAME_PROPERTY,
+          _TurbineUser.LOGIN_NAME_PROPERTY,
           userLoginName);
 
       List<TurbineUser> destUserList =
@@ -310,7 +313,7 @@ public class NoteUtils {
 
     try {
       Expression exp =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
           .valueOf(userId));
 
       List<TurbineUser> destUserList =
@@ -491,7 +494,7 @@ public class NoteUtils {
         EipTNote tmpnote = noteMap.getEipTNote();
 
         Expression mapexp =
-          ExpressionFactory.matchExp(EipTNoteMap.NOTE_ID_PROPERTY, tmpnote
+          ExpressionFactory.matchExp(_EipTNoteMap.NOTE_ID_PROPERTY, tmpnote
             .getNoteId());
 
         List<EipTNoteMap> maplist =
@@ -584,25 +587,25 @@ public class NoteUtils {
     SelectQuery<EipTNoteMap> query = Database.query(EipTNoteMap.class);
     Expression exp01 =
       ExpressionFactory.matchExp(
-        EipTNoteMap.NOTE_STAT_PROPERTY,
+        _EipTNoteMap.NOTE_STAT_PROPERTY,
         NoteUtils.NOTE_STAT_NEW);
     Expression exp02 =
       ExpressionFactory.matchExp(
-        EipTNoteMap.NOTE_STAT_PROPERTY,
+        _EipTNoteMap.NOTE_STAT_PROPERTY,
         NoteUtils.NOTE_STAT_UNREAD);
     query.setQualifier(exp01.orExp(exp02));
 
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTNoteMap.USER_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTNoteMap.USER_ID_PROPERTY, Integer
         .valueOf(userId));
     query.andQualifier(exp1);
     Expression exp2 =
-      ExpressionFactory.matchExp(EipTNoteMap.DEL_FLG_PROPERTY, "F");
+      ExpressionFactory.matchExp(_EipTNoteMap.DEL_FLG_PROPERTY, "F");
     query.andQualifier(exp2);
     Expression exp3 =
-      ExpressionFactory.noMatchExp(EipTNoteMap.EIP_TNOTE_PROPERTY
+      ExpressionFactory.noMatchExp(_EipTNoteMap.EIP_TNOTE_PROPERTY
         + "."
-        + EipTNote.OWNER_ID_PROPERTY, Integer.valueOf(userId));
+        + _EipTNote.OWNER_ID_PROPERTY, Integer.valueOf(userId));
     query.andQualifier(exp3);
 
     return query;
@@ -638,23 +641,23 @@ public class NoteUtils {
     try {
       SelectQuery<EipTNote> query = Database.query(EipTNote.class);
       Expression exp1 =
-        ExpressionFactory.noMatchExp(EipTNote.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.noMatchExp(_EipTNote.OWNER_ID_PROPERTY, Integer
           .valueOf(srcUserId));
       query.setQualifier(exp1);
       Expression exp2 =
-        ExpressionFactory.matchExp(EipTNote.EIP_TNOTE_MAPS_PROPERTY
+        ExpressionFactory.matchExp(_EipTNote.EIP_TNOTE_MAPS_PROPERTY
           + "."
-          + EipTNoteMap.USER_ID_PROPERTY, Integer.valueOf(srcUserId));
+          + _EipTNoteMap.USER_ID_PROPERTY, Integer.valueOf(srcUserId));
       query.andQualifier(exp2);
       Expression exp3 =
-        ExpressionFactory.matchExp(EipTNote.EIP_TNOTE_MAPS_PROPERTY
+        ExpressionFactory.matchExp(_EipTNote.EIP_TNOTE_MAPS_PROPERTY
           + "."
-          + EipTNoteMap.DEL_FLG_PROPERTY, "F");
+          + _EipTNoteMap.DEL_FLG_PROPERTY, "F");
       query.andQualifier(exp3);
       Expression exp4 =
-        ExpressionFactory.matchExp(EipTNote.EIP_TNOTE_MAPS_PROPERTY
+        ExpressionFactory.matchExp(_EipTNote.EIP_TNOTE_MAPS_PROPERTY
           + "."
-          + EipTNoteMap.NOTE_STAT_PROPERTY, NoteUtils.NOTE_STAT_NEW);
+          + _EipTNoteMap.NOTE_STAT_PROPERTY, NoteUtils.NOTE_STAT_NEW);
       query.andQualifier(exp4);
       return query;
     } catch (Exception ex) {
@@ -694,23 +697,23 @@ public class NoteUtils {
     try {
       SelectQuery<EipTNote> query = Database.query(EipTNote.class);
       Expression exp1 =
-        ExpressionFactory.noMatchExp(EipTNote.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.noMatchExp(_EipTNote.OWNER_ID_PROPERTY, Integer
           .valueOf(srcUserId));
       query.setQualifier(exp1);
       Expression exp2 =
-        ExpressionFactory.matchExp(EipTNote.EIP_TNOTE_MAPS_PROPERTY
+        ExpressionFactory.matchExp(_EipTNote.EIP_TNOTE_MAPS_PROPERTY
           + "."
-          + EipTNoteMap.USER_ID_PROPERTY, Integer.valueOf(srcUserId));
+          + _EipTNoteMap.USER_ID_PROPERTY, Integer.valueOf(srcUserId));
       query.andQualifier(exp2);
       Expression exp3 =
-        ExpressionFactory.matchExp(EipTNote.EIP_TNOTE_MAPS_PROPERTY
+        ExpressionFactory.matchExp(_EipTNote.EIP_TNOTE_MAPS_PROPERTY
           + "."
-          + EipTNoteMap.DEL_FLG_PROPERTY, "F");
+          + _EipTNoteMap.DEL_FLG_PROPERTY, "F");
       query.andQualifier(exp3);
       Expression exp4 =
-        ExpressionFactory.matchExp(EipTNote.EIP_TNOTE_MAPS_PROPERTY
+        ExpressionFactory.matchExp(_EipTNote.EIP_TNOTE_MAPS_PROPERTY
           + "."
-          + EipTNoteMap.NOTE_STAT_PROPERTY, NoteUtils.NOTE_STAT_UNREAD);
+          + _EipTNoteMap.NOTE_STAT_PROPERTY, NoteUtils.NOTE_STAT_UNREAD);
       query.andQualifier(exp4);
       return query;
     } catch (Exception ex) {

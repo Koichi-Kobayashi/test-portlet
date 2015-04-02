@@ -56,7 +56,8 @@ public class NoGroupManagement
      * @exception GroupException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Iterator getGroups(String username)
+    @Override
+	public Iterator getGroups(String username)
         throws JetspeedSecurityException
     {
         return new Vector().iterator();
@@ -72,7 +73,8 @@ public class NoGroupManagement
      * @exception GroupException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Iterator getGroups()
+    @Override
+	public Iterator getGroups()
         throws JetspeedSecurityException
     {
         return new Vector().iterator();
@@ -87,7 +89,8 @@ public class NoGroupManagement
      * @exception GroupException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void addGroup(Group group)
+    @Override
+	public void addGroup(Group group)
         throws JetspeedSecurityException
     {
     }
@@ -101,7 +104,8 @@ public class NoGroupManagement
      * @exception GroupException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void saveGroup(Group group)
+    @Override
+	public void saveGroup(Group group)
         throws JetspeedSecurityException
     {
     }
@@ -116,7 +120,8 @@ public class NoGroupManagement
      * @exception GroupException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void removeGroup(String groupname)
+    @Override
+	public void removeGroup(String groupname)
         throws JetspeedSecurityException
     {
     }
@@ -130,7 +135,8 @@ public class NoGroupManagement
      * @exception GroupException when the security provider has a general failure retrieving groups.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void joinGroup(String username, String groupname)
+    @Override
+	public void joinGroup(String username, String groupname)
         throws JetspeedSecurityException
     {
     }
@@ -144,7 +150,8 @@ public class NoGroupManagement
      * @exception GroupException when the security provider has a general failure retrieving groups.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void joinGroup(String username, String groupname, String rolename)
+    @Override
+	public void joinGroup(String username, String groupname, String rolename)
         throws JetspeedSecurityException
     {
     }
@@ -158,7 +165,8 @@ public class NoGroupManagement
      * @exception GroupException when the security provider has a general failure retrieving groups.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void unjoinGroup(String username, String groupname)
+    @Override
+	public void unjoinGroup(String username, String groupname)
         throws JetspeedSecurityException
     {
     }
@@ -173,7 +181,8 @@ public class NoGroupManagement
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
 
-    public void unjoinGroup(String username, String groupname, String rolename)
+    @Override
+	public void unjoinGroup(String username, String groupname, String rolename)
         throws JetspeedSecurityException
     {
     }
@@ -188,7 +197,8 @@ public class NoGroupManagement
      * @exception GroupException when the security provider has a general failure retrieving groups.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public boolean inGroup(String username, String groupname)
+    @Override
+	public boolean inGroup(String username, String groupname)
         throws JetspeedSecurityException
     {
         return false;
@@ -205,7 +215,8 @@ public class NoGroupManagement
      * @exception GroupException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Group getGroup(String groupname)
+    @Override
+	public Group getGroup(String groupname)
         throws JetspeedSecurityException
     {
         BaseJetspeedGroup r = new BaseJetspeedGroup();

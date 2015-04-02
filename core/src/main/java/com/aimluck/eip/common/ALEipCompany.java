@@ -37,7 +37,8 @@ public class ALEipCompany implements ALData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     company_id = new ALNumberField();
     company_name = new ALStringField();
   }

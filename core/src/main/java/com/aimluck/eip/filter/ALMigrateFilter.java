@@ -56,6 +56,7 @@ import org.exolab.castor.mapping.Mapping;
 import org.xml.sax.InputSource;
 
 import com.aimluck.eip.cayenne.om.account.JetspeedUserProfile;
+import com.aimluck.eip.cayenne.om.account.auto._JetspeedUserProfile;
 
 /**
  *
@@ -155,7 +156,7 @@ public class ALMigrateFilter implements javax.servlet.Filter {
         SelectQuery query = new SelectQuery(JetspeedUserProfile.class);
         Expression exp =
           ExpressionFactory.matchExp(
-            JetspeedUserProfile.MEDIA_TYPE_PROPERTY,
+            _JetspeedUserProfile.MEDIA_TYPE_PROPERTY,
             "html");
         query.setQualifier(exp);
 

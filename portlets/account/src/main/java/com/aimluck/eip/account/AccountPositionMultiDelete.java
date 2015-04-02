@@ -30,6 +30,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.account.EipMPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPosition;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.common.ALEipManager;
@@ -74,7 +75,7 @@ public class AccountPositionMultiDelete extends ALAbstractCheckList {
 
       // 役職を削除
       Expression exp =
-        ExpressionFactory.inDbExp(EipMPosition.POSITION_ID_PK_COLUMN, ids);
+        ExpressionFactory.inDbExp(_EipMPosition.POSITION_ID_PK_COLUMN, ids);
       SelectQuery<EipMPosition> query = Database.query(EipMPosition.class, exp);
       List<EipMPosition> postisions = query.fetchList();
 
@@ -121,7 +122,7 @@ public class AccountPositionMultiDelete extends ALAbstractCheckList {
       }
 
       Expression exp =
-        ExpressionFactory.inDbExp(EipMPosition.POSITION_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipMPosition.POSITION_ID_PK_COLUMN, values);
       SelectQuery<EipMPosition> query = Database.query(EipMPosition.class, exp);
       list = query.fetchList();
       if (list == null || list.size() == 0) {

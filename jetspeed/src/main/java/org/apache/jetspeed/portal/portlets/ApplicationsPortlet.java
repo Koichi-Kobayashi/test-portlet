@@ -60,7 +60,8 @@ public class ApplicationsPortlet extends AbstractPortlet
 
     /**
     */
-    public void init() throws PortletException
+    @Override
+	public void init() throws PortletException
     {
 
         PortletConfig config = this.getPortletConfig();
@@ -88,7 +89,8 @@ public class ApplicationsPortlet extends AbstractPortlet
 
     /**
     */
-    public ConcreteElement getContent( RunData data ) {
+    @Override
+	public ConcreteElement getContent( RunData data ) {
 
         Table table = new Table();
         Enumeration portlets = applications.elements();
@@ -114,11 +116,13 @@ public class ApplicationsPortlet extends AbstractPortlet
     }
 
 
-    public boolean getAllowEdit( RunData rundata ) {
+    @Override
+	public boolean getAllowEdit( RunData rundata ) {
         return false;
     }
 
-    public boolean getAllowMaximize( RunData rundata ) {
+    @Override
+	public boolean getAllowMaximize( RunData rundata ) {
         return true;
     }
 

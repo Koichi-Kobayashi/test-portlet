@@ -46,7 +46,8 @@ public  class EmailInbox
      *
      * @return byte[]
      */
-    public byte[] getAttachment()
+    @Override
+	public byte[] getAttachment()
     {
         return attachment;
     }
@@ -57,7 +58,8 @@ public  class EmailInbox
      *
      * @param v new value
      */
-    public void setAttachment(byte[] v) 
+    @Override
+	public void setAttachment(byte[] v) 
     {     
         if (!ObjectUtils.equals(this.attachment, v))
         {

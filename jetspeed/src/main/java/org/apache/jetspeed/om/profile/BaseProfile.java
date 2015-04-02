@@ -37,7 +37,8 @@ public class BaseProfile extends BaseProfileLocator implements Profile {
     init(locator);
   }
 
-  public void init(ProfileLocator locator) {
+  @Override
+public void init(ProfileLocator locator) {
     this.setAnonymous(locator.getAnonymous());
     this.setCountry(locator.getCountry());
     this.setGroup(locator.getGroup());
@@ -53,7 +54,8 @@ public class BaseProfile extends BaseProfileLocator implements Profile {
    * @see Object#clone
    * @return an instance copy of this object
    */
-  public Object clone() throws java.lang.CloneNotSupportedException {
+  @Override
+public Object clone() throws java.lang.CloneNotSupportedException {
     Object cloned = super.clone();
 
     // clone the document
@@ -68,7 +70,8 @@ public class BaseProfile extends BaseProfileLocator implements Profile {
    * 
    * @return The root portlet set for this profile.
    */
-  public PortletSet getRootSet() {
+  @Override
+public PortletSet getRootSet() {
     return PortalToolkit.getSet(getDocument().getPortlets());
   }
 
@@ -77,7 +80,8 @@ public class BaseProfile extends BaseProfileLocator implements Profile {
    * 
    * @return The root portlet set for this profile.
    */
-  public PSMLDocument getDocument() {
+  @Override
+public PSMLDocument getDocument() {
     synchronized (this) {
       if ((this.document == null) || (this.document.getPortlets() == null)) {
         this.document = PsmlManager.getDocument(this);
@@ -92,7 +96,8 @@ public class BaseProfile extends BaseProfileLocator implements Profile {
    * 
    * @param The PSML document for this profile.
    */
-  public void setDocument(PSMLDocument document) {
+  @Override
+public void setDocument(PSMLDocument document) {
     this.document = document;
   }
 
@@ -102,7 +107,8 @@ public class BaseProfile extends BaseProfileLocator implements Profile {
    * @throws ProfileException
    *             if an error occurs storing the profile
    */
-  public void store() throws ProfileException {
+  @Override
+public void store() throws ProfileException {
     if (document != null) {
       PsmlManager.store(this);
     }
@@ -111,7 +117,8 @@ public class BaseProfile extends BaseProfileLocator implements Profile {
   /**
    * provide useful info for ease of debugging
    */
-  public String toString() {
+  @Override
+public String toString() {
     return "BaseProfile[" + getId() + "]"; /*
                                              * getUser().getUserName()+","+
                                              * getGroup().getName()+","+

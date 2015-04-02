@@ -38,7 +38,11 @@ import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.EipTCommonCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTSchedule;
 import com.aimluck.eip.cayenne.om.portlet.EipTScheduleMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTSchedule;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTScheduleMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipUser;
@@ -254,10 +258,10 @@ public class ScheduleTooltipSelectData extends
       SelectQuery<EipTSchedule> schedulequery =
         Database.query(EipTSchedule.class);
       Expression exp1 =
-        ExpressionFactory.matchExp(EipTSchedule.PARENT_ID_PROPERTY, record
+        ExpressionFactory.matchExp(_EipTSchedule.PARENT_ID_PROPERTY, record
           .getScheduleId());
       Expression exp2 =
-        ExpressionFactory.matchExp(EipTSchedule.START_DATE_PROPERTY, view_date
+        ExpressionFactory.matchExp(_EipTSchedule.START_DATE_PROPERTY, view_date
           .getValue());
       schedulequery.setQualifier(exp1);
       schedulequery.andQualifier(exp2);
@@ -274,10 +278,10 @@ public class ScheduleTooltipSelectData extends
         Database.query(EipTScheduleMap.class);
       Expression mapexp1 =
         ExpressionFactory.inExp(
-          EipTScheduleMap.SCHEDULE_ID_PROPERTY,
+          _EipTScheduleMap.SCHEDULE_ID_PROPERTY,
           scheduleList);
       mapquery.setQualifier(mapexp1);
-      mapquery.orderAscending(EipTScheduleMap.SCHEDULE_ID_PROPERTY);
+      mapquery.orderAscending(_EipTScheduleMap.SCHEDULE_ID_PROPERTY);
 
       List<EipTScheduleMap> list = mapquery.fetchList();
 
@@ -312,7 +316,7 @@ public class ScheduleTooltipSelectData extends
       }
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
-        ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, users);
+        ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, users);
       query.setQualifier(exp);
       members = ALEipUtils.getUsersFromSelectQuery(query);
       // members = ALEipUtils.getUsersFromCriteria(rundata, new
@@ -323,7 +327,7 @@ public class ScheduleTooltipSelectData extends
         SelectQuery<EipMFacility> fquery = Database.query(EipMFacility.class);
         Expression fexp =
           ExpressionFactory.inDbExp(
-            EipMFacility.FACILITY_ID_PK_COLUMN,
+            _EipMFacility.FACILITY_ID_PK_COLUMN,
             facilityIds);
         fquery.setQualifier(fexp);
         facilities = FacilitiesUtils.getFacilitiesFromSelectQuery(fquery);

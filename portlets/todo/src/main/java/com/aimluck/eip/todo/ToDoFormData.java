@@ -38,6 +38,7 @@ import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodo;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodoCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTodoCategory;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -307,16 +308,16 @@ public class ToDoFormData extends ALAbstractFormData {
     try {
       Expression exp =
         ExpressionFactory.matchExp(
-          EipTTodoCategory.CATEGORY_NAME_PROPERTY,
+          _EipTTodoCategory.CATEGORY_NAME_PROPERTY,
           category_name.getValue());
 
       Expression exp2 =
-        ExpressionFactory.matchExp(EipTTodoCategory.USER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipTTodoCategory.USER_ID_PROPERTY, Integer
           .valueOf(0));
 
       Expression exp3 =
         ExpressionFactory.matchExp(
-          EipTTodoCategory.USER_ID_PROPERTY,
+          _EipTTodoCategory.USER_ID_PROPERTY,
           login_user_id);
       // 新規カテゴリの場合は重複していないかチェックを行います。
       if (is_new_category

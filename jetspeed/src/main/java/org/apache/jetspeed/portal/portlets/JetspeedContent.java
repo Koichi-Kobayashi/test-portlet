@@ -77,7 +77,8 @@ public class JetspeedContent extends FileWatchPortlet
     /**
     Init this Portlet, set it's title, description, etc.
     */
-    public void init() throws PortletException {
+    @Override
+	public void init() throws PortletException {
 
         PortletConfig config = this.getPortletConfig();
         

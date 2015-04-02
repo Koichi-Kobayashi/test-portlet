@@ -44,7 +44,8 @@ public class BlogFileResultData implements ALData {
    * 
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     file_id = new ALNumberField();
     owner_id = new ALNumberField();
     entry_id = new ALNumberField();

@@ -56,7 +56,7 @@ import javax.servlet.ServletConfig;
 /**
  * Simple implementation of the PortalFactoryService.
  * 
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:weaver@apache.org">Scott T. Weaver</a>
  * @version $Id: JetspeedPortletFactoryService.java,v 1.23 2004/02/23 03:36:42 jford Exp $
  */
@@ -78,7 +78,8 @@ public class JetspeedPortletFactoryService extends TurbineBaseService
      * This is the early initialization method called by the 
      * Turbine <code>Service</code> framework
      */
-    public void init( ServletConfig conf ) throws InitializationException
+    @Override
+	public void init( ServletConfig conf ) throws InitializationException
     {
 
         ResourceService serviceConf = ((TurbineServices)TurbineServices.getInstance())
@@ -101,7 +102,8 @@ public class JetspeedPortletFactoryService extends TurbineBaseService
      * @param id the PSML entry's portlet id     
      * @return an instanciated portlet corresponding to this entry
      */
-    public Portlet getPortlet( Entry entry ) throws PortletException
+    @Override
+	public Portlet getPortlet( Entry entry ) throws PortletException
     {
         PortletEntry regEntry = (PortletEntry)Registry.getEntry(Registry.PORTLET, 
                                                                 entry.getParent() );
@@ -131,7 +133,8 @@ public class JetspeedPortletFactoryService extends TurbineBaseService
      * @param name the name of a portlet in the registry
      * @return an instanciated portlet corresponding to this entry
      */
-    public Portlet getPortlet( String name, String id ) throws PortletException
+    @Override
+	public Portlet getPortlet( String name, String id ) throws PortletException
     {
         PortletEntry regEntry = (PortletEntry)Registry.getEntry(Registry.PORTLET, name );
 

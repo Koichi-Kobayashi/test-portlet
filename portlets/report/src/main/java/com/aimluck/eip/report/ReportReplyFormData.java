@@ -38,7 +38,10 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTReport;
 import com.aimluck.eip.cayenne.om.portlet.EipTReportFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTReportMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTReport;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTReportMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -445,7 +448,7 @@ public class ReportReplyFormData extends ALAbstractFormData {
     // 通知先をすべて取得する
     SelectQuery<EipTReportMap> mapQuery = Database.query(EipTReportMap.class);
     Expression mapExp =
-      ExpressionFactory.matchExp(EipTReportMap.REPORT_ID_PROPERTY, parenttopic
+      ExpressionFactory.matchExp(_EipTReportMap.REPORT_ID_PROPERTY, parenttopic
         .getReportId());
     mapQuery.setQualifier(mapExp);
     List<EipTReportMap> mapList = mapQuery.fetchList();
@@ -459,7 +462,7 @@ public class ReportReplyFormData extends ALAbstractFormData {
     // 関連トピックをすべて取得する
     SelectQuery<EipTReport> topicQuery = Database.query(EipTReport.class);
     Expression topicExp =
-      ExpressionFactory.matchExp(EipTReport.PARENT_ID_PROPERTY, parenttopic
+      ExpressionFactory.matchExp(_EipTReport.PARENT_ID_PROPERTY, parenttopic
         .getReportId());
     topicQuery.setQualifier(topicExp);
 
@@ -480,7 +483,7 @@ public class ReportReplyFormData extends ALAbstractFormData {
     // ユーザーIDからユーザー情報を取得する。
     SelectQuery<TurbineUser> userQuery = Database.query(TurbineUser.class);
     Expression userExp =
-      ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, userIdList);
+      ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, userIdList);
     userQuery.setQualifier(userExp);
 
     return ALEipUtils.getUsersFromSelectQuery(userQuery);

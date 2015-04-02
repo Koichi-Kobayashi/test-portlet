@@ -49,7 +49,8 @@ public class WebPageResultData implements ALData {
    * 
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     title = new ALStringField();
     link = new ALStringField();
     normalheight = new ALNumberField();

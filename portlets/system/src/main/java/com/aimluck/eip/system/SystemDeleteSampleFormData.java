@@ -45,6 +45,7 @@ import com.aimluck.eip.cabinet.util.CabinetUtils;
 import com.aimluck.eip.category.util.CommonCategoryUtils;
 import com.aimluck.eip.cayenne.om.account.EipMPosition;
 import com.aimluck.eip.cayenne.om.account.EipMPost;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPosition;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressbook;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressbookCompany;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
@@ -77,8 +78,37 @@ import com.aimluck.eip.cayenne.om.portlet.EipTTodo;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodoCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRequest;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRequestMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressbook;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressbookCompany;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMMailAccount;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlog;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogComment;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogEntry;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogFootmarkMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCabinetFolder;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMail;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMemo;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardTopic;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTNote;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTNoteMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTSchedule;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTScheduleMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimecard;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimeline;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimelineFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimelineMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimelineUrl;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTodo;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTodoCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowRequest;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowRequestMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipManager;
@@ -309,7 +339,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     SelectQuery<EipTCabinetFolder> query =
       Database.query(EipTCabinetFolder.class);
     Expression exp1 =
-      ExpressionFactory.inExp(EipTCabinetFolder.CREATE_USER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTCabinetFolder.CREATE_USER_ID_PROPERTY, ids);
     query.setQualifier(exp1);
 
     List<EipTCabinetFolder> list = query.fetchList();
@@ -320,11 +350,11 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
         Database.query(EipTCabinetFolder.class);
       exp1 =
         ExpressionFactory.matchDbExp(
-          EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
+          _EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
           Integer.valueOf(folderId));
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipTCabinetFolder.PARENT_ID_PROPERTY,
+          _EipTCabinetFolder.PARENT_ID_PROPERTY,
           Integer.valueOf(folderId));
       query1.setQualifier(exp1.orExp(exp2));
       List<EipTCabinetFolder> list1 = query1.fetchList();
@@ -339,7 +369,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
         Database.query(EipTCabinetFolder.class);
       Expression delfolderexp =
         ExpressionFactory.inDbExp(
-          EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
+          _EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
           folderids);
       delfolderquery.setQualifier(delfolderexp);
       List<EipTCabinetFolder> delFolderList = delfolderquery.fetchList();
@@ -409,7 +439,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     SelectQuery<EipTBlogFootmarkMap> blogquery2 =
       Database.query(EipTBlogFootmarkMap.class);
     Expression blogexp2 =
-      ExpressionFactory.inExp(EipTBlogFootmarkMap.USER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTBlogFootmarkMap.USER_ID_PROPERTY, ids);
     blogquery2.setQualifier(blogexp2);
     List<EipTBlogFootmarkMap> bloglist2 = blogquery2.fetchList();
     if (bloglist2 != null && bloglist2.size() > 0) {
@@ -418,7 +448,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
 
     SelectQuery<EipTBlogFile> blogquery3 = Database.query(EipTBlogFile.class);
     Expression blogexp3 =
-      ExpressionFactory.inExp(EipTBlogFile.OWNER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTBlogFile.OWNER_ID_PROPERTY, ids);
     blogquery3.setQualifier(blogexp3);
     List<EipTBlogFile> Bloglist3 = blogquery3.fetchList();
 
@@ -440,7 +470,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     SelectQuery<EipTBlogComment> blogquery4 =
       Database.query(EipTBlogComment.class);
     Expression blogexp4 =
-      ExpressionFactory.inExp(EipTBlogComment.OWNER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTBlogComment.OWNER_ID_PROPERTY, ids);
     blogquery4.setQualifier(blogexp4);
     List<EipTBlogComment> bloglist4 = blogquery4.fetchList();
     if (bloglist4 != null && bloglist4.size() > 0) {
@@ -451,7 +481,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
 
     SelectQuery<EipTBlogEntry> Blogquery5 = Database.query(EipTBlogEntry.class);
     Expression blogexp5 =
-      ExpressionFactory.inExp(EipTBlogEntry.OWNER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTBlogEntry.OWNER_ID_PROPERTY, ids);
     Blogquery5.setQualifier(blogexp5);
     List<EipTBlogEntry> bloglist5 = Blogquery5.fetchList();
     if (bloglist5 != null && bloglist5.size() > 0) {
@@ -470,7 +500,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
         }
         Expression themaExp =
           ExpressionFactory.inExp(
-            EipTBlogEntry.EIP_TBLOG_THEMA_PROPERTY,
+            _EipTBlogEntry.EIP_TBLOG_THEMA_PROPERTY,
             themeIds);
         Query<EipTBlogEntry> themaQuery =
           Database.query(EipTBlogEntry.class, themaExp);
@@ -485,7 +515,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
 
     SelectQuery<EipTBlog> blogquery6 = Database.query(EipTBlog.class);
     Expression blogexp6 =
-      ExpressionFactory.inExp(EipTBlog.OWNER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTBlog.OWNER_ID_PROPERTY, ids);
     blogquery6.setQualifier(blogexp6);
     List<EipTBlog> bloglist6 = blogquery6.fetchList();
     if (bloglist6 != null && bloglist6.size() > 0) {
@@ -499,7 +529,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
       Database.query(EipMAddressbookCompany.class);
     Expression addressexp1 =
       ExpressionFactory.inExp(
-        EipMAddressbookCompany.CREATE_USER_ID_PROPERTY,
+        _EipMAddressbookCompany.CREATE_USER_ID_PROPERTY,
         ids);
     addressquery1.setQualifier(addressexp1);
     List<EipMAddressbookCompany> addresslist1 = addressquery1.fetchList();
@@ -510,7 +540,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     SelectQuery<EipMAddressbook> addressquery2 =
       Database.query(EipMAddressbook.class);
     Expression addressexp2 =
-      ExpressionFactory.inExp(EipMAddressbook.OWNER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipMAddressbook.OWNER_ID_PROPERTY, ids);
     addressquery2.setQualifier(addressexp2);
     List<EipMAddressbook> addresslist2 = addressquery2.fetchList();
     if (addresslist2 != null && addresslist2.size() > 0) {
@@ -522,7 +552,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     SelectQuery<EipMMailAccount> mailquery1 =
       Database.query(EipMMailAccount.class);
     Expression mailexp1 =
-      ExpressionFactory.inExp(EipMMailAccount.USER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipMMailAccount.USER_ID_PROPERTY, ids);
     mailquery1.setQualifier(mailexp1);
     List<EipMMailAccount> maillist1 = mailquery1.fetchList();
     if (maillist1 != null && maillist1.size() > 0) {
@@ -533,7 +563,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
   private void updateMail(List<Integer> ids) {
     SelectQuery<EipTMail> mailquery1 = Database.query(EipTMail.class);
     Expression mailexp1 =
-      ExpressionFactory.inExp(EipTMail.USER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTMail.USER_ID_PROPERTY, ids);
     mailquery1.setQualifier(mailexp1);
     List<EipTMail> maillist1 = mailquery1.fetchList();
     if (maillist1 != null && maillist1.size() > 0) {
@@ -544,7 +574,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
   private void updateMemo(List<Integer> ids) {
     SelectQuery<EipTMemo> memoquery1 = Database.query(EipTMemo.class);
     Expression memoexp1 =
-      ExpressionFactory.inExp(EipTMemo.OWNER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTMemo.OWNER_ID_PROPERTY, ids);
     memoquery1.setQualifier(memoexp1);
     List<EipTMemo> memolist1 = memoquery1.fetchList();
     if (memolist1 != null && memolist1.size() > 0) {
@@ -554,7 +584,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
 
   private void updateMsgboard(List<Integer> ids) {
     Expression fileExp =
-      ExpressionFactory.inExp(EipTMsgboardFile.OWNER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTMsgboardFile.OWNER_ID_PROPERTY, ids);
     SelectQuery<EipTMsgboardFile> fileQuery =
       Database.query(EipTMsgboardFile.class, fileExp);
     List<EipTMsgboardFile> fileList = fileQuery.fetchList();
@@ -571,7 +601,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     }
 
     Expression topicExp =
-      ExpressionFactory.inExp(EipTMsgboardTopic.OWNER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTMsgboardTopic.OWNER_ID_PROPERTY, ids);
     SelectQuery<EipTMsgboardTopic> topicQuery =
       Database.query(EipTMsgboardTopic.class, topicExp);
     List<EipTMsgboardTopic> topicList = topicQuery.fetchList();
@@ -581,7 +611,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
 
     Expression defaultCategoryExp =
       ExpressionFactory.matchDbExp(
-        EipTMsgboardCategory.CATEGORY_ID_PK_COLUMN,
+        _EipTMsgboardCategory.CATEGORY_ID_PK_COLUMN,
         Integer.valueOf(1));
     SelectQuery<EipTMsgboardCategory> defaultCategoryQuery =
       Database.query(EipTMsgboardCategory.class, defaultCategoryExp);
@@ -608,7 +638,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     if (categoryIdList.size() > 0) {
       Expression deletedCategoryTopicExp =
         ExpressionFactory.inExp(
-          EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY,
+          _EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY,
           categoryIdList);
       SelectQuery<EipTMsgboardTopic> deletedCategoryTopicQuery =
         Database.query(EipTMsgboardTopic.class, deletedCategoryTopicExp);
@@ -624,7 +654,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
   private void updateNote(List<Integer> ids) {
     SelectQuery<EipTNote> notequery1 = Database.query(EipTNote.class);
     Expression noteexp1 =
-      ExpressionFactory.inExp(EipTNote.OWNER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTNote.OWNER_ID_PROPERTY, ids);
     notequery1.setQualifier(noteexp1);
     List<EipTNote> notelist1 = notequery1.fetchList();
     if (notelist1 != null && notelist1.size() > 0) {
@@ -633,7 +663,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
 
     SelectQuery<EipTNoteMap> notequery2 = Database.query(EipTNoteMap.class);
     Expression noteexp2 =
-      ExpressionFactory.inExp(EipTNoteMap.USER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTNoteMap.USER_ID_PROPERTY, ids);
     notequery2.setQualifier(noteexp2);
     List<EipTNoteMap> notelist2 = notequery2.fetchList();
     if (notelist2 != null && notelist2.size() > 0) {
@@ -645,7 +675,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     SelectQuery<EipTTimecard> timecardquery1 =
       Database.query(EipTTimecard.class);
     Expression timecardexp1 =
-      ExpressionFactory.inExp(EipTTimecard.USER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTTimecard.USER_ID_PROPERTY, ids);
     timecardquery1.setQualifier(timecardexp1);
     List<EipTTimecard> timecardlist1 = timecardquery1.fetchList();
     if (timecardlist1 != null && timecardlist1.size() > 0) {
@@ -657,7 +687,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     SelectQuery<EipTTimeline> timelineQuery1 =
       Database.query(EipTTimeline.class);
     Expression timelineExp1 =
-      ExpressionFactory.inExp(EipTTimeline.OWNER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTTimeline.OWNER_ID_PROPERTY, ids);
     timelineQuery1.setQualifier(timelineExp1);
     List<EipTTimeline> timelineList1 = timelineQuery1.fetchList();
 
@@ -683,7 +713,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
         SelectQuery<EipTTimelineFile> timelineFileQuery1 =
           Database.query(EipTTimelineFile.class);
         Expression timelineFileExp1 =
-          ExpressionFactory.inExp(EipTTimelineFile.OWNER_ID_PROPERTY, ids);
+          ExpressionFactory.inExp(_EipTTimelineFile.OWNER_ID_PROPERTY, ids);
         timelineFileQuery1.setQualifier(timelineFileExp1);
         List<EipTTimelineFile> timelineFileList1 =
           timelineFileQuery1.fetchList();
@@ -694,7 +724,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
         SelectQuery<EipTTimelineMap> timelineMapQuery1 =
           Database.query(EipTTimelineMap.class);
         Expression timelineMapExp1 =
-          ExpressionFactory.inExp(EipTTimelineMap.EIP_TTIMELINE_PROPERTY, ids);
+          ExpressionFactory.inExp(_EipTTimelineMap.EIP_TTIMELINE_PROPERTY, ids);
         timelineMapQuery1.setQualifier(timelineMapExp1);
         List<EipTTimelineMap> timelineMapList1 = timelineMapQuery1.fetchList();
         if (timelineMapList1 != null && timelineMapList1.size() > 0) {
@@ -705,7 +735,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
           Database.query(EipTTimelineUrl.class);
         Expression timelineUrlExp1 =
           ExpressionFactory.inExp(
-            EipTTimelineUrl.TIMELINE_ID_PROPERTY,
+            _EipTTimelineUrl.TIMELINE_ID_PROPERTY,
             timelineIds);
         timelineUrlQuery1.setQualifier(timelineUrlExp1);
         List<EipTTimelineUrl> timelineUrlList1 = timelineUrlQuery1.fetchList();
@@ -738,7 +768,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     SelectQuery<EipTTodoCategory> todoquery1 =
       Database.query(EipTTodoCategory.class);
     Expression todoexp1 =
-      ExpressionFactory.inExp(EipTTodoCategory.USER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTTodoCategory.USER_ID_PROPERTY, ids);
     todoquery1.setQualifier(todoexp1);
     List<EipTTodoCategory> todolist1 = todoquery1.fetchList();
     if (todolist1 != null && todolist1.size() > 0) {
@@ -747,7 +777,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
 
     SelectQuery<EipTTodo> todoquery2 = Database.query(EipTTodo.class);
     Expression todoexp2 =
-      ExpressionFactory.inExp(EipTTodo.USER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTTodo.USER_ID_PROPERTY, ids);
     todoquery2.setQualifier(todoexp2);
     List<EipTTodo> todolist2 = todoquery2.fetchList();
     if (todolist2 != null && todolist2.size() > 0) {
@@ -762,7 +792,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     SelectQuery<EipTSchedule> schedulequery1 =
       Database.query(EipTSchedule.class);
     Expression scheduleexp1 =
-      ExpressionFactory.inExp(EipTSchedule.OWNER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTSchedule.OWNER_ID_PROPERTY, ids);
     schedulequery1.setQualifier(scheduleexp1);
     List<EipTSchedule> schedulelist1 = schedulequery1.fetchList();
     if (schedulelist1 != null && schedulelist1.size() > 0) {
@@ -773,7 +803,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     SelectQuery<EipTScheduleMap> schedulequery2 =
       Database.query(EipTScheduleMap.class);
     Expression scheduleexp2 =
-      ExpressionFactory.inExp(EipTScheduleMap.USER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTScheduleMap.USER_ID_PROPERTY, ids);
     schedulequery2.setQualifier(scheduleexp2);
     List<EipTScheduleMap> schedulelist2 = schedulequery2.fetchList();
     if (schedulelist2 != null && schedulelist2.size() > 0) {
@@ -798,7 +828,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
       if (deleteFacilityId.size() > 0) {
         Expression fexp =
           ExpressionFactory.inDbExp(
-            EipMFacility.FACILITY_ID_PK_COLUMN,
+            _EipMFacility.FACILITY_ID_PK_COLUMN,
             deleteFacilityId);
         SelectQuery<EipMFacility> query =
           Database.query(EipMFacility.class, fexp);
@@ -808,10 +838,10 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
             Database.query(EipTScheduleMap.class);
           Expression exp1 =
             ExpressionFactory.inExp(
-              EipTScheduleMap.USER_ID_PROPERTY,
+              _EipTScheduleMap.USER_ID_PROPERTY,
               deleteFacilityId);
           Expression exp2 =
-            ExpressionFactory.matchExp(EipTScheduleMap.TYPE_PROPERTY, "F");
+            ExpressionFactory.matchExp(_EipTScheduleMap.TYPE_PROPERTY, "F");
           query1.setQualifier(exp1.andExp(exp2));
           query1.deleteAll();
           Database.deleteAll(flist);
@@ -824,7 +854,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     SelectQuery<EipTWorkflowRequestMap> workquery1 =
       Database.query(EipTWorkflowRequestMap.class);
     Expression workexp1 =
-      ExpressionFactory.inExp(EipTWorkflowRequestMap.USER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTWorkflowRequestMap.USER_ID_PROPERTY, ids);
     workquery1.setQualifier(workexp1);
     List<EipTWorkflowRequestMap> worklist1 = workquery1.fetchList();
     if (worklist1 != null && worklist1.size() > 0) {
@@ -834,7 +864,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     SelectQuery<EipTWorkflowRequest> workquery2 =
       Database.query(EipTWorkflowRequest.class);
     Expression workexp2 =
-      ExpressionFactory.inExp(EipTWorkflowRequest.USER_ID_PROPERTY, ids);
+      ExpressionFactory.inExp(_EipTWorkflowRequest.USER_ID_PROPERTY, ids);
     workquery2.setQualifier(workexp2);
     List<EipTWorkflowRequest> worklist2 = workquery2.fetchList();
     if (worklist2 != null && worklist2.size() > 0) {
@@ -927,7 +957,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     List<Integer> delpositionId = new ArrayList<Integer>();
 
     Expression gexp =
-      ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, ids);
+      ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, ids);
     SelectQuery<TurbineUserGroupRole> gquery =
       Database.query(TurbineUserGroupRole.class, gexp);
     List<TurbineUserGroupRole> map = gquery.fetchList();
@@ -956,7 +986,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
 
     SelectQuery<TurbineUser> tquery = Database.query(TurbineUser.class);
     Expression texp =
-      ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, ids);
+      ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, ids);
     tquery.setQualifier(texp);
     List<TurbineUser> tusers = tquery.fetchList();
     if (tusers != null && tusers.size() > 0) {
@@ -975,7 +1005,7 @@ public class SystemDeleteSampleFormData extends ALAbstractFormData {
     if (delpositionId.size() > 0) {
       Expression exp =
         ExpressionFactory.inDbExp(
-          EipMPosition.POSITION_ID_PK_COLUMN,
+          _EipMPosition.POSITION_ID_PK_COLUMN,
           delpositionId);
       SelectQuery<EipMPosition> postQuery =
         new SelectQuery<EipMPosition>(EipMPosition.class, exp);

@@ -44,7 +44,8 @@ public class AccountPositionResultData implements ALData {
    * 
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     position_id = new ALNumberField();
     position_name = new ALStringField();
     create_date = new ALStringField();

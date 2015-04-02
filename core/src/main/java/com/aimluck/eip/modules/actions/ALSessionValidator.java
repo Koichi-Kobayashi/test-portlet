@@ -55,6 +55,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALEipManager;
 import com.aimluck.eip.common.ALEipUser;
 import com.aimluck.eip.filter.ALDigestAuthenticationFilter;
@@ -459,7 +460,7 @@ public class ALSessionValidator extends JetspeedSessionValidator {
             Database.query(TurbineUser.class);
           Expression exp1 =
             ExpressionFactory.matchDbExp(
-              TurbineUser.USER_ID_PK_COLUMN,
+              _TurbineUser.USER_ID_PK_COLUMN,
               loginuser.getPerm("USER_ID").toString());
           userQuery.setQualifier(exp1);
           TurbineUser tUser = userQuery.fetchSingle();

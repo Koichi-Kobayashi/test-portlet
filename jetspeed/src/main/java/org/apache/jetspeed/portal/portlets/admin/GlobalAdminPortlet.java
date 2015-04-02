@@ -55,7 +55,8 @@ public class GlobalAdminPortlet extends AbstractPortlet {
      * @param rundata RunData object for the current request
      * @return ConcreteElement
      */    
-    public ConcreteElement getContent( RunData rundata ) {
+    @Override
+	public ConcreteElement getContent( RunData rundata ) {
 
         
         ElementContainer ec = new ElementContainer();
@@ -144,7 +145,8 @@ public class GlobalAdminPortlet extends AbstractPortlet {
      * @see AbstractPortlet#init
      */    
     
-    public void init() throws PortletException {
+    @Override
+	public void init() throws PortletException {
 
         this.setTitle( "Global" );
         this.setDescription( "Global information..." );
@@ -154,14 +156,16 @@ public class GlobalAdminPortlet extends AbstractPortlet {
     /**
      * @see AbstractPortlet#getAllowEdit
      */    
-    public boolean getAllowEdit(RunData rundata) {
+    @Override
+	public boolean getAllowEdit(RunData rundata) {
         return false;
     }
 
     /**
      * @see AbstractPortlet#getAllowMaximize
      */    
-    public boolean getAllowMaximize(RunData rundata) {
+    @Override
+	public boolean getAllowMaximize(RunData rundata) {
         return false;
     }
 

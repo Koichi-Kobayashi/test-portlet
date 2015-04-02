@@ -60,7 +60,7 @@ public class DBUtils
         Reader reader = new StringReader(new String(portletBytes));
         try 
         {
-            Unmarshaller unmarshaller = new Unmarshaller((Mapping)mapping);
+            Unmarshaller unmarshaller = new Unmarshaller(mapping);
             return (Portlets)unmarshaller.unmarshal(reader);
 
 //            return Portlets.unmarshal(reader);

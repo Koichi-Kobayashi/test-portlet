@@ -45,7 +45,8 @@ public class BaseJetspeedRole implements Role
      *
      * @return the name of the role.
      */
-    public String getName()
+    @Override
+	public String getName()
     {
         return name;
     }
@@ -55,7 +56,8 @@ public class BaseJetspeedRole implements Role
      *
      * @param roleName the name of the Role.
      */
-    public void setName(String roleName)
+    @Override
+	public void setName(String roleName)
     {
         name = roleName;
     }
@@ -65,7 +67,8 @@ public class BaseJetspeedRole implements Role
      *
      * @return the id of the role.
      */
-    public String getId()
+    @Override
+	public String getId()
     {
         return id;
     }
@@ -75,7 +78,8 @@ public class BaseJetspeedRole implements Role
      *
      * @param id the new id for the role
      */
-    public void setId(String id)
+    @Override
+	public void setId(String id)
     {      
         if (this.id == null)
         {

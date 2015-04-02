@@ -75,7 +75,8 @@ public class LogfileViewerAction extends GenericMVCAction
      * @paran rundata the Turbine rundata
      *
      */
-    protected void buildNormalContext(Portlet portlet, Context context, RunData rundata) throws Exception 
+    @Override
+	protected void buildNormalContext(Portlet portlet, Context context, RunData rundata) throws Exception 
     {
         String tempName;
         LoggerRepository repos = logger.getLoggerRepository();

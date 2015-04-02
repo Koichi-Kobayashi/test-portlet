@@ -36,7 +36,8 @@ import org.xml.sax.*;
  **/
 public class JetspeedXMLEntityResolver implements EntityResolver
 {
-    public InputSource resolveEntity (String publicId, String systemId)
+    @Override
+	public InputSource resolveEntity (String publicId, String systemId)
     {
         try {
             //access Jetspeed cache and get a java.io.Reader

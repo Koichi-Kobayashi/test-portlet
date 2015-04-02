@@ -31,6 +31,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.addressbook.util.AddressBookUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressbookCompany;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressbookCompany;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -201,7 +202,7 @@ public class AddressBookCompanySelectData extends
     Attributes map = new Attributes();
     map.putValue(
       "company_name_kana",
-      EipMAddressbookCompany.COMPANY_NAME_KANA_PROPERTY);
+      _EipMAddressbookCompany.COMPANY_NAME_KANA_PROPERTY);
     return map;
   }
 
@@ -231,14 +232,14 @@ public class AddressBookCompanySelectData extends
         ALEipUtils.setTemp(rundata, context, LIST_INDEX_STR, index);
         buildSelectQueryForAddressbookIndex(
           query,
-          EipMAddressbookCompany.COMPANY_NAME_KANA_PROPERTY,
+          _EipMAddressbookCompany.COMPANY_NAME_KANA_PROPERTY,
           Integer.parseInt(index));
         context.put("idx", index);
       }
     } else if (index_session != null) {
       buildSelectQueryForAddressbookIndex(
         query,
-        EipMAddressbookCompany.COMPANY_NAME_KANA_PROPERTY,
+        _EipMAddressbookCompany.COMPANY_NAME_KANA_PROPERTY,
         Integer.parseInt(index_session));
       context.put("idx", index);
     } else {

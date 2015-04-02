@@ -1,10 +1,8 @@
 package org.apache.jetspeed.om.dbregistry.map;
 
-import java.util.Date;
-import java.math.BigDecimal;
-
 import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
+import org.apache.torque.adapter.IDMethod;
 import org.apache.torque.map.MapBuilder;
 import org.apache.torque.map.DatabaseMap;
 import org.apache.torque.map.TableMap;
@@ -35,7 +33,8 @@ public class PortletDbEntryMapBuilder implements MapBuilder
      *
      * @return true if this DatabaseMapBuilder is built
      */
-    public boolean isBuilt()
+    @Override
+	public boolean isBuilt()
     {
         return (dbMap != null);
     }
@@ -45,7 +44,8 @@ public class PortletDbEntryMapBuilder implements MapBuilder
      *
      * @return the databasemap
      */
-    public DatabaseMap getDatabaseMap()
+    @Override
+	public DatabaseMap getDatabaseMap()
     {
         return this.dbMap;
     }
@@ -55,14 +55,15 @@ public class PortletDbEntryMapBuilder implements MapBuilder
      *
      * @throws TorqueException
      */
-    public void doBuild() throws TorqueException
+    @Override
+	public void doBuild() throws TorqueException
     {
         dbMap = Torque.getDatabaseMap("default");
 
         dbMap.addTable("PORTLET");
         TableMap tMap = dbMap.getTable("PORTLET");
 
-        tMap.setPrimaryKeyMethod(TableMap.NATIVE);
+        tMap.setPrimaryKeyMethod(IDMethod.NATIVE);
 
         tMap.setPrimaryKeyMethodInfo("PORTLET");
 

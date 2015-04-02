@@ -17,6 +17,7 @@
 package org.apache.jetspeed.modules.actions.portlets;
 
 // Turbine stuff
+import org.apache.turbine.services.resources.TurbineResources;
 import org.apache.turbine.util.RunData;
 
 // Jetspeed stuff
@@ -27,6 +28,7 @@ import org.apache.jetspeed.om.registry.PortletEntry;
 import org.apache.jetspeed.services.logging.JetspeedLogFactoryService;
 import org.apache.jetspeed.services.logging.JetspeedLogger;
 import org.apache.jetspeed.services.resources.JetspeedResources;
+
 
 // Java stuff
 import java.util.Hashtable;
@@ -67,7 +69,8 @@ public class QuestionnaireAction extends JspPortletAction
      * @param portlet The jsp-based portlet that is being built.
      * @param rundata The turbine rundata context for this request.
      */
-    protected void buildNormalContext(Portlet portlet, RunData rundata)
+    @Override
+	protected void buildNormalContext(Portlet portlet, RunData rundata)
     {
         PortletEntry entry = (PortletEntry) Registry.getEntry(Registry.PORTLET, portlet.getName());
         Iterator i = entry.getParameterNames();
@@ -138,7 +141,7 @@ public class QuestionnaireAction extends JspPortletAction
             }
         }
 
-        String emailSmtp = JetspeedResources.getString(JetspeedResources.MAIL_SERVER_KEY);
+        String emailSmtp = JetspeedResources.getString(TurbineResources.MAIL_SERVER_KEY);
         String emailFrom = JetspeedResources.getString("mail.support", "david@bluesunrise.com");
         String emailTo = rundata.getParameters().getString("emailTo", "jetspeed-dev@jakarta.apache.org");
         String emailAttachment = rundata.getRequest().getParameter("emailAttachment");

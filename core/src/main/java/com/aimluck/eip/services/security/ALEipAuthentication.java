@@ -19,6 +19,7 @@
 
 package com.aimluck.eip.services.security;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -153,9 +154,9 @@ public class ALEipAuthentication extends TurbineBaseService implements
       Date passwordExpireDate = null;
       if (passwordLastChangedDate != null) {
         GregorianCalendar gcal =
-          (GregorianCalendar) GregorianCalendar.getInstance();
+          (GregorianCalendar) Calendar.getInstance();
         gcal.setTime(passwordLastChangedDate);
-        gcal.add(GregorianCalendar.DATE, this.expirationPeriod);
+        gcal.add(Calendar.DATE, this.expirationPeriod);
         passwordExpireDate = gcal.getTime();
         if (logger.isDebugEnabled()) {
           logger.debug("TurbineAuthentication: password last changed = "

@@ -62,7 +62,8 @@ public class BaseLogger implements Logger
      * 
      * @return log name
      */
-    public String getName()
+    @Override
+	public String getName()
     {
         return this.name;
     }
@@ -72,7 +73,8 @@ public class BaseLogger implements Logger
      * 
      * @param logName
      */
-    public void setName(String logName)
+    @Override
+	public void setName(String logName)
     {
         this.name = logName;
     }
@@ -104,7 +106,8 @@ public class BaseLogger implements Logger
      * 
      * @return true if logger is well configured
      */
-    public boolean checkLogger()
+    @Override
+	public boolean checkLogger()
     {
 
         return true;
@@ -118,7 +121,8 @@ public class BaseLogger implements Logger
      *
      * @param LoggingConfig configuration object for logging
      */
-    public void init(LoggingConfig loggingConfig)
+    @Override
+	public void init(LoggingConfig loggingConfig)
     {
         // Nothing to do. Declared to satisfy the interface.
     }
@@ -126,7 +130,8 @@ public class BaseLogger implements Logger
     /**
      * Close all destinations
      */
-    public void shutdown()
+    @Override
+	public void shutdown()
     {
         // nothing to do
     }
@@ -136,7 +141,8 @@ public class BaseLogger implements Logger
      * 
      * @param level
      */
-    public void setLogLevel(int level)
+    @Override
+	public void setLogLevel(int level)
     {
         this.logLevel = level;
     }
@@ -146,7 +152,8 @@ public class BaseLogger implements Logger
       * 
       * @return true if debug is enabled
       */
-     public boolean isDebugEnabled() 
+     @Override
+	public boolean isDebugEnabled() 
      {
 
          return this.log.isDebugEnabled();
@@ -157,7 +164,8 @@ public class BaseLogger implements Logger
       * 
       * @return true if into is enabled
       */
-     public boolean isInfoEnabled()
+     @Override
+	public boolean isInfoEnabled()
      {
 
          return this.log.isInfoEnabled();
@@ -168,7 +176,8 @@ public class BaseLogger implements Logger
       * 
       * @return true if warn is enabled
       */
-     public boolean isWarnEnabled()
+     @Override
+	public boolean isWarnEnabled()
      {
 
          return this.log.isWarnEnabled();
@@ -180,7 +189,8 @@ public class BaseLogger implements Logger
       * 
       * @return true if error is enabled
       */
-     public boolean isErrorEnabled()
+     @Override
+	public boolean isErrorEnabled()
      {
 
          return this.log.isErrorEnabled();
@@ -191,7 +201,8 @@ public class BaseLogger implements Logger
      * 
      * @param format
      */
-    public void setFormat(String format)
+    @Override
+	public void setFormat(String format)
     {
         // nothing to do
     }
@@ -201,7 +212,8 @@ public class BaseLogger implements Logger
      * 
      * @param message
      */
-    public void debug(String message)
+    @Override
+	public void debug(String message)
     {
         this.log.debug(message);
     }
@@ -212,7 +224,8 @@ public class BaseLogger implements Logger
      * @param message
      * @param t
      */
-    public void debug(String message, Throwable t)
+    @Override
+	public void debug(String message, Throwable t)
     {
         this.log.debug(message, t);
     }
@@ -223,7 +236,8 @@ public class BaseLogger implements Logger
      * @param message
      * @param data
      */
-    public void debug(String message, RunData data)
+    @Override
+	public void debug(String message, RunData data)
     {
         this.log.debug(message);
     }
@@ -235,7 +249,8 @@ public class BaseLogger implements Logger
      * @param data
      * @param t
      */
-    public void debug(String message, RunData data, Throwable t)
+    @Override
+	public void debug(String message, RunData data, Throwable t)
     {
         this.log.debug(message, t);
     }
@@ -245,7 +260,8 @@ public class BaseLogger implements Logger
      * 
      * @param message
      */
-    public void info(String message)
+    @Override
+	public void info(String message)
     {
         this.log.info(message);
     }
@@ -256,7 +272,8 @@ public class BaseLogger implements Logger
      * @param message
      * @param t
      */
-    public void info(String message, Throwable t)
+    @Override
+	public void info(String message, Throwable t)
     {
         this.log.info(message, t);
     }
@@ -267,7 +284,8 @@ public class BaseLogger implements Logger
      * @param message
      * @param data
      */
-    public void info(String message, RunData data)
+    @Override
+	public void info(String message, RunData data)
     {
         this.log.info(message);
     }
@@ -279,7 +297,8 @@ public class BaseLogger implements Logger
      * @param data
      * @param t
      */
-    public void info(String message, RunData data, Throwable t)
+    @Override
+	public void info(String message, RunData data, Throwable t)
     {
         this.log.info(message, t);
     }
@@ -289,7 +308,8 @@ public class BaseLogger implements Logger
      * 
      * @param message
      */
-    public void warn(String message)
+    @Override
+	public void warn(String message)
     {
         this.log.warn(message);
     }
@@ -300,7 +320,8 @@ public class BaseLogger implements Logger
      * @param message
      * @param t
      */
-    public void warn(String message, Throwable t)
+    @Override
+	public void warn(String message, Throwable t)
     {
         this.log.warn(message, t);
     }
@@ -311,7 +332,8 @@ public class BaseLogger implements Logger
      * @param message
      * @param data
      */
-    public void warn(String message, RunData data)
+    @Override
+	public void warn(String message, RunData data)
     {
         this.log.warn(message);
     }
@@ -323,7 +345,8 @@ public class BaseLogger implements Logger
      * @param data
      * @param t
      */
-    public void warn(String message, RunData data, Throwable t)
+    @Override
+	public void warn(String message, RunData data, Throwable t)
     {
         this.log.warn(message, t);
     }
@@ -333,7 +356,8 @@ public class BaseLogger implements Logger
      * 
      * @param message
      */
-    public void error(String message)
+    @Override
+	public void error(String message)
     {
         this.log.error(message);
     }
@@ -344,7 +368,8 @@ public class BaseLogger implements Logger
      * @param message
      * @param e
      */
-    public void error(String message, Throwable e)
+    @Override
+	public void error(String message, Throwable e)
     {
         this.log.error(message, e);
     }
@@ -354,7 +379,8 @@ public class BaseLogger implements Logger
      * 
      * @param e
      */
-    public void error(Throwable e)
+    @Override
+	public void error(Throwable e)
     {
         this.log.error(e);
     }
@@ -365,7 +391,8 @@ public class BaseLogger implements Logger
      * @param message
      * @param data
      */
-    public void error(String message, RunData data)
+    @Override
+	public void error(String message, RunData data)
     {
         this.log.error(message);
     }
@@ -377,7 +404,8 @@ public class BaseLogger implements Logger
      * @param data
      * @param e
      */
-    public void error(String message, RunData data, Throwable e)
+    @Override
+	public void error(String message, RunData data, Throwable e)
     {
         this.log.error(message, e);
     }

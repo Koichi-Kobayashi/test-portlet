@@ -1,11 +1,8 @@
 package org.apache.jetspeed.om.security.turbine;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,9 +12,6 @@ import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
 import org.apache.torque.map.MapBuilder;
 import org.apache.torque.map.TableMap;
-import org.apache.torque.om.DateKey;
-import org.apache.torque.om.NumberKey;
-import org.apache.torque.om.StringKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
 import org.apache.torque.util.BasePeer;
@@ -288,7 +282,7 @@ public abstract class BaseTurbineUserPeer
         try
         {
             TurbineUser obj = (TurbineUser) cls.newInstance();
-            TurbineUserPeer.populateObject(row, offset, obj);
+            BaseTurbineUserPeer.populateObject(row, offset, obj);
                   obj.setModified(false);
               obj.setNew(false);
 
@@ -437,8 +431,8 @@ public abstract class BaseTurbineUserPeer
         for (int i = 0; i < records.size(); i++)
         {
             Record row = (Record) records.get(i);
-              results.add(TurbineUserPeer.row2Object(row, 1,
-                TurbineUserPeer.getOMClass()));
+              results.add(BaseTurbineUserPeer.row2Object(row, 1,
+                BaseTurbineUserPeer.getOMClass()));
           }
         return results;
     }

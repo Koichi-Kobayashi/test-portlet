@@ -46,7 +46,8 @@ public class EndCustomize extends Action {
    * @param rundata
    *            The RunData object for the current request
    */
-  public void doPerform(RunData data) throws Exception {
+  @Override
+public void doPerform(RunData data) throws Exception {
     ((JetspeedRunData) data).cleanupFromCustomization();
 
     // bring logged on user to homepage via HTTP redirect

@@ -32,6 +32,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystem;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystemMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTExtTimecardSystemMap;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.exttimecard.util.ExtTimecardUtils;
 import com.aimluck.eip.orm.Database;
@@ -65,7 +66,7 @@ public class ExtTimecardSystemMapMultiChange extends ALAbstractCheckList {
 
       Expression exp =
         ExpressionFactory.inExp(
-          EipTExtTimecardSystemMap.USER_ID_PROPERTY,
+          _EipTExtTimecardSystemMap.USER_ID_PROPERTY,
           values);
       SelectQuery<EipTExtTimecardSystemMap> query =
         Database.query(EipTExtTimecardSystemMap.class, exp);

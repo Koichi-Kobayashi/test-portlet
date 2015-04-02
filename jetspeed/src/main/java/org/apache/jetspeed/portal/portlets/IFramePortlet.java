@@ -293,7 +293,8 @@ public class IFramePortlet extends AbstractInstancePortlet
      * @param  runData  the RunData object for the request
      * @return          the content to be displayed to the user-agent
      */
-    public ConcreteElement getContent(RunData runData)
+    @Override
+	public ConcreteElement getContent(RunData runData)
     {
 
         // Reinitialize if user customized the portlet (this will be useful
@@ -508,7 +509,8 @@ public class IFramePortlet extends AbstractInstancePortlet
      *
      * @throws  PortletException  Initialization failed
      */
-    public void init() throws PortletException
+    @Override
+	public void init() throws PortletException
     {
         // first make sure we propagate init
         super.init();

@@ -58,6 +58,10 @@ import com.aimluck.eip.cayenne.om.security.TurbineRole;
 import com.aimluck.eip.cayenne.om.security.TurbineRolePermission;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineRolePermission;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
 import com.aimluck.eip.util.ALEipUtils;
@@ -105,7 +109,7 @@ public class ALRoleManagement extends TurbineBaseService implements
 
     try {
       Expression exp =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
           .valueOf(user.getUserId()));
 
       rels = Database.query(TurbineUserGroupRole.class, exp).fetchList();
@@ -250,14 +254,14 @@ public class ALRoleManagement extends TurbineBaseService implements
       if (cascadeDelete) {
         // CASCADE TURBINE_USER_GROUP_ROLE, TURBINE_ROLE_PERMISSION
         Expression exp1 =
-          ExpressionFactory.matchDbExp(TurbineRole.ROLE_ID_PK_COLUMN, Integer
+          ExpressionFactory.matchDbExp(_TurbineRole.ROLE_ID_PK_COLUMN, Integer
             .valueOf(role.getId()));
 
         Database.query(TurbineUserGroupRole.class, exp1).deleteAll();
 
         Expression exp2 =
           ExpressionFactory.matchDbExp(
-            TurbineRolePermission.ROLE_ID_PK_COLUMN,
+            _TurbineRolePermission.ROLE_ID_PK_COLUMN,
             Integer.valueOf(role.getId()));
 
         Database.query(TurbineRolePermission.class, exp2).deleteAll();
@@ -339,13 +343,13 @@ public class ALRoleManagement extends TurbineBaseService implements
       Group group = JetspeedSecurity.getGroup(groupname);
 
       Expression exp1 =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
           .valueOf(user.getUserId()));
       Expression exp2 =
-        ExpressionFactory.matchDbExp(TurbineGroup.GROUP_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineGroup.GROUP_ID_PK_COLUMN, Integer
           .valueOf(group.getId()));
       Expression exp3 =
-        ExpressionFactory.matchDbExp(TurbineRole.ROLE_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineRole.ROLE_ID_PK_COLUMN, Integer
           .valueOf(role.getId()));
       SelectQuery<TurbineUserGroupRole> query =
         Database.query(TurbineUserGroupRole.class);
@@ -395,13 +399,13 @@ public class ALRoleManagement extends TurbineBaseService implements
       Group group = JetspeedSecurity.getGroup(groupname);
 
       Expression exp1 =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
           .valueOf(user.getUserId()));
       Expression exp2 =
-        ExpressionFactory.matchDbExp(TurbineGroup.GROUP_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineGroup.GROUP_ID_PK_COLUMN, Integer
           .valueOf(group.getId()));
       Expression exp3 =
-        ExpressionFactory.matchDbExp(TurbineRole.ROLE_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineRole.ROLE_ID_PK_COLUMN, Integer
           .valueOf(role.getId()));
 
       SelectQuery<TurbineUserGroupRole> query =
@@ -426,7 +430,7 @@ public class ALRoleManagement extends TurbineBaseService implements
 
     try {
       Expression exp =
-        ExpressionFactory.matchExp(TurbineRole.ROLE_NAME_PROPERTY, rolename);
+        ExpressionFactory.matchExp(_TurbineRole.ROLE_NAME_PROPERTY, rolename);
       roles = Database.query(TurbineRole.class, exp).fetchList();
 
     } catch (Exception e) {
@@ -464,7 +468,7 @@ public class ALRoleManagement extends TurbineBaseService implements
 
     try {
       Expression exp =
-        ExpressionFactory.matchExp(TurbineRole.ROLE_NAME_PROPERTY, roleName);
+        ExpressionFactory.matchExp(_TurbineRole.ROLE_NAME_PROPERTY, roleName);
       roles = Database.query(TurbineRole.class, exp).fetchList();
 
     } catch (Exception e) {

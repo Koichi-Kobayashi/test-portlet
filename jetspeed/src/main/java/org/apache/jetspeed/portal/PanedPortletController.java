@@ -25,7 +25,7 @@ import org.apache.turbine.util.DynamicURI;
  * interface allows the controls object that interact with this controller
  * to build the correct links for referencing the hidden portlets
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:taylor@apache.org">David Sean Taylor</a>
  *
  * @version $Id: PanedPortletController.java,v 1.9 2004/02/23 04:05:35 jford Exp $
@@ -83,14 +83,16 @@ public interface PanedPortletController extends PortletController, PortletSetCon
      *
      * @param name the selection parameter name
      */
-    public void savePaneName( RunData data, String name );
+    @Deprecated
+	public void savePaneName( RunData data, String name );
 
     /**
      * Returns the name of the pane selector parameter for this controller
      *
      * @deprecated
      */
-    public String getParameterName();
+    @Deprecated
+	public String getParameterName();
 
     /**
      * Sets the name of the pane selector parameter for this controller
@@ -98,7 +100,8 @@ public interface PanedPortletController extends PortletController, PortletSetCon
      *
      * @deprecated
      */
-    public void setParameterName(String name);
+    @Deprecated
+	public void setParameterName(String name);
 
     /**
      * Returns the name of the pane that should be displayed
@@ -107,6 +110,7 @@ public interface PanedPortletController extends PortletController, PortletSetCon
      *
      * @param byParameter Set to true to look by query parameter first.
      */
-    public String retrievePaneName(RunData rundata);
+    @Deprecated
+	public String retrievePaneName(RunData rundata);
 
 }

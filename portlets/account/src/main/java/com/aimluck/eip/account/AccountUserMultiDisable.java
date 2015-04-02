@@ -30,6 +30,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.account.util.AccountUtils;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -73,7 +74,7 @@ public class AccountUserMultiDisable extends ALAbstractCheckList {
       }
 
       Expression exp =
-        ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, values);
+        ExpressionFactory.inExp(_TurbineUser.LOGIN_NAME_PROPERTY, values);
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class, exp);
       List<TurbineUser> ulist = query.fetchList();
       if (ulist == null || ulist.size() == 0) {

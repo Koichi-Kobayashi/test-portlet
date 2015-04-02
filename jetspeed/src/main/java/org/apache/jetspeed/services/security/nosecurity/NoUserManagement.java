@@ -64,14 +64,16 @@ public class NoUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *                when the requestor is denied due to insufficient privilege
    */
-  public JetspeedUser getUser(Principal principal)
+  @Override
+public JetspeedUser getUser(Principal principal)
       throws JetspeedSecurityException {
     // create a user object with this username for Jetspeed use
     FakeJetspeedUser user = new FakeJetspeedUser(principal.getName(), false);
     return user;
   }
 
-  public JetspeedUser getUser(RunData rundata, Principal principal)
+  @Override
+public JetspeedUser getUser(RunData rundata, Principal principal)
       throws JetspeedSecurityException {
     // create a user object with this username for Jetspeed use
     FakeJetspeedUser user = new FakeJetspeedUser(principal.getName(), false);
@@ -90,7 +92,8 @@ public class NoUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *                when the requestor is denied due to insufficient privilege
    */
-  public Iterator getUsers() throws JetspeedSecurityException {
+  @Override
+public Iterator getUsers() throws JetspeedSecurityException {
     return new Vector().iterator();
   }
 
@@ -107,7 +110,8 @@ public class NoUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *                when the requestor is denied due to insufficient privilege
    */
-  public Iterator getUsers(String filter) throws JetspeedSecurityException {
+  @Override
+public Iterator getUsers(String filter) throws JetspeedSecurityException {
     return new Vector().iterator();
   }
 
@@ -123,7 +127,8 @@ public class NoUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *                when the requestor is denied due to insufficient privilege
    */
-  public void saveUser(JetspeedUser user) throws JetspeedSecurityException {
+  @Override
+public void saveUser(JetspeedUser user) throws JetspeedSecurityException {
   }
 
   /**
@@ -142,7 +147,8 @@ public class NoUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *                when the requestor is denied due to insufficient privilege
    */
-  public void addUser(JetspeedUser user) throws JetspeedSecurityException {
+  @Override
+public void addUser(JetspeedUser user) throws JetspeedSecurityException {
   }
 
   /**
@@ -161,7 +167,8 @@ public class NoUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *                when the requestor is denied due to insufficient privilege
    */
-  public void removeUser(Principal principal) throws JetspeedSecurityException {
+  @Override
+public void removeUser(Principal principal) throws JetspeedSecurityException {
   }
 
   /**
@@ -182,7 +189,8 @@ public class NoUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *                when the requestor is denied due to insufficient privilege
    */
-  public void changePassword(JetspeedUser user, String oldPassword,
+  @Override
+public void changePassword(JetspeedUser user, String oldPassword,
       String newPassword) throws JetspeedSecurityException {
   }
 
@@ -206,7 +214,8 @@ public class NoUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *                when the requestor is denied due to insufficient privilege
    */
-  public void forcePassword(JetspeedUser user, String password)
+  @Override
+public void forcePassword(JetspeedUser user, String password)
       throws JetspeedSecurityException {
   }
 
@@ -223,7 +232,8 @@ public class NoUserManagement extends TurbineBaseService implements
    *            the password to process
    * @return processed password
    */
-  public String encryptPassword(String password)
+  @Override
+public String encryptPassword(String password)
       throws JetspeedSecurityException {
     return password;
   }

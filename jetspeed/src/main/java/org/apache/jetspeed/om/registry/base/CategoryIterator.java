@@ -74,7 +74,8 @@ public class CategoryIterator implements Iterator
     private CategoryIterator() 
     {}
 
-    public boolean hasNext()
+    @Override
+	public boolean hasNext()
     {
         if (iteratingMaps)
         {      
@@ -136,13 +137,15 @@ public class CategoryIterator implements Iterator
         return true;
     }
 
-    public void remove() throws IllegalStateException, UnsupportedOperationException
+    @Override
+	public void remove() throws IllegalStateException, UnsupportedOperationException
     {
         throw new UnsupportedOperationException("The remove() method is not supported");
     }
 
 
-    public Object next() throws NoSuchElementException
+    @Override
+	public Object next() throws NoSuchElementException
     {       
         return portlet;
     }

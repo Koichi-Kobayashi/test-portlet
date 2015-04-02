@@ -65,7 +65,8 @@ public class TimecardResultData implements ALData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     work_flag = new ALStringField();
     now_time = new ALStringField();
     work_date = new ALDateTimeField();

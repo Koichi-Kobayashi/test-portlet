@@ -29,6 +29,7 @@ import org.apache.cayenne.DataRow;
 
 import com.aimluck.eip.cayenne.om.account.VEipMUserGroupList;
 import com.aimluck.eip.cayenne.om.portlet.EipTScheduleMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTScheduleMap;
 import com.aimluck.eip.common.ALEipUser;
 import com.aimluck.eip.facilities.FacilityResultData;
 import com.aimluck.eip.facility.beans.FacilityLiteBean;
@@ -312,7 +313,7 @@ public class ScheduleAclUtils {
     List<EipTScheduleMap> list =
       Database
         .query(EipTScheduleMap.class)
-        .where(Operations.eq(EipTScheduleMap.SCHEDULE_ID_PROPERTY, scheduleId))
+        .where(Operations.eq(_EipTScheduleMap.SCHEDULE_ID_PROPERTY, scheduleId))
         .fetchList();
 
     List<Integer> users = new ArrayList<Integer>();

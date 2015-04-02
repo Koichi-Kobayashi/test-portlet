@@ -30,6 +30,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFilter;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMailFilter;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.mail.util.ALMailUtils;
 import com.aimluck.eip.orm.Database;
@@ -81,13 +82,13 @@ public class WebMailFilterMultiDelete extends ALAbstractCheckList {
       SelectQuery<EipTMailFilter> query = Database.query(EipTMailFilter.class);
 
       Expression exp =
-        ExpressionFactory.inDbExp(EipTMailFilter.FILTER_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipTMailFilter.FILTER_ID_PK_COLUMN, values);
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
+          _EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
           mailAccount);
       query.setQualifier(exp.andExp(exp2)).orderAscending(
-        EipTMailFilter.SORT_ORDER_PROPERTY);
+        _EipTMailFilter.SORT_ORDER_PROPERTY);
 
       List<EipTMailFilter> deleteFilterList = query.fetchList();
 
@@ -100,14 +101,14 @@ public class WebMailFilterMultiDelete extends ALAbstractCheckList {
           Database.query(EipTMailFilter.class);
         Expression exp3 =
           ExpressionFactory.matchExp(
-            EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
+            _EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
             mailAccount);
         Expression exp4 =
           ExpressionFactory.greaterOrEqualExp(
-            EipTMailFilter.SORT_ORDER_PROPERTY,
+            _EipTMailFilter.SORT_ORDER_PROPERTY,
             minSortOrder + 1);
         Expression exp5 =
-          ExpressionFactory.inDbExp(EipTMailFilter.FILTER_ID_PK_COLUMN, values);
+          ExpressionFactory.inDbExp(_EipTMailFilter.FILTER_ID_PK_COLUMN, values);
         query2.setQualifier(exp3.andExp(exp4.andExp(exp5.notExp())));
 
         List<EipTMailFilter> correctFilterList = query2.fetchList();

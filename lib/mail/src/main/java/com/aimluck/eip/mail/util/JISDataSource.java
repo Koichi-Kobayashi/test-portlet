@@ -46,22 +46,26 @@ public class JISDataSource implements DataSource {
     }
   }
 
-  public String getContentType() {
+  @Override
+public String getContentType() {
     return "text/plain; charset=ISO-2022-JP";
   }
 
-  public InputStream getInputStream() throws IOException {
+  @Override
+public InputStream getInputStream() throws IOException {
     if (data == null) {
       throw new IOException("no data");
     }
     return new ByteArrayInputStream(data);
   }
 
-  public OutputStream getOutputStream() throws IOException {
+  @Override
+public OutputStream getOutputStream() throws IOException {
     throw new IOException("cannot do this");
   }
 
-  public String getName() {
+  @Override
+public String getName() {
     return "dummy";
   }
 }

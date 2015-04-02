@@ -40,7 +40,8 @@ public class AccessControlAclBean implements ALData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     acl_id = new ALStringField();
     acl_name = new ALStringField();
     checked = new ALStringField();

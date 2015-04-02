@@ -37,7 +37,10 @@ import com.aimluck.eip.cayenne.om.portlet.EipTReport;
 import com.aimluck.eip.cayenne.om.portlet.EipTReportFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTReportMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTReportMemberMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTReport;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTReportMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -252,12 +255,12 @@ public class ReportSelectData extends
       SelectQuery<EipTReportMap> q = Database.query(EipTReportMap.class);
       Expression exp1 =
         ExpressionFactory.matchExp(
-          EipTReportMap.USER_ID_PROPERTY,
+          _EipTReportMap.USER_ID_PROPERTY,
           login_user_id);
       q.andQualifier(exp1);
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipTReportMap.STATUS_PROPERTY,
+          _EipTReportMap.STATUS_PROPERTY,
           ReportUtils.DB_STATUS_UNREAD);
       q.andQualifier(exp2);
       List<EipTReportMap> queryList = q.fetchList();
@@ -275,13 +278,13 @@ public class ReportSelectData extends
         resultid.add(-1);
       }
       Expression ex =
-        ExpressionFactory.inDbExp(EipTReport.REPORT_ID_PK_COLUMN, resultid);
+        ExpressionFactory.inDbExp(_EipTReport.REPORT_ID_PK_COLUMN, resultid);
       query.andQualifier(ex);
 
     } else if (SUBMENU_CREATED.equals(currentSubMenu)) {
       // 送信
       Expression exp1 =
-        ExpressionFactory.matchExp(EipTReport.USER_ID_PROPERTY, login_user_id);
+        ExpressionFactory.matchExp(_EipTReport.USER_ID_PROPERTY, login_user_id);
       query.andQualifier(exp1);
 
     } else if (SUBMENU_REQUESTED.equals(currentSubMenu)) {
@@ -289,7 +292,7 @@ public class ReportSelectData extends
       SelectQuery<EipTReportMap> q = Database.query(EipTReportMap.class);
       Expression exp1 =
         ExpressionFactory.matchExp(
-          EipTReportMap.USER_ID_PROPERTY,
+          _EipTReportMap.USER_ID_PROPERTY,
           login_user_id);
       q.andQualifier(exp1);
       List<EipTReportMap> queryList = q.fetchList();
@@ -307,7 +310,7 @@ public class ReportSelectData extends
         resultid.add(-1);
       }
       Expression exp3 =
-        ExpressionFactory.inDbExp(EipTReport.REPORT_ID_PK_COLUMN, resultid);
+        ExpressionFactory.inDbExp(_EipTReport.REPORT_ID_PK_COLUMN, resultid);
       query.andQualifier(exp3);
     } else if (SUBMENU_ALL.equals(currentSubMenu)) {
       // 全て
@@ -320,11 +323,11 @@ public class ReportSelectData extends
     if (search != null && !search.equals("")) {
       current_search = search;
       Expression ex1 =
-        ExpressionFactory.likeExp(EipTReport.REPORT_NAME_PROPERTY, "%"
+        ExpressionFactory.likeExp(_EipTReport.REPORT_NAME_PROPERTY, "%"
           + search
           + "%");
       Expression ex2 =
-        ExpressionFactory.likeExp(EipTReport.NOTE_PROPERTY, "%" + search + "%");
+        ExpressionFactory.likeExp(_EipTReport.NOTE_PROPERTY, "%" + search + "%");
       SelectQuery<EipTReport> q = Database.query(EipTReport.class);
       q.andQualifier(ex1.orExp(ex2));
       List<EipTReport> queryList = q.fetchList();
@@ -341,13 +344,13 @@ public class ReportSelectData extends
         resultid.add(-1);
       }
       Expression ex3 =
-        ExpressionFactory.inDbExp(EipTReport.REPORT_ID_PK_COLUMN, resultid);
+        ExpressionFactory.inDbExp(_EipTReport.REPORT_ID_PK_COLUMN, resultid);
       query.andQualifier(ex3);
     }
 
     // replyを除く
     Expression ex =
-      ExpressionFactory.noMatchExp(EipTReport.REPORT_NAME_PROPERTY, "");
+      ExpressionFactory.noMatchExp(_EipTReport.REPORT_NAME_PROPERTY, "");
     query.andQualifier(ex);
     return query;
 
@@ -477,9 +480,9 @@ public class ReportSelectData extends
       /** 詳細画面は全件表示する */
       // buildSelectQueryForListView(query);
       if ("response_new".equals(coreportsort)) {
-        query.orderDesending(EipTReport.CREATE_DATE_PROPERTY);
+        query.orderDesending(_EipTReport.CREATE_DATE_PROPERTY);
       } else {
-        query.orderAscending(EipTReport.CREATE_DATE_PROPERTY);
+        query.orderAscending(_EipTReport.CREATE_DATE_PROPERTY);
       }
 
       List<EipTReport> resultList = query.fetchList();
@@ -499,7 +502,7 @@ public class ReportSelectData extends
       Context context, String reportid, String coreportsort) {
     SelectQuery<EipTReport> query = Database.query(EipTReport.class);
     Expression exp =
-      ExpressionFactory.matchExp(EipTReport.PARENT_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTReport.PARENT_ID_PROPERTY, Integer
         .valueOf(reportid));
     query.setQualifier(exp);
     query.distinct(true);
@@ -554,7 +557,7 @@ public class ReportSelectData extends
         rd.setStatusList(statusList);
         SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
         Expression exp =
-          ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, users);
+          ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, users);
         query.setQualifier(exp);
         rd.setMapList(ALEipUtils.getUsersFromSelectQuery(query));
 
@@ -569,7 +572,7 @@ public class ReportSelectData extends
         }
         SelectQuery<TurbineUser> query1 = Database.query(TurbineUser.class);
         Expression exp1 =
-          ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, users1);
+          ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, users1);
         query1.setQualifier(exp1);
         rd.setMemberList(ALEipUtils.getUsersFromSelectQuery(query1));
       }
@@ -623,11 +626,11 @@ public class ReportSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("report_name", EipTReport.REPORT_NAME_PROPERTY);
-    map.putValue("create_date", EipTReport.CREATE_DATE_PROPERTY);
-    map.putValue("user_id", EipTReport.USER_ID_PROPERTY);
-    map.putValue("parent_id", EipTReport.PARENT_ID_PROPERTY);
-    map.putValue("start_date", EipTReport.START_DATE_PROPERTY);
+    map.putValue("report_name", _EipTReport.REPORT_NAME_PROPERTY);
+    map.putValue("create_date", _EipTReport.CREATE_DATE_PROPERTY);
+    map.putValue("user_id", _EipTReport.USER_ID_PROPERTY);
+    map.putValue("parent_id", _EipTReport.PARENT_ID_PROPERTY);
+    map.putValue("start_date", _EipTReport.START_DATE_PROPERTY);
     return map;
   }
 

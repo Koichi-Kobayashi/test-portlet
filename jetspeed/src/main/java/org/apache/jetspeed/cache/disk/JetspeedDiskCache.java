@@ -172,7 +172,8 @@ public class JetspeedDiskCache implements DiskCache {
     
     @see DiskCache#getEntries
     */
-    public DiskCacheEntry[] getEntries() {
+    @Override
+	public DiskCacheEntry[] getEntries() {
         
         Vector diskEntries = new Vector();
         
@@ -193,7 +194,8 @@ public class JetspeedDiskCache implements DiskCache {
     
     @see DiskCache#getRoot
     */
-    public String getRoot() {
+    @Override
+	public String getRoot() {
         new File( this.directory ).mkdirs();
         return this.directory;
     }
@@ -201,14 +203,16 @@ public class JetspeedDiskCache implements DiskCache {
     /**
     @see DiskCache#getEntry( String url )
     */
-    public DiskCacheEntry getEntry( String url ) throws IOException {
+    @Override
+	public DiskCacheEntry getEntry( String url ) throws IOException {
         return getEntry( url, false );
     }
     
     /**
     Force this URL to update
     */
-    public DiskCacheEntry getEntry( String url, 
+    @Override
+	public DiskCacheEntry getEntry( String url, 
                                     boolean force ) throws IOException 
     {
         
@@ -288,7 +292,8 @@ public class JetspeedDiskCache implements DiskCache {
      Get an Entry given a Reader and the URL from which it has been fetched.
     @see DiskCache#getEntry( String url, Reader is )
     */
-    public DiskCacheEntry getEntry( String url, 
+    @Override
+	public DiskCacheEntry getEntry( String url, 
                                     Reader is ) throws IOException { 
 
         String uri = URIEncoder.encode( url );
@@ -342,7 +347,8 @@ public class JetspeedDiskCache implements DiskCache {
     /**
     @see DiskCache#remove( String url )
     */
-    public void remove( String url ) throws IOException {
+    @Override
+	public void remove( String url ) throws IOException {
         String uri = URIEncoder.encode( url );
         if( DiskCacheUtils.isCached( this, url ) ) {
             entries.remove(url.intern());
@@ -368,7 +374,8 @@ public class JetspeedDiskCache implements DiskCache {
     /**
     @see DiskCache#add( String url )
     */
-    public void add( String url ) throws IOException {
+    @Override
+	public void add( String url ) throws IOException {
         add( url, false );
     }
     
@@ -394,7 +401,8 @@ public class JetspeedDiskCache implements DiskCache {
     @param url the url to retrieve
     @param cache what file to store it in.
     */
-    public String fetch( String url, 
+    @Override
+	public String fetch( String url, 
                          String cache ) throws IOException {
         return fetch( url, cache, false );
     }
@@ -449,7 +457,8 @@ public class JetspeedDiskCache implements DiskCache {
     /**
     @see DiskCache#refresh
     */
-    public void refresh( String url ) {
+    @Override
+	public void refresh( String url ) {
         ThreadPool.process( new URLFetcherDownloader( url ) );        
     }
     
@@ -485,7 +494,8 @@ public class JetspeedDiskCache implements DiskCache {
 
     /**
     */
-    public boolean isCached(String url)
+    @Override
+	public boolean isCached(String url)
     {
         return entries.containsKey(url.intern());
     }

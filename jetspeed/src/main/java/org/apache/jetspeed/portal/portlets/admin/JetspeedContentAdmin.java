@@ -45,11 +45,13 @@ import org.apache.jetspeed.xml.api.jcm.Content;
 import org.apache.jetspeed.xml.api.jcm.Entry;
 import org.apache.jetspeed.xml.api.jcm.Item;
 
+import org.apache.turbine.services.resources.TurbineResources;
 //turbine
 import org.apache.turbine.util.ParameterParser;
 import org.apache.turbine.util.DynamicURI;
 import org.apache.turbine.util.RunData;
 import org.apache.jetspeed.services.resources.JetspeedResources;
+
 
 //standard java stuff
 import java.io.Reader;
@@ -82,7 +84,8 @@ public class JetspeedContentAdmin extends AbstractPortlet
     /**
     Get the content for this JCP Admin
     */
-    public ConcreteElement getContent( RunData rundata ) {
+    @Override
+	public ConcreteElement getContent( RunData rundata ) {
 
         ParameterParser params = rundata.getParameters();
         
@@ -183,7 +186,7 @@ public class JetspeedContentAdmin extends AbstractPortlet
         
         root.addElement( new P().addElement( "Select a content provider: " ) );
 
-        Vector v = JetspeedResources.getVector( JetspeedResources.CONTENT_PROVIDER_LIST_KEY );
+        Vector v = TurbineResources.getVector( JetspeedResources.CONTENT_PROVIDER_LIST_KEY );
         
         for ( int i = 0; i < v.size(); ++i ) {
             
@@ -321,7 +324,8 @@ public class JetspeedContentAdmin extends AbstractPortlet
     /**
     Init this 
     */
-    public void init() throws PortletException {
+    @Override
+	public void init() throws PortletException {
         this.setTitle("Jetspeed Content");
         this.setDescription("Publish Jetspeed Content.");
     }
@@ -357,13 +361,15 @@ public class JetspeedContentAdmin extends AbstractPortlet
     
     /**
     */
-    public boolean getAllowEdit( RunData rundata ) {
+    @Override
+	public boolean getAllowEdit( RunData rundata ) {
         return false;
     }
 
     /**
     */
-    public boolean getAllowMaximize( RunData rundata ) {
+    @Override
+	public boolean getAllowMaximize( RunData rundata ) {
         return false;
     }
     

@@ -54,7 +54,8 @@ public class NoteGroupResultData implements ALData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     user_id = new ALNumberField();
     user_name = new ALStringField();
     schedule = new ALStringField();

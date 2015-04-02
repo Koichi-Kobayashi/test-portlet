@@ -36,6 +36,8 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogComment;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogEntry;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogComment;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogEntry;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -148,7 +150,7 @@ public class BlogWordSelectData extends ALAbstractSelectData<DataRow, DataRow> {
       Integer entry_id =
         (Integer) Database.getFromDataRow(
           dataRow,
-          EipTBlogEntry.ENTRY_ID_PK_COLUMN);
+          _EipTBlogEntry.ENTRY_ID_PK_COLUMN);
       Integer ower_id =
         (Integer) Database.getFromDataRow(
           dataRow,
@@ -174,9 +176,9 @@ public class BlogWordSelectData extends ALAbstractSelectData<DataRow, DataRow> {
       SelectQuery<EipTBlogComment> query =
         Database.query(EipTBlogComment.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTBlogComment.EIP_TBLOG_ENTRY_PROPERTY
+        ExpressionFactory.matchDbExp(_EipTBlogComment.EIP_TBLOG_ENTRY_PROPERTY
           + "."
-          + EipTBlogEntry.ENTRY_ID_PK_COLUMN, entry_id);
+          + _EipTBlogEntry.ENTRY_ID_PK_COLUMN, entry_id);
       query.setQualifier(exp);
       List<EipTBlogComment> list = query.fetchList();
       if (list != null && list.size() > 0) {

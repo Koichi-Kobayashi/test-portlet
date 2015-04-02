@@ -25,7 +25,7 @@ package org.apache.jetspeed.portal;
  * inner object and can thus be transparently cascaded or substituted to
  * a simple portlet wherever in a PSML object tree.
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: PortletControl.java,v 1.24 2004/02/23 04:05:35 jford Exp $
  */
 public interface PortletControl extends Portlet, PortletSet
@@ -75,7 +75,8 @@ public interface PortletControl extends Portlet, PortletSet
      * @deprecated
      * @return the text color value in HTML format (#RRGGBB)
      */
-    public String getColor();
+    @Deprecated
+	public String getColor();
 
     /**
      * Sets the color to use for displaying the portlet text
@@ -85,7 +86,8 @@ public interface PortletControl extends Portlet, PortletSet
      * @deprecated
      * @param color the text color value in HTML format (#RRGGBB)
      */
-    public void setColor(String color);
+    @Deprecated
+	public void setColor(String color);
 
     /**
      * Returns the color to use for displaying the portlet background
@@ -95,7 +97,8 @@ public interface PortletControl extends Portlet, PortletSet
      * @deprecated
      * @return the text color value in HTML format (#RRGGBB)
      */
-    public String getBackgroundColor();
+    @Deprecated
+	public String getBackgroundColor();
 
     /**
      * Sets the color to use for displaying the portlet background
@@ -105,7 +108,8 @@ public interface PortletControl extends Portlet, PortletSet
      * @deprecated
      * @param backgroundColor the background color value in HTML format (#RRGGBB)
      */
-    public void setBackgroundColor(String backgroundColor);
+    @Deprecated
+	public void setBackgroundColor(String backgroundColor);
 
     /**
      * Returns the color to use for displaying the portlet title
@@ -115,7 +119,8 @@ public interface PortletControl extends Portlet, PortletSet
      * @deprecated
      * @return the text color value in HTML format (#RRGGBB)
      */
-    public String getTitleColor();
+    @Deprecated
+	public String getTitleColor();
 
     /**
      * Sets the color to use for displaying the portlet title
@@ -125,7 +130,8 @@ public interface PortletControl extends Portlet, PortletSet
      * @deprecated
      * @param titleColor the title color value in HTML format (#RRGGBB)
      */
-    public void setTitleColor(String titleColor);
+    @Deprecated
+	public void setTitleColor(String titleColor);
 
     /**
      * Returns the width of the managed portlet relative to the size of
@@ -135,7 +141,8 @@ public interface PortletControl extends Portlet, PortletSet
      * @deprecated
      * @return the size value. May be expressed in percentages (eg, "80%")
      */
-    public String getWidth();
+    @Deprecated
+	public String getWidth();
 
     /**
      * Sets the width of the managed portlet relative to the size of
@@ -146,7 +153,8 @@ public interface PortletControl extends Portlet, PortletSet
      * @deprecated
      * @param width the width of portlet. Must be a positive, non nul integer
      */
-    public void setWidth(int width);
+    @Deprecated
+	public void setWidth(int width);
 
     /**
      * Sets the width of the managed portlet relative to the size of
@@ -158,5 +166,6 @@ public interface PortletControl extends Portlet, PortletSet
      * @param width the width of portlet. Must be parseable as a positive, non 
      * nul integer or a percentage
      */
-    public void setWidth(String width);
+    @Deprecated
+	public void setWidth(String width);
 }

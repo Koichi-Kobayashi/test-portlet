@@ -42,7 +42,8 @@ public class SearchAction extends GenericMVCAction
      * Subclasses must override this method to provide default behavior
      * for the portlet action
      */
-    public void buildNormalContext(Portlet portlet, 
+    @Override
+	public void buildNormalContext(Portlet portlet, 
                                    Context context, 
                                    RunData rundata)
     throws Exception
@@ -65,7 +66,7 @@ public class SearchAction extends GenericMVCAction
             context.put(SEARCH_RESULTS, results);
         }
         
-        String searchString = (String)rundata.getParameters().getString(SEARCH_STRING);
+        String searchString = rundata.getParameters().getString(SEARCH_STRING);
         if (searchString == null || searchString.trim().length() == 0)
         {
             searchString = (String)PortletSessionState.getAttribute(rundata, SEARCH_STRING);
@@ -87,7 +88,7 @@ public class SearchAction extends GenericMVCAction
     public void doSearch(RunData rundata, Context context)
     {
         // get posted new target
-        String searchString = (String)rundata.getParameters().getString(SEARCH_STRING);
+        String searchString = rundata.getParameters().getString(SEARCH_STRING);
         
         if (searchString == null || searchString.trim().length() == 0)
         {

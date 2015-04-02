@@ -45,7 +45,8 @@ public class WebMailAdminSettingsResultData implements ALData {
 
   private ALStringField msg_inform_time_minute;
 
-  public void initField() {
+  @Override
+public void initField() {
     msg_type_schedule = new ALNumberField();
     msg_type_note = new ALNumberField();
     msg_type_blog = new ALNumberField();

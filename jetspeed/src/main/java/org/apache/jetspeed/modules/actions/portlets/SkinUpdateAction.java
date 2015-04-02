@@ -64,7 +64,8 @@ public class SkinUpdateAction extends RegistryUpdateAction
      * @param context The velocity context for this request.
      * @param rundata The turbine rundata context for this request.
      */
-    protected void buildNormalContext(
+    @Override
+	protected void buildNormalContext(
         VelocityPortlet portlet,
         Context context,
         RunData rundata)
@@ -89,7 +90,8 @@ public class SkinUpdateAction extends RegistryUpdateAction
     /**
      * @see org.apache.jetspeed.modules.actions.portlets.RegistryUpdateAction#updateRegistryEntry(org.apache.turbine.util.RunData, org.apache.jetspeed.om.registry.RegistryEntry)
      */
-    protected void updateRegistryEntry(
+    @Override
+	protected void updateRegistryEntry(
         RunData rundata,
         RegistryEntry registryEntry) throws Exception
     {
@@ -102,7 +104,8 @@ public class SkinUpdateAction extends RegistryUpdateAction
      * Populates the user's temp storage with form data
      * @param rundata The turbine rundata context for this request.
      */
-    protected void resetForm(RunData rundata)
+    @Override
+	protected void resetForm(RunData rundata)
     {
         super.resetForm(rundata);
 
@@ -162,7 +165,8 @@ public class SkinUpdateAction extends RegistryUpdateAction
      * Clears the temporary storage of any data that was used
      * @param rundata
      */
-    protected void clearUserData(RunData rundata)
+    @Override
+	protected void clearUserData(RunData rundata)
     {
         try
         {

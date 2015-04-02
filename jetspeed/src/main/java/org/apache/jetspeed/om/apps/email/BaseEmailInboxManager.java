@@ -2,8 +2,6 @@
 
 package org.apache.jetspeed.om.apps.email;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.torque.Torque;
@@ -45,8 +43,8 @@ public abstract class BaseEmailInboxManager
     public static EmailInboxManager getManager()
     {
         return (EmailInboxManager)
-            Torque.getManager(EmailInboxManager.MANAGED_CLASS,
-                EmailInboxManager.DEFAULT_MANAGER_CLASS);
+            Torque.getManager(BaseEmailInboxManager.MANAGED_CLASS,
+                BaseEmailInboxManager.DEFAULT_MANAGER_CLASS);
     }
 
     /**
@@ -255,16 +253,17 @@ public abstract class BaseEmailInboxManager
     protected boolean existsImpl(EmailInbox om)
         throws TorqueException
     {
-        Criteria crit = EmailInboxPeer
-            .buildCriteria((EmailInbox)om);
-        return EmailInboxPeer.doSelect(crit).size() > 0;
+        Criteria crit = BaseEmailInboxPeer
+            .buildCriteria(om);
+        return BaseEmailInboxPeer.doSelect(crit).size() > 0;
     }
 
 
-    protected Persistent retrieveStoredOM(ObjectKey id)
+    @Override
+	protected Persistent retrieveStoredOM(ObjectKey id)
         throws TorqueException
     {
-        return EmailInboxPeer.retrieveByPK(id);
+        return BaseEmailInboxPeer.retrieveByPK(id);
     }
 
     /**
@@ -274,9 +273,10 @@ public abstract class BaseEmailInboxManager
      * @return a <code>List</code> value
      * @exception TorqueException if an error occurs
      */
-    protected List retrieveStoredOMs(List ids)
+    @Override
+	protected List retrieveStoredOMs(List ids)
         throws TorqueException
     {
-        return EmailInboxPeer.retrieveByPKs(ids);
+        return BaseEmailInboxPeer.retrieveByPKs(ids);
     }
 }

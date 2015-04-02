@@ -27,6 +27,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.account.EipTAclMap;
 import com.aimluck.eip.cayenne.om.account.VEipMUserGroupList;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclMap;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALPageNotFoundException;
@@ -106,9 +107,9 @@ public class ScheduleAdminAclUserGroupListSelectData extends
     List<EipTAclMap> result =
       Database
         .query(EipTAclMap.class)
-        .where(Operations.eq(EipTAclMap.TARGET_ID_PROPERTY, record.getId()))
-        .where(Operations.eq(EipTAclMap.TARGET_TYPE_PROPERTY, record.getType()))
-        .where(Operations.eq(EipTAclMap.FEATURE_PROPERTY, "schedule"))
+        .where(Operations.eq(_EipTAclMap.TARGET_ID_PROPERTY, record.getId()))
+        .where(Operations.eq(_EipTAclMap.TARGET_TYPE_PROPERTY, record.getType()))
+        .where(Operations.eq(_EipTAclMap.FEATURE_PROPERTY, "schedule"))
         .fetchList();
 
     if (Type.u.equals(Type.valueOf(record.getType()))

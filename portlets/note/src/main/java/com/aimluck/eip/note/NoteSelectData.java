@@ -38,8 +38,12 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTNote;
 import com.aimluck.eip.cayenne.om.portlet.EipTNoteMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTNote;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTNoteMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.cayenne.om.social.Activity;
+import com.aimluck.eip.cayenne.om.social.auto._Activity;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -318,7 +322,7 @@ public class NoteSelectData extends ALAbstractSelectData<EipTNoteMap, EipTNote> 
       rd.setUpdateDate(record.getUpdateDate());
 
       Expression mapexp =
-        ExpressionFactory.matchExp(EipTNoteMap.NOTE_ID_PROPERTY, record
+        ExpressionFactory.matchExp(_EipTNoteMap.NOTE_ID_PROPERTY, record
           .getNoteId());
       List<EipTNoteMap> list =
         Database.query(EipTNoteMap.class, mapexp).fetchList();
@@ -392,7 +396,7 @@ public class NoteSelectData extends ALAbstractSelectData<EipTNoteMap, EipTNote> 
 
       EipTNoteMap map = null;
       Expression mapexp =
-        ExpressionFactory.matchExp(EipTNoteMap.NOTE_ID_PROPERTY, record
+        ExpressionFactory.matchExp(_EipTNoteMap.NOTE_ID_PROPERTY, record
           .getNoteId());
       List<EipTNoteMap> list =
         Database.query(EipTNoteMap.class, mapexp).fetchList();
@@ -416,7 +420,7 @@ public class NoteSelectData extends ALAbstractSelectData<EipTNoteMap, EipTNote> 
 
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
-        ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, users);
+        ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, users);
       query.setQualifier(exp);
 
       members = ALEipUtils.getUsersFromSelectQuery(query);
@@ -463,10 +467,10 @@ public class NoteSelectData extends ALAbstractSelectData<EipTNoteMap, EipTNote> 
           rd.setConfirmDate(nowDate);
 
           Expression exp2 =
-            ExpressionFactory.matchExp(Activity.EXTERNAL_ID_PROPERTY, rd
+            ExpressionFactory.matchExp(_Activity.EXTERNAL_ID_PROPERTY, rd
               .getNoteId());
           Expression exp3 =
-            ExpressionFactory.matchExp(Activity.APP_ID_PROPERTY, "Note");
+            ExpressionFactory.matchExp(_Activity.APP_ID_PROPERTY, "Note");
           Expression exp4 = exp2.andExp(exp3);
           List<Activity> list2 =
             Database.query(Activity.class, exp4).fetchList();
@@ -518,25 +522,25 @@ public class NoteSelectData extends ALAbstractSelectData<EipTNoteMap, EipTNote> 
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("client_name", EipTNoteMap.EIP_TNOTE_PROPERTY
+    map.putValue("client_name", _EipTNoteMap.EIP_TNOTE_PROPERTY
       + "."
-      + EipTNote.CLIENT_NAME_PROPERTY);
-    map.putValue("company_name", EipTNoteMap.EIP_TNOTE_PROPERTY
+      + _EipTNote.CLIENT_NAME_PROPERTY);
+    map.putValue("company_name", _EipTNoteMap.EIP_TNOTE_PROPERTY
       + "."
-      + EipTNote.COMPANY_NAME_PROPERTY);
-    map.putValue("subject_type", EipTNoteMap.EIP_TNOTE_PROPERTY
+      + _EipTNote.COMPANY_NAME_PROPERTY);
+    map.putValue("subject_type", _EipTNoteMap.EIP_TNOTE_PROPERTY
       + "."
-      + EipTNote.SUBJECT_TYPE_PROPERTY);
-    map.putValue("create_date", EipTNoteMap.EIP_TNOTE_PROPERTY
+      + _EipTNote.SUBJECT_TYPE_PROPERTY);
+    map.putValue("create_date", _EipTNoteMap.EIP_TNOTE_PROPERTY
       + "."
-      + EipTNote.CREATE_DATE_PROPERTY);
-    map.putValue("confirm_date", EipTNoteMap.CONFIRM_DATE_PROPERTY);
-    map.putValue("accept_date", EipTNoteMap.EIP_TNOTE_PROPERTY
+      + _EipTNote.CREATE_DATE_PROPERTY);
+    map.putValue("confirm_date", _EipTNoteMap.CONFIRM_DATE_PROPERTY);
+    map.putValue("accept_date", _EipTNoteMap.EIP_TNOTE_PROPERTY
       + "."
-      + EipTNote.ACCEPT_DATE_PROPERTY);
+      + _EipTNote.ACCEPT_DATE_PROPERTY);
     // map.putValue("src_user", TurbineUserConstants.LAST_NAME_KANA);
     // map.putValue("dest_user", TurbineUserConstants.LAST_NAME_KANA);
-    map.putValue("note_stat", EipTNoteMap.NOTE_STAT_PROPERTY);
+    map.putValue("note_stat", _EipTNoteMap.NOTE_STAT_PROPERTY);
     return map;
   }
 
@@ -560,24 +564,24 @@ public class NoteSelectData extends ALAbstractSelectData<EipTNoteMap, EipTNote> 
     SelectQuery<EipTNoteMap> query = Database.query(EipTNoteMap.class);
 
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTNoteMap.USER_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTNoteMap.USER_ID_PROPERTY, Integer
         .valueOf(userId));
     query.setQualifier(exp1);
     Expression exp2 =
-      ExpressionFactory.matchExp(EipTNoteMap.DEL_FLG_PROPERTY, "F");
+      ExpressionFactory.matchExp(_EipTNoteMap.DEL_FLG_PROPERTY, "F");
     query.andQualifier(exp2);
 
     if ("received_notes".equals(getCurrentTab())) {
       Expression exp3 =
-        ExpressionFactory.noMatchExp(EipTNoteMap.EIP_TNOTE_PROPERTY
+        ExpressionFactory.noMatchExp(_EipTNoteMap.EIP_TNOTE_PROPERTY
           + "."
-          + EipTNote.OWNER_ID_PROPERTY, Integer.valueOf(userId));
+          + _EipTNote.OWNER_ID_PROPERTY, Integer.valueOf(userId));
       query.andQualifier(exp3);
     } else {
       Expression exp3 =
-        ExpressionFactory.matchExp(EipTNoteMap.EIP_TNOTE_PROPERTY
+        ExpressionFactory.matchExp(_EipTNoteMap.EIP_TNOTE_PROPERTY
           + "."
-          + EipTNote.OWNER_ID_PROPERTY, Integer.valueOf(userId));
+          + _EipTNote.OWNER_ID_PROPERTY, Integer.valueOf(userId));
       query.andQualifier(exp3);
     }
 
@@ -592,28 +596,28 @@ public class NoteSelectData extends ALAbstractSelectData<EipTNoteMap, EipTNote> 
     if (search != null && !search.equals("")) {
       current_search = search;
       Expression ex1 =
-        ExpressionFactory.likeExp(EipTNote.CLIENT_NAME_PROPERTY, "%"
+        ExpressionFactory.likeExp(_EipTNote.CLIENT_NAME_PROPERTY, "%"
           + search
           + "%");
       Expression ex2 =
-        ExpressionFactory.likeExp(EipTNote.COMPANY_NAME_PROPERTY, "%"
+        ExpressionFactory.likeExp(_EipTNote.COMPANY_NAME_PROPERTY, "%"
           + search
           + "%");
       Expression ex3 =
-        ExpressionFactory.likeExp(EipTNote.EMAIL_ADDRESS_PROPERTY, "%"
+        ExpressionFactory.likeExp(_EipTNote.EMAIL_ADDRESS_PROPERTY, "%"
           + search
           + "%");
       Expression ex4 =
-        ExpressionFactory.likeExp(EipTNote.TELEPHONE_PROPERTY, "%"
+        ExpressionFactory.likeExp(_EipTNote.TELEPHONE_PROPERTY, "%"
           + search
           + "%");
       Expression ex5 =
-        ExpressionFactory.likeExp(EipTNote.CUSTOM_SUBJECT_PROPERTY, "%"
+        ExpressionFactory.likeExp(_EipTNote.CUSTOM_SUBJECT_PROPERTY, "%"
           + search
           + "%");
       Expression ex6 =
         ExpressionFactory
-          .likeExp(EipTNote.MESSAGE_PROPERTY, "%" + search + "%");
+          .likeExp(_EipTNote.MESSAGE_PROPERTY, "%" + search + "%");
 
       StringBuilder body = new StringBuilder();
       body.append("SELECT eip_t_note_map.note_id");
@@ -655,7 +659,7 @@ public class NoteSelectData extends ALAbstractSelectData<EipTNoteMap, EipTNote> 
         resultid.add(-1);
       }
       Expression ex =
-        ExpressionFactory.inDbExp(EipTNote.NOTE_ID_PK_COLUMN, resultid);
+        ExpressionFactory.inDbExp(_EipTNote.NOTE_ID_PK_COLUMN, resultid);
       query.andQualifier(ex);
     }
     return query;

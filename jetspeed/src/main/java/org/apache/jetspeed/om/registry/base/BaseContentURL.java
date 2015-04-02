@@ -35,7 +35,8 @@ public class BaseContentURL implements ContentURL
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object==null)
         {
@@ -68,7 +69,8 @@ public class BaseContentURL implements ContentURL
     }
 
     /** @return the string URL */
-    public String getURL()
+    @Override
+	public String getURL()
     {
         return url;
     }
@@ -77,17 +79,20 @@ public class BaseContentURL implements ContentURL
      *
      * @param value the new URL value
      */
-    public void setURL(String value)
+    @Override
+	public void setURL(String value)
     {
         this.url = value;
     }
 
-    public boolean isCacheKey()
+    @Override
+	public boolean isCacheKey()
     {
         return cacheKey;
     }
 
-    public void setCachedOnURL(boolean cacheKey)
+    @Override
+	public void setCachedOnURL(boolean cacheKey)
     {
         this.cacheKey = cacheKey;
     }

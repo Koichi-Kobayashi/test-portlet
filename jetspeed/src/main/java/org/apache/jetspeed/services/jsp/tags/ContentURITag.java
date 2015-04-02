@@ -33,7 +33,7 @@ import org.apache.jetspeed.services.logging.JetspeedLogger;
  * Supporting class for the contentURI tag.
  * Returns the URL for the given webapp relative URI
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: ContentURITag.java,v 1.7 2004/02/23 03:59:40 jford Exp $
  */
 public class ContentURITag extends TagSupport 
@@ -56,7 +56,8 @@ public class ContentURITag extends TagSupport
         this.href = href;
     }
 
-    public int doStartTag() throws JspException 
+    @Override
+	public int doStartTag() throws JspException 
     {
         RunData data = (RunData)pageContext.getAttribute(JspService.RUNDATA, PageContext.REQUEST_SCOPE);    
         

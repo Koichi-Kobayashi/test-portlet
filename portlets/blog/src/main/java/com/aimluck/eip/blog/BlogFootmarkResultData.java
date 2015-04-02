@@ -42,7 +42,8 @@ public class BlogFootmarkResultData implements ALData {
    * 
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     user_id = new ALNumberField();
     user_name = new ALStringField();
     update_date = new ALStringField();

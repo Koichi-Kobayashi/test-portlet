@@ -39,6 +39,10 @@ import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroup;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroupMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTScheduleMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroup;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroupMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTScheduleMap;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -145,7 +149,7 @@ public class FacilityFormData extends ALAbstractFormData {
             Database.query(EipMFacilityGroup.class);
           Expression fexp =
             ExpressionFactory.inDbExp(
-              EipMFacilityGroup.GROUP_ID_PK_COLUMN,
+              _EipMFacilityGroup.GROUP_ID_PK_COLUMN,
               groupIds);
           fquery.setQualifier(fexp);
           facility_group_list = fquery.fetchList();
@@ -172,18 +176,18 @@ public class FacilityFormData extends ALAbstractFormData {
       if (ALEipConstants.MODE_INSERT.equals(getMode())) {
         Expression exp =
           ExpressionFactory.matchExp(
-            EipMFacility.FACILITY_NAME_PROPERTY,
+            _EipMFacility.FACILITY_NAME_PROPERTY,
             facility_name.getValue());
         query.setQualifier(exp);
       } else if (ALEipConstants.MODE_UPDATE.equals(getMode())) {
         Expression exp1 =
           ExpressionFactory.matchExp(
-            EipMFacility.FACILITY_NAME_PROPERTY,
+            _EipMFacility.FACILITY_NAME_PROPERTY,
             facility_name.getValue());
         query.setQualifier(exp1);
         Expression exp2 =
           ExpressionFactory.noMatchDbExp(
-            EipMFacility.FACILITY_ID_PK_COLUMN,
+            _EipMFacility.FACILITY_ID_PK_COLUMN,
             Integer.valueOf(facilityid));
         query.andQualifier(exp2);
       }
@@ -232,7 +236,7 @@ public class FacilityFormData extends ALAbstractFormData {
       SelectQuery<EipMFacilityGroupMap> query =
         Database.query(EipMFacilityGroupMap.class);
       query.where(Operations.eq(
-        EipMFacilityGroupMap.FACILITY_ID_PROPERTY,
+        _EipMFacilityGroupMap.FACILITY_ID_PROPERTY,
         facility.getFacilityId()));
       List<EipMFacilityGroupMap> maps = query.fetchList();
       List<Integer> faclityGroupIdList = new ArrayList<Integer>();
@@ -248,7 +252,7 @@ public class FacilityFormData extends ALAbstractFormData {
           Database.query(EipMFacilityGroup.class);
         Expression exp =
           ExpressionFactory.inDbExp(
-            EipMFacilityGroup.GROUP_ID_PK_COLUMN,
+            _EipMFacilityGroup.GROUP_ID_PK_COLUMN,
             faclityGroupIdList);
         fquery.setQualifier(exp);
         facility_group_list = fquery.fetchList();
@@ -282,10 +286,10 @@ public class FacilityFormData extends ALAbstractFormData {
       SelectQuery<EipTScheduleMap> query1 =
         Database.query(EipTScheduleMap.class);
       Expression exp1 =
-        ExpressionFactory.matchExp(EipTScheduleMap.USER_ID_PROPERTY, facility
+        ExpressionFactory.matchExp(_EipTScheduleMap.USER_ID_PROPERTY, facility
           .getFacilityId());
       Expression exp2 =
-        ExpressionFactory.matchExp(EipTScheduleMap.TYPE_PROPERTY, "F");
+        ExpressionFactory.matchExp(_EipTScheduleMap.TYPE_PROPERTY, "F");
       query1.setQualifier(exp1.andExp(exp2));
 
       List<EipTScheduleMap> slist = query1.fetchList();
@@ -298,7 +302,7 @@ public class FacilityFormData extends ALAbstractFormData {
         Database.query(EipMFacilityGroupMap.class);
       Expression fexp =
         ExpressionFactory.matchExp(
-          EipMFacilityGroupMap.FACILITY_ID_PROPERTY,
+          _EipMFacilityGroupMap.FACILITY_ID_PROPERTY,
           facility.getFacilityId());
       fmaps.setQualifier(fexp);
       // マップ削除
@@ -343,10 +347,10 @@ public class FacilityFormData extends ALAbstractFormData {
       }
       // 最大のソートナンバーの後ろに振られていないデータを追加
       Expression exp2 =
-        ExpressionFactory.matchExp(EipMFacility.SORT_PROPERTY, null);
+        ExpressionFactory.matchExp(_EipMFacility.SORT_PROPERTY, null);
       SelectQuery<EipMFacility> querynotsort =
         Database.query(EipMFacility.class);
-      querynotsort.orderAscending(EipMFacility.UPDATE_DATE_PROPERTY);
+      querynotsort.orderAscending(_EipMFacility.UPDATE_DATE_PROPERTY);
       querynotsort.setQualifier(exp2);
       List<EipMFacility> facility_notsort_list = querynotsort.fetchList();
       for (EipMFacility facilitydata2 : facility_notsort_list) {
@@ -431,7 +435,7 @@ public class FacilityFormData extends ALAbstractFormData {
         Database.query(EipMFacilityGroupMap.class);
       Expression fexp =
         ExpressionFactory.matchExp(
-          EipMFacilityGroupMap.FACILITY_ID_PROPERTY,
+          _EipMFacilityGroupMap.FACILITY_ID_PROPERTY,
           facility.getFacilityId());
       fmaps.setQualifier(fexp);
       List<EipMFacilityGroupMap> oldMapList = fmaps.fetchList();
@@ -455,9 +459,9 @@ public class FacilityFormData extends ALAbstractFormData {
         SelectQuery<EipMFacilityGroupMap> remove =
           Database.query(EipMFacilityGroupMap.class);
         remove.where(Operations.and(Operations.eq(
-          EipMFacilityGroupMap.FACILITY_ID_PROPERTY,
+          _EipMFacilityGroupMap.FACILITY_ID_PROPERTY,
           facility.getFacilityId()), Operations.in(
-          EipMFacilityGroupMap.GROUP_ID_PROPERTY,
+          _EipMFacilityGroupMap.GROUP_ID_PROPERTY,
           oldMapIdList)));
         remove.deleteAll();
       }

@@ -103,7 +103,8 @@ public class JetspeedDBSecurityService extends TurbineBaseService
      * @exception throws a <code>InitializationException</code> if the service
      * fails to initialize
      */
-    public synchronized void init(ServletConfig conf) throws InitializationException 
+    @Override
+	public synchronized void init(ServletConfig conf) throws InitializationException 
     {
         // already initialized
         if (getInit()) return;
@@ -169,7 +170,8 @@ public class JetspeedDBSecurityService extends TurbineBaseService
      *
      * @return JetspeedUser a newly created user that implements JetspeedUser.
      */
-    public JetspeedUser getUserInstance()
+    @Override
+	public JetspeedUser getUserInstance()
     {
         try
         {
@@ -206,7 +208,8 @@ public class JetspeedDBSecurityService extends TurbineBaseService
      * @return The converted username.
      *
      */
-    public String convertUserName(String username)
+    @Override
+	public String convertUserName(String username)
     {
         if (caseInsensitiveUsername)
         { 
@@ -232,7 +235,8 @@ public class JetspeedDBSecurityService extends TurbineBaseService
      * @return The converted password.
      *
      */
-    public String convertPassword(String password)
+    @Override
+	public String convertPassword(String password)
     {
         if (caseInsensitivePassword)
         { 
@@ -268,7 +272,8 @@ public class JetspeedDBSecurityService extends TurbineBaseService
      *         user's account was disabled, otherwise False.
      *
      */
-    public boolean checkDisableAccount(String username)
+    @Override
+	public boolean checkDisableAccount(String username)
     {
         username = convertUserName(username);
  
@@ -289,7 +294,7 @@ public class JetspeedDBSecurityService extends TurbineBaseService
             try
             {
                 // disable the account
-                JetspeedUser user = (JetspeedUser)JetspeedSecurity.getUser(username);
+                JetspeedUser user = JetspeedSecurity.getUser(username);
                 if (user != null)
                 {
                     user.setDisabled("T");
@@ -317,7 +322,8 @@ public class JetspeedDBSecurityService extends TurbineBaseService
      * @return True if the feature is enabled, false if the feature is disabled.
      *
      */
-    public boolean isDisableAccountCheckEnabled()
+    @Override
+	public boolean isDisableAccountCheckEnabled()
     {
         return autoLogonDisable;
     }
@@ -336,7 +342,8 @@ public class JetspeedDBSecurityService extends TurbineBaseService
      * @param username The username to reset the logon failure counters.
      *
      */
-    public void resetDisableAccountCheck(String username)
+    @Override
+	public void resetDisableAccountCheck(String username)
     {
         // TODO: make this work across a cluster of servers
         username = convertUserName(username);
@@ -377,7 +384,8 @@ public class JetspeedDBSecurityService extends TurbineBaseService
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege 
      */
 
-    public JetspeedUser getUser(String username) 
+    @Override
+	public JetspeedUser getUser(String username) 
         throws JetspeedSecurityException
     {
         return JetspeedUserManagement.getUser(new UserNamePrincipal(username));
@@ -396,7 +404,8 @@ public class JetspeedDBSecurityService extends TurbineBaseService
      * @param portlet the portlet resource.
      * @return boolean true if the user has sufficient privilege.
      */
-    public boolean checkPermission(JetspeedRunData runData, String action, Portlet portlet)
+    @Override
+	public boolean checkPermission(JetspeedRunData runData, String action, Portlet portlet)
     {
         return JetspeedPortalAccessController.checkPermission(runData.getJetspeedUser(),
                                                        portlet,
@@ -430,7 +439,8 @@ public class JetspeedDBSecurityService extends TurbineBaseService
      * @return True if the feature actions are disabled for the anon user
      *
      */
-    public boolean areActionsDisabledForAnon()
+    @Override
+	public boolean areActionsDisabledForAnon()
     {
         return actionsAnonDisable;
     }
@@ -443,7 +453,8 @@ public class JetspeedDBSecurityService extends TurbineBaseService
      * @return True if the feature actions are disabled for the all users
      *
      */
-    public boolean areActionsDisabledForAllUsers()
+    @Override
+	public boolean areActionsDisabledForAllUsers()
     {
         return actionsAllUsersDisable;
     }
@@ -455,7 +466,8 @@ public class JetspeedDBSecurityService extends TurbineBaseService
      * @return String the name of the anonymous user account
      *
      */
-    public String getAnonymousUserName()
+    @Override
+	public String getAnonymousUserName()
     {
         return anonymousUser;
     }
@@ -465,7 +477,8 @@ public class JetspeedDBSecurityService extends TurbineBaseService
 	 *    
 	 * @return list of admin roles
 	 */
-	 public List getAdminRoles()
+	 @Override
+	public List getAdminRoles()
 	 {
 	 	List result = new ArrayList();
 	 	for (int i = 0; i < adminRoles.length; i++)
@@ -482,6 +495,7 @@ public class JetspeedDBSecurityService extends TurbineBaseService
 	 * @param user
 	 * @return true if user has administrative role
 	 */
+	@Override
 	public boolean hasAdminRole(User user)
 	{
 		String username = user.getUserName();

@@ -41,9 +41,14 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.commons.utils.ALDateUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodo;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodoCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTodo;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTodoCategory;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALAbstractMultiFilterSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -131,7 +136,7 @@ public class ToDoSelectData extends
         rundata,
         context,
         LIST_SORT_STR,
-        EipTTodo.UPDATE_DATE_PROPERTY);
+        _EipTTodo.UPDATE_DATE_PROPERTY);
       ALEipUtils.setTemp(
         rundata,
         context,
@@ -260,7 +265,7 @@ public class ToDoSelectData extends
       && (!target_user_id.equals(""))
       && (!target_user_id.equals("all"))) {
       exp1 =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
           .valueOf(target_user_id));
       // exp0.andExp(exp1);
       query.andQualifier(exp1);
@@ -271,13 +276,13 @@ public class ToDoSelectData extends
       && (!target_group_name.equals("all"))) {
       // 選択したグループを指定する．
       Expression exp =
-        ExpressionFactory.matchExp(EipTTodo.TURBINE_USER_PROPERTY
+        ExpressionFactory.matchExp(_EipTTodo.TURBINE_USER_PROPERTY
           + "."
-          + TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
+          + _TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
           + "."
-          + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+          + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
           + "."
-          + TurbineGroup.GROUP_NAME_PROPERTY, target_group_name);
+          + _TurbineGroup.GROUP_NAME_PROPERTY, target_group_name);
       query.andQualifier(exp);
     }
 
@@ -285,9 +290,9 @@ public class ToDoSelectData extends
       // 選択したキーワードを指定する．
       String keyword = "%" + target_keyword.getValue() + "%";
       Expression exp =
-        ExpressionFactory.likeExp(EipTTodo.TODO_NAME_PROPERTY, keyword);
+        ExpressionFactory.likeExp(_EipTTodo.TODO_NAME_PROPERTY, keyword);
       Expression exp2 =
-        ExpressionFactory.likeExp(EipTTodo.NOTE_PROPERTY, keyword);
+        ExpressionFactory.likeExp(_EipTTodo.NOTE_PROPERTY, keyword);
 
       /* フルネーム対応 */
       String first_name = keyword;
@@ -304,21 +309,21 @@ public class ToDoSelectData extends
       }
 
       Expression exp3 =
-        ExpressionFactory.likeExp(EipTTodo.TURBINE_USER_PROPERTY
+        ExpressionFactory.likeExp(_EipTTodo.TURBINE_USER_PROPERTY
           + "."
-          + TurbineUser.FIRST_NAME_PROPERTY, first_name);
+          + _TurbineUser.FIRST_NAME_PROPERTY, first_name);
       Expression exp4 =
-        ExpressionFactory.likeExp(EipTTodo.TURBINE_USER_PROPERTY
+        ExpressionFactory.likeExp(_EipTTodo.TURBINE_USER_PROPERTY
           + "."
-          + TurbineUser.FIRST_NAME_KANA_PROPERTY, first_name);
+          + _TurbineUser.FIRST_NAME_KANA_PROPERTY, first_name);
       Expression exp5 =
-        ExpressionFactory.likeExp(EipTTodo.TURBINE_USER_PROPERTY
+        ExpressionFactory.likeExp(_EipTTodo.TURBINE_USER_PROPERTY
           + "."
-          + TurbineUser.LAST_NAME_PROPERTY, last_name);
+          + _TurbineUser.LAST_NAME_PROPERTY, last_name);
       Expression exp6 =
-        ExpressionFactory.likeExp(EipTTodo.TURBINE_USER_PROPERTY
+        ExpressionFactory.likeExp(_EipTTodo.TURBINE_USER_PROPERTY
           + "."
-          + TurbineUser.LAST_NAME_KANA_PROPERTY, last_name);
+          + _TurbineUser.LAST_NAME_KANA_PROPERTY, last_name);
 
       query.andQualifier(exp
         .orExp(exp2)
@@ -330,12 +335,12 @@ public class ToDoSelectData extends
 
     if ("list".equals(currentTab)) {
       Expression exp3 =
-        ExpressionFactory.noMatchExp(EipTTodo.STATE_PROPERTY, Short
+        ExpressionFactory.noMatchExp(_EipTTodo.STATE_PROPERTY, Short
           .valueOf((short) 100));
       query.andQualifier(exp3);
     } else if ("complete".equals(currentTab)) {
       Expression exp4 =
-        ExpressionFactory.matchExp(EipTTodo.STATE_PROPERTY, Short
+        ExpressionFactory.matchExp(_EipTTodo.STATE_PROPERTY, Short
           .valueOf((short) 100));
       query.andQualifier(exp4);
     }
@@ -343,14 +348,14 @@ public class ToDoSelectData extends
     // 公開ならば無条件に閲覧
     // 非公開ならuserIDが一致していれば閲覧可能
     Expression exp5 =
-      ExpressionFactory.matchExp(EipTTodo.PUBLIC_FLAG_PROPERTY, "T");
+      ExpressionFactory.matchExp(_EipTTodo.PUBLIC_FLAG_PROPERTY, "T");
     if (target_user_id != null
       && (target_user_id.equals("all") || target_user_id.equals(String
         .valueOf(login_user_id)))) {
       Expression exp6 =
-        ExpressionFactory.matchExp(EipTTodo.PUBLIC_FLAG_PROPERTY, "F");
+        ExpressionFactory.matchExp(_EipTTodo.PUBLIC_FLAG_PROPERTY, "F");
       Expression exp7 =
-        ExpressionFactory.matchExp(EipTTodo.USER_ID_PROPERTY, login_user_id);
+        ExpressionFactory.matchExp(_EipTTodo.USER_ID_PROPERTY, login_user_id);
       query.andQualifier(exp5.orExp(exp6.andExp(exp7)));
     } else {
       query.andQualifier(exp5);
@@ -402,7 +407,7 @@ public class ToDoSelectData extends
         userIds.add(-1);
       }
       Expression exp =
-        ExpressionFactory.inExp(EipTTodo.USER_ID_PROPERTY, userIds);
+        ExpressionFactory.inExp(_EipTTodo.USER_ID_PROPERTY, userIds);
       query.andQualifier(exp);
     }
 
@@ -624,18 +629,18 @@ public class ToDoSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("todo_name", EipTTodo.TODO_NAME_PROPERTY);
-    map.putValue("state", EipTTodo.STATE_PROPERTY);
-    map.putValue("priority", EipTTodo.PRIORITY_PROPERTY);
-    map.putValue("end_date", EipTTodo.END_DATE_PROPERTY);
-    map.putValue("category_name", EipTTodo.EIP_TTODO_CATEGORY_PROPERTY
+    map.putValue("todo_name", _EipTTodo.TODO_NAME_PROPERTY);
+    map.putValue("state", _EipTTodo.STATE_PROPERTY);
+    map.putValue("priority", _EipTTodo.PRIORITY_PROPERTY);
+    map.putValue("end_date", _EipTTodo.END_DATE_PROPERTY);
+    map.putValue("category_name", _EipTTodo.EIP_TTODO_CATEGORY_PROPERTY
       + "."
-      + EipTTodoCategory.CATEGORY_NAME_PROPERTY);
-    map.putValue("category", EipTTodoCategory.CATEGORY_ID_PK_COLUMN);
-    map.putValue("user_name", EipTTodoCategory.TURBINE_USER_PROPERTY
+      + _EipTTodoCategory.CATEGORY_NAME_PROPERTY);
+    map.putValue("category", _EipTTodoCategory.CATEGORY_ID_PK_COLUMN);
+    map.putValue("user_name", _EipTTodoCategory.TURBINE_USER_PROPERTY
       + "."
-      + TurbineUser.LAST_NAME_KANA_PROPERTY);
-    map.putValue(EipTTodo.UPDATE_DATE_PROPERTY, EipTTodo.UPDATE_DATE_PROPERTY);
+      + _TurbineUser.LAST_NAME_KANA_PROPERTY);
+    map.putValue(_EipTTodo.UPDATE_DATE_PROPERTY, _EipTTodo.UPDATE_DATE_PROPERTY);
     return map;
   }
 

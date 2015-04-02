@@ -770,7 +770,7 @@ public class JetspeedTemplateLocatorService extends TurbineBaseService
   private void initConfiguration() throws InitializationException {
 
     templateRoots =
-      JetspeedResources.getStringArray(TurbineServices.SERVICE_PREFIX
+      TurbineResources.getStringArray(TurbineServices.SERVICE_PREFIX
         + TemplateLocatorService.SERVICE_NAME
         + CONFIG_TEMPLATE_ROOT);
 

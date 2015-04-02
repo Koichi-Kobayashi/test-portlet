@@ -25,7 +25,7 @@ import java.util.Iterator;
  * all facilities for finding and updating specific parts of the 
  * document.
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BasePSMLDocument.java,v 1.9 2004/02/23 03:05:01 jford Exp $
  */
 public class BasePSMLDocument implements PSMLDocument
@@ -65,7 +65,8 @@ public class BasePSMLDocument implements PSMLDocument
     /**
      * Return the name of this document
      */
-    public final String getName()
+    @Override
+	public final String getName()
     {
         return this.name;
     }
@@ -75,7 +76,8 @@ public class BasePSMLDocument implements PSMLDocument
      * 
      * @param name the new document name
      */
-    public final void setName(String name)
+    @Override
+	public final void setName(String name)
     {
         this.name = name;
     }
@@ -86,7 +88,8 @@ public class BasePSMLDocument implements PSMLDocument
      * @return a PSML object model hierarchy, or null if none is 
      * defined for this document
      */
-    public final Portlets getPortlets()
+    @Override
+	public final Portlets getPortlets()
     {
         return this.portlets;
     }
@@ -96,7 +99,8 @@ public class BasePSMLDocument implements PSMLDocument
      * 
      * @param portlets the PSML object model
      */
-    public final void setPortlets(Portlets portlets)
+    @Override
+	public final void setPortlets(Portlets portlets)
     {
         this.portlets = portlets;
     }
@@ -107,7 +111,8 @@ public class BasePSMLDocument implements PSMLDocument
      *  @param name the portlet name to seek
      *  @return the found entry description or null
      */
-    public Entry getEntry(String name)
+    @Override
+	public Entry getEntry(String name)
     {
         return getEntry(this.portlets, name);
     }
@@ -118,7 +123,8 @@ public class BasePSMLDocument implements PSMLDocument
      *  @param entryId the portlet's entry id to seek
      *  @return the found entry description or null
      */
-    public Entry getEntryById(String entryId)
+    @Override
+	public Entry getEntryById(String entryId)
     {
         return getEntryById(this.portlets, entryId);
     }
@@ -129,7 +135,8 @@ public class BasePSMLDocument implements PSMLDocument
      *  @param name the portlets name to seek
      *  @return the found portlets description or null
      */
-    public Portlets getPortlets(String name)
+    @Override
+	public Portlets getPortlets(String name)
     {        
         Portlets p = getPortlets(this.portlets, name);
         
@@ -155,7 +162,8 @@ public class BasePSMLDocument implements PSMLDocument
      *  @param name the portlets id to seek
      *  @return the found portlets description or null
      */
-    public Portlets getPortletsById(String portletId)
+    @Override
+	public Portlets getPortletsById(String portletId)
     {        
         Portlets p = getPortletsById(this.portlets, portletId);
         return p;
@@ -170,7 +178,8 @@ public class BasePSMLDocument implements PSMLDocument
      *  @return the found portlets object or null if we did not find such an
      *  object
      */
-    public Portlets getPortlets(int position)
+    @Override
+	public Portlets getPortlets(int position)
     {
         return getPortlets(this.portlets, position, 0);
     }
@@ -342,7 +351,8 @@ public class BasePSMLDocument implements PSMLDocument
      * 
      * @param entryId the portlet's entry id to seek
      */
-    public boolean removeEntryById(String entryId)
+    @Override
+	public boolean removeEntryById(String entryId)
     {        
         return removeEntryById(this.portlets, entryId);
     }
@@ -379,7 +389,8 @@ public class BasePSMLDocument implements PSMLDocument
     /**
      * Create a clone of this object
      */
-    public Object clone()
+    @Override
+	public Object clone()
         throws java.lang.CloneNotSupportedException
     {
         Object cloned = super.clone();

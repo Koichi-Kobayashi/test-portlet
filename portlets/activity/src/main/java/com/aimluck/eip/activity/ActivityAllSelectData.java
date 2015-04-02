@@ -27,6 +27,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.activity.util.ActivityUtils;
 import com.aimluck.eip.cayenne.om.social.Activity;
+import com.aimluck.eip.cayenne.om.social.auto._Activity;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALActivity;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -72,7 +73,7 @@ public class ActivityAllSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue(Activity.UPDATE_DATE_PROPERTY, Activity.UPDATE_DATE_PROPERTY);
+    map.putValue(_Activity.UPDATE_DATE_PROPERTY, _Activity.UPDATE_DATE_PROPERTY);
     return map;
   }
 

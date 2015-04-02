@@ -66,7 +66,8 @@ public class WebPagePortlet extends AbstractInstancePortlet
      * Initialize this portlet by defining a HTML rewriter.
      * @throws PortletException Initialization failed
      */    
-    public void init() throws PortletException {
+    @Override
+	public void init() throws PortletException {
   
         if (initDone) // Why is init called more than once per portlet?
             return;
@@ -215,7 +216,8 @@ public class WebPagePortlet extends AbstractInstancePortlet
     @param data the RunData object for the request
     @return the content to be displayed to the user-agent
     */
-    public ConcreteElement getContent( RunData data ) 
+    @Override
+	public ConcreteElement getContent( RunData data ) 
     {
         PortletConfig config = this.getPortletConfig();
         
@@ -265,7 +267,8 @@ public class WebPagePortlet extends AbstractInstancePortlet
      *
      * Any cached content that is expired need to be refreshed.
      */
-    public void refresh() {
+    @Override
+	public void refresh() {
         if (cacheContent == true) {
           getWebPageContent(null, this.getPortletConfig());
         }

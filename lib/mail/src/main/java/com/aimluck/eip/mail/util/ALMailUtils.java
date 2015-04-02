@@ -72,6 +72,11 @@ import com.aimluck.eip.cayenne.om.portlet.EipMMailNotifyConf;
 import com.aimluck.eip.cayenne.om.portlet.EipTMail;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFilter;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFolder;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMMailAccount;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMMailNotifyConf;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMail;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMailFilter;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMailFolder;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -223,11 +228,11 @@ public class ALMailUtils {
       SelectQuery<EipMMailAccount> query =
         Database.query(EipMMailAccount.class);
       Expression exp1 =
-        ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMMailAccount.USER_ID_PROPERTY, Integer
           .valueOf(userId));
       Expression exp2 =
         ExpressionFactory.matchDbExp(
-          EipMMailAccount.ACCOUNT_ID_PK_COLUMN,
+          _EipMMailAccount.ACCOUNT_ID_PK_COLUMN,
           Integer.valueOf(accountId));
 
       EipMMailAccount account =
@@ -949,7 +954,7 @@ public class ALMailUtils {
         Database.query(EipMMailAccount.class);
 
       Expression exp =
-        ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMMailAccount.USER_ID_PROPERTY, Integer
           .valueOf(1));
       EipMMailAccount account = query.andQualifier(exp).fetchSingle();
 
@@ -976,12 +981,12 @@ public class ALMailUtils {
         Database.query(EipMMailAccount.class);
 
       Expression exp1 =
-        ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMMailAccount.USER_ID_PROPERTY, Integer
           .valueOf(userId));
       Expression exp21 =
-        ExpressionFactory.matchExp(EipMMailAccount.ACCOUNT_TYPE_PROPERTY, "1");
+        ExpressionFactory.matchExp(_EipMMailAccount.ACCOUNT_TYPE_PROPERTY, "1");
       Expression exp22 =
-        ExpressionFactory.matchExp(EipMMailAccount.ACCOUNT_TYPE_PROPERTY, "2");
+        ExpressionFactory.matchExp(_EipMMailAccount.ACCOUNT_TYPE_PROPERTY, "2");
       EipMMailAccount account =
         query.andQualifier(exp1).andQualifier(exp21.orExp(exp22)).fetchSingle();
 
@@ -1051,11 +1056,11 @@ public class ALMailUtils {
           Database.query(EipMMailAccount.class);
 
         Expression exp1 =
-          ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, Integer
+          ExpressionFactory.matchExp(_EipMMailAccount.USER_ID_PROPERTY, Integer
             .valueOf(userId));
         Expression exp2 =
           ExpressionFactory.matchExp(
-            EipMMailAccount.ACCOUNT_TYPE_PROPERTY,
+            _EipMMailAccount.ACCOUNT_TYPE_PROPERTY,
             Integer.valueOf(ACCOUNT_TYPE_INIT));
         EipMMailAccount account =
           query.andQualifier(exp1).andQualifier(exp2).fetchSingle();
@@ -1069,7 +1074,7 @@ public class ALMailUtils {
 
           Expression exp3 =
             ExpressionFactory.matchExp(
-              EipMMailAccount.USER_ID_PROPERTY,
+              _EipMMailAccount.USER_ID_PROPERTY,
               Integer.valueOf(userId));
           EipMMailAccount anotherAccount =
             query3.andQualifier(exp3).fetchSingle();
@@ -1550,11 +1555,11 @@ public class ALMailUtils {
         Database.query(EipMMailNotifyConf.class);
 
       Expression exp1 =
-        ExpressionFactory.matchExp(EipMMailNotifyConf.USER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMMailNotifyConf.USER_ID_PROPERTY, Integer
           .valueOf(1));
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipMMailNotifyConf.NOTIFY_TYPE_PROPERTY,
+          _EipMMailNotifyConf.NOTIFY_TYPE_PROPERTY,
           Integer.valueOf(keyMsgtype));
       EipMMailNotifyConf mail_notify_conf =
         query.andQualifier(exp1).andQualifier(exp2).fetchSingle();
@@ -1588,7 +1593,7 @@ public class ALMailUtils {
 
       Expression exp1 =
         ExpressionFactory.matchExp(
-          EipMMailNotifyConf.NOTIFY_TYPE_PROPERTY,
+          _EipMMailNotifyConf.NOTIFY_TYPE_PROPERTY,
           Integer.valueOf(keyMsgtype));
       EipMMailNotifyConf mail_notify_conf =
         query.andQualifier(exp1).fetchSingle();
@@ -1747,11 +1752,11 @@ public class ALMailUtils {
 
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTMailFolder.EIP_MMAIL_ACCOUNT_PROPERTY,
+          _EipTMailFolder.EIP_MMAIL_ACCOUNT_PROPERTY,
           account);
       List<EipTMailFolder> folder_list =
         query.andQualifier(exp).orderAscending(
-          EipTMailFolder.FOLDER_NAME_PROPERTY).fetchList();
+          _EipTMailFolder.FOLDER_NAME_PROPERTY).fetchList();
 
       if (folder_list == null || folder_list.size() == 0) {
         logger.debug("[WebMail Folder] Not found ID...");
@@ -1792,7 +1797,7 @@ public class ALMailUtils {
       SelectQuery<EipTMail> query = Database.query(EipTMail.class);
 
       Expression exp =
-        ExpressionFactory.matchExp(EipTMail.FOLDER_ID_PROPERTY, folder
+        ExpressionFactory.matchExp(_EipTMail.FOLDER_ID_PROPERTY, folder
           .getFolderId());
       List<EipTMail> mail_list = query.andQualifier(exp).fetchList();
 
@@ -1821,11 +1826,11 @@ public class ALMailUtils {
 
       Expression exp =
         ExpressionFactory.matchExp(
-          EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
+          _EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
           mailAccount);
       List<EipTMailFilter> filter_list =
         query.andQualifier(exp).orderAscending(
-          EipTMailFilter.SORT_ORDER_PROPERTY).fetchList();
+          _EipTMailFilter.SORT_ORDER_PROPERTY).fetchList();
 
       if (filter_list == null || filter_list.size() == 0) {
         logger.debug("[WebMail Filter] Not found ID...");

@@ -48,7 +48,11 @@ import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.EipTCommonCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTSchedule;
 import com.aimluck.eip.cayenne.om.portlet.EipTScheduleMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTSchedule;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTScheduleMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -682,7 +686,7 @@ public class ScheduleFormData extends ALAbstractFormData {
           SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
           Expression exp =
             ExpressionFactory.inExp(
-              TurbineUser.LOGIN_NAME_PROPERTY,
+              _TurbineUser.LOGIN_NAME_PROPERTY,
               memberNames);
           query.setQualifier(exp);
           memberList.addAll(ALEipUtils.getUsersFromSelectQuery(query));
@@ -697,7 +701,7 @@ public class ScheduleFormData extends ALAbstractFormData {
           SelectQuery<EipMFacility> fquery = Database.query(EipMFacility.class);
           Expression fexp =
             ExpressionFactory.inDbExp(
-              EipMFacility.FACILITY_ID_PK_COLUMN,
+              _EipMFacility.FACILITY_ID_PK_COLUMN,
               facilityIds);
           fquery.setQualifier(fexp);
           List<EipMFacility> facilities = fquery.fetchList();
@@ -945,7 +949,7 @@ public class ScheduleFormData extends ALAbstractFormData {
       SelectQuery<EipTScheduleMap> mapquery =
         Database.query(EipTScheduleMap.class);
       Expression mapexp =
-        ExpressionFactory.matchExp(EipTScheduleMap.SCHEDULE_ID_PROPERTY, record
+        ExpressionFactory.matchExp(_EipTScheduleMap.SCHEDULE_ID_PROPERTY, record
           .getScheduleId());
       mapquery.setQualifier(mapexp);
       List<EipTScheduleMap> scheduleMaps = mapquery.fetchList();
@@ -971,7 +975,7 @@ public class ScheduleFormData extends ALAbstractFormData {
       if (userIds.size() > 0) {
         SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
         Expression exp =
-          ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, userIds);
+          ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, userIds);
         query.setQualifier(exp);
         memberList.addAll(ALEipUtils.getUsersFromSelectQuery(query));
       } else {
@@ -982,7 +986,7 @@ public class ScheduleFormData extends ALAbstractFormData {
         SelectQuery<EipMFacility> fquery = Database.query(EipMFacility.class);
         Expression fexp =
           ExpressionFactory.inDbExp(
-            EipMFacility.FACILITY_ID_PK_COLUMN,
+            _EipMFacility.FACILITY_ID_PK_COLUMN,
             facilityIds);
         fquery.setQualifier(fexp);
         facilityList.addAll(FacilitiesUtils
@@ -2063,14 +2067,14 @@ public class ScheduleFormData extends ALAbstractFormData {
         SelectQuery<EipTSchedule> dummy_query =
           Database.query(EipTSchedule.class);
         Expression exp1 =
-          ExpressionFactory.matchExp(EipTSchedule.PARENT_ID_PROPERTY, schedule
+          ExpressionFactory.matchExp(_EipTSchedule.PARENT_ID_PROPERTY, schedule
             .getScheduleId());
         Expression exp2 =
           ExpressionFactory.matchExp(
-            EipTSchedule.START_DATE_PROPERTY,
+            _EipTSchedule.START_DATE_PROPERTY,
             view_date.getValue());
         Expression exp3 =
-          ExpressionFactory.matchExp(EipTSchedule.END_DATE_PROPERTY, view_date
+          ExpressionFactory.matchExp(_EipTSchedule.END_DATE_PROPERTY, view_date
             .getValue());
         dummy_query.setQualifier(exp1);
         dummy_query.andQualifier(exp2);
@@ -2222,7 +2226,7 @@ public class ScheduleFormData extends ALAbstractFormData {
           Database.query(EipTScheduleMap.class);
         Expression exp11 =
           ExpressionFactory.matchExp(
-            EipTScheduleMap.SCHEDULE_ID_PROPERTY,
+            _EipTScheduleMap.SCHEDULE_ID_PROPERTY,
             Integer.valueOf(rundata.getParameters().getString("entityid")));
         query2.andQualifier(exp11);
         List<EipTScheduleMap> scheduleMap = query2.fetchList();
@@ -2420,12 +2424,12 @@ public class ScheduleFormData extends ALAbstractFormData {
     // ダミースケジュールの取得
     SelectQuery<EipTSchedule> query = Database.query(EipTSchedule.class);
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTSchedule.PARENT_ID_PROPERTY, scheduleId);
+      ExpressionFactory.matchExp(_EipTSchedule.PARENT_ID_PROPERTY, scheduleId);
     query.setQualifier(exp1);
     Expression exp2 =
-      ExpressionFactory.matchExp(EipTSchedule.EIP_TSCHEDULE_MAPS_PROPERTY
+      ExpressionFactory.matchExp(_EipTSchedule.EIP_TSCHEDULE_MAPS_PROPERTY
         + "."
-        + EipTScheduleMap.STATUS_PROPERTY, "D");
+        + _EipTScheduleMap.STATUS_PROPERTY, "D");
     query.andQualifier(exp2);
     List<EipTSchedule> dellist = query.fetchList();
     // ダミースケジュールの削除

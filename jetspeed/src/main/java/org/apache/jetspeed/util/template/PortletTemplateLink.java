@@ -30,11 +30,12 @@ import org.apache.jetspeed.services.rundata.JetspeedRunData;
  * Portlet context and allows you to manipulate the lowest level pane 
  * if it exists.
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @deprecated Since 2002-03-05. Use JetspeedTemplateLink with the setPortlet(Portlet) method to give
  * it the right context.
  * @version $Id: PortletTemplateLink.java,v 1.4 2004/02/23 03:20:45 jford Exp $
  */
+@Deprecated
 public class PortletTemplateLink extends JetspeedTemplateLink
 {
         
@@ -65,7 +66,8 @@ public class PortletTemplateLink extends JetspeedTemplateLink
      * @param portlet the name of the portlet to link to
      * @return a self reference for easy link construction in template
      */
-    public DynamicURI setPanel(String panel)
+    @Override
+	public DynamicURI setPanel(String panel)
     {
         removePathInfo(getPanelKey());
         removeQueryData(getPanelKey());
@@ -75,7 +77,8 @@ public class PortletTemplateLink extends JetspeedTemplateLink
      /** 
      * @return the panel parameter name
      */
-    public String getPanelKey()
+    @Override
+	public String getPanelKey()
     {
         String panelName = PANEL_KEY;
         try

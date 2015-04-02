@@ -54,7 +54,8 @@ public class BaseSecurityAccess implements SecurityAccess, java.io.Serializable
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object == null || !(object instanceof SecurityAccess))
         {
@@ -138,7 +139,8 @@ public class BaseSecurityAccess implements SecurityAccess, java.io.Serializable
     /** Getter for property action.
      * @return Value of property action.
      */
-    public String getAction()
+    @Override
+	public String getAction()
     {
         return action;
     }
@@ -146,7 +148,8 @@ public class BaseSecurityAccess implements SecurityAccess, java.io.Serializable
     /** Setter for property action.
      * @param action New value of property action.
      */
-    public void setAction(String action)
+    @Override
+	public void setAction(String action)
     {
         this.action = action;
     }
@@ -154,7 +157,8 @@ public class BaseSecurityAccess implements SecurityAccess, java.io.Serializable
     /** Getter for property allows.
      * @return Value of property allows.
      */
-    public Vector getAllows()
+    @Override
+	public Vector getAllows()
     {
         if (allows == null)
         {
@@ -166,7 +170,8 @@ public class BaseSecurityAccess implements SecurityAccess, java.io.Serializable
     /** Setter for property allows.
      * @param allows New value of property allows.
      */
-    public void setAllows(Vector allows)
+    @Override
+	public void setAllows(Vector allows)
     {
         this.allows = allows;
         if (this.allAllows != null)
@@ -178,7 +183,8 @@ public class BaseSecurityAccess implements SecurityAccess, java.io.Serializable
     /** Getter for property ownerAllows.
      * @return Value of property ownerAllows.
      */
-    public Vector getOwnerAllows()
+    @Override
+	public Vector getOwnerAllows()
     {
         if (ownerAllows == null)
         {
@@ -190,7 +196,8 @@ public class BaseSecurityAccess implements SecurityAccess, java.io.Serializable
     /** Setter for property ownerAllows.
      * @param ownerAllows New value of property ownerAllows.
      */
-    public void setOwnerAllows(Vector ownerAllows)
+    @Override
+	public void setOwnerAllows(Vector ownerAllows)
     {
         this.ownerAllows = ownerAllows;
         if (this.allAllows != null)
@@ -206,7 +213,8 @@ public class BaseSecurityAccess implements SecurityAccess, java.io.Serializable
      *
      * @return vector containing all allows
      */
-    public Vector getAllAllows()
+    @Override
+	public Vector getAllAllows()
     {
         int elementCount = 0;
         if (this.allAllows == null)

@@ -40,7 +40,8 @@ public class ALEipPost implements ALData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     post_id = new ALNumberField();
     post_name = new ALStringField();
     group_name = new ALStringField();

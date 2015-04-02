@@ -34,12 +34,15 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.account.util.AccountUtils;
 import com.aimluck.eip.cayenne.om.account.EipMUserPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMUserPosition;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlog;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogFootmarkMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodo;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodoCategory;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -84,7 +87,7 @@ public class AccountUserMultiDelete extends ALAbstractCheckList {
       }
 
       Expression exp =
-        ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, values);
+        ExpressionFactory.inExp(_TurbineUser.LOGIN_NAME_PROPERTY, values);
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class, exp);
       List<TurbineUser> ulist = query.fetchList();
       if (ulist == null || ulist.size() == 0) {
@@ -141,7 +144,7 @@ public class AccountUserMultiDelete extends ALAbstractCheckList {
           Database.query(TurbineUserGroupRole.class);
         Expression exp2 =
           ExpressionFactory.matchExp(
-            TurbineUserGroupRole.TURBINE_USER_PROPERTY,
+            _TurbineUserGroupRole.TURBINE_USER_PROPERTY,
             userId);
         ugr_query.setQualifier(exp2);
         List<TurbineUserGroupRole> list4 = ugr_query.fetchList();
@@ -193,7 +196,7 @@ public class AccountUserMultiDelete extends ALAbstractCheckList {
       // 他のユーザの順番を変更する．
       SelectQuery<EipMUserPosition> p_query =
         Database.query(EipMUserPosition.class);
-      p_query.orderAscending(EipMUserPosition.POSITION_PROPERTY);
+      p_query.orderAscending(_EipMUserPosition.POSITION_PROPERTY);
       List<EipMUserPosition> userPositions = p_query.fetchList();
       if (userPositions != null && userPositions.size() > 0) {
         EipMUserPosition userPosition = null;

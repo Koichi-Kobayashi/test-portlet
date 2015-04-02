@@ -42,7 +42,8 @@ public class ScheduleTermMonthContainer implements ALData {
   /*
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     map = new LinkedHashMap<Integer, List<ScheduleTermWeekContainer>>();
   }
 

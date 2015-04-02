@@ -62,7 +62,8 @@ public class SecurityUpdateAction extends RegistryUpdateAction
     /**
      * @see org.apache.jetspeed.modules.actions.portlets.VelocityPortletAction#buildNormalContext(VelocityPortlet, Context, RunData)
      */
-    protected void buildNormalContext(
+    @Override
+	protected void buildNormalContext(
         VelocityPortlet portlet,
         Context context,
         RunData rundata)
@@ -553,7 +554,8 @@ public class SecurityUpdateAction extends RegistryUpdateAction
      * Clears the temporary storage of any data that was used
      * @param rundata
      */
-    protected void clearUserData(RunData rundata)
+    @Override
+	protected void clearUserData(RunData rundata)
     {
         try
         {
@@ -578,7 +580,8 @@ public class SecurityUpdateAction extends RegistryUpdateAction
      * Populates the user's temp storage with form data
      * @param rundata The turbine rundata context for this request.
      */
-    protected void resetForm(RunData rundata)
+    @Override
+	protected void resetForm(RunData rundata)
     {
         String securityName =
             rundata.getParameters().getString("security_name");

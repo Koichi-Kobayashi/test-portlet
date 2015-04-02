@@ -41,7 +41,7 @@ import org.w3c.dom.NodeList;
  * is only used for this mime-type</dd>
  * </dl>
  * 
- * @author <A HREF="mailto:raphael@apache.org">Raphaël Luta</A>
+ * @author <A HREF="mailto:raphael@apache.org">Raphaï¿½l Luta</A>
  * @version $Id: $
  * @since 1.4b4
  */
@@ -55,7 +55,8 @@ public class RSSViewProcessor extends XSLViewProcessor
      * @param portlet
      * @exception PortletException
      */
-    public void init(Portlet portlet)
+    @Override
+	public void init(Portlet portlet)
     throws PortletException
     {
 

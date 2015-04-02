@@ -35,7 +35,8 @@ public class PsmlRole implements Role, java.io.Serializable
     {}
     
     /** @return the role name that is required for accessing this entry */
-    public String getName()
+    @Override
+	public String getName()
     {
         return this.name;
     }
@@ -43,7 +44,8 @@ public class PsmlRole implements Role, java.io.Serializable
     /** Sets the role name required for accessing this entry
      * @param name the required role name
      */
-    public void setName( String name )
+    @Override
+	public void setName( String name )
     {
         this.name = name;
     }

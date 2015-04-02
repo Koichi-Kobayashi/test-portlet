@@ -61,7 +61,7 @@ import java.util.StringTokenizer;
  * This action builds a context suitable for controllers handling
  * grid positioned layout using PortletSet.Constraints
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:paulsp@apache.org">Paul Spencer</a>
  * @version $Id: MultiColumnControllerAction.java,v 1.30 2004/02/23 02:49:58 jford Exp $
  */
@@ -79,7 +79,8 @@ public class MultiColumnControllerAction extends VelocityControllerAction
      * Subclasses must override this method to provide default behavior
      * for the portlet action
      */
-    protected void buildNormalContext(PortletController controller,
+    @Override
+	protected void buildNormalContext(PortletController controller,
                                       Context context,
                                       RunData rundata)
     {
@@ -225,7 +226,8 @@ public class MultiColumnControllerAction extends VelocityControllerAction
      * Subclasses must override this method to provide default behavior
      * for the portlet action
      */
-    protected void buildCustomizeContext(PortletController controller,
+    @Override
+	protected void buildCustomizeContext(PortletController controller,
                                          Context context,
                                          RunData rundata)
     {
@@ -347,7 +349,8 @@ public class MultiColumnControllerAction extends VelocityControllerAction
      * Cancel the current customizations.  If this was the last customization
      * on the stack, then return the user to the home page.
      */
-    public void doCancel(RunData data, Context context)
+    @Override
+	public void doCancel(RunData data, Context context)
     {
         // move one level back in customization
         ((JetspeedRunData) data).setCustomized(null);

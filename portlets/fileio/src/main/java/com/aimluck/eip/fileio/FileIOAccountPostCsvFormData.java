@@ -35,8 +35,10 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.account.EipMPost;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPost;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -244,7 +246,7 @@ public class FileIOAccountPostCsvFormData extends ALAbstractFormData {
           }
 
           Expression exp =
-            ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, str);
+            ExpressionFactory.inExp(_TurbineUser.LOGIN_NAME_PROPERTY, str);
           SelectQuery<TurbineUser> query =
             Database.query(TurbineUser.class, exp);
           List<TurbineUser> list = query.fetchList();
@@ -718,7 +720,7 @@ public class FileIOAccountPostCsvFormData extends ALAbstractFormData {
 
     SelectQuery<EipMPost> query = Database.query(EipMPost.class);
     Expression exp =
-      ExpressionFactory.matchExp(EipMPost.POST_NAME_PROPERTY, post_name);
+      ExpressionFactory.matchExp(_EipMPost.POST_NAME_PROPERTY, post_name);
 
     query.setQualifier(exp);
 

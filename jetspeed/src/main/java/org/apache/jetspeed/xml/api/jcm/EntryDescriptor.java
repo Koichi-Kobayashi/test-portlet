@@ -11,14 +11,8 @@ package org.apache.jetspeed.xml.api.jcm;
  //- Imported classes and packages -/
 //---------------------------------/
 
-import org.exolab.castor.mapping.AccessMode;
-import org.exolab.castor.mapping.ClassDescriptor;
-import org.exolab.castor.mapping.FieldDescriptor;
 import org.exolab.castor.xml.*;
 import org.exolab.castor.xml.FieldValidator;
-import org.exolab.castor.xml.TypeValidator;
-import org.exolab.castor.xml.XMLFieldDescriptor;
-import org.exolab.castor.xml.handlers.*;
 import org.exolab.castor.xml.util.XMLFieldDescriptorImpl;
 import org.exolab.castor.xml.validators.*;
 
@@ -59,13 +53,15 @@ public class EntryDescriptor extends org.exolab.castor.xml.util.XMLClassDescript
         desc = new XMLFieldDescriptorImpl(java.lang.String.class, "_name", "name", NodeType.Attribute);
         desc.setImmutable(true);
         handler = (new XMLFieldHandler() {
-            public Object getValue( Object object ) 
+            @Override
+			public Object getValue( Object object ) 
                 throws IllegalStateException
             {
                 Entry target = (Entry) object;
                 return target.getName();
             }
-            public void setValue( Object object, Object value) 
+            @Override
+			public void setValue( Object object, Object value) 
                 throws IllegalStateException, IllegalArgumentException
             {
                 try {
@@ -76,7 +72,8 @@ public class EntryDescriptor extends org.exolab.castor.xml.util.XMLClassDescript
                     throw new IllegalStateException(ex.toString());
                 }
             }
-            public Object newInstance( Object parent ) {
+            @Override
+			public Object newInstance( Object parent ) {
                 return null;
             }
         } );
@@ -98,13 +95,15 @@ public class EntryDescriptor extends org.exolab.castor.xml.util.XMLClassDescript
         //-- _image
         desc = new XMLFieldDescriptorImpl(Image.class, "_image", "image", NodeType.Element);
         handler = (new XMLFieldHandler() {
-            public Object getValue( Object object ) 
+            @Override
+			public Object getValue( Object object ) 
                 throws IllegalStateException
             {
                 Entry target = (Entry) object;
                 return target.getImage();
             }
-            public void setValue( Object object, Object value) 
+            @Override
+			public void setValue( Object object, Object value) 
                 throws IllegalStateException, IllegalArgumentException
             {
                 try {
@@ -115,7 +114,8 @@ public class EntryDescriptor extends org.exolab.castor.xml.util.XMLClassDescript
                     throw new IllegalStateException(ex.toString());
                 }
             }
-            public Object newInstance( Object parent ) {
+            @Override
+			public Object newInstance( Object parent ) {
                 return new Image();
             }
         } );
@@ -139,56 +139,64 @@ public class EntryDescriptor extends org.exolab.castor.xml.util.XMLClassDescript
 
     /**
     **/
-    public org.exolab.castor.mapping.AccessMode getAccessMode()
+    @Override
+	public org.exolab.castor.mapping.AccessMode getAccessMode()
     {
         return null;
     } //-- org.exolab.castor.mapping.AccessMode getAccessMode() 
 
     /**
     **/
-    public org.exolab.castor.mapping.ClassDescriptor getExtends()
+    @Override
+	public org.exolab.castor.mapping.ClassDescriptor getExtends()
     {
         return null;
     } //-- org.exolab.castor.mapping.ClassDescriptor getExtends() 
 
     /**
     **/
-    public org.exolab.castor.mapping.FieldDescriptor getIdentity()
+    @Override
+	public org.exolab.castor.mapping.FieldDescriptor getIdentity()
     {
         return identity;
     } //-- org.exolab.castor.mapping.FieldDescriptor getIdentity() 
 
     /**
     **/
-    public java.lang.Class getJavaClass()
+    @Override
+	public java.lang.Class getJavaClass()
     {
         return org.apache.jetspeed.xml.api.jcm.Entry.class;
     } //-- java.lang.Class getJavaClass() 
 
     /**
     **/
-    public java.lang.String getNameSpacePrefix()
+    @Override
+	public java.lang.String getNameSpacePrefix()
     {
         return nsPrefix;
     } //-- java.lang.String getNameSpacePrefix() 
 
     /**
     **/
-    public java.lang.String getNameSpaceURI()
+    @Override
+	public java.lang.String getNameSpaceURI()
     {
         return nsURI;
     } //-- java.lang.String getNameSpaceURI() 
 
     /**
     **/
-    public org.exolab.castor.xml.TypeValidator getValidator()
+    @Override
+	public org.exolab.castor.xml.TypeValidator getValidator()
     {
         return this;
     } //-- org.exolab.castor.xml.TypeValidator getValidator() 
 
     /**
     **/
-    public java.lang.String getXMLName()
+    @Override
+	public java.lang.String getXMLName()
     {
         return xmlName;
     } //-- java.lang.String getXMLName() 

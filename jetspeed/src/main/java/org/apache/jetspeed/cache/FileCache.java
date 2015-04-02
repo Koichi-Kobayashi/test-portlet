@@ -283,7 +283,8 @@ public class FileCache implements java.util.Comparator {
    * Comparator function for sorting by last accessed during eviction
    * 
    */
-  public int compare(Object o1, Object o2) {
+  @Override
+public int compare(Object o1, Object o2) {
     FileCacheEntry e1 = (FileCacheEntry) o1;
     FileCacheEntry e2 = (FileCacheEntry) o2;
     if (e1.getLastAccessed() < e2.getLastAccessed()) {
@@ -310,7 +311,8 @@ public class FileCache implements java.util.Comparator {
      * Run the file scanner thread
      * 
      */
-    public void run() {
+    @Override
+	public void run() {
       boolean done = false;
 
       try {

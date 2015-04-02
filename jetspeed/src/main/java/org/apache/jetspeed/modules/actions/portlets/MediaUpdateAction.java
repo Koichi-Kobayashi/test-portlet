@@ -43,7 +43,8 @@ public class MediaUpdateAction extends RegistryUpdateAction
     /**
      * @see org.apache.jetspeed.modules.actions.portlets.VelocityPortletAction#buildNormalContext(org.apache.jetspeed.portal.portlets.VelocityPortlet, org.apache.velocity.context.Context, org.apache.turbine.util.RunData)
      */
-    protected void buildNormalContext(
+    @Override
+	protected void buildNormalContext(
         VelocityPortlet portlet,
         Context context,
         RunData rundata)
@@ -70,7 +71,8 @@ public class MediaUpdateAction extends RegistryUpdateAction
     /** 
      * @see org.apache.jetspeed.modules.actions.portlets.RegistryUpdateAction#updateRegistryEntry(org.apache.turbine.util.RunData, org.apache.jetspeed.om.registry.RegistryEntry)
      */
-    protected void updateRegistryEntry(RunData rundata, RegistryEntry registryEntry) throws Exception
+    @Override
+	protected void updateRegistryEntry(RunData rundata, RegistryEntry registryEntry) throws Exception
     {
         super.updateRegistryEntry(rundata, registryEntry);
         
@@ -102,7 +104,8 @@ public class MediaUpdateAction extends RegistryUpdateAction
       * Populates the user's temp storage with form data
       * @param rundata The turbine rundata context for this request.
       */
-    protected void resetForm(RunData rundata)
+    @Override
+	protected void resetForm(RunData rundata)
     {
         super.resetForm(rundata);
         String charSet = rundata.getParameters().getString("charset");
@@ -116,7 +119,8 @@ public class MediaUpdateAction extends RegistryUpdateAction
      * Clears the temporary storage of any data that was used
      * @param rundata The turbine rundata context for this request.
      */
-    protected void clearUserData(RunData rundata)
+    @Override
+	protected void clearUserData(RunData rundata)
     {
         super.clearUserData(rundata);
         rundata.getUser().removeTemp("charset");

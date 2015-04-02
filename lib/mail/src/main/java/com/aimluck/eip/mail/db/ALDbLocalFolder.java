@@ -33,6 +33,7 @@ import org.apache.jetspeed.services.logging.JetspeedLogFactoryService;
 import org.apache.jetspeed.services.logging.JetspeedLogger;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTMail;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMail;
 import com.aimluck.eip.common.ALPageNotFoundException;
 import com.aimluck.eip.mail.ALAbstractFolder;
 import com.aimluck.eip.mail.ALLocalMailMessage;
@@ -74,10 +75,10 @@ public class ALDbLocalFolder extends ALAbstractFolder {
       SelectQuery<EipTMail> query = Database.query(EipTMail.class);
 
       Expression exp1 =
-        ExpressionFactory.matchDbExp(EipTMail.MAIL_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipTMail.MAIL_ID_PK_COLUMN, Integer
           .valueOf(mailid));
       Expression exp2 =
-        ExpressionFactory.matchExp(EipTMail.USER_ID_PROPERTY, user_id);
+        ExpressionFactory.matchExp(_EipTMail.USER_ID_PROPERTY, user_id);
 
       EipTMail email = query.setQualifier(exp1.andExp(exp2)).fetchSingle();
       if (email == null) {
@@ -171,12 +172,12 @@ public class ALDbLocalFolder extends ALAbstractFolder {
     try {
       SelectQuery<EipTMail> query = Database.query(EipTMail.class);
       Expression exp1 =
-        ExpressionFactory.matchDbExp(EipTMail.MAIL_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipTMail.MAIL_ID_PK_COLUMN, Integer
           .valueOf(mailid));
       Expression exp2 =
-        ExpressionFactory.matchExp(EipTMail.USER_ID_PROPERTY, user_id);
+        ExpressionFactory.matchExp(_EipTMail.USER_ID_PROPERTY, user_id);
       Expression exp3 =
-        ExpressionFactory.matchExp(EipTMail.ACCOUNT_ID_PROPERTY, account_id);
+        ExpressionFactory.matchExp(_EipTMail.ACCOUNT_ID_PROPERTY, account_id);
       query.andQualifier(exp1).andQualifier(exp2).andQualifier(exp3);
 
       EipTMail mail =
@@ -215,10 +216,10 @@ public class ALDbLocalFolder extends ALAbstractFolder {
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("subject", EipTMail.SUBJECT_PROPERTY);
-    map.putValue("person", EipTMail.PERSON_PROPERTY);
-    map.putValue("date", EipTMail.EVENT_DATE_PROPERTY);
-    map.putValue("volume", EipTMail.FILE_VOLUME_PROPERTY);
+    map.putValue("subject", _EipTMail.SUBJECT_PROPERTY);
+    map.putValue("person", _EipTMail.PERSON_PROPERTY);
+    map.putValue("date", _EipTMail.EVENT_DATE_PROPERTY);
+    map.putValue("volume", _EipTMail.FILE_VOLUME_PROPERTY);
     return map;
   }
 

@@ -87,7 +87,7 @@ import org.apache.jetspeed.cache.FileCacheEntry;
 /**
  * This service is responsible for loading and saving PSML documents.
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:taylor@apache.org">David Sean Taylor</a>
  * @author <a href="mailto:sgala@apache.org">Santiago Gala</a>
  * @version $Id: CastorPsmlManagerService.java,v 1.44 2004/03/31 00:23:02 jford Exp $
@@ -156,7 +156,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      * This is the early initialization method called by the
      * Turbine <code>Service</code> framework
      */
-    public void init( ServletConfig conf ) throws InitializationException
+    @Override
+	public void init( ServletConfig conf ) throws InitializationException
     {
         if (getInit())
         {
@@ -229,7 +230,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
 
 
     /** Late init method from Turbine Service model */
-    public void init() throws InitializationException
+    @Override
+	public void init() throws InitializationException
     {
         while( !getInit() )
         {
@@ -250,7 +252,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      * This is the shutdown method called by the
      * Turbine <code>Service</code> framework
      */
-    public void shutdown()
+    @Override
+	public void shutdown()
     {
         documents.stopFileScanner();
     }
@@ -263,7 +266,9 @@ public class CastorPsmlManagerService extends TurbineBaseService
      * @deprecated
      * @param name the name of the document to retrieve
      */
-    public PSMLDocument getDocument( String name )
+    @Deprecated
+	@Override
+	public PSMLDocument getDocument( String name )
     {
         if (name == null)
         {
@@ -308,7 +313,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      * @param locator The locator descriptor of the document to be retrieved.
      * @return PSML document  from cache (or disk if not yet cached)
      */
-    public PSMLDocument getDocument( ProfileLocator locator)
+    @Override
+	public PSMLDocument getDocument( ProfileLocator locator)
     {
         return getDocument(locator, true);
     }
@@ -396,7 +402,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      * @param locator
      * @return PSML document from disk
      */
-    public PSMLDocument refresh(ProfileLocator locator)
+    @Override
+	public PSMLDocument refresh(ProfileLocator locator)
     {
         if (logger.isDebugEnabled())
         {
@@ -442,7 +449,7 @@ public class CastorPsmlManagerService extends TurbineBaseService
                 Document d = builder.parse(f);
 
                 Unmarshaller unmarshaller = new Unmarshaller(this.mapping);
-                portlets = (Portlets)unmarshaller.unmarshal((Node) d);
+                portlets = (Portlets)unmarshaller.unmarshal(d);
 
                 doc.setPortlets(portlets);
 
@@ -487,7 +494,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      * @param profile the profile locator description.
      * @return true if the operation succeeded
      */
-    public boolean store(Profile profile)
+    @Override
+	public boolean store(Profile profile)
     {
         PSMLDocument doc = profile.getDocument();
 
@@ -528,7 +536,9 @@ public class CastorPsmlManagerService extends TurbineBaseService
      * @deprecated
      * @param doc the document to save
      */
-    public boolean saveDocument(PSMLDocument doc)
+    @Deprecated
+	@Override
+	public boolean saveDocument(PSMLDocument doc)
     {
         return saveDocument(doc.getName(), doc);
     }
@@ -539,7 +549,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      * or an absolute filepath
      * @param doc the document to save
      */
-    public boolean saveDocument(String fileOrUrl, PSMLDocument doc)
+    @Override
+	public boolean saveDocument(String fileOrUrl, PSMLDocument doc)
     {
         boolean success = false;
 
@@ -685,10 +696,11 @@ public class CastorPsmlManagerService extends TurbineBaseService
      * @param profile The description and default value for the new document.
      * @return The newly created document;
      */
-    public PSMLDocument createDocument( Profile profile )
+    @Override
+	public PSMLDocument createDocument( Profile profile )
     {
         File base = this.rootDir;
-        String path = mapLocatorToFile((ProfileLocator)profile);
+        String path = mapLocatorToFile(profile);
 
         if (logger.isDebugEnabled())
         {
@@ -746,7 +758,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      *
      * @param locator The ordered list of profile locators.
      */
-    public PSMLDocument getDocument( List locators )
+    @Override
+	public PSMLDocument getDocument( List locators )
     {
         PSMLDocument doc=null;
 
@@ -763,7 +776,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      *
      * @param locator The description of the profile resource to be removed.
      */
-    public void removeDocument( ProfileLocator locator )
+    @Override
+	public void removeDocument( ProfileLocator locator )
     {
         // remove a single document
         String fileName = mapLocatorToFile(locator);
@@ -795,7 +809,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      *
      * @param user The user object.
      */
-    public void removeUserDocuments( JetspeedUser user )
+    @Override
+	public void removeUserDocuments( JetspeedUser user )
     {
         ProfileLocator locator = Profiler.createLocator();
         locator.setUser(user);
@@ -854,7 +869,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      *
      * @param role The role object.
      */
-    public void removeRoleDocuments( Role role )
+    @Override
+	public void removeRoleDocuments( Role role )
     {
         ProfileLocator locator = Profiler.createLocator();
         locator.setRole(role);
@@ -912,7 +928,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      *
      * @param group The group object.
      */
-    public void removeGroupDocuments( Group group )
+    @Override
+	public void removeGroupDocuments( Group group )
     {
         ProfileLocator locator = Profiler.createLocator();
         locator.setGroup(group);
@@ -1066,7 +1083,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      *
      * @param locator The profile locator criteria.
      */
-    public Iterator query( QueryLocator locator )
+    @Override
+	public Iterator query( QueryLocator locator )
     {
         List list = new LinkedList();
 
@@ -1209,7 +1227,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      * @param locator The profile locator criteria.
      * @return The count of profiles exported.
      */
-    public int export(PsmlManagerService consumer, QueryLocator locator)
+    @Override
+	public int export(PsmlManagerService consumer, QueryLocator locator)
     {
         importFlag = true;
         Iterator profiles = null;
@@ -1298,7 +1317,7 @@ public class CastorPsmlManagerService extends TurbineBaseService
                 {
                     if (QUERY_BY_USER == qs.queryBy)
                     {
-                        JetspeedUser user = (JetspeedUser)qs.profile.getUser();
+                        JetspeedUser user = qs.profile.getUser();
                         if (null == user)
                         {
                             user = JetspeedUserFactory.getInstance();
@@ -1531,7 +1550,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      *
      * @param entry the entry being refreshed.
      */
-    public void refresh(FileCacheEntry entry)
+    @Override
+	public void refresh(FileCacheEntry entry)
     {
         if (logger.isInfoEnabled())
         {
@@ -1560,7 +1580,8 @@ public class CastorPsmlManagerService extends TurbineBaseService
      *
      * @param entry the entry being refreshed.
      */
-    public void evict(FileCacheEntry entry)
+    @Override
+	public void evict(FileCacheEntry entry)
     {
         System.out.println("entry is evicting: " + entry.getFile().getName());
     }

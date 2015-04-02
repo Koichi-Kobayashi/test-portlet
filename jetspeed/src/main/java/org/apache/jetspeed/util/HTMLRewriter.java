@@ -293,7 +293,8 @@ public class HTMLRewriter
     /** This is needed, because getParser is protected
      * @return Html Parser
      */        
-      public HTMLEditorKit.Parser getParser(){
+      @Override
+	public HTMLEditorKit.Parser getParser(){
         return super.getParser();
       }
     } 
@@ -372,7 +373,8 @@ public class HTMLRewriter
         }
         
        
-        public void flush() throws javax.swing.text.BadLocationException {
+        @Override
+		public void flush() throws javax.swing.text.BadLocationException {
             // nothing to do here ...
         }
 
@@ -380,7 +382,8 @@ public class HTMLRewriter
          * Because Scripts and Stlyle sometimes are defined in comments, thoese
          * will be written. Otherwise comments are removed
          */
-        public void handleComment(char[] values,int param) {
+        @Override
+		public void handleComment(char[] values,int param) {
             if ( !( inStyle || inScript))
                 return;
 
@@ -392,26 +395,31 @@ public class HTMLRewriter
           // we ignore them 
         }
 
-        public void handleEndOfLineString(java.lang.String str) {
+        @Override
+		public void handleEndOfLineString(java.lang.String str) {
             addToResult("\n");
         }
 
-        public void handleError(java.lang.String str,int param) {
+        @Override
+		public void handleError(java.lang.String str,int param) {
             // ignored
         }
 
-        public void handleSimpleTag(HTML.Tag tag,MutableAttributeSet attrs,int param) {
+        @Override
+		public void handleSimpleTag(HTML.Tag tag,MutableAttributeSet attrs,int param) {
             if (removeMeta && (tag == HTML.Tag.META)) {
                 return;
             }            
             appendTagToResult(tag,attrs);        
         }
 
-        public void handleStartTag(HTML.Tag tag,  MutableAttributeSet attrs, int position) {
+        @Override
+		public void handleStartTag(HTML.Tag tag,  MutableAttributeSet attrs, int position) {
             appendTagToResult(tag,attrs);
         }
 
-        public void handleEndTag(HTML.Tag tag, int position) {
+        @Override
+		public void handleEndTag(HTML.Tag tag, int position) {
             if ((tag ==HTML.Tag.FORM) && (inForm)) { 
                 // form handling seems to be buggy
                 addToResult("</").addToResult(tag).addToResult(">");
@@ -636,7 +644,8 @@ public class HTMLRewriter
             }
         }
 
-        public void handleText(char[] values,int param) {
+        @Override
+		public void handleText(char[] values,int param) {
             addToResult(values);
         }
     }

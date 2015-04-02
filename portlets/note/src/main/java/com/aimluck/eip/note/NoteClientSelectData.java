@@ -28,6 +28,8 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTNote;
 import com.aimluck.eip.cayenne.om.portlet.EipTNoteMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTNote;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTNoteMap;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -238,19 +240,19 @@ public class NoteClientSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("client_name", EipTNoteMap.EIP_TNOTE_PROPERTY
+    map.putValue("client_name", _EipTNoteMap.EIP_TNOTE_PROPERTY
       + "."
-      + EipTNote.CLIENT_NAME_PROPERTY);
-    map.putValue("subject_type", EipTNoteMap.EIP_TNOTE_PROPERTY
+      + _EipTNote.CLIENT_NAME_PROPERTY);
+    map.putValue("subject_type", _EipTNoteMap.EIP_TNOTE_PROPERTY
       + "."
-      + EipTNote.SUBJECT_TYPE_PROPERTY);
-    map.putValue("create_date", EipTNoteMap.EIP_TNOTE_PROPERTY
+      + _EipTNote.SUBJECT_TYPE_PROPERTY);
+    map.putValue("create_date", _EipTNoteMap.EIP_TNOTE_PROPERTY
       + "."
-      + EipTNote.CREATE_DATE_PROPERTY);
-    map.putValue("accept_date", EipTNoteMap.EIP_TNOTE_PROPERTY
+      + _EipTNote.CREATE_DATE_PROPERTY);
+    map.putValue("accept_date", _EipTNoteMap.EIP_TNOTE_PROPERTY
       + "."
-      + EipTNote.ACCEPT_DATE_PROPERTY);
-    map.putValue("note_stat", EipTNoteMap.NOTE_STAT_PROPERTY);
+      + _EipTNote.ACCEPT_DATE_PROPERTY);
+    map.putValue("note_stat", _EipTNoteMap.NOTE_STAT_PROPERTY);
     return map;
   }
 

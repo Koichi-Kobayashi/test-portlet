@@ -62,7 +62,8 @@ public class JetspeedPortalPersistenceService
      * to work.
      * 
      */
-    public void init(RunData data) throws InitializationException
+    @Override
+	public void init(RunData data) throws InitializationException
     {
         if (!(data instanceof JetspeedRunData))
         {
@@ -78,7 +79,8 @@ public class JetspeedPortalPersistenceService
     /**
      * @see PortalPersistenceService#getInstance(Portlet, Profile)
      */
-    public PortletInstance getInstance(Portlet portlet, Profile profile)
+    @Override
+	public PortletInstance getInstance(Portlet portlet, Profile profile)
     {
         return new JetspeedPortletInstance(portlet, profile);
     }
@@ -86,7 +88,8 @@ public class JetspeedPortalPersistenceService
     /**
      * @see PortalPersistenceService#getInstance(Portlet, RunData)
      */
-    public PortletInstance getInstance(Portlet portlet, RunData data)
+    @Override
+	public PortletInstance getInstance(Portlet portlet, RunData data)
     {
      	String attrKey = "portlet_instance:"+portlet.getID();
     	// optimize portlet instance retreival by saving it to the request
@@ -109,7 +112,8 @@ public class JetspeedPortalPersistenceService
     /**
      * @see PortalPersistenceService#store(PortletInstance)
      */
-    public void store(PortletInstance pPortlet) throws PortalPersistenceException
+    @Override
+	public void store(PortletInstance pPortlet) throws PortalPersistenceException
     {
         Profile profile = pPortlet.getProfile();
         profile.setDocument(pPortlet.getDocument());
@@ -123,7 +127,8 @@ public class JetspeedPortalPersistenceService
     /**
      * @see PortalPersistenceService#getInstances(Portlet, Profile)
      */
-    public List getInstances( Profile profile) throws PortletException
+    @Override
+	public List getInstances( Profile profile) throws PortletException
     {
         PSMLDocument doc = profile.getDocument();
         Portlets portlets =  doc.getPortlets();
@@ -137,7 +142,8 @@ public class JetspeedPortalPersistenceService
     /**
      * @see PortalPersistenceService#getInstances(Portlet, RunData)
      */
-    public List getInstances( RunData data) throws PortletException
+    @Override
+	public List getInstances( RunData data) throws PortletException
     {
         JetspeedRunData jData = (JetspeedRunData) data;
         return getInstances(jData.getProfile());

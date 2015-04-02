@@ -53,7 +53,8 @@ public class CabinetBean implements ALData, Cloneable {
   /*
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     cabinet_id = new ALNumberField();
     cabinet_name = new ALStringField();
     // cabinet_numberofitems = new ALNumberField();

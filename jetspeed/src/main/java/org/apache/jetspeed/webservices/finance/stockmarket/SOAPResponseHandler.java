@@ -48,11 +48,13 @@ class SOAPResponseHandler extends XMLFilterImpl
     boolean inFaultString = false;
     StringBuffer faultContent = null;
 
-    public void setContentHandler(ContentHandler handler) {
-        ((XMLReader)getParent()).setContentHandler(handler);
+    @Override
+	public void setContentHandler(ContentHandler handler) {
+        getParent().setContentHandler(handler);
     }
 
-    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+    @Override
+	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         String uriName = uri+":"+localName;
         if ("http://schemas.xmlsoap.org/soap/envelope/:Fault".equals(uriName)) {
             if (debugParse) System.out.println("Found Fault");
@@ -88,7 +90,8 @@ class SOAPResponseHandler extends XMLFilterImpl
         }
     }
 
-    public void endElement(String uri, String localName, String qName) throws SAXException {
+    @Override
+	public void endElement(String uri, String localName, String qName) throws SAXException {
         if (inResult && outputPartElementName.equals(localName)) {
             inResult = false;
         } else if ("http://schemas.xmlsoap.org/soap/envelope/:Fault".equals(uri+":"+localName)) {
@@ -99,7 +102,8 @@ class SOAPResponseHandler extends XMLFilterImpl
         }
     }
 
-    public void characters(char[] ch, int start, int length) throws SAXException {
+    @Override
+	public void characters(char[] ch, int start, int length) throws SAXException {
         if (inResult) {
             resultBuffer.append(new String(ch,start,length));
         }

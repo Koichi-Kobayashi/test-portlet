@@ -29,6 +29,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.account.EipTAclMap;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclMap;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
@@ -116,11 +117,11 @@ public class ScheduleAdminAclFormData extends ALAbstractFormData {
 
     List<EipTAclMap> list =
       Database.query(EipTAclMap.class).where(
-        Operations.eq(EipTAclMap.TARGET_ID_PROPERTY, tmpId)).where(
-        Operations.eq(EipTAclMap.TARGET_TYPE_PROPERTY, currentResultData
+        Operations.eq(_EipTAclMap.TARGET_ID_PROPERTY, tmpId)).where(
+        Operations.eq(_EipTAclMap.TARGET_TYPE_PROPERTY, currentResultData
           .getType()
           .toString())).where(
-        Operations.eq(EipTAclMap.FEATURE_PROPERTY, "schedule")).fetchList();
+        Operations.eq(_EipTAclMap.FEATURE_PROPERTY, "schedule")).fetchList();
 
     StringBuilder tmpAcl = new StringBuilder();
     boolean isFirst = true;

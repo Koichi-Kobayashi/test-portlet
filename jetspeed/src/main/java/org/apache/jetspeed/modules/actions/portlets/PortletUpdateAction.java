@@ -74,7 +74,8 @@ public class PortletUpdateAction extends RegistryUpdateAction
      * @param context The velocity context for this request.
      * @param rundata The turbine rundata context for this request.
      */
-    protected void buildNormalContext(
+    @Override
+	protected void buildNormalContext(
         VelocityPortlet portlet,
         Context context,
         RunData rundata)
@@ -144,7 +145,8 @@ public class PortletUpdateAction extends RegistryUpdateAction
         }
     }
     
-    public void doInsert(RunData rundata, Context context) throws Exception
+    @Override
+	public void doInsert(RunData rundata, Context context) throws Exception
     {
         super.doInsert(rundata, context);
         
@@ -192,7 +194,8 @@ public class PortletUpdateAction extends RegistryUpdateAction
     /**
      * @see org.apache.jetspeed.modules.actions.portlets.RegistryUpdateAction#updateRegistryEntry(org.apache.turbine.util.RunData, org.apache.jetspeed.om.registry.RegistryEntry)
      */
-    protected void updateRegistryEntry(RunData rundata, RegistryEntry registryEntry) throws Exception
+    @Override
+	protected void updateRegistryEntry(RunData rundata, RegistryEntry registryEntry) throws Exception
     {
         super.updateRegistryEntry(rundata, registryEntry);
         setPortletEntryInfo(rundata, (PortletEntry)registryEntry);
@@ -399,7 +402,8 @@ public class PortletUpdateAction extends RegistryUpdateAction
      * Populates the user's temp storage with form data
      * @param rundata The turbine rundata context for this request.
      */
-    protected void resetForm(RunData rundata)
+    @Override
+	protected void resetForm(RunData rundata)
     {
         super.resetForm(rundata);
         
@@ -443,7 +447,8 @@ public class PortletUpdateAction extends RegistryUpdateAction
     /**
      * @see org.apache.jetspeed.modules.actions.portlets.RegistryUpdateAction#clearUserData(org.apache.turbine.util.RunData)
      */
-    protected void clearUserData(RunData rundata)
+    @Override
+	protected void clearUserData(RunData rundata)
     {
         try
         {
@@ -475,7 +480,8 @@ public class PortletUpdateAction extends RegistryUpdateAction
     /**
      * @see org.apache.jetspeed.modules.actions.portlets.RegistryUpdateAction#redirect(org.apache.turbine.util.RunData, java.lang.String, int)
      */
-    protected DynamicURI redirect(RunData rundata, String mode, int reason)
+    @Override
+	protected DynamicURI redirect(RunData rundata, String mode, int reason)
             throws TurbineException
     {
         DynamicURI duri = super.redirect(rundata, mode, reason);

@@ -29,14 +29,15 @@ package org.apache.jetspeed.portal.portlets;
  *  or a sub-class there of.
  * </p>
  * 
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  */
 public class CustomizerVelocityPortlet extends VelocityPortlet
 {
     /**
     * @return true if the portlet does its own customization
     */
-    public boolean providesCustomization()
+    @Override
+	public boolean providesCustomization()
     {
         return true;
     }

@@ -111,7 +111,8 @@ public class JetspeedTemplateService
      *
      * @param config A ServletConfig.
      */
-    public void init(ServletConfig config)
+    @Override
+	public void init(ServletConfig config)
         throws InitializationException
     {
         try

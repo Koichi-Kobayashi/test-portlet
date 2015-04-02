@@ -28,7 +28,6 @@ import java.util.*;
 
 // java.net
 import java.net.*;
-import org.apache.turbine.util.Log;//AAAtogli!
 
 
 /*
@@ -68,7 +67,8 @@ public class SwingParserAdaptor implements HTMLParserAdaptor
      *
      * @return An HTML-String with rewritten URLs.
      */    
-    public String run(Reader reader)
+    @Override
+	public String run(Reader reader)
     throws MalformedURLException
     {
         HTMLEditorKit.Parser parser = new SwingParserAdaptor.ParserGetter().getParser();        
@@ -96,7 +96,8 @@ public class SwingParserAdaptor implements HTMLParserAdaptor
     class ParserGetter extends HTMLEditorKit
     {
 
-        public HTMLEditorKit.Parser getParser(){
+        @Override
+		public HTMLEditorKit.Parser getParser(){
             return super.getParser();
         }
     } 
@@ -133,7 +134,8 @@ public class SwingParserAdaptor implements HTMLParserAdaptor
          * 
          * @param values The array of characters containing the text.
          */
-        public void handleText(char[] values,int param) 
+        @Override
+		public void handleText(char[] values,int param) 
         {
              if (false == emit)                               
                  return;                                      
@@ -153,7 +155,8 @@ public class SwingParserAdaptor implements HTMLParserAdaptor
          * @param position the position of the tag.         
          *
          */
-        public void handleSimpleTag(HTML.Tag tag,MutableAttributeSet attrs,int param) 
+        @Override
+		public void handleSimpleTag(HTML.Tag tag,MutableAttributeSet attrs,int param) 
         {
             simpleTag = true;
             if (false == rewriter.enterSimpleTagEvent(tag, attrs))
@@ -183,7 +186,8 @@ public class SwingParserAdaptor implements HTMLParserAdaptor
          * @param position the position of the tag.         
          *
          */
-        public void handleStartTag(HTML.Tag tag,  MutableAttributeSet attrs, int position) 
+        @Override
+		public void handleStartTag(HTML.Tag tag,  MutableAttributeSet attrs, int position) 
         {
             if (false == rewriter.enterStartTagEvent(tag, attrs))
                 return;
@@ -237,7 +241,8 @@ public class SwingParserAdaptor implements HTMLParserAdaptor
          * @param position the position of the tag.
          *
          */
-        public void handleEndTag(HTML.Tag tag, int position) 
+        @Override
+		public void handleEndTag(HTML.Tag tag, int position) 
         {
             if (false == rewriter.enterEndTagEvent(tag))
                 return;
@@ -268,7 +273,8 @@ public class SwingParserAdaptor implements HTMLParserAdaptor
          * @param param A parameter passed to handler.
          *
          */
-        public void handleError(java.lang.String str,int param) 
+        @Override
+		public void handleError(java.lang.String str,int param) 
         {
             // ignored
         }
@@ -280,7 +286,8 @@ public class SwingParserAdaptor implements HTMLParserAdaptor
          * @param param A parameter passed to handler.
          *
          */
-        public void handleComment(char[] values,int param) 
+        @Override
+		public void handleComment(char[] values,int param) 
         {
             // STRIP COMMENTS: addToResult(values);
             // this is questionable, we may need to turn this on for scripts inside comments
@@ -292,7 +299,8 @@ public class SwingParserAdaptor implements HTMLParserAdaptor
          * @param str The end-of-line string.
          *
          */
-        public void handleEndOfLineString(java.lang.String str) 
+        @Override
+		public void handleEndOfLineString(java.lang.String str) 
         {
             addToResult(str);
         }
@@ -390,7 +398,8 @@ public class SwingParserAdaptor implements HTMLParserAdaptor
          * Flushes the output stream. NOT IMPLEMENTED
          *
          */
-        public void flush() throws javax.swing.text.BadLocationException 
+        @Override
+		public void flush() throws javax.swing.text.BadLocationException 
         {
             // nothing to do here ...
         }

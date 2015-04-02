@@ -35,6 +35,7 @@ import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimecard;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimecard;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -144,10 +145,10 @@ public class TimecardFormData extends ALAbstractFormData {
         SelectQuery<EipTTimecard> workflg_query =
           Database.query(EipTTimecard.class);
         Expression workflg_exp =
-          ExpressionFactory.matchExp(EipTTimecard.USER_ID_PROPERTY, Integer
+          ExpressionFactory.matchExp(_EipTTimecard.USER_ID_PROPERTY, Integer
             .valueOf(login_uid));
         workflg_query.setQualifier(workflg_exp);
-        workflg_query.orderDesending(EipTTimecard.WORK_DATE_PROPERTY);
+        workflg_query.orderDesending(_EipTTimecard.WORK_DATE_PROPERTY);
 
         List<EipTTimecard> workflg_list = workflg_query.fetchList();
         if (workflg_list != null && workflg_list.size() > 0) {
@@ -182,18 +183,18 @@ public class TimecardFormData extends ALAbstractFormData {
       SelectQuery<EipTTimecard> query = Database.query(EipTTimecard.class);
       Expression exp11 =
         ExpressionFactory.greaterOrEqualExp(
-          EipTTimecard.WORK_DATE_PROPERTY,
+          _EipTTimecard.WORK_DATE_PROPERTY,
           cal.getTime());
       cal.add(Calendar.MONTH, +1);
       Expression exp12 =
-        ExpressionFactory.lessExp(EipTTimecard.WORK_DATE_PROPERTY, cal
+        ExpressionFactory.lessExp(_EipTTimecard.WORK_DATE_PROPERTY, cal
           .getTime());
       query.setQualifier(exp11.andExp(exp12));
       Expression exp21 =
-        ExpressionFactory.matchExp(EipTTimecard.USER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipTTimecard.USER_ID_PROPERTY, Integer
           .valueOf(login_uid));
       query.andQualifier(exp21);
-      query.orderAscending(EipTTimecard.WORK_DATE_PROPERTY);
+      query.orderAscending(_EipTTimecard.WORK_DATE_PROPERTY);
 
       List<EipTTimecard> list = query.fetchList();
 

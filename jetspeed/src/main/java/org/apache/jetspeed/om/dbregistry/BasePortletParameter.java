@@ -1,24 +1,17 @@
 package org.apache.jetspeed.om.dbregistry;
 
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.BaseObject;
-import org.apache.torque.om.ComboKey;
-import org.apache.torque.om.DateKey;
 import org.apache.torque.om.NumberKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
-import org.apache.torque.om.StringKey;
-import org.apache.torque.om.Persistent;
-import org.apache.torque.util.Criteria;
 import org.apache.torque.util.Transaction;
 
   
@@ -449,7 +442,7 @@ public abstract class BasePortletParameter extends BaseObject
     {
         if ( getPortletId()>0 )
         {
-                return PortletDbEntryManager.getInstance(SimpleKey.keyFor(getPortletId()));
+                return BasePortletDbEntryManager.getInstance(SimpleKey.keyFor(getPortletId()));
             }
         return aPortletDbEntry;
     }
@@ -500,7 +493,8 @@ public abstract class BasePortletParameter extends BaseObject
      * Retrieves a field from the object by name passed in
      * as a String.
      */
-    public Object getByName(String name)
+    @Override
+	public Object getByName(String name)
     {
           if (name.equals("Id"))
         {
@@ -562,57 +556,58 @@ public abstract class BasePortletParameter extends BaseObject
      * as a String.  The String must be one of the static
      * Strings defined in this Class' Peer.
      */
-    public Object getByPeerName(String name)
+    @Override
+	public Object getByPeerName(String name)
     {
-          if (name.equals(PortletParameterPeer.ID ))
+          if (name.equals(BasePortletParameterPeer.ID ))
         {
                 return new Long(getId());
             }
-          if (name.equals(PortletParameterPeer.NAME ))
+          if (name.equals(BasePortletParameterPeer.NAME ))
         {
                 return getName();
             }
-          if (name.equals(PortletParameterPeer.VALUE ))
+          if (name.equals(BasePortletParameterPeer.VALUE ))
         {
                 return getValue();
             }
-          if (name.equals(PortletParameterPeer.TYPE ))
+          if (name.equals(BasePortletParameterPeer.TYPE ))
         {
                 return getType();
             }
-          if (name.equals(PortletParameterPeer.HIDDEN ))
+          if (name.equals(BasePortletParameterPeer.HIDDEN ))
         {
                 return new Boolean(getHidden());
             }
-          if (name.equals(PortletParameterPeer.ROLE ))
+          if (name.equals(BasePortletParameterPeer.ROLE ))
         {
                 return getRole();
             }
-          if (name.equals(PortletParameterPeer.CACHEDONVALUE ))
+          if (name.equals(BasePortletParameterPeer.CACHEDONVALUE ))
         {
                 return new Boolean(getCachedonvalue());
             }
-          if (name.equals(PortletParameterPeer.CACHEDONNAME ))
+          if (name.equals(BasePortletParameterPeer.CACHEDONNAME ))
         {
                 return new Boolean(getCachedonname());
             }
-          if (name.equals(PortletParameterPeer.TITLE ))
+          if (name.equals(BasePortletParameterPeer.TITLE ))
         {
                 return getTitle();
             }
-          if (name.equals(PortletParameterPeer.DESCRIPTION ))
+          if (name.equals(BasePortletParameterPeer.DESCRIPTION ))
         {
                 return getDescription();
             }
-          if (name.equals(PortletParameterPeer.IMAGE ))
+          if (name.equals(BasePortletParameterPeer.IMAGE ))
         {
                 return getImage();
             }
-          if (name.equals(PortletParameterPeer.PORTLET_ID ))
+          if (name.equals(BasePortletParameterPeer.PORTLET_ID ))
         {
                 return new Long(getPortletId());
             }
-          if (name.equals(PortletParameterPeer.SECURITY ))
+          if (name.equals(BasePortletParameterPeer.SECURITY ))
         {
                 return getSecurityRef();
             }
@@ -623,7 +618,8 @@ public abstract class BasePortletParameter extends BaseObject
      * Retrieves a field from the object by Position as specified
      * in the xml schema.  Zero-based.
      */
-    public Object getByPosition(int pos)
+    @Override
+	public Object getByPosition(int pos)
     {
             if ( pos == 0 )
         {
@@ -684,9 +680,10 @@ public abstract class BasePortletParameter extends BaseObject
      * Stores the object in the database.  If the object is new,
      * it inserts it; otherwise an update is performed.
      */
-    public void save() throws Exception
+    @Override
+	public void save() throws Exception
     {
-          save(PortletParameterPeer.getMapBuilder()
+          save(BasePortletParameterPeer.getMapBuilder()
                 .getDatabaseMap().getName());
       }
 
@@ -697,7 +694,8 @@ public abstract class BasePortletParameter extends BaseObject
      * auto-generated conditionally and therefore needs to be
      * in this file instead of in the super class, BaseObject.
        */
-    public void save(String dbName) throws TorqueException
+    @Override
+	public void save(String dbName) throws TorqueException
     {
         Connection con = null;
           try
@@ -723,7 +721,8 @@ public abstract class BasePortletParameter extends BaseObject
      * the save() method and the connection details will be handled
      * internally
      */
-    public void save(Connection con) throws TorqueException
+    @Override
+	public void save(Connection con) throws TorqueException
     {
           if (!alreadyInSave)
         {
@@ -736,17 +735,17 @@ public abstract class BasePortletParameter extends BaseObject
             {
                 if (isNew())
                 {
-                    PortletParameterPeer.doInsert((PortletParameter)this, con);
+                    BasePortletParameterPeer.doInsert((PortletParameter)this, con);
                     setNew(false);
                 }
                 else
                 {
-                    PortletParameterPeer.doUpdate((PortletParameter)this, con);
+                    BasePortletParameterPeer.doUpdate((PortletParameter)this, con);
                 }
 
                       if (isCacheOnSave())
                 {
-                    PortletParameterManager.putInstance(this);
+                    BasePortletParameterManager.putInstance(this);
                 }
               }
 
@@ -769,7 +768,8 @@ public abstract class BasePortletParameter extends BaseObject
      *
      * @param ObjectKey id
      */
-    public void setPrimaryKey(ObjectKey id)
+    @Override
+	public void setPrimaryKey(ObjectKey id)
          {
             setId(((NumberKey)id).longValue());
         }
@@ -777,7 +777,8 @@ public abstract class BasePortletParameter extends BaseObject
     /**
      * Set the PrimaryKey using a String.
      */
-    public void setPrimaryKey(String key) 
+    @Override
+	public void setPrimaryKey(String key) 
     {
             setId(Long.parseLong(key));
         }
@@ -787,7 +788,8 @@ public abstract class BasePortletParameter extends BaseObject
      * returns an id that differentiates this object from others
      * of its class.
      */
-    public ObjectKey getPrimaryKey()
+    @Override
+	public ObjectKey getPrimaryKey()
     {
           return SimpleKey.keyFor(getId());
       }

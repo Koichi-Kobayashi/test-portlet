@@ -120,7 +120,8 @@ public interface ParsedObject
      * 
      * @return 
      */
-    public String[] getKeywords();
+    @Deprecated
+	public String[] getKeywords();
 
     /**
      * @deprecated
@@ -129,7 +130,8 @@ public interface ParsedObject
      * 
      * @param keywords
      */
-    public void setKeywords(String[] keywords);
+    @Deprecated
+	public void setKeywords(String[] keywords);
 
     /**
      * Returns parsed object title (cannot be null)
@@ -166,7 +168,8 @@ public interface ParsedObject
      * 
      * @return 
      */
-    public Map getFields();
+    @Deprecated
+	public Map getFields();
 
     /**
      * @deprecated
@@ -175,7 +178,8 @@ public interface ParsedObject
      * 
      * @param fields
      */
-    public void setFields(Map fields);
+    @Deprecated
+	public void setFields(Map fields);
     
     /**
      * @return

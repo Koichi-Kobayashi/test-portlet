@@ -23,6 +23,7 @@ import org.apache.jetspeed.services.logging.JetspeedLogFactoryService;
 import org.apache.jetspeed.services.logging.JetspeedLogger;
 
 import com.aimluck.eip.cayenne.om.account.EipMConfig;
+import com.aimluck.eip.cayenne.om.account.auto._EipMConfig;
 import com.aimluck.eip.common.ALEipManager;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.Operations;
@@ -81,7 +82,7 @@ public class ALDefaultConfigHanlder extends ALConfigHandler {
         config =
           Database
             .query(EipMConfig.class)
-            .where(Operations.eq(EipMConfig.NAME_PROPERTY, property.toString()))
+            .where(Operations.eq(_EipMConfig.NAME_PROPERTY, property.toString()))
             .fetchSingle();
         if (config == null) {
           ALEipManager.getInstance().setConfig(
@@ -112,7 +113,7 @@ public class ALDefaultConfigHanlder extends ALConfigHandler {
     try {
       EipMConfig config =
         Database.query(EipMConfig.class).where(
-          Operations.eq(EipMConfig.NAME_PROPERTY, property)).fetchSingle();
+          Operations.eq(_EipMConfig.NAME_PROPERTY, property)).fetchSingle();
       if (config == null) {
         config = Database.create(EipMConfig.class);
         config.setName(property.toString());

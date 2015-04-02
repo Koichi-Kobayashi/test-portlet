@@ -119,7 +119,8 @@ public class JetspeedForwardService extends TurbineBaseService
      * @exception throws a <code>InitializationException</code> if the service
      * fails to initialize
      */
-    public synchronized void init(ServletConfig conf) throws InitializationException
+    @Override
+	public synchronized void init(ServletConfig conf) throws InitializationException
     {
 
         // already initialized
@@ -157,7 +158,8 @@ public class JetspeedForwardService extends TurbineBaseService
      * This is the shutdown method called by the
      * Turbine <code>Service</code> framework
      */
-    public void shutdown()
+    @Override
+	public void shutdown()
     {
     }
 
@@ -169,7 +171,8 @@ public class JetspeedForwardService extends TurbineBaseService
      * @param forwardName Forward to this abstract forward name.
      * @return DynamicURI the full link to the referenced page
      */
-    public DynamicURI forward(RunData rundata, String forwardName)
+    @Override
+	public DynamicURI forward(RunData rundata, String forwardName)
     {
         return forwardInternal(rundata, forwardName, null, null);
     }
@@ -184,7 +187,8 @@ public class JetspeedForwardService extends TurbineBaseService
      * @param parameters The dynamic Validation Parameters used in creating validation forwards
      * @return DynamicURI the full link to the referenced page
      */
-    public DynamicURI forwardDynamic(RunData rundata, String forwardName, Map parameters)
+    @Override
+	public DynamicURI forwardDynamic(RunData rundata, String forwardName, Map parameters)
     {
         return forwardInternal(rundata, forwardName, null, parameters);        
     }
@@ -420,7 +424,8 @@ public class JetspeedForwardService extends TurbineBaseService
      * @param target A logical target name. Portlets can have 1 or more targets.
      * @return DynamicURI the full link to the referenced page
      */
-    public DynamicURI forward(RunData rundata, String portlet, String target)
+    @Override
+	public DynamicURI forward(RunData rundata, String portlet, String target)
     {
         return forwardDynamic(rundata, portlet, target, null);
     }
@@ -436,7 +441,8 @@ public class JetspeedForwardService extends TurbineBaseService
      * @param parameters The dynamic Validation Parameters used in creating validation forwards     
      * @return DynamicURI the full link to the referenced page
      */
-    public DynamicURI forwardDynamic(RunData rundata, 
+    @Override
+	public DynamicURI forwardDynamic(RunData rundata, 
                                  String portlet, 
                                  String target,
                                  Map parameters)
@@ -471,7 +477,8 @@ public class JetspeedForwardService extends TurbineBaseService
      *
      * @return Collection of all forward definitions
      */
-    public Collection getForwards()
+    @Override
+	public Collection getForwards()
     {
         return this.forwards.values();
     }
@@ -481,7 +488,8 @@ public class JetspeedForwardService extends TurbineBaseService
      *
      * @return Collection of all portlet forward definitions
      */
-    public Collection getPortletForwards()
+    @Override
+	public Collection getPortletForwards()
     {
         return this.portletForwards.values();
     }
@@ -492,7 +500,8 @@ public class JetspeedForwardService extends TurbineBaseService
      * @param  forwardName The name of the Forward to find
      * @return Forward The found forward definition or null if not found
      */
-    public Forward getForward(String forwardName)
+    @Override
+	public Forward getForward(String forwardName)
     {
         return (Forward)this.forwards.get(forwardName);
     }
@@ -504,7 +513,8 @@ public class JetspeedForwardService extends TurbineBaseService
      * @param  target The name of the target in the Portlet Forward to find     
      * @return Forward The found portlet forward definition or null if not found
      */
-    public PortletForward getPortletForward(String portlet, String target)
+    @Override
+	public PortletForward getPortletForward(String portlet, String target)
     {
         return (PortletForward)this.portletForwards.get(makePortletForwardKey(portlet, target));
     }
@@ -596,7 +606,7 @@ public class JetspeedForwardService extends TurbineBaseService
 
             Unmarshaller unmarshaller = new Unmarshaller(this.mapper);
             ForwardsConfiguration configuration = 
-                (ForwardsConfiguration) unmarshaller.unmarshal((Node) doc);
+                (ForwardsConfiguration) unmarshaller.unmarshal(doc);
 
             Iterator it = configuration.getForwards().iterator();
             while (it.hasNext())

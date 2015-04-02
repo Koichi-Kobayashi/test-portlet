@@ -83,7 +83,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return the user id.
    */
-  public String getUserId() {
+  @Override
+public String getUserId() {
     String tmp = null;
     try {
       tmp = (String) getPerm(JetspeedUser.USER_ID);
@@ -107,7 +108,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return The access counter for the user for the session.
    */
-  public int getAccessCounterForSession() {
+  @Override
+public int getAccessCounterForSession() {
     int accessCounter = 0;
     try {
       Integer temp = (Integer) getTemp(User.SESSION_ACCESS_COUNTER);
@@ -126,7 +128,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return The access counter for the user.
    */
-  public int getAccessCounter() {
+  @Override
+public int getAccessCounter() {
     int accessCounter = 0;
     try {
       Integer temp = (Integer) getPerm(User.ACCESS_COUNTER);
@@ -145,7 +148,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return A Java Date with the date of creation for the user.
    */
-  public java.util.Date getCreateDate() {
+  @Override
+public java.util.Date getCreateDate() {
     return createDate;
   }
 
@@ -155,7 +159,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return A Java Date with the last access date for the user.
    */
-  public java.util.Date getLastAccessDate() {
+  @Override
+public java.util.Date getLastAccessDate() {
     if (lastAccessDate == null) {
       setLastAccessDate();
     }
@@ -167,7 +172,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return A Java Date with the last login date for the user.
    */
-  public java.util.Date getLastLogin() {
+  @Override
+public java.util.Date getLastLogin() {
     return (java.util.Date) getPerm(User.LAST_LOGIN);
   }
 
@@ -176,7 +182,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return A String with the password for the user.
    */
-  public String getPassword() {
+  @Override
+public String getPassword() {
     return (String) getPerm(User.PASSWORD);
   }
 
@@ -187,7 +194,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    *            The object's name.
    * @return An Object with the given name.
    */
-  public Object getPerm(String name) {
+  @Override
+public Object getPerm(String name) {
     return permStorage.get(name);
   }
 
@@ -200,7 +208,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    *            A default value to return.
    * @return An Object with the given name.
    */
-  public Object getPerm(String name, Object def) {
+  @Override
+public Object getPerm(String name, Object def) {
     try {
       Object val = permStorage.get(name);
       return (val == null ? def : val);
@@ -216,7 +225,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return A Hashtable.
    */
-  public Hashtable getPermStorage() {
+  @Override
+public Hashtable getPermStorage() {
     if (this.permStorage == null) {
       this.permStorage = new Hashtable();
     }
@@ -230,7 +240,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    *            The object's name.
    * @return An Object with the given name.
    */
-  public Object getTemp(String name) {
+  @Override
+public Object getTemp(String name) {
     return tempStorage.get(name);
   }
 
@@ -243,7 +254,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    *            A default value to return.
    * @return An Object with the given name.
    */
-  public Object getTemp(String name, Object def) {
+  @Override
+public Object getTemp(String name, Object def) {
     Object val;
     try {
       val = tempStorage.get(name);
@@ -263,7 +275,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return A String with the username.
    */
-  public String getUserName() {
+  @Override
+public String getUserName() {
     String tmp = null;
     try {
       tmp = (String) getPerm(User.USERNAME);
@@ -282,7 +295,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return A String with the user's first name.
    */
-  public String getFirstName() {
+  @Override
+public String getFirstName() {
     String tmp = null;
     try {
       tmp = (String) getPerm(User.FIRST_NAME);
@@ -301,7 +315,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return A String with the user's last name.
    */
-  public String getLastName() {
+  @Override
+public String getLastName() {
     String tmp = null;
     try {
       tmp = (String) getPerm(User.LAST_NAME);
@@ -318,7 +333,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return Whether the user has logged in.
    */
-  public boolean hasLoggedIn() {
+  @Override
+public boolean hasLoggedIn() {
     Boolean loggedIn = getHasLoggedIn();
     return (loggedIn != null && loggedIn.booleanValue());
   }
@@ -328,21 +344,24 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return A String with the user's email address.
    */
-  public String getEmail() {
+  @Override
+public String getEmail() {
     return (String) getPerm(User.EMAIL);
   }
 
   /**
    * Increments the permanent hit counter for the user.
    */
-  public void incrementAccessCounter() {
+  @Override
+public void incrementAccessCounter() {
     setAccessCounter(getAccessCounter() + 1);
   }
 
   /**
    * Increments the session hit counter for the user.
    */
-  public void incrementAccessCounterForSession() {
+  @Override
+public void incrementAccessCounterForSession() {
     setAccessCounterForSession(getAccessCounterForSession() + 1);
   }
 
@@ -353,7 +372,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    *            The name of the object to remove.
    * @return An Object.
    */
-  public Object removeTemp(String name) {
+  @Override
+public Object removeTemp(String name) {
     return tempStorage.remove(name);
   }
 
@@ -363,7 +383,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param cnt
    *            The new count.
    */
-  public void setAccessCounter(int cnt) {
+  @Override
+public void setAccessCounter(int cnt) {
     setPerm(User.ACCESS_COUNTER, new Integer(cnt));
   }
 
@@ -373,7 +394,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param cnt
    *            The new count.
    */
-  public void setAccessCounterForSession(int cnt) {
+  @Override
+public void setAccessCounterForSession(int cnt) {
     setTemp(User.SESSION_ACCESS_COUNTER, new Integer(cnt));
   }
 
@@ -381,7 +403,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * Sets the last access date for this User. This is the last time that the
    * user object was referenced.
    */
-  public void setLastAccessDate() {
+  @Override
+public void setLastAccessDate() {
     lastAccessDate = new java.util.Date();
   }
 
@@ -392,7 +415,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param date
    *            The create date.
    */
-  public void setCreateDate(java.util.Date date) {
+  @Override
+public void setCreateDate(java.util.Date date) {
     createDate = date;
   }
 
@@ -402,7 +426,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param date
    *            The last login date.
    */
-  public void setLastLogin(java.util.Date date) {
+  @Override
+public void setLastLogin(java.util.Date date) {
     setPerm(User.LAST_LOGIN, date);
   }
 
@@ -412,7 +437,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param password
    *            The new password.
    */
-  public void setPassword(String password) {
+  @Override
+public void setPassword(String password) {
     setPerm(User.PASSWORD, password);
   }
 
@@ -426,7 +452,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param value
    *            The object.
    */
-  public void setPerm(String name, Object value) {
+  @Override
+public void setPerm(String name, Object value) {
     ObjectUtils.safeAddToHashtable(getPermStorage(), name, value);
   }
 
@@ -437,7 +464,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param stuff
    *            A Hashtable.
    */
-  public void setPermStorage(Hashtable stuff) {
+  @Override
+public void setPermStorage(Hashtable stuff) {
     this.permStorage = stuff;
   }
 
@@ -447,7 +475,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return A Hashtable.
    */
-  public Hashtable getTempStorage() {
+  @Override
+public Hashtable getTempStorage() {
     if (this.tempStorage == null) {
       this.tempStorage = new Hashtable();
     }
@@ -461,7 +490,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param storage
    *            A Hashtable.
    */
-  public void setTempStorage(Hashtable storage) {
+  @Override
+public void setTempStorage(Hashtable storage) {
     this.tempStorage = storage;
   }
 
@@ -483,7 +513,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param value
    *            Whether someone has logged in or not.
    */
-  public void setHasLoggedIn(Boolean value) {
+  @Override
+public void setHasLoggedIn(Boolean value) {
     setTemp(User.HAS_LOGGED_IN, value);
   }
 
@@ -497,7 +528,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param value
    *            The object.
    */
-  public void setTemp(String name, Object value) {
+  @Override
+public void setTemp(String name, Object value) {
     ObjectUtils.safeAddToHashtable(tempStorage, name, value);
   }
 
@@ -507,7 +539,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param username
    *            The user's username.
    */
-  public void setUserName(String username) {
+  @Override
+public void setUserName(String username) {
     setPerm(User.USERNAME, username);
   }
 
@@ -517,7 +550,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param firstName
    *            User's first name.
    */
-  public void setFirstName(String firstName) {
+  @Override
+public void setFirstName(String firstName) {
     setPerm(User.FIRST_NAME, firstName);
   }
 
@@ -527,7 +561,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param lastName
    *            User's last name.
    */
-  public void setLastName(String lastName) {
+  @Override
+public void setLastName(String lastName) {
     setPerm(User.LAST_NAME, lastName);
   }
 
@@ -537,7 +572,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param address
    *            The email address.
    */
-  public void setEmail(String address) {
+  @Override
+public void setEmail(String address) {
     setPerm(User.EMAIL, address);
   }
 
@@ -548,7 +584,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return True if the user has been confirmed.
    */
-  public boolean isConfirmed() {
+  @Override
+public boolean isConfirmed() {
     String value = getConfirmed();
     return (value != null && value.equals(User.CONFIRM_DATA));
   }
@@ -560,7 +597,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param value
    *            The confirmation key value.
    */
-  public void setConfirmed(String value) {
+  @Override
+public void setConfirmed(String value) {
     String val = "";
     if (value != null) {
       val = value;
@@ -573,7 +611,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return status The confirmation value for this User
    */
-  public String getConfirmed() {
+  @Override
+public String getConfirmed() {
     return (String) getPerm(User.CONFIRM_VALUE);
   }
 
@@ -583,7 +622,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @exception Exception,
    *                a generic exception.
    */
-  public void updateLastLogin() throws Exception {
+  @Override
+public void updateLastLogin() throws Exception {
     setPerm(User.LAST_LOGIN, new java.util.Date());
   }
 
@@ -594,7 +634,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param hsbe
    *            The HttpSessionBindingEvent.
    */
-  public void valueBound(HttpSessionBindingEvent hsbe) {
+  @Override
+public void valueBound(HttpSessionBindingEvent hsbe) {
     // Currently we have no need for this method.
   }
 
@@ -605,7 +646,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * @param hsbe
    *            The HttpSessionBindingEvent.
    */
-  public void valueUnbound(HttpSessionBindingEvent hsbe) {
+  @Override
+public void valueUnbound(HttpSessionBindingEvent hsbe) {
 
     try {
       java.util.Date now = new java.util.Date();
@@ -647,7 +689,8 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
    * 
    * @return True when the account is disabled
    */
-  public String getDisabled() {
+  @Override
+public String getDisabled() {
     String disabled = null;
     try {
       String tmp = (String) getPerm(JetspeedUser.DISABLED);
@@ -660,19 +703,23 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
     return disabled;
   }
 
-  public void setDisabled(String disabled) {
+  @Override
+public void setDisabled(String disabled) {
     setPerm(JetspeedUser.DISABLED, disabled);
   }
 
-  public String getName() {
+  @Override
+public String getName() {
     return name;
   }
 
-  public void setName(String name) {
+  @Override
+public void setName(String name) {
     this.name = name;
   }
 
-  public boolean isNew() {
+  @Override
+public boolean isNew() {
     return isNew;
   }
 
@@ -683,14 +730,16 @@ public class BaseJetspeedUser /* extends SecurityObject */implements
   /**
    * @see org.apache.jetspeed.om.security.JetspeedUser#getPasswordChanged
    */
-  public Date getPasswordChanged() {
+  @Override
+public Date getPasswordChanged() {
     return (Date) getPerm(JetspeedUser.PASSWORD_CHANGED);
   }
 
   /**
    * @see org.apache.jetspeed.om.security.JetspeedUser#setPasswordChanged
    */
-  public void setPasswordChanged(Date value) {
+  @Override
+public void setPasswordChanged(Date value) {
     setPerm(JetspeedUser.PASSWORD_CHANGED, value);
   }
 

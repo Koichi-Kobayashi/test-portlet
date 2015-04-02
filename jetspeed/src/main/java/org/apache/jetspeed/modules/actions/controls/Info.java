@@ -24,12 +24,13 @@ import org.apache.jetspeed.services.rundata.JetspeedRunData;
 /**
  * Display information about the selected portlet
  * 
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:mark_orciuch@ngsltd.com">Mark Orciuch</a>
  */
 public class Info extends Action
 {
-    public void doPerform( RunData rundata ) throws Exception
+    @Override
+	public void doPerform( RunData rundata ) throws Exception
     {
 
         String peid = rundata.getParameters().getString("js_peid");

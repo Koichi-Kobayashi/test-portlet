@@ -46,12 +46,14 @@ public class PsmlReference extends PsmlPortlets implements Reference, java.io.Se
     /** Holds value of property securityRef. */
     private SecurityReference securityRef;
     
-    public Portlets getPortletsReference()
+    @Override
+	public Portlets getPortletsReference()
     {
         return ref;
     }
 
-    public void setPath(String path)
+    @Override
+	public void setPath(String path)
     {
         this.path = path;
         PsmlPortlets tempRef = (PsmlPortlets)PortalToolkit.getReference(path);
@@ -61,7 +63,8 @@ public class PsmlReference extends PsmlPortlets implements Reference, java.io.Se
         }
     }
 
-    public String getPath()
+    @Override
+	public String getPath()
     {
         return this.path;
     }
@@ -71,119 +74,141 @@ public class PsmlReference extends PsmlPortlets implements Reference, java.io.Se
         super();
     }
 
-    public Controller getController()
+    @Override
+	public Controller getController()
     {
         return ref.getController();
     }
 
-    public void setController(Controller controller)
+    @Override
+	public void setController(Controller controller)
     {
         ref.setController(controller);       
     }
 
-    public void setSecurity(Security security)
+    @Override
+	public void setSecurity(Security security)
     {
         ref.setSecurity(security);
     }
  
-    public Security getSecurity()
+    @Override
+	public Security getSecurity()
     {
         return ref.getSecurity();
     }
 
-    public Vector getEntries()
+    @Override
+	public Vector getEntries()
     {
         return ref.getEntries();
     }
 
-    public void setEntries(Vector entries)
+    @Override
+	public void setEntries(Vector entries)
     {
         ref.setEntries(entries);
     }
 
-    public Vector getPortlets()
+    @Override
+	public Vector getPortlets()
     {
         return ref.getPortlets();
     }
 
-    public void setPortlets(Vector portlets)
+    @Override
+	public void setPortlets(Vector portlets)
     {
         ref.setPortlets(portlets);
     }
 
-    public int getEntryCount()
+    @Override
+	public int getEntryCount()
     {
         return ref.getEntryCount();
     }
 
-    public int getPortletsCount()
+    @Override
+	public int getPortletsCount()
     {
         return ref.getPortletsCount();
     }
 
-    public Entry removeEntry(int index)
+    @Override
+	public Entry removeEntry(int index)
     {
         return ref.removeEntry(index);
     } 
 
-    public Portlets removePortlets(int index)
+    @Override
+	public Portlets removePortlets(int index)
     {
         return ref.removePortlets(index);
     } 
 
-    public Entry getEntry(int index)
+    @Override
+	public Entry getEntry(int index)
         throws java.lang.IndexOutOfBoundsException
     {
         return ref.getEntry(index);
     } 
 
-    public Portlets getPortlets(int index)
+    @Override
+	public Portlets getPortlets(int index)
         throws java.lang.IndexOutOfBoundsException
     {
         return ref.getPortlets(index);
     } 
 
 
-    public Iterator getEntriesIterator()
+    @Override
+	public Iterator getEntriesIterator()
     {
         return ref.getEntriesIterator();
     }
 
-    public Iterator getPortletsIterator()
+    @Override
+	public Iterator getPortletsIterator()
     {
         return ref.getPortletsIterator();
     }
 
-    public void addEntry(Entry entry)
+    @Override
+	public void addEntry(Entry entry)
         throws java.lang.IndexOutOfBoundsException
     {
         ref.addEntry(entry);
     } 
 
-    public void addPortlets(Portlets p)
+    @Override
+	public void addPortlets(Portlets p)
         throws java.lang.IndexOutOfBoundsException
     {
         ref.addPortlets(p);
     } 
 
-    public Entry[] getEntriesArray()
+    @Override
+	public Entry[] getEntriesArray()
     {
         return ref.getEntriesArray();
     }
 
-    public Portlets[] getPortletsArray()
+    @Override
+	public Portlets[] getPortletsArray()
     {
         return ref.getPortletsArray();
     }
 
     //////////////////////////////////////////////////////////////////////////
 
-    public Control getControl()
+    @Override
+	public Control getControl()
     {
         return ref.getControl();
     }
 
-    public void setControl(Control control)
+    @Override
+	public void setControl(Control control)
     {
         ref.setControl(control);
     }
@@ -193,7 +218,8 @@ public class PsmlReference extends PsmlPortlets implements Reference, java.io.Se
     
     /** Required by Castor 0.8.11 XML serialization for retrieving the metainfo
       */
-    public MetaInfo getMetaInfo()
+    @Override
+	public MetaInfo getMetaInfo()
     {
         MetaInfo info = super.getMetaInfo();
         if (info == null)
@@ -206,37 +232,43 @@ public class PsmlReference extends PsmlPortlets implements Reference, java.io.Se
 // helper getter setters into meta info
 
     /** @see org.apache.jetspeed.om.registry.MetaInfo#getTitle */
-    public String getTitle()
+    @Override
+	public String getTitle()
     {
         return ref.getTitle();
     }
                                 
     /** @see org.apache.jetspeed.om.registry.MetaInfo#setTitle */
-    public void setTitle(String title)
+    @Override
+	public void setTitle(String title)
     {
         ref.setTitle(title);
     }
 
     /** @see org.apache.jetspeed.om.registry.MetaInfo#getDescription */
-    public String getDescription()
+    @Override
+	public String getDescription()
     {
         return ref.getDescription();
     }
                                 
     /** @see org.apache.jetspeed.om.registry.MetaInfo#setDescription */
-    public void setDescription(String description)
+    @Override
+	public void setDescription(String description)
     {
         ref.setDescription(description);
     }
 
     /** @see org.apache.jetspeed.om.registry.MetaInfo#getImage */
-    public String getImage()
+    @Override
+	public String getImage()
     {
         return ref.getImage();
     }
                                 
     /** @see org.apache.jetspeed.om.registry.MetaInfo#setImage */
-    public void setImage(String image)
+    @Override
+	public void setImage(String image)
     {
         ref.setImage(image);
     }
@@ -244,7 +276,8 @@ public class PsmlReference extends PsmlPortlets implements Reference, java.io.Se
     /////////////////////////////////////////////////////////////////////////
 
    /** @return the parameters */
-    public Vector getParameters()
+    @Override
+	public Vector getParameters()
     {
         return ref.getParameters();
     }
@@ -252,92 +285,109 @@ public class PsmlReference extends PsmlPortlets implements Reference, java.io.Se
     /** Sets the parameters for this element
      * @param parameters 
      */
-    public void setParameters(Vector parameters)
+    @Override
+	public void setParameters(Vector parameters)
     {
         ref.setParameters(parameters);
     }
 
-    public String getParameterValue(String name)
+    @Override
+	public String getParameterValue(String name)
     {
         return ref.getParameterValue(name);
     }
 
-    public Parameter getParameter(String name)
+    @Override
+	public Parameter getParameter(String name)
     {
         return ref.getParameter(name);
     }
 
-    public Iterator getParameterIterator()
+    @Override
+	public Iterator getParameterIterator()
     {
         return ref.getParameterIterator();
     }
 
-    public Parameter getParameter(int index)
+    @Override
+	public Parameter getParameter(int index)
         throws java.lang.IndexOutOfBoundsException
     {
         return ref.getParameter(index);
     } 
 
-    public int getParameterCount()
+    @Override
+	public int getParameterCount()
     {
         return ref.getParameterCount();
     } 
 
-    public int getReferenceCount()
+    @Override
+	public int getReferenceCount()
     {
         return ref.getReferenceCount();
     }
 
-    public void removeAllParameter()
+    @Override
+	public void removeAllParameter()
     {
         ref.removeAllParameter();
     } 
 
-    public Parameter removeParameter(int index)
+    @Override
+	public Parameter removeParameter(int index)
     {
         return ref.removeParameter(index);
     } 
 
-    public void setParameter(int index, Parameter vParameter)
+    @Override
+	public void setParameter(int index, Parameter vParameter)
         throws java.lang.IndexOutOfBoundsException
     {
         ref.setParameter(index,vParameter);
     } 
 
-    public Parameter[] getParameter()
+    @Override
+	public Parameter[] getParameter()
     {
         return ref.getParameter();
     } 
 
-    public void addParameter(Parameter vParameter)
+    @Override
+	public void addParameter(Parameter vParameter)
         throws java.lang.IndexOutOfBoundsException
     {
         ref.addParameter(vParameter);
     } 
 
-    public Reference getReference(int index)
+    @Override
+	public Reference getReference(int index)
         throws java.lang.IndexOutOfBoundsException
     {
         return ref.getReference(index);
     }
 
-    public Reference removeReference(int index)
+    @Override
+	public Reference removeReference(int index)
     {
         return ref.removeReference(index);
     }
 
-    public Iterator getReferenceIterator()
+    @Override
+	public Iterator getReferenceIterator()
     {
         return ref.getReferenceIterator();
     }
 
-    public void addReference(Reference ref)
+    @Override
+	public void addReference(Reference ref)
         throws java.lang.IndexOutOfBoundsException
     {
         ref.addReference(ref);
     }
 
-    public Reference[] getReferenceArray()
+    @Override
+	public Reference[] getReferenceArray()
     {
         return ref.getReferenceArray();
     }
@@ -345,7 +395,8 @@ public class PsmlReference extends PsmlPortlets implements Reference, java.io.Se
     /** Getter for property securityRef.
      * @return Value of property securityRef.
      */
-    public SecurityReference getSecurityRef()
+    @Override
+	public SecurityReference getSecurityRef()
     {
         return securityRef;
     }    
@@ -353,7 +404,8 @@ public class PsmlReference extends PsmlPortlets implements Reference, java.io.Se
     /** Setter for property securityRef.
      * @param securityRef New value of property securityRef.
      */
-    public void setSecurityRef(SecurityReference securityRef)
+    @Override
+	public void setSecurityRef(SecurityReference securityRef)
     {
         this.securityRef = securityRef;
     }    
@@ -361,7 +413,8 @@ public class PsmlReference extends PsmlPortlets implements Reference, java.io.Se
     /**
      * Create a clone of this object
      */
-    public Object clone()
+    @Override
+	public Object clone()
         throws java.lang.CloneNotSupportedException
     {
         Object cloned = super.clone();

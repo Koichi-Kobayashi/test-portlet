@@ -29,6 +29,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMMailAccount;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.mail.ALMailFactoryService;
 import com.aimluck.eip.mail.ALMailHandler;
@@ -66,10 +67,10 @@ public class WebMailAccountMultiDelete extends ALAbstractCheckList {
       SelectQuery<EipMMailAccount> query =
         Database.query(EipMMailAccount.class);
       Expression exp1 =
-        ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMMailAccount.USER_ID_PROPERTY, Integer
           .valueOf(uid));
       Expression exp2 =
-        ExpressionFactory.inDbExp(EipMMailAccount.ACCOUNT_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipMMailAccount.ACCOUNT_ID_PK_COLUMN, values);
 
       List<EipMMailAccount> accounts =
         query.setQualifier(exp1.andExp(exp2)).fetchList();

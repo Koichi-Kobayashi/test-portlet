@@ -106,7 +106,8 @@ public class JetspeedPortletLinkTag extends TagSupport
      *
      * @return SKIP_BODY, as it is intended to be a single tag.
      */
-    public int doStartTag() throws JspException
+    @Override
+	public int doStartTag() throws JspException
     {
         JetspeedRunData data = (JetspeedRunData) pageContext.getAttribute(JspService.RUNDATA, PageContext.REQUEST_SCOPE);
         

@@ -35,6 +35,8 @@ import com.aimluck.eip.accessctl.util.AccessControlUtils;
 import com.aimluck.eip.cayenne.om.account.EipTAclPortletFeature;
 import com.aimluck.eip.cayenne.om.account.EipTAclRole;
 import com.aimluck.eip.cayenne.om.account.EipTAclUserRoleMap;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclPortletFeature;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclRole;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -281,15 +283,15 @@ public class AccessControlSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("acl_role_name", EipTAclRole.ROLE_NAME_PROPERTY);
+    map.putValue("acl_role_name", _EipTAclRole.ROLE_NAME_PROPERTY);
     map.putValue(
       "feature_alias_name",
-      EipTAclRole.EIP_TACL_PORTLET_FEATURE_PROPERTY
+      _EipTAclRole.EIP_TACL_PORTLET_FEATURE_PROPERTY
         + "."
-        + EipTAclPortletFeature.FEATURE_ALIAS_NAME_PROPERTY);
-    map.putValue("feature", EipTAclRole.EIP_TACL_PORTLET_FEATURE_PROPERTY
+        + _EipTAclPortletFeature.FEATURE_ALIAS_NAME_PROPERTY);
+    map.putValue("feature", _EipTAclRole.EIP_TACL_PORTLET_FEATURE_PROPERTY
       + "."
-      + EipTAclPortletFeature.FEATURE_ID_PK_COLUMN);
+      + _EipTAclPortletFeature.FEATURE_ID_PK_COLUMN);
 
     return map;
   }

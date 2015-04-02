@@ -150,7 +150,8 @@ public class PsmlManagerAction extends GenericMVCAction
      * provide their own customization behavior.
      * Default is to use Portal base customizer action
      */
-    protected void buildConfigureContext(Portlet portlet,
+    @Override
+	protected void buildConfigureContext(Portlet portlet,
                                          Context context,
                                          RunData rundata)
     {
@@ -174,7 +175,8 @@ public class PsmlManagerAction extends GenericMVCAction
      * @param context
      * @param rundata
      */
-    protected void buildNormalContext(Portlet portlet, Context context, RunData rundata)
+    @Override
+	protected void buildNormalContext(Portlet portlet, Context context, RunData rundata)
     {
 
         PortletEntry entry = (PortletEntry) Registry.getEntry(Registry.PORTLET, portlet.getName());

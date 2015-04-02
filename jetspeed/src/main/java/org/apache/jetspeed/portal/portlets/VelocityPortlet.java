@@ -32,7 +32,7 @@ import org.apache.jetspeed.portal.PortletException;
  *    instructions for using using the MVC portlet model.
  *   </p>
  * @author <a href="mailto:re_carrasco@bco011.sonda.cl">Roberto Carrasco</a>
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:paulsp@apache.org">Paul Spencer</a>
  * @author <a href="mailto:sweaver@rippe.com">Scott Weaver</a>u
  */
@@ -42,7 +42,8 @@ public class VelocityPortlet extends GenericMVCPortlet
    /**
     * STW: Backward compatibility: set the viewType to "Velocity".
     */
-    public void init() throws PortletException
+    @Override
+	public void init() throws PortletException
     {
         setCacheable(true);
         setViewType("Velocity");

@@ -54,7 +54,7 @@ import java.util.Comparator;
  * This action builds a context suitable for controllers handlings simple
  * sorted lists of portlets
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:paulsp@apache.org">Paul Spencer</a>
  */
 public class RowColumnControllerAction extends VelocityControllerAction
@@ -69,7 +69,8 @@ public class RowColumnControllerAction extends VelocityControllerAction
      * Subclasses must override this method to provide default behavior
      * for the portlet action
      */
-    protected void buildNormalContext( PortletController controller,
+    @Override
+	protected void buildNormalContext( PortletController controller,
                                        Context context,
                                        RunData rundata )
     {
@@ -104,7 +105,8 @@ public class RowColumnControllerAction extends VelocityControllerAction
      * Adds a "pane" portlet object in the context which represents the
      * currently selected pane
      */
-    protected void buildCustomizeContext( PortletController controller,
+    @Override
+	protected void buildCustomizeContext( PortletController controller,
                                        Context context,
                                        RunData rundata )
     {
@@ -270,7 +272,8 @@ public class RowColumnControllerAction extends VelocityControllerAction
      * Cancel the current customizations.  If this was the last customization
      * on the stack, then return the user to the home page.
      */
-    public void doCancel(RunData data, Context context)
+    @Override
+	public void doCancel(RunData data, Context context)
     {
          ((JetspeedRunData)data).setCustomized(null);
 
@@ -444,7 +447,8 @@ public class RowColumnControllerAction extends VelocityControllerAction
         Collections.sort(list, 
                          new Comparator()
                          {
-                             public int compare(Object pane1, Object pane2)
+                             @Override
+							public int compare(Object pane1, Object pane2)
                              {
                                  Long pos1 = new Long(((Portlets) pane1).getLayout().getPosition());
                                  Long pos2 = new Long(((Portlets) pane2).getLayout().getPosition());

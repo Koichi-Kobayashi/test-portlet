@@ -79,7 +79,8 @@ public class TurbineScreenPortlet extends AbstractPortlet
 
     /**
     */
-    public ConcreteElement getContent( RunData rundata )
+    @Override
+	public ConcreteElement getContent( RunData rundata )
     {
         ElementContainer content = new ElementContainer();
         try
@@ -100,13 +101,14 @@ public class TurbineScreenPortlet extends AbstractPortlet
 
     /**
     */
-    public void init() throws PortletException
+    @Override
+	public void init() throws PortletException
     {
         PortletConfig pc = getPortletConfig();
         ConcreteElement myContent = null;
         try
         {
-            screen = ( String ) pc.getInitParameter( SCREEN );
+            screen = pc.getInitParameter( SCREEN );
             //if it is null here it should be in the parameters
             if ( screen == null )
             {
@@ -156,14 +158,16 @@ public class TurbineScreenPortlet extends AbstractPortlet
 
     /**
     */
-    public boolean getAllowEdit( RunData rundata )
+    @Override
+	public boolean getAllowEdit( RunData rundata )
     {
         return false;
     }
 
     /**
     */
-    public boolean getAllowMaximize( RunData rundata )
+    @Override
+	public boolean getAllowMaximize( RunData rundata )
     {
         return true;
     }

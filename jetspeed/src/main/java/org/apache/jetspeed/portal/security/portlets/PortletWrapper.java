@@ -73,7 +73,8 @@ public class PortletWrapper implements Portlet
 
     /**
     */
-    public final String getName()
+    @Override
+	public final String getName()
     {
         //This means name is accessible for every Portlet
         return wrappedPortlet.getName();
@@ -81,7 +82,8 @@ public class PortletWrapper implements Portlet
 
     /**
     */
-    public final void setName(String name)
+    @Override
+	public final void setName(String name)
     {
         //if we want to secure this, we need a context for the check
         wrappedPortlet.setName(name);
@@ -89,14 +91,16 @@ public class PortletWrapper implements Portlet
 
     /**
     */
-    public final PortletConfig getPortletConfig()
+    @Override
+	public final PortletConfig getPortletConfig()
     {
         return wrappedPortlet.getPortletConfig();
     }
 
     /**
     */
-    public final void setPortletConfig(PortletConfig pc)
+    @Override
+	public final void setPortletConfig(PortletConfig pc)
     {
         //if we want to secure this, we need a context for the check
         wrappedPortlet.setPortletConfig(pc);
@@ -104,7 +108,8 @@ public class PortletWrapper implements Portlet
     
     /**
     */
-    public ConcreteElement getContent(RunData rundata)
+    @Override
+	public ConcreteElement getContent(RunData rundata)
     {
  
         if (checkPermission(rundata, JetspeedSecurity.PERMISSION_VIEW))
@@ -136,19 +141,22 @@ public class PortletWrapper implements Portlet
 
     @return a null entry if the user hasn't defined anything
     */
-    public String getDescription()
+    @Override
+	public String getDescription()
     {
         return wrappedPortlet.getDescription();
     }
 
-    public String getDescription(String instanceDescription)
+    @Override
+	public String getDescription(String instanceDescription)
     {
         return wrappedPortlet.getDescription(instanceDescription);
     }
 
     /**
     */
-    public void setDescription(String description)
+    @Override
+	public void setDescription(String description)
     {
         wrappedPortlet.setDescription(description);
     }
@@ -156,7 +164,8 @@ public class PortletWrapper implements Portlet
     /**
      * @see Portlet#getImage
      */
-    public String getImage(String instanceImage)
+    @Override
+	public String getImage(String instanceImage)
     {
         return wrappedPortlet.getImage(instanceImage);
     }
@@ -164,14 +173,16 @@ public class PortletWrapper implements Portlet
     /**
      * @see Portlet#setImge
      */
-    public void setImage(String image)
+    @Override
+	public void setImage(String image)
     {
         wrappedPortlet.setImage(image);
     }
     /**
      * @see Portlet#getTitle
      */
-    public String getTitle()
+    @Override
+	public String getTitle()
     {
         /* FIXME, no rundata here if( !checkPermission(rundata, 
                                          JetspeedSecurity.PERMISSION_VIEW ) )
@@ -184,7 +195,8 @@ public class PortletWrapper implements Portlet
     /**
      * @see Portlet#getImage
      */
-    public String getTitle(String instanceTitle)
+    @Override
+	public String getTitle(String instanceTitle)
     {
         return wrappedPortlet.getTitle(instanceTitle);
     }
@@ -192,7 +204,8 @@ public class PortletWrapper implements Portlet
     /**
     Set the title for this Portlet
     */
-    public void setTitle(String title)
+    @Override
+	public void setTitle(String title)
     {
         /* FIXME, no rundata here if( !checkPermission(rundata, 
                                               JetspeedSecurity.PERMISSION_CUSTOMIZE ) )
@@ -204,14 +217,16 @@ public class PortletWrapper implements Portlet
 
     /**
     */
-    public boolean getAllowEdit(RunData rundata)
+    @Override
+	public boolean getAllowEdit(RunData rundata)
     {
         return checkPermission(rundata, JetspeedSecurity.PERMISSION_CUSTOMIZE);
     }
 
     /**
      */
-     public boolean getAllowView(RunData rundata)
+     @Override
+	public boolean getAllowView(RunData rundata)
      {
 
          if (checkPermission(rundata, JetspeedSecurity.PERMISSION_VIEW))
@@ -223,7 +238,8 @@ public class PortletWrapper implements Portlet
     
     /**
     */
-    public boolean getAllowMaximize(RunData rundata)
+    @Override
+	public boolean getAllowMaximize(RunData rundata)
     {
         return checkPermission(rundata, JetspeedSecurity.PERMISSION_MAXIMIZE);
     }
@@ -231,7 +247,8 @@ public class PortletWrapper implements Portlet
     /**
     By default don't provide any initialization
     */
-    public void init() throws PortletException 
+    @Override
+	public void init() throws PortletException 
     {
         /* FIXME, no rundata here if( !checkPermission(rundata, 
                                               JetspeedSecurity.PERMISSION_CUSTOMIZE) )
@@ -243,7 +260,8 @@ public class PortletWrapper implements Portlet
     /**
     @see Portlet#getCreationTime
     */
-    public long getCreationTime()
+    @Override
+	public long getCreationTime()
     {
         /* FIXME, no rundata here if( !checkPermission(rundata, 
                                               JetspeedSecurity.PERMISSION_VIEW) )
@@ -255,7 +273,8 @@ public class PortletWrapper implements Portlet
     /**
     @see Portlet#setCreationTime
     */
-    public void setCreationTime(long creationTime)
+    @Override
+	public void setCreationTime(long creationTime)
     {
         /* FIXME, no rundata here if( !checkPermission(rundata, 
                                               JetspeedSecurity.PERMISSION_CUSTOMIZE) )
@@ -266,7 +285,8 @@ public class PortletWrapper implements Portlet
     /**
     @see Portlet#supportsType
     */
-    public boolean supportsType(MimeType mimeType)
+    @Override
+	public boolean supportsType(MimeType mimeType)
     {
         /* FIXME, no rundata here if( !checkPermission(rundata, 
                                               JetspeedSecurity.PERMISSION_VIEW) )
@@ -319,7 +339,8 @@ public class PortletWrapper implements Portlet
     NOTE(FIXME) Not in Portlet interface. Called a la Bean from Velocity.
     @param rundata A RunData object
     */
-    public boolean isShowTitleBar(RunData rundata)
+    @Override
+	public boolean isShowTitleBar(RunData rundata)
     {
         if (wrappedPortlet.getPortletConfig() != null) 
         {
@@ -338,7 +359,8 @@ public class PortletWrapper implements Portlet
     @param rundata A RunData object
     @return The attribute value
     */
-    public String getAttribute(String attrName, String attrDefValue, RunData rundata)
+    @Override
+	public String getAttribute(String attrName, String attrDefValue, RunData rundata)
     {
         if (checkPermission(rundata, JetspeedSecurity.PERMISSION_VIEW))
         {
@@ -360,7 +382,8 @@ public class PortletWrapper implements Portlet
      * @param attrValue The value 
      * @param rundata A RunData object
      */
-    public void setAttribute(String attrName, String attrValue, RunData rundata)
+    @Override
+	public void setAttribute(String attrName, String attrValue, RunData rundata)
     {
         if (checkPermission(rundata, JetspeedSecurity.PERMISSION_VIEW))
         {
@@ -381,7 +404,8 @@ public class PortletWrapper implements Portlet
      * @param rundata A RunData object
      * @return PortletInstance
      */
-    public PortletInstance getInstance(RunData rundata)
+    @Override
+	public PortletInstance getInstance(RunData rundata)
     {
         return wrappedPortlet.getInstance(rundata);
     }
@@ -413,12 +437,14 @@ public class PortletWrapper implements Portlet
     }
  
 
-    public String getID()
+    @Override
+	public String getID()
     {
         return wrappedPortlet.getID();
     }
 
-    public void setID(String id)
+    @Override
+	public void setID(String id)
     {
         wrappedPortlet.setID(id);
     }
@@ -426,7 +452,8 @@ public class PortletWrapper implements Portlet
     /**
     * @return true if the portlet does its own customization
     */
-    public boolean providesCustomization()
+    @Override
+	public boolean providesCustomization()
     {
         return wrappedPortlet.providesCustomization();
     } 

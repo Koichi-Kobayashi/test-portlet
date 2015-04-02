@@ -37,7 +37,8 @@ public class ALEipPosition implements ALData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     position_id = new ALNumberField();
     position_name = new ALStringField();
   }

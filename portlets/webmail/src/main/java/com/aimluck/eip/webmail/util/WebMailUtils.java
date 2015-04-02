@@ -38,6 +38,9 @@ import com.aimluck.commons.utils.ALStringUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFilter;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFolder;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMMailAccount;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMailFilter;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMailFolder;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.mail.ALFolder;
 import com.aimluck.eip.mail.ALMailFactoryService;
@@ -110,10 +113,10 @@ public class WebMailUtils {
   public static final List<EipMMailAccount> getMailAccountNameList(int userId) {
     SelectQuery<EipMMailAccount> query = Database.query(EipMMailAccount.class);
 
-    query.select(EipMMailAccount.ACCOUNT_ID_PK_COLUMN);
+    query.select(_EipMMailAccount.ACCOUNT_ID_PK_COLUMN);
     query.select(EipMMailAccount.ACCOUNT_NAME_COLUMN);
     Expression exp =
-      ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipMMailAccount.USER_ID_PROPERTY, Integer
         .valueOf(userId));
 
     return query.setQualifier(exp).fetchList();
@@ -447,12 +450,12 @@ public class WebMailUtils {
 
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTMailFolder.FOLDER_ID_PK_COLUMN,
+          _EipTMailFolder.FOLDER_ID_PK_COLUMN,
           folderId);
       Expression exp2 =
-        ExpressionFactory.matchDbExp(EipTMailFolder.EIP_MMAIL_ACCOUNT_PROPERTY
+        ExpressionFactory.matchDbExp(_EipTMailFolder.EIP_MMAIL_ACCOUNT_PROPERTY
           + "."
-          + EipMMailAccount.ACCOUNT_ID_PK_COLUMN, accountId);
+          + _EipMMailAccount.ACCOUNT_ID_PK_COLUMN, accountId);
 
       EipTMailFolder folder =
         query.setQualifier(exp.andExp(exp2)).fetchSingle();
@@ -491,11 +494,11 @@ public class WebMailUtils {
 
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTMailFolder.FOLDER_ID_PK_COLUMN,
+          _EipTMailFolder.FOLDER_ID_PK_COLUMN,
           folderId);
       Expression exp2 =
         ExpressionFactory.matchDbExp(
-          EipTMailFolder.EIP_MMAIL_ACCOUNT_PROPERTY,
+          _EipTMailFolder.EIP_MMAIL_ACCOUNT_PROPERTY,
           account);
 
       EipTMailFolder folder =
@@ -531,11 +534,11 @@ public class WebMailUtils {
 
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTMailFilter.FILTER_ID_PK_COLUMN,
+          _EipTMailFilter.FILTER_ID_PK_COLUMN,
           filterId);
       Expression exp2 =
         ExpressionFactory.matchDbExp(
-          EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
+          _EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
           account);
 
       EipTMailFilter filter =
@@ -576,12 +579,12 @@ public class WebMailUtils {
       SelectQuery<EipTMailFilter> query = Database.query(EipTMailFilter.class);
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTMailFilter.FILTER_ID_PK_COLUMN,
+          _EipTMailFilter.FILTER_ID_PK_COLUMN,
           filterId);
       Expression exp2 =
-        ExpressionFactory.matchDbExp(EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY
+        ExpressionFactory.matchDbExp(_EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY
           + "."
-          + EipMMailAccount.ACCOUNT_ID_PK_COLUMN, accountId);
+          + _EipMMailAccount.ACCOUNT_ID_PK_COLUMN, accountId);
 
       EipTMailFilter filter =
         query.setQualifier(exp.andExp(exp2)).fetchSingle();
@@ -615,11 +618,11 @@ public class WebMailUtils {
 
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
+          _EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
           account);
       query
         .setQualifier(exp)
-        .orderDesending(EipTMailFilter.SORT_ORDER_PROPERTY);
+        .orderDesending(_EipTMailFilter.SORT_ORDER_PROPERTY);
 
       EipTMailFilter filter = query.fetchSingle();
       if (filter == null) {

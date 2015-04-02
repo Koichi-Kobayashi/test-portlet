@@ -30,6 +30,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.VEipTScheduleList;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALPageNotFoundException;
 import com.aimluck.eip.facilities.util.FacilitiesUtils;
@@ -224,7 +225,7 @@ public class ScheduleSearchSelectData extends ScheduleMonthlySelectData {
 
     try {
       SelectQuery<EipMFacility> query = Database.query(EipMFacility.class);
-      query.select(EipMFacility.FACILITY_ID_PK_COLUMN);
+      query.select(_EipMFacility.FACILITY_ID_PK_COLUMN);
       List<EipMFacility> aList = query.fetchList();
 
       int size = aList.size();

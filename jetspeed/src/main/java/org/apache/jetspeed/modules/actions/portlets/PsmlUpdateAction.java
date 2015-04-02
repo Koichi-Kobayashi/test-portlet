@@ -110,7 +110,8 @@ public class PsmlUpdateAction extends SecureVelocityPortletAction
      * @param context The velocity context for this request.
      * @param rundata The turbine rundata context for this request.
      */
-    protected void buildNormalContext( VelocityPortlet portlet,
+    @Override
+	protected void buildNormalContext( VelocityPortlet portlet,
                                        Context context,
                                        RunData rundata )
     {

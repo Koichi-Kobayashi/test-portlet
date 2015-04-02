@@ -26,6 +26,7 @@ import org.apache.cayenne.exp.ExpressionFactory;
 import org.apache.turbine.util.RunData;
 
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMMailAccount;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
 import com.aimluck.eip.util.ALEipUtils;
@@ -51,7 +52,7 @@ public class WebMailAccountIdListBox extends ListBox {
         Database.query(EipMMailAccount.class);
 
       Expression exp =
-        ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMMailAccount.USER_ID_PROPERTY, Integer
           .valueOf(ALEipUtils.getUserId(data)));
       List<EipMMailAccount> accounts = query.setQualifier(exp).fetchList();
       if (accounts != null) {

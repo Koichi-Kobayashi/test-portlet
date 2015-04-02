@@ -54,7 +54,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     /**
     Init this PortletConfig providing the basic info.
     */
-    public void init( String url, Map init_params )
+    @Override
+	public void init( String url, Map init_params )
     {
         if (init_params == null)
         {
@@ -71,7 +72,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     /**
     Returns the portlet current PortletSet
     */
-    public PortletSet getPortletSet()
+    @Override
+	public PortletSet getPortletSet()
     {
         return this.currentSet;
     }
@@ -79,7 +81,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     /**
     Set the context (PortletSet) for this portlet
     */
-    public void setPortletSet(PortletSet set)
+    @Override
+	public void setPortletSet(PortletSet set)
     {
         this.currentSet=set;
     }
@@ -88,7 +91,9 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     Returns the portlet current PortletSet
      @deprecated use getConstraints instead
     */
-    public Map getLayout()
+    @Deprecated
+	@Override
+	public Map getLayout()
     {
         return this.layoutConstraints;
     }
@@ -97,7 +102,9 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
      Set the context (PortletSet) for this portlet
      @deprecated use setConstraints instead
     */
-    public void setLayout(Map constraints)
+    @Deprecated
+	@Override
+	public void setLayout(Map constraints)
     {
         //obsolete
     }
@@ -108,7 +115,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
      *
      * @return Current skin mapping or null if no skin is defined in PSML.
      */
-    public Map getSkin()
+    @Override
+	public Map getSkin()
     {
         return this.skin;
     }
@@ -118,7 +126,9 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
      *
      * @deprecated use setPortletSkin instead
      */
-    public void setSkin(Map skin)
+    @Deprecated
+	@Override
+	public void setSkin(Map skin)
     {
         //obsolete
     }
@@ -126,7 +136,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     /**
     Returns the portlet current PortletSet
     */
-    public int getPosition()
+    @Override
+	public int getPosition()
     {
         return this.layoutPosition;
     }
@@ -134,7 +145,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     /**
     Set the context (PortletSet) for this portlet
     */
-    public void setPosition(int position)
+    @Override
+	public void setPosition(int position)
     {
         this.layoutPosition=position;
     }
@@ -143,7 +155,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     Returns this Portlet's Metainfo or null it none exists.  The Metainfo can
     be used to determine an optional title or description for this Portlet.
     */
-    public MetaData getMetainfo()
+    @Override
+	public MetaData getMetainfo()
     {
         return this.metainfo;
     }
@@ -151,7 +164,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     /**
     Set the metainfo for the Portlet
     */
-    public void setMetainfo(MetaData metainfo)
+    @Override
+	public void setMetainfo(MetaData metainfo)
     {
         this.metainfo = metainfo;
     }
@@ -164,7 +178,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     The main reason for using setURL/getURL is because the remote URL is cached
     within Jetspeed so future requests won't have any latency.
     */
-    public String getURL()
+    @Override
+	public String getURL()
     {
         return this.url;
     }
@@ -172,7 +187,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     /**
     Used to define a Portlet's URL.
     */
-    public void setURL(String url)
+    @Override
+	public void setURL(String url)
     {
         if ( url == null )
         {
@@ -191,12 +207,14 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
         }
     }
 
-    public boolean isCachedOnURL()
+    @Override
+	public boolean isCachedOnURL()
     {
         return cachedOnURL;
     }
 
-    public void setCachedOnURL(boolean cached)
+    @Override
+	public void setCachedOnURL(boolean cached)
     {
         cachedOnURL = cached;
     }
@@ -208,7 +226,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     The parameter is returned even if it is defined in the context and not directly
     in the portlet config
     */
-    public String getLayout(String name, String defaultValue)
+    @Override
+	public String getLayout(String name, String defaultValue)
     {
         String value = null;
 
@@ -231,7 +250,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     The parameter is returned even if it is defined in the context and not directly
     in the portlet config
     */
-    public String getSkin(String name, String defaultValue)
+    @Override
+	public String getSkin(String name, String defaultValue)
     {
         String value = null;
 
@@ -240,7 +260,7 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
             value=(String)skin.get(name.toLowerCase());
             if (value==null)
             {
-                value=(String)currentSet.getPortletConfig().getSkin(name, defaultValue);
+                value=currentSet.getPortletConfig().getSkin(name, defaultValue);
             }
             if (value==null) value=defaultValue;
         }
@@ -255,7 +275,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     /**
     Sets a skin parameter value in the local config
     */
-    public void setSkin(String name, String value)
+    @Override
+	public void setSkin(String name, String value)
     {
         if (name!=null)
         {
@@ -285,7 +306,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
      *
      * @return the Skin object that should be used.
      */
-    public PortletSkin getPortletSkin()
+    @Override
+	public PortletSkin getPortletSkin()
     { 
         if ((this.skin==null)&&(getPortletSet()!=null))
         {
@@ -300,7 +322,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
      *
      * @param skin the new skin to use
      */
-    public void setPortletSkin(PortletSkin skin)
+    @Override
+	public void setPortletSkin(PortletSkin skin)
     {
         this.skin = skin;
     }
@@ -310,7 +333,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
      *
      * @return the Constraints object
      */
-    public PortletSet.Constraints getConstraints()
+    @Override
+	public PortletSet.Constraints getConstraints()
     { 
         return this.layoutConstraints;
     }
@@ -321,41 +345,48 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
      * @param constraints the constrints object associated with this portlet
      * in the current set
      */
-    public void setConstraints(PortletSet.Constraints constraints)
+    @Override
+	public void setConstraints(PortletSet.Constraints constraints)
     {
         this.layoutConstraints = constraints;
     }
     
     /**
     */
-    public CapabilityMap getCapabilityMap()
+    @Override
+	public CapabilityMap getCapabilityMap()
     {
         return this.cm;
     }
     
     /**
     */
-    public void setCapabilityMap( CapabilityMap cm )
+    @Override
+	public void setCapabilityMap( CapabilityMap cm )
     {
         this.cm = cm;
     }
 
-    public void setPageId(String pageId)
+    @Override
+	public void setPageId(String pageId)
     {
         this.pageId = pageId;
     }
 
-    public String getPageId()
+    @Override
+	public String getPageId()
     {
         return this.pageId;
     }
 
-    public void setPortletId(String portletId)
+    @Override
+	public void setPortletId(String portletId)
     {
         this.portletId = portletId;
     }
 
-    public String getPortletId()
+    @Override
+	public String getPortletId()
     {
         return this.portletId;
     }
@@ -363,7 +394,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     /** Getter for property securityRef.
      * @return Value of property securityRef.
      */
-    public SecurityReference getSecurityRef()
+    @Override
+	public SecurityReference getSecurityRef()
     {
         return this.securityRef;
     }
@@ -371,7 +403,8 @@ public class BasePortletConfig extends BaseConfig implements PortletConfig
     /** Setter for property securityRef.
      * @param securityRef New value of property securityRef.
      */
-    public void setSecurityRef(SecurityReference securityRef)
+    @Override
+	public void setSecurityRef(SecurityReference securityRef)
     {
         this.securityRef = securityRef;
     }

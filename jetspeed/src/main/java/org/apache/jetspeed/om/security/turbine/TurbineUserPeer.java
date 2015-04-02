@@ -84,7 +84,7 @@ public class TurbineUserPeer
         for ( int i=0; i<records.size(); i++ )
         {
             Record row = (Record)records.get(i);
-            results.add(TurbineUserPeer.row2UserObject(row, 1, TurbineUserPeer.getOMClass()));
+            results.add(TurbineUserPeer.row2UserObject(row, 1, BaseTurbineUserPeer.getOMClass()));
         }
         return results;
     }
@@ -148,7 +148,7 @@ public class TurbineUserPeer
         // Restore the Permanent Storage Hashtable.  First the
         // Hashtable is restored, then any explicit table columns
         // which should be included in the Hashtable are added.
-        byte[] objectData = (byte[])row.getValue(objectDataPosition).asBytes();
+        byte[] objectData = row.getValue(objectDataPosition).asBytes();
         Hashtable tempHash = (Hashtable)ObjectUtils.deserialize(objectData);
         if (tempHash == null)
         {

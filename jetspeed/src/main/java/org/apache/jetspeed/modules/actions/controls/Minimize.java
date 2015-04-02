@@ -46,7 +46,8 @@ public class Minimize extends Action
     /**
      * @param rundata The RunData object for the current request
      */    
-    public void doPerform( RunData rundata ) throws Exception
+    @Override
+	public void doPerform( RunData rundata ) throws Exception
     {
         // Only logged in users can minmize
         if( rundata.getUser() == null)

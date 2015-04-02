@@ -38,6 +38,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
 import com.aimluck.eip.cayenne.om.portlet.EipTMail;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFolder;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMMailAccount;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -192,11 +193,11 @@ public class WebMailSelectData extends
     if (accountId == 0) {
       try {
         Expression exp =
-          ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, userId);
+          ExpressionFactory.matchExp(_EipMMailAccount.USER_ID_PROPERTY, userId);
         SelectQuery<EipMMailAccount> query =
           Database.query(EipMMailAccount.class, exp);
 
-        query.select(EipMMailAccount.ACCOUNT_ID_PK_COLUMN);
+        query.select(_EipMMailAccount.ACCOUNT_ID_PK_COLUMN);
         List<EipMMailAccount> accounts = query.fetchList();
         if (accounts != null && accounts.size() > 0) {
           EipMMailAccount account = accounts.get(0);

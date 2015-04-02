@@ -37,6 +37,8 @@ import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardCategoryMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardTopic;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardTopic;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -262,7 +264,7 @@ public class MsgboardTopicFormData extends ALAbstractFormData {
       SelectQuery<EipTMsgboardFile> query =
         Database.query(EipTMsgboardFile.class);
       query.andQualifier(ExpressionFactory.matchDbExp(
-        EipTMsgboardFile.EIP_TMSGBOARD_TOPIC_PROPERTY,
+        _EipTMsgboardFile.EIP_TMSGBOARD_TOPIC_PROPERTY,
         topic.getTopicId()));
       List<EipTMsgboardFile> msgboardFileList = query.fetchList();
       for (EipTMsgboardFile file : msgboardFileList) {
@@ -341,7 +343,7 @@ public class MsgboardTopicFormData extends ALAbstractFormData {
         Database.query(EipTMsgboardTopic.class);
       Expression exp =
         ExpressionFactory.inDbExp(
-          EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
+          _EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
           topicIdList);
       query.setQualifier(exp);
 

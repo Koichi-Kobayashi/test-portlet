@@ -26,7 +26,7 @@ import org.apache.jetspeed.om.registry.RegistryEntry;
  * Base simple bean-like implementation of the RegistryEntry interface
  * suitable for Castor XML serialization.
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BaseRegistryEntry.java,v 1.10 2004/02/23 03:08:26 jford Exp $
  */
 public class BaseRegistryEntry implements RegistryEntry, java.io.Serializable
@@ -71,7 +71,8 @@ public class BaseRegistryEntry implements RegistryEntry, java.io.Serializable
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object entry)
+    @Override
+	public boolean equals(Object entry)
     {
         if (entry==null)
         {
@@ -139,25 +140,29 @@ public class BaseRegistryEntry implements RegistryEntry, java.io.Serializable
     }
 
     /** @see RegistryEntry#getName */
-    public long getId()
+    @Override
+	public long getId()
     {
         return this.id;
     }
 
     /** @see RegistryEntry#getName */
-    public String getName()
+    @Override
+	public String getName()
     {
         return this.name;
     }
 
     /** @see RegistryEntry#setName */
-    public void setName( String name )
+    @Override
+	public void setName( String name )
     {
         this.name = name;
     }
 
     /** @see RegistryEntry#getTitle */
-    public String getTitle()
+    @Override
+	public String getTitle()
     {
         if (this.metaInfo != null)
         {
@@ -172,7 +177,8 @@ public class BaseRegistryEntry implements RegistryEntry, java.io.Serializable
     }
 
     /** @see RegistryEntry#setTitle */
-    public void setTitle(String title)
+    @Override
+	public void setTitle(String title)
     {
         if (this.metaInfo == null)
         {
@@ -183,7 +189,8 @@ public class BaseRegistryEntry implements RegistryEntry, java.io.Serializable
     }
 
     /** @see RegistryEntry#getDescription */
-    public String getDescription()
+    @Override
+	public String getDescription()
     {
         if (this.metaInfo != null)
         {
@@ -196,7 +203,8 @@ public class BaseRegistryEntry implements RegistryEntry, java.io.Serializable
     }
 
     /** @see RegistryEntry#setDescription */
-    public void setDescription(String description)
+    @Override
+	public void setDescription(String description)
     {
         if (this.metaInfo == null)
         {
@@ -208,26 +216,30 @@ public class BaseRegistryEntry implements RegistryEntry, java.io.Serializable
     }
 
     /** @see RegistryEntry#getSecurity */
-    public Security getSecurity()
+    @Override
+	public Security getSecurity()
     {
         return this.security;
     }
 
     /** @see RegistryEntry#setSecurity */
-    public void setSecurity( Security security )
+    @Override
+	public void setSecurity( Security security )
     {
         this.security = security;
         this.role = this.security.getRole();
     }
 
     /** @see RegistryEntry#isHidden */
-    public boolean isHidden()
+    @Override
+	public boolean isHidden()
     {
         return this.hidden;
     }
 
     /** @see RegistryEntry#setHidden */
-    public void setHidden( boolean hidden )
+    @Override
+	public void setHidden( boolean hidden )
     {
         this.hidden = hidden;
         this._hidden = (hidden) ? 1 : 0;
@@ -260,7 +272,8 @@ public class BaseRegistryEntry implements RegistryEntry, java.io.Serializable
         this.role = this.security.getRole();
     }
 
-    public MetaInfo getMetaInfo()
+    @Override
+	public MetaInfo getMetaInfo()
     {
         return this.metaInfo;
     }
@@ -268,7 +281,8 @@ public class BaseRegistryEntry implements RegistryEntry, java.io.Serializable
     /** Required by Castor 0.8.11 XML serialization for setting the entry
       * metainfo
       */
-    public void setMetaInfo( MetaInfo metaInfo )
+    @Override
+	public void setMetaInfo( MetaInfo metaInfo )
     {
         this.metaInfo = metaInfo;
         this.title = metaInfo.getTitle();
@@ -297,7 +311,8 @@ public class BaseRegistryEntry implements RegistryEntry, java.io.Serializable
     /** Getter for property securityId.
      * @return Value of property securityId.
      */
-    public SecurityReference getSecurityRef()
+    @Override
+	public SecurityReference getSecurityRef()
     {
         return securityRef;
     }
@@ -305,7 +320,8 @@ public class BaseRegistryEntry implements RegistryEntry, java.io.Serializable
     /** Setter for property securityId.
      * @param securityId New value of property securityId.
      */
-    public void setSecurityRef(SecurityReference securityRef)
+    @Override
+	public void setSecurityRef(SecurityReference securityRef)
     {
         this.securityRef = securityRef;
     }

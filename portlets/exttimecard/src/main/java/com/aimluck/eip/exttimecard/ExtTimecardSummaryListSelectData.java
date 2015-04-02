@@ -42,6 +42,8 @@ import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecard;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystem;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystemMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTExtTimecard;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTExtTimecardSystemMap;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -307,7 +309,7 @@ public class ExtTimecardSummaryListSelectData extends
         Database.query(EipTExtTimecardSystemMap.class);
       Expression exp =
         ExpressionFactory.matchExp(
-          EipTExtTimecardSystemMap.USER_ID_PROPERTY,
+          _EipTExtTimecardSystemMap.USER_ID_PROPERTY,
           target_user_id);
       default_query.setQualifier(exp);
       ResultList<EipTExtTimecardSystemMap> map_list =
@@ -338,7 +340,7 @@ public class ExtTimecardSummaryListSelectData extends
         Database.query(EipTExtTimecardSystemMap.class);
       Expression exp =
         ExpressionFactory.matchExp(
-          EipTExtTimecardSystemMap.USER_ID_PROPERTY,
+          _EipTExtTimecardSystemMap.USER_ID_PROPERTY,
           userid);
       default_query.setQualifier(exp);
       ResultList<EipTExtTimecardSystemMap> map_list =
@@ -509,7 +511,7 @@ public class ExtTimecardSummaryListSelectData extends
         SelectQuery<EipTExtTimecard> query =
           getSelectQuery(rundata, context, target_user_id);
         buildSelectQueryForListView(query);
-        query.orderAscending(EipTExtTimecard.PUNCH_DATE_PROPERTY);
+        query.orderAscending(_EipTExtTimecard.PUNCH_DATE_PROPERTY);
 
         return query.getResultList();
       } else {
@@ -541,7 +543,7 @@ public class ExtTimecardSummaryListSelectData extends
         SelectQuery<EipTExtTimecard> query =
           getSelectQuery(rundata, context, target_user_id);
         buildSelectQueryForListView(query);
-        query.orderAscending(EipTExtTimecard.PUNCH_DATE_PROPERTY);
+        query.orderAscending(_EipTExtTimecard.PUNCH_DATE_PROPERTY);
 
         return query.getResultList();
       } else {
@@ -775,7 +777,7 @@ public class ExtTimecardSummaryListSelectData extends
       Database.query(EipTExtTimecardSystemMap.class);
     Expression exp =
       ExpressionFactory.matchExp(
-        EipTExtTimecardSystemMap.USER_ID_PROPERTY,
+        _EipTExtTimecardSystemMap.USER_ID_PROPERTY,
         target_user_id);
     default_query.setQualifier(exp);
     ResultList<EipTExtTimecardSystemMap> map_list =
@@ -802,7 +804,7 @@ public class ExtTimecardSummaryListSelectData extends
     }
 
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTExtTimecard.USER_ID_PROPERTY, new Integer(
+      ExpressionFactory.matchExp(_EipTExtTimecard.USER_ID_PROPERTY, new Integer(
         target_user_id));
     query.setQualifier(exp1);
 
@@ -818,13 +820,13 @@ public class ExtTimecardSummaryListSelectData extends
     Date date = cal.getTime();
     Expression exp11 =
       ExpressionFactory.greaterOrEqualExp(
-        EipTExtTimecard.PUNCH_DATE_PROPERTY,
+        _EipTExtTimecard.PUNCH_DATE_PROPERTY,
         date);
 
     cal.add(Calendar.MONTH, +1);
     cal.add(Calendar.MILLISECOND, -1);
     Expression exp12 =
-      ExpressionFactory.lessOrEqualExp(EipTExtTimecard.PUNCH_DATE_PROPERTY, cal
+      ExpressionFactory.lessOrEqualExp(_EipTExtTimecard.PUNCH_DATE_PROPERTY, cal
         .getTime());
     query.andQualifier(exp11.andExp(exp12));
 

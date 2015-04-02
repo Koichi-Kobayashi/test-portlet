@@ -44,6 +44,9 @@ import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardCategoryMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardTopic;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardCategoryMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardTopic;
 import com.aimluck.eip.common.ALAbstractMultiFilterSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -323,47 +326,47 @@ public class MsgboardTopicSelectData extends
       Database.query(EipTMsgboardTopic.class);
 
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTMsgboardTopic.PARENT_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTMsgboardTopic.PARENT_ID_PROPERTY, Integer
         .valueOf(0));
     query.setQualifier(exp1);
 
     // アクセス制御
     Expression exp01 =
       ExpressionFactory.matchExp(
-        EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
+        _EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
           + "."
-          + EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
+          + _EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
         "T");
 
     Expression exp02 =
       ExpressionFactory.matchExp(
-        EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
+        _EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
           + "."
-          + EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
+          + _EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
           + "."
-          + EipTMsgboardCategoryMap.STATUS_PROPERTY,
+          + _EipTMsgboardCategoryMap.STATUS_PROPERTY,
         "O");
     Expression exp03 =
       ExpressionFactory.matchExp(
-        EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
+        _EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
           + "."
-          + EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
+          + _EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
           + "."
-          + EipTMsgboardCategoryMap.STATUS_PROPERTY,
+          + _EipTMsgboardCategoryMap.STATUS_PROPERTY,
         "A");
     Expression exp11 =
       ExpressionFactory.matchExp(
-        EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
+        _EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
           + "."
-          + EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
+          + _EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
         "F");
     Expression exp12 =
       ExpressionFactory.matchExp(
-        EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
+        _EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
           + "."
-          + EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
+          + _EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
           + "."
-          + EipTMsgboardCategoryMap.USER_ID_PROPERTY,
+          + _EipTMsgboardCategoryMap.USER_ID_PROPERTY,
         Integer.valueOf(ALEipUtils.getUserId(rundata)));
     query.andQualifier((exp01.andExp(exp02.orExp(exp03))).orExp(exp11
       .andExp(exp12)));
@@ -439,7 +442,7 @@ public class MsgboardTopicSelectData extends
         userIds.add(-1);
       }
       Expression exp =
-        ExpressionFactory.inExp(EipTMsgboardTopic.OWNER_ID_PROPERTY, userIds);
+        ExpressionFactory.inExp(_EipTMsgboardTopic.OWNER_ID_PROPERTY, userIds);
       query.andQualifier(exp);
 
       postId = postIds.get(0).toString();
@@ -451,11 +454,11 @@ public class MsgboardTopicSelectData extends
     if (search != null && !"".equals(search)) {
       current_search = search;
       Expression ex1 =
-        ExpressionFactory.likeExp(EipTMsgboardTopic.NOTE_PROPERTY, "%"
+        ExpressionFactory.likeExp(_EipTMsgboardTopic.NOTE_PROPERTY, "%"
           + search
           + "%");
       Expression ex2 =
-        ExpressionFactory.likeExp(EipTMsgboardTopic.TOPIC_NAME_PROPERTY, "%"
+        ExpressionFactory.likeExp(_EipTMsgboardTopic.TOPIC_NAME_PROPERTY, "%"
           + search
           + "%");
       SelectQuery<EipTMsgboardTopic> q =
@@ -476,7 +479,7 @@ public class MsgboardTopicSelectData extends
       }
       Expression ex =
         ExpressionFactory.inDbExp(
-          EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
+          _EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
           resultid);
       query.andQualifier(ex);
     }
@@ -609,9 +612,9 @@ public class MsgboardTopicSelectData extends
       /** 詳細画面は全件表示する */
       // buildSelectQueryForListView(query);
       if ("response_new".equals(cotopicsort)) {
-        query.orderDesending(EipTMsgboardTopic.CREATE_DATE_PROPERTY);
+        query.orderDesending(_EipTMsgboardTopic.CREATE_DATE_PROPERTY);
       } else {
-        query.orderAscending(EipTMsgboardTopic.CREATE_DATE_PROPERTY);
+        query.orderAscending(_EipTMsgboardTopic.CREATE_DATE_PROPERTY);
       }
 
       List<EipTMsgboardTopic> resultList = query.fetchList();
@@ -638,7 +641,7 @@ public class MsgboardTopicSelectData extends
     SelectQuery<EipTMsgboardTopic> query =
       Database.query(EipTMsgboardTopic.class);
     Expression exp =
-      ExpressionFactory.matchExp(EipTMsgboardTopic.PARENT_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTMsgboardTopic.PARENT_ID_PROPERTY, Integer
         .valueOf(topicid));
     query.setQualifier(exp);
     query.distinct(true);
@@ -650,7 +653,7 @@ public class MsgboardTopicSelectData extends
       Database.query(EipTMsgboardFile.class);
     Expression exp =
       ExpressionFactory.matchDbExp(
-        EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
+        _EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
         Integer.valueOf(topicid));
     query.setQualifier(exp);
     return query;
@@ -781,16 +784,16 @@ public class MsgboardTopicSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("topic_name", EipTMsgboardTopic.TOPIC_NAME_PROPERTY);
-    map.putValue("update_date", EipTMsgboardTopic.UPDATE_DATE_PROPERTY);
-    map.putValue("category", EipTMsgboardCategory.CATEGORY_ID_PK_COLUMN);
+    map.putValue("topic_name", _EipTMsgboardTopic.TOPIC_NAME_PROPERTY);
+    map.putValue("update_date", _EipTMsgboardTopic.UPDATE_DATE_PROPERTY);
+    map.putValue("category", _EipTMsgboardCategory.CATEGORY_ID_PK_COLUMN);
     map.putValue(
       "category_name",
-      EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
+      _EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
         + "."
-        + EipTMsgboardCategory.CATEGORY_NAME_PROPERTY);
-    map.putValue("owner_name", EipTMsgboardTopic.OWNER_ID_PROPERTY);
-    map.putValue("update_user", EipTMsgboardTopic.UPDATE_USER_ID_PROPERTY);
+        + _EipTMsgboardCategory.CATEGORY_NAME_PROPERTY);
+    map.putValue("owner_name", _EipTMsgboardTopic.OWNER_ID_PROPERTY);
+    map.putValue("update_user", _EipTMsgboardTopic.UPDATE_USER_ID_PROPERTY);
 
     return map;
   }

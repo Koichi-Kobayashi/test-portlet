@@ -33,6 +33,8 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.category.beans.CommonCategoryLiteBean;
 import com.aimluck.eip.cayenne.om.portlet.EipTCommonCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTScheduleMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCommonCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTScheduleMap;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -109,9 +111,9 @@ public class CommonCategoryUtils {
 
       Expression exp =
         ExpressionFactory.noMatchDbExp(
-          EipTCommonCategory.COMMON_CATEGORY_ID_PK_COLUMN,
+          _EipTCommonCategory.COMMON_CATEGORY_ID_PK_COLUMN,
           Integer.valueOf(1));
-      query.setQualifier(exp).orderAscending(EipTCommonCategory.NAME_PROPERTY);
+      query.setQualifier(exp).orderAscending(_EipTCommonCategory.NAME_PROPERTY);
 
       List<EipTCommonCategory> commoncategory_list = query.fetchList();
 
@@ -167,7 +169,7 @@ public class CommonCategoryUtils {
     SelectQuery<EipTScheduleMap> query = Database.query(EipTScheduleMap.class);
     Expression exp =
       ExpressionFactory.matchExp(
-        EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY,
+        _EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY,
         category.getCommonCategoryId());
     List<EipTScheduleMap> schedulemap_list =
       query.andQualifier(exp).fetchList();

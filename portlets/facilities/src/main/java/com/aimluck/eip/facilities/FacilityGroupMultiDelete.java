@@ -30,6 +30,8 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroup;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroupMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroup;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroupMap;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -59,7 +61,7 @@ public class FacilityGroupMultiDelete extends ALAbstractCheckList {
       SelectQuery<EipMFacilityGroupMap> query1 =
         Database.query(EipMFacilityGroupMap.class);
       Expression exp1 =
-        ExpressionFactory.inExp(EipMFacilityGroupMap.GROUP_ID_PROPERTY, values);
+        ExpressionFactory.inExp(_EipMFacilityGroupMap.GROUP_ID_PROPERTY, values);
       query1.setQualifier(exp1);
       List<EipMFacilityGroupMap> maplist = query1.fetchList();
       if (maplist != null && maplist.size() > 0) {
@@ -69,7 +71,7 @@ public class FacilityGroupMultiDelete extends ALAbstractCheckList {
       SelectQuery<EipMFacilityGroup> query =
         Database.query(EipMFacilityGroup.class);
       Expression exp =
-        ExpressionFactory.inDbExp(EipMFacilityGroup.GROUP_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipMFacilityGroup.GROUP_ID_PK_COLUMN, values);
       query.setQualifier(exp);
 
       List<EipMFacilityGroup> flist = query.fetchList();

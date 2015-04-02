@@ -2,9 +2,7 @@
 
 package org.apache.jetspeed.om.apps.email;
 
-import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
-import org.apache.torque.om.Persistent;
 
 /**
  * This class manages EmailInbox objects.

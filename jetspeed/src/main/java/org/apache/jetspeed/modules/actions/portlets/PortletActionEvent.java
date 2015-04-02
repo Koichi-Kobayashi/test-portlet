@@ -63,7 +63,8 @@ public abstract class PortletActionEvent
      * @param data A Turbine RunData object.
      * @exception Exception, a generic exception.
      */
-    public abstract void doPerform(RunData data)
+    @Override
+	public abstract void doPerform(RunData data)
                             throws Exception;
 
     /**
@@ -74,7 +75,8 @@ public abstract class PortletActionEvent
      * @param data A Turbine RunData object.
      * @exception Exception, a generic exception.
      */
-    protected void perform(RunData data)
+    @Override
+	protected void perform(RunData data)
                     throws Exception
       {
 

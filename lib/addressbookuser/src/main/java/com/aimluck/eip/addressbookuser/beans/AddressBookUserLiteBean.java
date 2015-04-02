@@ -33,7 +33,8 @@ public class AddressBookUserLiteBean implements ALData {
 
   private ALStringField full_name;
 
-  public void initField() {
+  @Override
+public void initField() {
     address_id = new ALNumberField();
     full_name = new ALStringField();
   }

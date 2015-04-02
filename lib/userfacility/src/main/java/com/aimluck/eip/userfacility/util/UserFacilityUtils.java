@@ -31,6 +31,8 @@ import org.apache.turbine.util.RunData;
 
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroupMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroupMap;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
 import com.aimluck.eip.user.beans.UserLiteBean;
@@ -108,7 +110,7 @@ public class UserFacilityUtils {
     } else {
       List<EipMFacility> aList =
         Database.query(EipMFacility.class).orderAscending(
-          EipMFacility.SORT_PROPERTY).fetchList();
+          _EipMFacility.SORT_PROPERTY).fetchList();
       for (EipMFacility record : aList) {
         user = new UserFacilityLiteBean();
         user.initField();
@@ -132,7 +134,7 @@ public class UserFacilityUtils {
       Database.query(EipMFacilityGroupMap.class);
     Expression mapexp =
       ExpressionFactory.matchExp(
-        EipMFacilityGroupMap.GROUP_ID_PROPERTY,
+        _EipMFacilityGroupMap.GROUP_ID_PROPERTY,
         groupid);
     mapquery.setQualifier(mapexp);
     List<EipMFacilityGroupMap> FacilityMaps = mapquery.fetchList();
@@ -145,10 +147,10 @@ public class UserFacilityUtils {
     if (facilityIds.size() > 0) {
       Expression fexp =
         ExpressionFactory.inDbExp(
-          EipMFacility.FACILITY_ID_PK_COLUMN,
+          _EipMFacility.FACILITY_ID_PK_COLUMN,
           facilityIds);
       fquery.setQualifier(fexp);
-      fquery.orderAscending(EipMFacility.SORT_PROPERTY);
+      fquery.orderAscending(_EipMFacility.SORT_PROPERTY);
       List<EipMFacility> facility_list = fquery.fetchList();
 
       for (EipMFacility record : facility_list) {
@@ -170,7 +172,7 @@ public class UserFacilityUtils {
     List<UserFacilityLiteBean> facilityAllList =
       new ArrayList<UserFacilityLiteBean>();
     SelectQuery<EipMFacility> fquery = Database.query(EipMFacility.class);
-    fquery.orderAscending(EipMFacility.SORT_PROPERTY);
+    fquery.orderAscending(_EipMFacility.SORT_PROPERTY);
     List<EipMFacility> facility_list = fquery.fetchList();
 
     for (EipMFacility record : facility_list) {

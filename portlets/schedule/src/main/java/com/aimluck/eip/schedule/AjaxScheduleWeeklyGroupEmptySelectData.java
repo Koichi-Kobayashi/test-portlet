@@ -33,6 +33,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.VEipTScheduleList;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipGroup;
 import com.aimluck.eip.common.ALEipManager;
@@ -199,7 +200,7 @@ public class AjaxScheduleWeeklyGroupEmptySelectData extends
     SelectQuery<EipMFacility> facility_query =
       Database.query(EipMFacility.class);
     Expression exp =
-      ExpressionFactory.inDbExp(EipMFacility.FACILITY_ID_PK_COLUMN, f_list);
+      ExpressionFactory.inDbExp(_EipMFacility.FACILITY_ID_PK_COLUMN, f_list);
     facility_query.setQualifier(exp);
     temp_list.addAll(FacilitiesUtils
       .getFacilitiesFromSelectQuery(facility_query));

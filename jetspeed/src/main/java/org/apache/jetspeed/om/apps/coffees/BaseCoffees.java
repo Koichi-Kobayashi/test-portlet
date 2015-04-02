@@ -1,24 +1,17 @@
 package org.apache.jetspeed.om.apps.coffees;
 
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.BaseObject;
-import org.apache.torque.om.ComboKey;
-import org.apache.torque.om.DateKey;
 import org.apache.torque.om.NumberKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
-import org.apache.torque.om.StringKey;
-import org.apache.torque.om.Persistent;
-import org.apache.torque.util.Criteria;
 import org.apache.torque.util.Transaction;
 
 
@@ -239,7 +232,8 @@ public abstract class BaseCoffees extends BaseObject
      * Retrieves a field from the object by name passed in
      * as a String.
      */
-    public Object getByName(String name)
+    @Override
+	public Object getByName(String name)
     {
           if (name.equals("CoffeeId"))
         {
@@ -273,29 +267,30 @@ public abstract class BaseCoffees extends BaseObject
      * as a String.  The String must be one of the static
      * Strings defined in this Class' Peer.
      */
-    public Object getByPeerName(String name)
+    @Override
+	public Object getByPeerName(String name)
     {
-          if (name.equals(CoffeesPeer.COFFEE_ID ))
+          if (name.equals(BaseCoffeesPeer.COFFEE_ID ))
         {
                 return new Integer(getCoffeeId());
             }
-          if (name.equals(CoffeesPeer.COFFEE_NAME ))
+          if (name.equals(BaseCoffeesPeer.COFFEE_NAME ))
         {
                 return getCoffeeName();
             }
-          if (name.equals(CoffeesPeer.SUPPLIER_ID ))
+          if (name.equals(BaseCoffeesPeer.SUPPLIER_ID ))
         {
                 return new Integer(getSupplierId());
             }
-          if (name.equals(CoffeesPeer.PRICE ))
+          if (name.equals(BaseCoffeesPeer.PRICE ))
         {
                 return new Double(getPrice());
             }
-          if (name.equals(CoffeesPeer.SALES ))
+          if (name.equals(BaseCoffeesPeer.SALES ))
         {
                 return new Integer(getSales());
             }
-          if (name.equals(CoffeesPeer.TOTAL ))
+          if (name.equals(BaseCoffeesPeer.TOTAL ))
         {
                 return new Integer(getTotal());
             }
@@ -306,7 +301,8 @@ public abstract class BaseCoffees extends BaseObject
      * Retrieves a field from the object by Position as specified
      * in the xml schema.  Zero-based.
      */
-    public Object getByPosition(int pos)
+    @Override
+	public Object getByPosition(int pos)
     {
             if ( pos == 0 )
         {
@@ -339,9 +335,10 @@ public abstract class BaseCoffees extends BaseObject
      * Stores the object in the database.  If the object is new,
      * it inserts it; otherwise an update is performed.
      */
-    public void save() throws Exception
+    @Override
+	public void save() throws Exception
     {
-          save(CoffeesPeer.getMapBuilder()
+          save(BaseCoffeesPeer.getMapBuilder()
                 .getDatabaseMap().getName());
       }
 
@@ -352,7 +349,8 @@ public abstract class BaseCoffees extends BaseObject
      * auto-generated conditionally and therefore needs to be
      * in this file instead of in the super class, BaseObject.
        */
-    public void save(String dbName) throws TorqueException
+    @Override
+	public void save(String dbName) throws TorqueException
     {
         Connection con = null;
           try
@@ -378,7 +376,8 @@ public abstract class BaseCoffees extends BaseObject
      * the save() method and the connection details will be handled
      * internally
      */
-    public void save(Connection con) throws TorqueException
+    @Override
+	public void save(Connection con) throws TorqueException
     {
           if (!alreadyInSave)
         {
@@ -391,17 +390,17 @@ public abstract class BaseCoffees extends BaseObject
             {
                 if (isNew())
                 {
-                    CoffeesPeer.doInsert((Coffees)this, con);
+                    BaseCoffeesPeer.doInsert((Coffees)this, con);
                     setNew(false);
                 }
                 else
                 {
-                    CoffeesPeer.doUpdate((Coffees)this, con);
+                    BaseCoffeesPeer.doUpdate((Coffees)this, con);
                 }
 
                       if (isCacheOnSave())
                 {
-                    CoffeesManager.putInstance(this);
+                    BaseCoffeesManager.putInstance(this);
                 }
               }
 
@@ -424,7 +423,8 @@ public abstract class BaseCoffees extends BaseObject
      *
      * @param ObjectKey coffeeId
      */
-    public void setPrimaryKey(ObjectKey coffeeId)
+    @Override
+	public void setPrimaryKey(ObjectKey coffeeId)
          {
             setCoffeeId(((NumberKey)coffeeId).intValue());
         }
@@ -432,7 +432,8 @@ public abstract class BaseCoffees extends BaseObject
     /**
      * Set the PrimaryKey using a String.
      */
-    public void setPrimaryKey(String key) 
+    @Override
+	public void setPrimaryKey(String key) 
     {
             setCoffeeId(Integer.parseInt(key));
         }
@@ -442,7 +443,8 @@ public abstract class BaseCoffees extends BaseObject
      * returns an id that differentiates this object from others
      * of its class.
      */
-    public ObjectKey getPrimaryKey()
+    @Override
+	public ObjectKey getPrimaryKey()
     {
           return SimpleKey.keyFor(getCoffeeId());
       }

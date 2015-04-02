@@ -19,43 +19,27 @@
 
 package com.aimluck.eip.test.util;
 
-import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.cayenne.exp.Expression;
 import org.apache.cayenne.exp.ExpressionFactory;
-import org.apache.jetspeed.om.security.UserIdPrincipal;
 import org.apache.jetspeed.portal.PortletConfig;
 import org.apache.jetspeed.portal.portlets.VelocityPortlet;
-import org.apache.jetspeed.services.JetspeedSecurity;
-import org.apache.jetspeed.services.customlocalization.CustomLocalizationService;
 import org.apache.jetspeed.services.logging.JetspeedLogFactoryService;
 import org.apache.jetspeed.services.logging.JetspeedLogger;
-import org.apache.jetspeed.services.resources.JetspeedResources;
-import org.apache.jetspeed.util.ServiceUtil;
-import org.apache.turbine.services.localization.LocalizationService;
 import org.apache.turbine.util.RunData;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
 import org.apache.velocity.context.Context;
 
-import com.aimluck.commons.utils.ALDateUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipTTest;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTest;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALActivity;
-import com.aimluck.eip.common.ALBaseUser;
-import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
-import com.aimluck.eip.common.ALEipUser;
 import com.aimluck.eip.common.ALPageNotFoundException;
-import com.aimluck.eip.mail.util.ALMailUtils;
 import com.aimluck.eip.orm.Database;
-import com.aimluck.eip.orm.query.Operations;
-import com.aimluck.eip.services.orgutils.ALOrgUtilsService;
 import com.aimluck.eip.services.social.ALActivityService;
 import com.aimluck.eip.services.social.model.ALActivityPutRequest;
 import com.aimluck.eip.util.ALEipUtils;
@@ -121,10 +105,10 @@ public class TestUtils {
       }
 
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTTest.TEST_ID_PK_COLUMN, testid);
-      exp.andExp(ExpressionFactory.matchDbExp(EipTTest.TURBINE_USER_PROPERTY
+        ExpressionFactory.matchDbExp(_EipTTest.TEST_ID_PK_COLUMN, testid);
+      exp.andExp(ExpressionFactory.matchDbExp(_EipTTest.TURBINE_USER_PROPERTY
         + "."
-        + TurbineUser.USER_ID_PK_COLUMN, Integer.valueOf(ALEipUtils
+        + _TurbineUser.USER_ID_PK_COLUMN, Integer.valueOf(ALEipUtils
         .getUserId(rundata))));
 
       List<EipTTest> testList = Database.query(EipTTest.class, exp).fetchList();

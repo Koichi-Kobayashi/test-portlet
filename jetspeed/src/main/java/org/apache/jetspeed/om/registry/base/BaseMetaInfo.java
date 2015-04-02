@@ -23,7 +23,7 @@ import org.apache.jetspeed.om.registry.*;
  * Castor serialization.
  *
  * @see org.apache.jetspeed.om.registry.MetaInfo
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BaseMetaInfo.java,v 1.4 2004/02/23 03:08:26 jford Exp $
  */
 public class BaseMetaInfo implements MetaInfo, java.io.Serializable
@@ -48,7 +48,8 @@ public class BaseMetaInfo implements MetaInfo, java.io.Serializable
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object==null)
         {
@@ -106,7 +107,8 @@ public class BaseMetaInfo implements MetaInfo, java.io.Serializable
     }
 
     /** @return the title for this entry */
-    public String getTitle()
+    @Override
+	public String getTitle()
     {
         return this.title;
     }
@@ -114,13 +116,15 @@ public class BaseMetaInfo implements MetaInfo, java.io.Serializable
     /** Sets the title for this entry
      * @param title the new title for this entry
      */
-    public void setTitle( String title )
+    @Override
+	public void setTitle( String title )
     {
         this.title = title;
     }
 
     /** @return the description for this entry */
-    public String getDescription()
+    @Override
+	public String getDescription()
     {
         return this.description;
     }
@@ -128,13 +132,15 @@ public class BaseMetaInfo implements MetaInfo, java.io.Serializable
     /** Sets the description for this entry
      * @param description the new description for this entry
      */
-    public void setDescription( String description )
+    @Override
+	public void setDescription( String description )
     {
         this.description = description;
     }
 
     /** @return the image link for this entry */
-    public String getImage()
+    @Override
+	public String getImage()
     {
         return this.image;
     }
@@ -142,7 +148,8 @@ public class BaseMetaInfo implements MetaInfo, java.io.Serializable
     /** Sets the image URL attached to this entry
      * @param image the image URL to link to this entry
      */
-    public void setImage( String image )
+    @Override
+	public void setImage( String image )
     {
         this.image = image;
     }

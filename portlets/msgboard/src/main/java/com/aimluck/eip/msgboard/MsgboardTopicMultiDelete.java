@@ -29,6 +29,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardTopic;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardTopic;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -73,11 +74,11 @@ public class MsgboardTopicMultiDelete extends ALAbstractCheckList {
             ownerid);
         Expression exp02 =
           ExpressionFactory.matchDbExp(
-            EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
+            _EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
             Integer.valueOf(id));
         Expression exp03 =
           ExpressionFactory.matchExp(
-            EipTMsgboardTopic.PARENT_ID_PROPERTY,
+            _EipTMsgboardTopic.PARENT_ID_PROPERTY,
             Integer.valueOf(id));
         query.orQualifier((exp01.andExp(exp02)).orExp(exp03));
       }

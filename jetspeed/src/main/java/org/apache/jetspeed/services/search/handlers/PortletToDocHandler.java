@@ -42,7 +42,8 @@ public class PortletToDocHandler extends AbstractObjectHandler
     /* (non-Javadoc)
      * @see org.apache.jetspeed.services.search.ObjectHandler#parseObject(java.lang.Object)
      */
-    public ParsedObject parseObject(Object o)
+    @Override
+	public ParsedObject parseObject(Object o)
     {
         ParsedObject result = new BaseParsedObject();
 

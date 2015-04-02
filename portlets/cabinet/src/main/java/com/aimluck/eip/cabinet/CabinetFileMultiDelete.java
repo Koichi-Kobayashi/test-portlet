@@ -31,6 +31,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cabinet.util.CabinetUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTCabinetFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCabinetFile;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -66,7 +67,7 @@ public class CabinetFileMultiDelete extends ALAbstractCheckList {
       SelectQuery<EipTCabinetFile> query =
         Database.query(EipTCabinetFile.class);
       Expression exp =
-        ExpressionFactory.inDbExp(EipTCabinetFile.FILE_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipTCabinetFile.FILE_ID_PK_COLUMN, values);
       query.setQualifier(exp);
 
       List<EipTCabinetFile> filelist = query.fetchList();

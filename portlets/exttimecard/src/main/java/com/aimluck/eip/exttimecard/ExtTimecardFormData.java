@@ -44,6 +44,7 @@ import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecard;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystem;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTExtTimecard;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -348,10 +349,10 @@ public class ExtTimecardFormData extends ALAbstractFormData {
         SelectQuery<EipTExtTimecard> workflg_query =
           Database.query(EipTExtTimecard.class);
         Expression workflg_exp =
-          ExpressionFactory.matchExp(EipTExtTimecard.USER_ID_PROPERTY, Integer
+          ExpressionFactory.matchExp(_EipTExtTimecard.USER_ID_PROPERTY, Integer
             .valueOf(login_uid));
         workflg_query.setQualifier(workflg_exp);
-        workflg_query.orderDesending(EipTExtTimecard.PUNCH_DATE_PROPERTY);
+        workflg_query.orderDesending(_EipTExtTimecard.PUNCH_DATE_PROPERTY);
         List<EipTExtTimecard> workflg_list = workflg_query.fetchList();
         if (workflg_list != null && workflg_list.size() > 0) {
         } else {

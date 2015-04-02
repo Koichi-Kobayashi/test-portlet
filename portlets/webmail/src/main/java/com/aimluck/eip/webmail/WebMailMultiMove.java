@@ -31,6 +31,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
 import com.aimluck.eip.cayenne.om.portlet.EipTMail;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFolder;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMail;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.mail.util.ALMailUtils;
 import com.aimluck.eip.orm.Database;
@@ -94,7 +95,7 @@ public class WebMailMultiMove extends ALAbstractCheckList {
       // フォルダを移動
       SelectQuery<EipTMail> query = Database.query(EipTMail.class);
       Expression exp =
-        ExpressionFactory.inDbExp(EipTMail.MAIL_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipTMail.MAIL_ID_PK_COLUMN, values);
 
       List<EipTMail> mailList = query.setQualifier(exp).fetchList();
       for (EipTMail mail : mailList) {

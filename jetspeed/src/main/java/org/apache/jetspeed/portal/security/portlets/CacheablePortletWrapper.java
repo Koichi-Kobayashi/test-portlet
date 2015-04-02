@@ -61,14 +61,16 @@ public class CacheablePortletWrapper extends PortletWrapper implements /*FIXME*/
 
     /**
     */
-    public boolean isCacheable()
+    @Override
+	public boolean isCacheable()
     {
         return wrappedCacheable.isCacheable();
     }
 
     /**
     */
-    public void setCacheable(boolean cacheable)
+    @Override
+	public void setCacheable(boolean cacheable)
     {
         wrappedCacheable.setCacheable( cacheable );
     }
@@ -76,21 +78,24 @@ public class CacheablePortletWrapper extends PortletWrapper implements /*FIXME*/
 
     /**
     */
-    public Expire getExpire()
+    @Override
+	public Expire getExpire()
     {
         return wrappedCacheable.getExpire();
     }
 
     /**
     */
-    public final String getHandle()
+    @Override
+	public final String getHandle()
     {
         return wrappedCacheable.getHandle();
     }
 
     /**
     */
-    public final void setHandle( String handle )
+    @Override
+	public final void setHandle( String handle )
     {
         wrappedCacheable.setHandle( handle );
     }
@@ -98,7 +103,8 @@ public class CacheablePortletWrapper extends PortletWrapper implements /*FIXME*/
     /**
     @see Cacheable#getExpirationMillis
     */
-    public Long getExpirationMillis()
+    @Override
+	public Long getExpirationMillis()
     {
       return wrappedCacheable.getExpirationMillis();
     }
@@ -107,7 +113,8 @@ public class CacheablePortletWrapper extends PortletWrapper implements /*FIXME*/
     /**
      * @see Cacheable#setExpirationMillis
      */
-    public void setExpirationMillis( long expirationMillis)
+    @Override
+	public void setExpirationMillis( long expirationMillis)
     {
       wrappedCacheable.setExpirationMillis( expirationMillis );
     }
@@ -119,7 +126,8 @@ public class CacheablePortletWrapper extends PortletWrapper implements /*FIXME*/
      *
      * @param cachedObject Handle to the CachedObject
      */
-    public void setCachedObject(CachedObject cachedObject)
+    @Override
+	public void setCachedObject(CachedObject cachedObject)
     {
       wrappedCacheable.setCachedObject( cachedObject );
     }

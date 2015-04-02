@@ -33,7 +33,9 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.eip.cayenne.om.portlet.EipTEventlog;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTEventlog;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -171,14 +173,14 @@ public class EventlogSelectData extends
       RunData rundata, Context context) {
     Expression exp1 =
       ExpressionFactory.greaterOrEqualExp(
-        EipTEventlog.EVENT_DATE_PROPERTY,
+        _EipTEventlog.EVENT_DATE_PROPERTY,
         start_date.getValue());
     Calendar cal = Calendar.getInstance();
     cal.setTime(end_date.getValue());
     cal.set(Calendar.DATE, cal.get(Calendar.DATE) + 1);
     Expression exp2 =
       ExpressionFactory
-        .lessExp(EipTEventlog.EVENT_DATE_PROPERTY, cal.getTime());
+        .lessExp(_EipTEventlog.EVENT_DATE_PROPERTY, cal.getTime());
     query.andQualifier(exp1.andExp(exp2));
   }
 
@@ -325,13 +327,13 @@ public class EventlogSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("event_date", EipTEventlog.EVENT_DATE_PROPERTY);
-    map.putValue("user_name", EipTEventlog.TURBINE_USER_PROPERTY
+    map.putValue("event_date", _EipTEventlog.EVENT_DATE_PROPERTY);
+    map.putValue("user_name", _EipTEventlog.TURBINE_USER_PROPERTY
       + "."
-      + TurbineUser.LAST_NAME_KANA_PROPERTY);
-    map.putValue("portlet_id", EipTEventlog.PORTLET_TYPE_PROPERTY);
-    map.putValue("event_type", EipTEventlog.EVENT_TYPE_PROPERTY);
-    map.putValue("ip_addr", EipTEventlog.IP_ADDR_PROPERTY);
+      + _TurbineUser.LAST_NAME_KANA_PROPERTY);
+    map.putValue("portlet_id", _EipTEventlog.PORTLET_TYPE_PROPERTY);
+    map.putValue("event_type", _EipTEventlog.EVENT_TYPE_PROPERTY);
+    map.putValue("ip_addr", _EipTEventlog.IP_ADDR_PROPERTY);
     return map;
   }
 

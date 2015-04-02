@@ -37,7 +37,7 @@ Portlet to output an XML well-formed document without any rendering.
 Strips all PIs and XML declaration before outputting content to allow
 for inclusion in a wider XML document.
 
-@author <A HREF="mailto:raphael@apache.org">Raphaël Luta</A>
+@author <A HREF="mailto:raphael@apache.org">Raphaï¿½l Luta</A>
 @version $Id: XMLPortlet.java,v 1.21 2004/02/23 04:03:34 jford Exp $
 */
 public class XMLPortlet extends AbstractPortlet 
@@ -50,7 +50,8 @@ public class XMLPortlet extends AbstractPortlet
     /**
     Return the PI-stripped XML document wrapped in an ECS ElementContainer
     */
-    public ConcreteElement getContent( RunData rundata ) {
+    @Override
+	public ConcreteElement getContent( RunData rundata ) {
 
         String myContent = null;
 

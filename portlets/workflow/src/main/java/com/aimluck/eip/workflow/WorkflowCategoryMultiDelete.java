@@ -31,6 +31,8 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRequest;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowRequest;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -75,7 +77,7 @@ public class WorkflowCategoryMultiDelete extends ALAbstractCheckList {
         Database.query(EipTWorkflowCategory.class);
       Expression exp1 =
         ExpressionFactory.inDbExp(
-          EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
+          _EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
           intValues);
       query.setQualifier(exp1);
       List<EipTWorkflowCategory> categorylist = query.fetchList();
@@ -95,9 +97,9 @@ public class WorkflowCategoryMultiDelete extends ALAbstractCheckList {
         Database.query(EipTWorkflowRequest.class);
       Expression reqexp1 =
         ExpressionFactory.inDbExp(
-          EipTWorkflowRequest.EIP_TWORKFLOW_CATEGORY_PROPERTY
+          _EipTWorkflowRequest.EIP_TWORKFLOW_CATEGORY_PROPERTY
             + "."
-            + EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
+            + _EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
           categoryIds);
       reqquery.setQualifier(reqexp1);
       List<EipTWorkflowRequest> requests = reqquery.fetchList();

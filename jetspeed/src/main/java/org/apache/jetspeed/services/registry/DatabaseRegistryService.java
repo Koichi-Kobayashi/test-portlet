@@ -94,7 +94,8 @@ public class DatabaseRegistryService extends TurbineBaseService implements
    *            the name of the registry to fetch
    * @return a Registry object if found by the manager or null
    */
-  public Registry get(String regName) {
+  @Override
+public Registry get(String regName) {
     return (Registry) registries.get(regName);
   }
 
@@ -103,7 +104,8 @@ public class DatabaseRegistryService extends TurbineBaseService implements
    * 
    * @return an Enumeration of registry names.
    */
-  public Enumeration getNames() {
+  @Override
+public Enumeration getNames() {
     return registries.keys();
   }
 
@@ -115,7 +117,8 @@ public class DatabaseRegistryService extends TurbineBaseService implements
    *            the name of the registry to use
    * @return the newly created RegistryEntry
    */
-  public RegistryEntry createEntry(String regName) {
+  @Override
+public RegistryEntry createEntry(String regName) {
     RegistryEntry entry = null;
     Registry registry = (Registry) registries.get(regName);
 
@@ -136,7 +139,8 @@ public class DatabaseRegistryService extends TurbineBaseService implements
    *            the name of the entry to retrieve from the registry.
    * @return a RegistryEntry object if the key is found or null
    */
-  public RegistryEntry getEntry(String regName, String entryName) {
+  @Override
+public RegistryEntry getEntry(String regName, String entryName) {
     try {
       return ((Registry) registries.get(regName)).getEntry(entryName);
     } catch (RegistryException e) {
@@ -165,7 +169,8 @@ public class DatabaseRegistryService extends TurbineBaseService implements
    *                a RegistryException if the manager can't add the provided
    *                entry
    */
-  public void addEntry(String regName, RegistryEntry entry)
+  @Override
+public void addEntry(String regName, RegistryEntry entry)
       throws RegistryException {
     if (entry == null) {
       return;
@@ -224,7 +229,8 @@ public class DatabaseRegistryService extends TurbineBaseService implements
    * @param entryName
    *            the name of the entry to remove
    */
-  public void removeEntry(String regName, String entryName) {
+  @Override
+public void removeEntry(String regName, String entryName) {
     if (entryName == null) {
       return;
     }
@@ -257,7 +263,8 @@ public class DatabaseRegistryService extends TurbineBaseService implements
    * This is the early initialization method called by the Turbine
    * <code>Service</code> framework
    */
-  public synchronized void init(ServletConfig conf)
+  @Override
+public synchronized void init(ServletConfig conf)
       throws InitializationException {
     int refreshRate = 0;
     Vector names = new Vector();
@@ -285,7 +292,7 @@ public class DatabaseRegistryService extends TurbineBaseService implements
           String registryClass = "org.apache.jetspeed.om.registry.database.BaseJetspeed"
               + name + "Peer";
 
-          baseClass.put(name, (DBRegistry) Class.forName(registryClass)
+          baseClass.put(name, Class.forName(registryClass)
               .newInstance());
         } catch (Exception e) {
           if (logger.isWarnEnabled()) {
@@ -358,12 +365,14 @@ public class DatabaseRegistryService extends TurbineBaseService implements
   /**
    * @return a Map of all fragments keyed by file names
    */
-  public Map getFragmentMap() {
+  @Override
+public Map getFragmentMap() {
     return (Map) fragments.clone();
   }
 
   /** Late init method from Turbine Service model */
-  public void init() throws InitializationException {
+  @Override
+public void init() throws InitializationException {
     if (logger.isDebugEnabled()) {
       logger.debug("DatabaseRegistryService: Late init called");
     }
@@ -389,7 +398,8 @@ public class DatabaseRegistryService extends TurbineBaseService implements
    * This is the shutdown method called by the Turbine <code>Service</code>
    * framework
    */
-  public void shutdown() {
+  @Override
+public void shutdown() {
     this.watcher.setDone();
 
     Iterator i = fragments.keySet().iterator();
@@ -528,7 +538,8 @@ public class DatabaseRegistryService extends TurbineBaseService implements
    * Refresh the state of the registry implementation. Should be called whenever
    * the underlying fragments are modified
    */
-  public void refresh() {
+  @Override
+public void refresh() {
     synchronized (watcher) {
       Enumeration en = getNames();
       while (en.hasMoreElements()) {
@@ -543,7 +554,8 @@ public class DatabaseRegistryService extends TurbineBaseService implements
    * @param file
    *            the absolute file path storing this fragment
    */
-  public void loadFragment(String file) {
+  @Override
+public void loadFragment(String file) {
     try {
       RegistryFragment fragment = createFragment(file);
       // mark this fragment as changed
@@ -566,7 +578,8 @@ public class DatabaseRegistryService extends TurbineBaseService implements
    *            whether this fragment should be persisted on disk in the
    *            registry
    */
-  public void createFragment(String name, Reader reader, boolean persistent) {
+  @Override
+public void createFragment(String name, Reader reader, boolean persistent) {
     String file = null;
 
     try {
@@ -588,7 +601,8 @@ public class DatabaseRegistryService extends TurbineBaseService implements
    * @param file
    *            the absolute file path storing this fragment
    */
-  public void saveFragment(String file) {
+  @Override
+public void saveFragment(String file) {
 
     /**
      * TODO I will implement this should go to database
@@ -602,7 +616,8 @@ public class DatabaseRegistryService extends TurbineBaseService implements
    * @param file
    *            the absolute file path storing this fragment
    */
-  public void removeFragment(String file) {
+  @Override
+public void removeFragment(String file) {
     RegistryFragment fragment = (RegistryFragment) fragments.get(file);
 
     if (fragment != null) {

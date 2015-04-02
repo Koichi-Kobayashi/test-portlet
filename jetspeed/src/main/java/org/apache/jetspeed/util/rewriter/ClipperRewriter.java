@@ -68,6 +68,7 @@ public class ClipperRewriter extends HTMLRewriter
 	 * @exception      MalformedURLException a servlet exception.
 	 */
 
+	@Override
 	public String rewrite(Reader input, String baseURL)
 		throws MalformedURLException
 	{
@@ -118,6 +119,7 @@ public class ClipperRewriter extends HTMLRewriter
 	 *
 	 * @return true if all URLs are rewritten back to proxy server.
 	 */
+	@Override
 	public boolean proxyAllTags()
 	{
 		return true;
@@ -126,6 +128,7 @@ public class ClipperRewriter extends HTMLRewriter
 	/*
 	 * Simple Tag Events
 	 */
+	@Override
 	public boolean enterSimpleTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
 	{
 		String attributes = attrsToString(attrs);
@@ -136,6 +139,7 @@ public class ClipperRewriter extends HTMLRewriter
 	/*
 	 * Start Tag Events
 	 */
+	@Override
 	public boolean enterStartTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
 	{
 		String attributes = attrsToString(attrs);
@@ -146,6 +150,7 @@ public class ClipperRewriter extends HTMLRewriter
 	/*
 	 * Exit Tag Events
 	 */
+	@Override
 	public boolean enterEndTagEvent(HTML.Tag tag)
 	{
 		String tagString = tag.toString();
@@ -155,6 +160,7 @@ public class ClipperRewriter extends HTMLRewriter
 	/*
 	 * Text Event
 	 */
+	@Override
 	public boolean enterText(char[] values, int param)
 	{
 		if ((foundStart == true)

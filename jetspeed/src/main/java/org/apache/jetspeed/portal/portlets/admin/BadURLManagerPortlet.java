@@ -48,7 +48,8 @@ public class BadURLManagerPortlet extends AbstractPortlet {
     public static final String RETRY_URL = "retry";
 
 
-    public ConcreteElement getContent( RunData rundata ) {
+    @Override
+	public ConcreteElement getContent( RunData rundata ) {
 
         String url = rundata.getParameters().getString( RETRY_URL );
 
@@ -126,17 +127,20 @@ public class BadURLManagerPortlet extends AbstractPortlet {
         return root;
     }
 
-    public void init() {
+    @Override
+	public void init() {
         this.setTitle( "BadURLManager" );
         
         this.setDescription( "Shows the admin what URLs are considered bad." );
     }
     
-    public boolean getAllowEdit(RunData rundata) {
+    @Override
+	public boolean getAllowEdit(RunData rundata) {
         return false;
     }
 
-    public boolean getAllowMaximize(RunData rundata) {
+    @Override
+	public boolean getAllowMaximize(RunData rundata) {
         return false;
     }
     

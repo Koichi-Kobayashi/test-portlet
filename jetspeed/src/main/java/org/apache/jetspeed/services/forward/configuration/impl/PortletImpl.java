@@ -32,7 +32,8 @@ public class PortletImpl implements Portlet, java.io.Serializable
     private String action;
 
 
-    public String getName()
+    @Override
+	public String getName()
     {
         return this.name;
     }
@@ -42,7 +43,8 @@ public class PortletImpl implements Portlet, java.io.Serializable
         this.name = name;
     }
 
-    public String getId()
+    @Override
+	public String getId()
     {
         return this.id;
     }
@@ -52,7 +54,8 @@ public class PortletImpl implements Portlet, java.io.Serializable
         this.id = id;    
     }
 
-    public String getAction()
+    @Override
+	public String getAction()
     {
         return this.action;
     }

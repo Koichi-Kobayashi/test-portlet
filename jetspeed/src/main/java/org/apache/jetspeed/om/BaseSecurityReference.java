@@ -39,7 +39,8 @@ public class BaseSecurityReference implements SecurityReference
     /** Getter for property parent.
      * @return Value of property parent.
      */
-    public String getParent()
+    @Override
+	public String getParent()
     {
         return parent;
     }
@@ -47,7 +48,8 @@ public class BaseSecurityReference implements SecurityReference
     /** Setter for property parent.
      * @param parent New value of property parent.
      */
-    public void setParent(String parent)
+    @Override
+	public void setParent(String parent)
     {
         this.parent = parent;
     }
@@ -55,7 +57,8 @@ public class BaseSecurityReference implements SecurityReference
     /**
      * Create a clone of this object
      */
-    public Object clone()
+    @Override
+	public Object clone()
         throws java.lang.CloneNotSupportedException
     {
         BaseSecurityReference cloned = new BaseSecurityReference();

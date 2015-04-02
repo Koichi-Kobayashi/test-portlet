@@ -74,7 +74,8 @@ public interface PortletConfig extends Config
      *
      * @deprecated use setPortletSkin instead
      */
-    public void setSkin(Map skin);
+    @Deprecated
+	public void setSkin(Map skin);
 
     /**
     Returns the portlet current PortletSet

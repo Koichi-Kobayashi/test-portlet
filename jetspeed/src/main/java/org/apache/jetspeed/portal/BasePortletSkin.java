@@ -26,7 +26,7 @@ import org.apache.turbine.services.servlet.TurbineServlet;
  * This default implementation of PortletSkin stores every property
  * as a Map of text properties
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:paulsp@apache.org">Paul Spencer</a>
  * @author <a href="mailto:weaver@apache.org">Scott T. Weaver</a>
  * @version $Id: BasePortletSkin.java,v 1.7 2004/02/23 04:05:35 jford Exp $
@@ -42,7 +42,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the name of this color scheme
      * @return the color scheme name
      */
-    public String getName()
+    @Override
+	public String getName()
     {
         return this.name;
     }
@@ -58,7 +59,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the color to use for displaying the portlet text
      * @return the text color value in HTML format (#RRGGBB)
      */
-    public String getTextColor()
+    @Override
+	public String getTextColor()
     {
         return (String)get(TEXT_COLOR);
     }
@@ -67,7 +69,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Sets the color to use for displaying the portlet text
      * @param color the text color value in HTML format (#RRGGBB)
      */
-    public void setTextColor(String color)
+    @Override
+	public void setTextColor(String color)
     {
         if (color!=null)
         {
@@ -79,7 +82,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the color to use for displaying the portlet background
      * @return the text color value in HTML format (#RRGGBB)
      */
-    public String getBackgroundColor()
+    @Override
+	public String getBackgroundColor()
     {
         return (String)get(BACKGROUND_COLOR);
     }
@@ -88,7 +92,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Sets the color to use for displaying the portlet background
      * @param backgroundColor the background color value in HTML format (#RRGGBB)
      */
-    public void setBackgroundColor(String color)
+    @Override
+	public void setBackgroundColor(String color)
     {
         if (color!=null)
         {
@@ -101,7 +106,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the color to use for displaying the portlet title text
      * @return the text color value in HTML format (#RRGGBB)
      */
-    public String getTitleTextColor()
+    @Override
+	public String getTitleTextColor()
     {
         return (String)get(TITLE_TEXT_COLOR);
     }
@@ -111,7 +117,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Sets the color to use for displaying the portlet title text
      * @param titleColor the title color value in HTML format (#RRGGBB)
      */
-    public void setTitleTextColor(String color)
+    @Override
+	public void setTitleTextColor(String color)
     {
         if (color!=null)
         {
@@ -123,7 +130,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the color to use for displaying the portlet title background
      * @return the background color value in HTML format (#RRGGBB)
      */
-    public String getTitleBackgroundColor()
+    @Override
+	public String getTitleBackgroundColor()
     {
         return (String)get(TITLE_BACKGROUND_COLOR);
     }
@@ -132,7 +140,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Sets the color to use for displaying the portlet title background
      * @param titleColor the title color value in HTML format (#RRGGBB)
      */
-    public void setTitleBackgroundColor(String color)
+    @Override
+	public void setTitleBackgroundColor(String color)
     {
         if (color!=null)
         {
@@ -144,7 +153,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the color to use for displaying an highlighted text
      * @return the text color value in HTML format (#RRGGBB)
      */
-    public String getHighlightTextColor()
+    @Override
+	public String getHighlightTextColor()
     {
         return (String)get(HIGHLIGHT_TEXT_COLOR);
     }
@@ -153,7 +163,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Sets the color to use for displaying an highlighted text
      * @param titleColor a color value in HTML format (#RRGGBB)
      */
-    public void setHighlightTextColor(String color)
+    @Override
+	public void setHighlightTextColor(String color)
     {
         if (color!=null)
         {
@@ -165,7 +176,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the color to use for displaying an highlighted background
      * @return the background color value in HTML format (#RRGGBB)
      */
-    public String getHighlightBackgroundColor()
+    @Override
+	public String getHighlightBackgroundColor()
     {
         return (String)get(HIGHLIGHT_BACKGROUND_COLOR);
     }
@@ -174,7 +186,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Sets the color to use for displaying an highlighted background
      * @param titleColor the title color value in HTML format (#RRGGBB)
      */
-    public void setHighlightBackgroundColor(String color)
+    @Override
+	public void setHighlightBackgroundColor(String color)
     {
         if (color!=null)
         {
@@ -186,7 +199,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the CSS class to use for the portlet overall
      * @return the CSS class to use (PortletStyleClass)
      */
-    public String getPortletStyleClass()
+    @Override
+	public String getPortletStyleClass()
     {
         return (String)get(PORTLET_STYLE_CLASS);
     }
@@ -195,7 +209,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Sets the CSS class to use for the portlet overall
      * @param portletStyleClass the new class to be used
      */
-    public void setPortletStyleClass(String portletStyleClass)
+    @Override
+	public void setPortletStyleClass(String portletStyleClass)
     {
         if (portletStyleClass!=null)
         {
@@ -207,7 +222,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the CSS class to use for the portlet title
      * @return the CSS class to use (TitleStyleClass)
      */
-    public String getTitleStyleClass()
+    @Override
+	public String getTitleStyleClass()
     {
         return (String)get(TITLE_STYLE_CLASS);
     }
@@ -216,7 +232,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Sets the CSS class to use for the portlet title
      * @param titleStyleClass the new class to be used
      */
-    public void setTitleStyleClass(String titleStyleClass)
+    @Override
+	public void setTitleStyleClass(String titleStyleClass)
     {
         if (titleStyleClass!=null)
         {
@@ -228,7 +245,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the CSS class to use for the portlet content
      * @return the CSS class to use (ContentStyleClass)
      */
-    public String getContentStyleClass()
+    @Override
+	public String getContentStyleClass()
     {
         return (String)get(CONTENT_STYLE_CLASS);
     }
@@ -237,7 +255,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Sets the CSS class to use for the portlet content
      * @param contentStyleClass the new class to be used
      */
-    public void setContentStyleClass(String contentStyleClass)
+    @Override
+	public void setContentStyleClass(String contentStyleClass)
     {
         if (contentStyleClass!=null)
         {
@@ -249,7 +268,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the CSS class to use overall for the tabbed control
      * @return the CSS class to use (TabStyleClass)
      */
-    public String getTabStyleClass()
+    @Override
+	public String getTabStyleClass()
     {
         return (String)get(TAB_STYLE_CLASS);
     }
@@ -258,7 +278,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Sets the CSS class to use for overall for the tabbed control
      * @param tabStyleClass the new class to be used
      */
-    public void setTabStyleClass(String tabStyleClass)
+    @Override
+	public void setTabStyleClass(String tabStyleClass)
     {
         if (tabStyleClass!=null)
         {
@@ -270,7 +291,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the CSS class to use on the title of the tabbed control
      * @return the CSS class to use (TabTitleStyleClass)
      */
-    public String getTabTitleStyleClass()
+    @Override
+	public String getTabTitleStyleClass()
     {
         return (String)get(TAB_TITLE_STYLE_CLASS);
     }
@@ -279,7 +301,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Sets the CSS class to use on the title of the tabbed control
      * @param tabTitleStyleClass the new class to be used
      */
-    public void setTabTitleStyleClass(String tabTitleStyleClass)
+    @Override
+	public void setTabTitleStyleClass(String tabTitleStyleClass)
     {
         if (tabTitleStyleClass!=null)
         {
@@ -291,7 +314,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the CSS class to use on the control of the tabbed control
      * @return the CSS class to use (TabContentStyleClass)
      */
-    public String getTabContentStyleClass()
+    @Override
+	public String getTabContentStyleClass()
     {
         return (String)get(TAB_CONTENT_STYLE_CLASS);
     }
@@ -300,7 +324,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Sets the CSS class to use on the control of the tabbed control
      * @param tabContentStyleClass the new class to be used
      */
-    public void setTabContentStyleClass(String tabContentStyleClass)
+    @Override
+	public void setTabContentStyleClass(String tabContentStyleClass)
     {
         if (tabContentStyleClass!=null)
         {
@@ -312,7 +337,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the CSS class to use on the control of the Highlighted title tab or menu item
      * @return the CSS class to use (HighlightTitleStyleClass)
      */
-    public String getHighlightTitleStyleClass()
+    @Override
+	public String getHighlightTitleStyleClass()
     {
         return (String)get(HIGHLIGHT_TITLE_STYLE_CLASS);
     }
@@ -321,7 +347,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Sets the CSS class to use on the control of the Highlighted title tab or menu item
      * @param highlightTitleStyleClass the new class to be used
      */
-    public void setHighlightTitleStyleClass(String highlightTitleStyleClass)
+    @Override
+	public void setHighlightTitleStyleClass(String highlightTitleStyleClass)
     {
         if (highlightTitleStyleClass!=null)
         {
@@ -333,7 +360,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the CSS class to use for the controller overall
      * @return the CSS class to use (ControllerStyleClass)
      */
-    public String getControllerStyleClass()
+    @Override
+	public String getControllerStyleClass()
     {
         return (String)get(CONTROLLER_STYLE_CLASS);
     }
@@ -342,7 +370,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Sets the CSS class to use for the controller overall
      * @param controllerStyleClass the new class to be used
      */
-    public void setControllerStyleClass(String controllerStyleClass)
+    @Override
+	public void setControllerStyleClass(String controllerStyleClass)
     {
         if (controllerStyleClass!=null)
         {
@@ -354,7 +383,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
      * Returns the CSS class to use for the global skin rendering
      * @see org.apache.jetspeed.portal.PortletSkin#getPortletSkinClass()
      */
-    public String getPortletSkinClass()
+    @Override
+	public String getPortletSkinClass()
     {
         return (String)get(PORTLET_SKIN_CLASS);
     }
@@ -374,7 +404,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
     /**
      * @see org.apache.jetspeed.portal.PortletSkin#getImage(String, String)
      */
-    public String getImage(String name, String dftPath)
+    @Override
+	public String getImage(String name, String dftPath)
     {
 
         if (containsKey("image-" + name))
@@ -400,7 +431,8 @@ public class BasePortletSkin extends java.util.HashMap implements PortletSkin
     * @param CapabilityMap cm Current capaibilities of the user-agent
     * @author <a href="mailto:weaver@apache.org">Scott T. Weaver</a>
     */
-    public void setCapabilityMap(CapabilityMap cm)
+    @Override
+	public void setCapabilityMap(CapabilityMap cm)
     {
         this.cm = cm;
     }

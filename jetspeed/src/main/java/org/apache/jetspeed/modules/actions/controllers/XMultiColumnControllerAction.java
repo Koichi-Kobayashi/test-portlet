@@ -33,7 +33,8 @@ import org.apache.velocity.context.Context;
  * @author <a href="mailto:junyang@cisco.com">Jun Yang</a>
  */
 public class XMultiColumnControllerAction extends MultiColumnControllerAction {
-  protected void buildCustomizeContext(PortletController controller,
+  @Override
+protected void buildCustomizeContext(PortletController controller,
       Context context, RunData rundata) {
     super.buildCustomizeContext(controller, context, rundata);
     context.put("template", "x-multicolumn-customize.vm");
@@ -69,17 +70,20 @@ public class XMultiColumnControllerAction extends MultiColumnControllerAction {
      */
   }
 
-  public void doSave(RunData data, Context context) {
+  @Override
+public void doSave(RunData data, Context context) {
     applyModelChanges(data, context);
     super.doSave(data, context);
   }
 
-  public void doDelete(RunData data, Context context) {
+  @Override
+public void doDelete(RunData data, Context context) {
     applyModelChanges(data, context);
     super.doDelete(data, context);
   }
 
-  public void doControl(RunData data, Context context) {
+  @Override
+public void doControl(RunData data, Context context) {
     applyModelChanges(data, context);
     super.doControl(data, context);
   }

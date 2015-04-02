@@ -35,6 +35,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.modules.actions.common.ALBaseAction;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -120,7 +121,7 @@ public class CellAccountLoginAction extends ALBaseAction {
 
         DataContext dataContext = DataContext.getThreadDataContext();
         Expression exp =
-          ExpressionFactory.matchExp(TurbineUser.LOGIN_NAME_PROPERTY, username);
+          ExpressionFactory.matchExp(_TurbineUser.LOGIN_NAME_PROPERTY, username);
         SelectQuery<TurbineUser> query =
           Database.query(dataContext, TurbineUser.class, exp);
         List<TurbineUser> users = query.fetchList();

@@ -43,6 +43,10 @@ import com.aimluck.eip.cayenne.om.portlet.EipTTimeline;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimelineFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimelineMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimelineUrl;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimeline;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimelineFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimelineMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimelineUrl;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -254,7 +258,7 @@ public class TimelineSelectData extends
       Context context) {
 
     SelectQuery<EipTTimeline> query = Database.query(EipTTimeline.class);
-    query.where(Operations.eq(EipTTimeline.PARENT_ID_PROPERTY, Integer
+    query.where(Operations.eq(_EipTTimeline.PARENT_ID_PROPERTY, Integer
       .valueOf(0)));
 
     return query;
@@ -413,7 +417,7 @@ public class TimelineSelectData extends
       return new HashMap<Integer, List<TimelineUrlResultData>>();
     }
     SelectQuery<EipTTimelineUrl> query = Database.query(EipTTimelineUrl.class);
-    query.where(Operations.in(EipTTimelineUrl.TIMELINE_ID_PROPERTY, parentIds));
+    query.where(Operations.in(_EipTTimelineUrl.TIMELINE_ID_PROPERTY, parentIds));
 
     List<EipTTimelineUrl> list = query.fetchList();
     Map<Integer, List<TimelineUrlResultData>> result =
@@ -467,7 +471,7 @@ public class TimelineSelectData extends
     SelectQuery<EipTTimelineFile> query =
       Database.query(EipTTimelineFile.class);
     query
-      .where(Operations.in(EipTTimelineFile.TIMELINE_ID_PROPERTY, parentIds));
+      .where(Operations.in(_EipTTimelineFile.TIMELINE_ID_PROPERTY, parentIds));
 
     List<EipTTimelineFile> list = query.fetchList();
     Map<Integer, List<FileuploadBean>> result =
@@ -571,7 +575,7 @@ public class TimelineSelectData extends
             Database.query(EipTTimelineMap.class);
           Expression exp1 =
             ExpressionFactory.matchExp(
-              EipTTimelineMap.EIP_TTIMELINE_PROPERTY,
+              _EipTTimelineMap.EIP_TTIMELINE_PROPERTY,
               coac_item.getTimelineId().getValue());
           query_map.setQualifier(exp1);
           List<EipTTimelineMap> data_map = query_map.fetchList();
@@ -688,7 +692,7 @@ public class TimelineSelectData extends
             Database.query(EipTTimelineMap.class);
           Expression exp1 =
             ExpressionFactory.matchExp(
-              EipTTimelineMap.EIP_TTIMELINE_PROPERTY,
+              _EipTTimelineMap.EIP_TTIMELINE_PROPERTY,
               coac_item.getTimelineId().getValue());
           query_map.setQualifier(exp1);
           List<EipTTimelineMap> data_map = query_map.fetchList();
@@ -765,8 +769,8 @@ public class TimelineSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("update_date", EipTTimeline.UPDATE_DATE_PROPERTY);
-    map.putValue("owner_name", EipTTimeline.OWNER_ID_PROPERTY);
+    map.putValue("update_date", _EipTTimeline.UPDATE_DATE_PROPERTY);
+    map.putValue("owner_name", _EipTTimeline.OWNER_ID_PROPERTY);
 
     return map;
   }

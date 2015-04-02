@@ -24,7 +24,7 @@ import org.apache.jetspeed.om.registry.CapabilityMap;
  * Simple implementation of the ClientRegistry interface.
  *
  * @author <a href="shesmer@raleigh.ibm.com">Stephan Hesmer</a>
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BaseClientEntry.java,v 1.4 2004/02/23 03:08:26 jford Exp $
  */
 public class BaseClientEntry extends BaseRegistryEntry
@@ -45,7 +45,8 @@ public class BaseClientEntry extends BaseRegistryEntry
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object==null)
         {
@@ -127,52 +128,62 @@ public class BaseClientEntry extends BaseRegistryEntry
         return super.equals(object);
     }
 
-    public String getUseragentpattern()
+    @Override
+	public String getUseragentpattern()
     {
         return useragentpattern;
     }
 
-    public void setUseragentpattern(String useragentpattern)
+    @Override
+	public void setUseragentpattern(String useragentpattern)
     {
         this.useragentpattern = useragentpattern;
     }
 
-    public String getManufacturer()
+    @Override
+	public String getManufacturer()
     {
         return manufacturer;
     }
 
-    public void setManufacturer(String name)
+    @Override
+	public void setManufacturer(String name)
     {
         manufacturer = name;
     }
 
-    public String getModel()
+    @Override
+	public String getModel()
     {
         return model;
     }
 
-    public void setModel(String name)
+    @Override
+	public void setModel(String name)
     {
         model = name;
     }
 
-    public String getVersion()
+    @Override
+	public String getVersion()
     {
         return version;
     }
 
-    public void setVersion(String name)
+    @Override
+	public void setVersion(String name)
     {
         version = name;
     }
 
-    public MimetypeMap getMimetypeMap()
+    @Override
+	public MimetypeMap getMimetypeMap()
     {
         return mimetypes;
     }
 
-    public CapabilityMap getCapabilityMap()
+    @Override
+	public CapabilityMap getCapabilityMap()
     {
         return capabilities;
     }

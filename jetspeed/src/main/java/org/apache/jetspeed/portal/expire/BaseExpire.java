@@ -41,7 +41,8 @@ public abstract class BaseExpire implements Expire {
     @author <a href="mailto:burton@apache.org">Kevin A. Burton</a>
     @version $Id: BaseExpire.java,v 1.5 2004/02/23 03:24:40 jford Exp $
     */
-    public void init() {
+    @Override
+	public void init() {
         this.setCreationTime( System.currentTimeMillis() );
     }
     
@@ -50,7 +51,8 @@ public abstract class BaseExpire implements Expire {
     @author <a href="mailto:burton@apache.org">Kevin A. Burton</a>
     @version $Id: BaseExpire.java,v 1.5 2004/02/23 03:24:40 jford Exp $
     */
-    public boolean isExpired() {
+    @Override
+	public boolean isExpired() {
         return this.expired;
     }
 
@@ -59,7 +61,8 @@ public abstract class BaseExpire implements Expire {
     @author <a href="mailto:burton@apache.org">Kevin A. Burton</a>
     @version $Id: BaseExpire.java,v 1.5 2004/02/23 03:24:40 jford Exp $
     */
-    public void setExpired( boolean expired ) {
+    @Override
+	public void setExpired( boolean expired ) {
         this.expired = expired;
     }
 
@@ -68,7 +71,8 @@ public abstract class BaseExpire implements Expire {
     @author <a href="mailto:burton@apache.org">Kevin A. Burton</a>
     @version $Id: BaseExpire.java,v 1.5 2004/02/23 03:24:40 jford Exp $
     */
-    public long getCreationTime() {
+    @Override
+	public long getCreationTime() {
         return this.creationTime;
     }
   
@@ -77,7 +81,8 @@ public abstract class BaseExpire implements Expire {
     @author <a href="mailto:burton@apache.org">Kevin A. Burton</a>
     @version $Id: BaseExpire.java,v 1.5 2004/02/23 03:24:40 jford Exp $
     */
-    public void setCreationTime( long creationTime ) {
+    @Override
+	public void setCreationTime( long creationTime ) {
         
         this.creationTime = creationTime;
     }
@@ -87,7 +92,8 @@ public abstract class BaseExpire implements Expire {
     @author <a href="mailto:burton@apache.org">Kevin A. Burton</a>
     @version $Id: BaseExpire.java,v 1.5 2004/02/23 03:24:40 jford Exp $
     */
-    public void setProperty( String name, String value ) {
+    @Override
+	public void setProperty( String name, String value ) {
         this.properties.put( name, value );
     }
 
@@ -96,7 +102,8 @@ public abstract class BaseExpire implements Expire {
     @author <a href="mailto:burton@apache.org">Kevin A. Burton</a>
     @version $Id: BaseExpire.java,v 1.5 2004/02/23 03:24:40 jford Exp $
     */
-    public String getProperty( String name ) {
+    @Override
+	public String getProperty( String name ) {
         return (String)this.properties.get( name );
     }
 
@@ -106,7 +113,8 @@ public abstract class BaseExpire implements Expire {
     @author <a href="mailto:burton@apache.org">Kevin A. Burton</a>
     @version $Id: BaseExpire.java,v 1.5 2004/02/23 03:24:40 jford Exp $
     */
-    public Portlet getPortlet() {
+    @Override
+	public Portlet getPortlet() {
         return this.portlet;
     }
     
@@ -116,7 +124,8 @@ public abstract class BaseExpire implements Expire {
     @author <a href="mailto:burton@apache.org">Kevin A. Burton</a>
     @version $Id: BaseExpire.java,v 1.5 2004/02/23 03:24:40 jford Exp $
     */
-    public void setPortlet( Portlet portlet ) {
+    @Override
+	public void setPortlet( Portlet portlet ) {
         this.portlet = portlet;
     }
     

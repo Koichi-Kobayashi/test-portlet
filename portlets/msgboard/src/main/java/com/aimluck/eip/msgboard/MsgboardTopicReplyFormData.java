@@ -35,7 +35,9 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardTopic;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardTopic;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -477,7 +479,7 @@ public class MsgboardTopicReplyFormData extends ALAbstractFormData {
       Database.query(EipTMsgboardTopic.class);
     Expression topicExp =
       ExpressionFactory.matchExp(
-        EipTMsgboardTopic.PARENT_ID_PROPERTY,
+        _EipTMsgboardTopic.PARENT_ID_PROPERTY,
         parenttopic.getTopicId());
     topicQuery.setQualifier(topicExp);
 
@@ -496,7 +498,7 @@ public class MsgboardTopicReplyFormData extends ALAbstractFormData {
     // ユーザーIDからユーザー情報を取得する。
     SelectQuery<TurbineUser> userQuery = Database.query(TurbineUser.class);
     Expression userExp =
-      ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, userIdList);
+      ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, userIdList);
     userQuery.setQualifier(userExp);
     return ALEipUtils.getUsersFromSelectQuery(userQuery);
 

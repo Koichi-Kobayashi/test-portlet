@@ -40,7 +40,7 @@ import org.apache.turbine.util.security.AccessControlList;
  * <note>Several of these properties may be put in the base RunData
  * interface in future releases of Turbine</note>
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:sgala@apache.org">Santiago Gala</a>
  * @author <a href="mailto:paulsp@apache.org">Paul Spencer</a>
  * @version $Id: DefaultJetspeedRunData.java,v 1.20 2004/02/23 03:36:10 jford Exp $
@@ -65,7 +65,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @return the portlet id referenced or null
      */
-    public String getPortlet()
+    @Override
+	public String getPortlet()
     {
       return pid;
     }
@@ -75,7 +76,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @param id the portlet id referenced in this request
      */
-    public void setPortlet(String id)
+    @Override
+	public void setPortlet(String id)
     {
         this.pid = id;
     }
@@ -85,7 +87,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @return the portlet id being customized or null
      */
-    public Portlet getCustomized()
+    @Override
+	public Portlet getCustomized()
     {
         // customization state info is in the page's session state
         SessionState customizationState = getPageSessionState();
@@ -105,11 +108,11 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
          * Andreas Kempf, Siemens ICM S CP PE, Munich
          */
         if ((p != null) && (stack.size() > 1))
-          customizationState.setAttribute ("customize-paneName", (String)p.getTitle());
+          customizationState.setAttribute ("customize-paneName", p.getTitle());
         else
           customizationState.setAttribute ("customize-paneName", "*");
 
-        return (Portlet)p;
+        return p;
     }
 
     /**
@@ -117,7 +120,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @param id the portlet id to customize or null;
      */
-    public void setCustomized(Portlet p)
+    @Override
+	public void setCustomized(Portlet p)
     {
         // customization state info is in the page's session state
         SessionState customizationState = getPageSessionState();
@@ -159,7 +163,7 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
            * Andreas Kempf, Siemens ICM S CP PE, Munich
            */
 
-           customizationState.setAttribute ("customize-paneName", (String)p.getTitle());
+           customizationState.setAttribute ("customize-paneName", p.getTitle());
         }
     }
 
@@ -167,7 +171,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
     * Get the psml profile being customized.
     * @return the Profile being customized.
     */
-    public Profile getCustomizedProfile()
+    @Override
+	public Profile getCustomizedProfile()
     {
         // customization state info is in the page's session state
         SessionState customizationState = getPageSessionState();
@@ -180,7 +185,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
     * Set the psml profile being customized.
     * @param profile The Profile being customized.
     */
-    public void setCustomizedProfile(Profile profile)
+    @Override
+	public void setCustomizedProfile(Profile profile)
     {
         // customization state info is in the page's session state
         SessionState customizationState = getPageSessionState();
@@ -192,7 +198,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
     /**
     * Clean up from customization
     */
-    public void cleanupFromCustomization()
+    @Override
+	public void cleanupFromCustomization()
     {
         // get the customization state for this page
         SessionState customizationState = getPageSessionState();
@@ -214,7 +221,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @return the portlet id being maximized or null
      */
-    public int getMode()
+    @Override
+	public int getMode()
     {
         return this.mode;
     }
@@ -224,7 +232,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @param id the portlet id to maximize or null;
      */
-    public void setMode(int mode)
+    @Override
+	public void setMode(int mode)
     {
         this.mode=mode;
     }
@@ -234,7 +243,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @param id the portlet id to maximize or null;
      */
-    public void setMode(String mode)
+    @Override
+	public void setMode(String mode)
     {
         if ("customize".equals(mode))
         {
@@ -254,7 +264,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
     /**
      * Returns the template path as requested from the parameters
      */
-    public String getRequestedTemplate()
+    @Override
+	public String getRequestedTemplate()
     {
         return this.template;
     }
@@ -262,7 +273,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
     /**
      * Sets the template path as requested from the parameters
      */
-    public void setRequestedTemplate(String id)
+    @Override
+	public void setRequestedTemplate(String id)
     {
         this.template=id;
     }
@@ -272,7 +284,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @return a capability map objet
      */
-    public CapabilityMap getCapability()
+    @Override
+	public CapabilityMap getCapability()
     {
         if (map == null)
         {
@@ -287,7 +300,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @param profile a profile implementation for the current request
      */
-    public void setProfile(Profile profile)
+    @Override
+	public void setProfile(Profile profile)
     {
         this.profile = profile;
     }
@@ -297,13 +311,15 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @return a profile implementation for the current request
      */
-    public Profile getProfile()
+    @Override
+	public Profile getProfile()
     {
         return this.profile;
     }
 
     /** Clears the state of this object for recycling... */
-    public void dispose()
+    @Override
+	public void dispose()
     {
         mode=0;
         map = null;
@@ -320,7 +336,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @return the portlet id (PEID) referenced or null
      */
-    public String getJs_peid()
+    @Override
+	public String getJs_peid()
     {
         return peid;
     }
@@ -330,7 +347,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @param id the portlet id (PEID) referenced in this request
      */
-    public void setJs_peid(String peid)
+    @Override
+	public void setJs_peid(String peid)
     {
         this.peid = peid;
     }
@@ -342,7 +360,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @return int The current user's id.
      */
-    public String getUserId()
+    @Override
+	public String getUserId()
     {
         JetspeedUser user = getJetspeedUser();
         if (user == null)
@@ -358,7 +377,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      * user session (and perhaps, but not yet [@todo] in a specific browser window).
      * @return the identifier for the current request's PageSession.
      */
-    public String getPageSessionId()
+    @Override
+	public String getPageSessionId()
     {
         // form based on the session and page's profile's id
         // session
@@ -391,7 +411,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      * Access the current request's UserSession state object.
      * @return the current request's UserSession state object (may be null).
      */
-    public SessionState getUserSessionState()
+    @Override
+	public SessionState getUserSessionState()
     {
         // get the StateManagerService
         StateManagerService service = (StateManagerService)TurbineServices
@@ -408,7 +429,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      * Access the current request's PageSession state object.
      * @return the current request's PageSession state object (may be null).
      */
-    public SessionState getPageSessionState()
+    @Override
+	public SessionState getPageSessionState()
     {
         // get the StateManagerService
         StateManagerService service = (StateManagerService)TurbineServices
@@ -426,7 +448,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      * @param id The Portlet's unique id.
      * @return the current request's PortletSession state object. (may be null).
      */
-    public SessionState getPortletSessionState(String id)
+    @Override
+	public SessionState getPortletSessionState(String id)
     {
         // get the StateManagerService
         StateManagerService service = (StateManagerService)TurbineServices
@@ -447,7 +470,8 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @return the current user.
      */
-    public JetspeedUser getJetspeedUser()
+    @Override
+	public JetspeedUser getJetspeedUser()
     {
         return (JetspeedUser)getUser();
     }
@@ -457,7 +481,9 @@ public class DefaultJetspeedRunData extends DefaultTurbineRunData
      *
      * @deprecated
      */
-    public AccessControlList getACL()
+    @Deprecated
+	@Override
+	public AccessControlList getACL()
     {
         return null;
     }

@@ -100,7 +100,8 @@ public class Profiler {
    * @see ProfilerService#getProfile
    * @deprecated Do not use a profiler method based on MimeType
    */
-  public static Profile getProfile(RunData data, MimeType mt)
+  @Deprecated
+public static Profile getProfile(RunData data, MimeType mt)
       throws ProfileException {
     return getService().getProfile(data, mt);
   }

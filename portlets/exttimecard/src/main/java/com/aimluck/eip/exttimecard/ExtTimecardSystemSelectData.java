@@ -28,6 +28,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystem;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTExtTimecardSystem;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.exttimecard.util.ExtTimecardUtils;
 import com.aimluck.eip.orm.Database;
@@ -183,8 +184,8 @@ public class ExtTimecardSystemSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("create_date", EipTExtTimecardSystem.CREATE_DATE_PROPERTY);
-    map.putValue("system_name", EipTExtTimecardSystem.SYSTEM_NAME_PROPERTY);
+    map.putValue("create_date", _EipTExtTimecardSystem.CREATE_DATE_PROPERTY);
+    map.putValue("system_name", _EipTExtTimecardSystem.SYSTEM_NAME_PROPERTY);
     return map;
   }
 

@@ -56,7 +56,8 @@ public class JetspeedUploadService
      * @exception TurbineException If there are problems reading/parsing
      * the request or storing files.
      */
-    public void parseRequest( HttpServletRequest req,
+    @Override
+	public void parseRequest( HttpServletRequest req,
                               ParameterParser params,
                               String path )
         throws TurbineException
@@ -97,7 +98,7 @@ public class JetspeedUploadService
         {
             byte[] boundary = contentType.substring(
                                 contentType.indexOf("boundary=")+9).getBytes();
-            InputStream input = (InputStream)req.getInputStream();
+            InputStream input = req.getInputStream();
 
             MultipartStream multi = new MultipartStream(input, boundary);
             multi.setHeaderEncoding(encoding);

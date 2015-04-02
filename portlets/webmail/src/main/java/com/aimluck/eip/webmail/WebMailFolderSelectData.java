@@ -33,6 +33,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.utils.ALDateUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFolder;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMailFolder;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipUser;
@@ -147,7 +148,7 @@ public class WebMailFolderSelectData extends
     SelectQuery<EipTMailFolder> query = Database.query(EipTMailFolder.class);
     Expression exp =
       ExpressionFactory.matchDbExp(
-        EipTMailFolder.EIP_MMAIL_ACCOUNT_PROPERTY,
+        _EipTMailFolder.EIP_MMAIL_ACCOUNT_PROPERTY,
         mail_account);
     query.setQualifier(exp);
     return query;
@@ -246,7 +247,7 @@ public class WebMailFolderSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("folder_name", EipTMailFolder.FOLDER_NAME_PROPERTY);
+    map.putValue("folder_name", _EipTMailFolder.FOLDER_NAME_PROPERTY);
     return map;
   }
 

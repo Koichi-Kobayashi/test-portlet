@@ -64,7 +64,8 @@ public class JetspeedSessionValidator extends TemplateSessionValidator {
    * @exception Exception,
    *                a generic exception.
    */
-  public void doPerform(RunData data) throws Exception {
+  @Override
+public void doPerform(RunData data) throws Exception {
     // first, invoke our superclass action to make sure
     // we follow Turbine evolutions
     // FIXME: if the user is not found (this can happen, for instance,
@@ -132,7 +133,7 @@ public class JetspeedSessionValidator extends TemplateSessionValidator {
               + "please verify the RunData factory settings", e);
       return;
     }
-    String language = (String) data.getRequest().getParameter("js_language");
+    String language = data.getRequest().getParameter("js_language");
 
     if (null != language) {
       user.setPerm("language", language);
@@ -161,7 +162,8 @@ public class JetspeedSessionValidator extends TemplateSessionValidator {
 
   /**
    */
-  public boolean requiresNewSession(RunData data) {
+  @Override
+public boolean requiresNewSession(RunData data) {
     return false;
   }
 

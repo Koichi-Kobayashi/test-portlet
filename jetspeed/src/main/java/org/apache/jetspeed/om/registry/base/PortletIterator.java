@@ -47,7 +47,8 @@ public class PortletIterator implements Iterator
         this.vector = getVector();
     }
 
-    public boolean hasNext()
+    @Override
+	public boolean hasNext()
     {
         int size = vector.size();
 
@@ -72,7 +73,8 @@ public class PortletIterator implements Iterator
         return true;
     }
 
-    public void remove() throws IllegalStateException, UnsupportedOperationException
+    @Override
+	public void remove() throws IllegalStateException, UnsupportedOperationException
     {
         throw new UnsupportedOperationException("The remove() method is not supported");
     }
@@ -88,7 +90,8 @@ public class PortletIterator implements Iterator
         return parent;
     }
 
-    public Object next() throws NoSuchElementException
+    @Override
+	public Object next() throws NoSuchElementException
     {
         Object o = vector.elementAt(index);
         index++;

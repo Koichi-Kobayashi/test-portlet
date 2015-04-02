@@ -43,7 +43,8 @@ public class JetspeedJspPage extends JetspeedTemplatePage
      * Stuffs some useful objects into the request so that 
      * it is available to the Action module and the Screen module
      */  
-    protected void doBuildBeforeAction(RunData data) throws Exception
+    @Override
+	protected void doBuildBeforeAction(RunData data) throws Exception
     {
         super.doBuildBeforeAction( data);
         JspService jsp = (JspService)TurbineServices.getInstance()

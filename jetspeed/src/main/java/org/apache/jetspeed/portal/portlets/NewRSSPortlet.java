@@ -71,7 +71,7 @@ by the user-agent</p>
 <dd>The stylesheet URL. If a mime-type is specified, the stylesheet
 is only used for this mime-type</dd>
 </dl>
-@author <A HREF="mailto:raphael@apache.org">Raphaël Luta</A>
+@author <A HREF="mailto:raphael@apache.org">Raphaï¿½l Luta</A>
 @version $Id: NewRSSPortlet.java,v 1.22 2004/02/23 04:03:34 jford Exp $
 */
 public class NewRSSPortlet extends FileWatchPortlet 
@@ -93,7 +93,8 @@ public class NewRSSPortlet extends FileWatchPortlet
         This method loads the init parameters and
         parse the document tied to this portlet
     */
-    public void init( ) throws PortletException {
+    @Override
+	public void init( ) throws PortletException {
 
         // first make sure we propagate init
         super.init();
@@ -211,7 +212,8 @@ public class NewRSSPortlet extends FileWatchPortlet
     @param data the RunData object for the request
     @return the content to be displayed to the user-agent
     */
-    public ConcreteElement getContent( RunData data ) 
+    @Override
+	public ConcreteElement getContent( RunData data ) 
     {
         if (org.apache.jetspeed.util.PortletSessionState.getPortletConfigChanged(this, data))
         {
@@ -264,7 +266,8 @@ public class NewRSSPortlet extends FileWatchPortlet
     @return true if the portlet knows how to display
     content for mimeType
     */
-    public boolean supportsType( MimeType mimeType ) {
+    @Override
+	public boolean supportsType( MimeType mimeType ) {
 
         Enumeration en = stylesheets.keys();
         while(en.hasMoreElements()) {

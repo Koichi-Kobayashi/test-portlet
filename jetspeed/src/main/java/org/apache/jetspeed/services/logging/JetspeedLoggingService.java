@@ -21,9 +21,11 @@ import java.util.Iterator;
 import java.util.HashMap;
 import java.util.Map;
 
+
 // Servlet API
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
+
 
 // Turbine classes
 import org.apache.turbine.services.InitializationException;
@@ -36,6 +38,7 @@ import org.apache.turbine.services.logging.LoggingConfig;
 import org.apache.turbine.services.logging.Logger;
 import org.apache.turbine.util.RunData;
 import org.apache.turbine.Turbine;
+import org.apache.turbine.TurbineConstants;
 
 /**
  * This service now only functions as an interim implementation of
@@ -97,7 +100,8 @@ implements LoggingService
      * @throws InitializationException Something went wrong in the init
      *         stage
      */ 
-    public void init()
+    @Override
+	public void init()
     throws InitializationException
     {
         ServletConfig conf = Turbine.getTurbineServletConfig();
@@ -112,7 +116,8 @@ implements LoggingService
      *
      * @throws InitializationException Something went wrong when starting up.
      */
-    public void init(ServletConfig config) 
+    @Override
+	public void init(ServletConfig config) 
     throws InitializationException
     {
         context = config.getServletContext();
@@ -142,7 +147,7 @@ implements LoggingService
             //add webappRoot manually - cos logging is a primary
             //service and so it is not yet defined
             String webappRoot = context.getRealPath("/");
-            resources.setProperty(Turbine.WEBAPP_ROOT, webappRoot);
+            resources.setProperty(TurbineConstants.WEBAPP_ROOT, webappRoot);
         }
         return (resources);
     }
@@ -184,7 +189,8 @@ implements LoggingService
      * Shutdowns all loggers. After shutdown servlet logger is still available
      * using the servlet log method
      */
-    public void shutdown()
+    @Override
+	public void shutdown()
     {
         if (!getInit())
         {
@@ -204,7 +210,8 @@ implements LoggingService
     /**
      * This method returns default logger for Turbine System
      */
-    public final Logger getLogger()
+    @Override
+	public final Logger getLogger()
     {
         return defaultLogger;
     }
@@ -212,7 +219,8 @@ implements LoggingService
     /**
      * This method returns logger with given name.
      */
-    public Logger getLogger(String logName)
+    @Override
+	public Logger getLogger(String logName)
     {
         Logger logger = (Logger) loggers.get(logName);
         if (logger == null)
@@ -233,7 +241,8 @@ implements LoggingService
     /**
      * This method sets the log level of the default logger.
      */
-    public void setLogLevel(int level)
+    @Override
+	public void setLogLevel(int level)
     {
         defaultLogger.setLogLevel(level);
     }
@@ -241,7 +250,8 @@ implements LoggingService
     /**
      * This method sets the log level of the logger of given name.
      */
-    public void setLogLevel(String logName, int level)
+    @Override
+	public void setLogLevel(String logName, int level)
     {
         Logger logger = (Logger) loggers.get(logName);
         if (logger != null)
@@ -253,7 +263,8 @@ implements LoggingService
     /**
      * This method sets format style of the default logger
      */
-    public void setFormat(String format)
+    @Override
+	public void setFormat(String format)
     {
         defaultLogger.setFormat(format);
     }
@@ -261,7 +272,8 @@ implements LoggingService
     /**
      * This method sets format style of the given logger.
      */
-    public void setFormat(String logName, String format)
+    @Override
+	public void setFormat(String logName, String format)
     {
         Logger logger = (Logger) loggers.get(logName);
         if (logger != null)
@@ -274,7 +286,8 @@ implements LoggingService
      * This is a log method with logLevel == DEBUG, printing is done by
      * the default logger
      */
-    public void debug(String message)
+    @Override
+	public void debug(String message)
     {
         defaultLogger.debug(message);
     }
@@ -283,7 +296,8 @@ implements LoggingService
      * This is a log method with logLevel == DEBUG, printing is done by
      * the default logger
      */
-    public void debug(String message, Throwable t)
+    @Override
+	public void debug(String message, Throwable t)
     {
         defaultLogger.debug(message, t);
     }
@@ -292,7 +306,8 @@ implements LoggingService
      * This is a log method with logLevel == DEBUG, printing is done by
      * the given logger
      */
-    public void debug(String logName, String message, Throwable t)
+    @Override
+	public void debug(String logName, String message, Throwable t)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -309,7 +324,8 @@ implements LoggingService
      * This is a log method with logLevel == DEBUG, printing is done by
      * the given logger
      */
-    public void debug(String logName, String message)
+    @Override
+	public void debug(String logName, String message)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -326,7 +342,8 @@ implements LoggingService
      * This is a log method with logLevel == DEBUG, printing is done by
      * the default logger
      */
-    public void debug(String message, RunData data)
+    @Override
+	public void debug(String message, RunData data)
     {
         defaultLogger.debug(message);
     }
@@ -335,7 +352,8 @@ implements LoggingService
      * This is a log method with logLevel == DEBUG, printing is done by
      * the default logger
      */
-    public void debug(String message, RunData data, Throwable t)
+    @Override
+	public void debug(String message, RunData data, Throwable t)
     {
         defaultLogger.debug(message, t);
     }
@@ -344,7 +362,8 @@ implements LoggingService
      * This is a log method with logLevel == DEBUG, printing is done by
      * the given logger
      */
-    public void debug(String logName, String message, RunData data, Throwable t)
+    @Override
+	public void debug(String logName, String message, RunData data, Throwable t)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -361,7 +380,8 @@ implements LoggingService
      * This is a log method with logLevel == DEBUG, printing is done by
      * the given logger
      */
-    public void debug(String logName, String message, RunData data)
+    @Override
+	public void debug(String logName, String message, RunData data)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -378,7 +398,8 @@ implements LoggingService
      * This is a log method with logLevel == INFO, printing is done by
      * the default logger
      */
-    public void info(String message)
+    @Override
+	public void info(String message)
     {
         defaultLogger.info(message);
     }
@@ -387,7 +408,8 @@ implements LoggingService
      * This is a log method with logLevel == INFO, printing is done by
      * the default logger
      */
-    public void info(String message, Throwable t)
+    @Override
+	public void info(String message, Throwable t)
     {
         defaultLogger.info(message, t);
     }
@@ -396,7 +418,8 @@ implements LoggingService
      * This is a log method with logLevel == INFO, printing is done by
      * the given logger
      */
-    public void info(String logName, String message)
+    @Override
+	public void info(String logName, String message)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -413,7 +436,8 @@ implements LoggingService
      * This is a log method with logLevel == INFO, printing is done by
      * the given logger
      */
-    public void info(String logName, String message, Throwable t)
+    @Override
+	public void info(String logName, String message, Throwable t)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -430,7 +454,8 @@ implements LoggingService
      * This is a log method with logLevel == INFO, printing is done by
      * the default logger
      */
-    public void info(String message, RunData data)
+    @Override
+	public void info(String message, RunData data)
     {
         defaultLogger.info(message);
     }
@@ -439,7 +464,8 @@ implements LoggingService
      * This is a log method with logLevel == INFO,printing is done by
      * the default logger
      */
-    public void info(String message, RunData data, Throwable t)
+    @Override
+	public void info(String message, RunData data, Throwable t)
     {
         defaultLogger.info(message, t);
     }
@@ -448,7 +474,8 @@ implements LoggingService
      * This is a log method with logLevel == INFO, printing is done by
      * the given logger
      */
-    public void info(String logName, String message, RunData data)
+    @Override
+	public void info(String logName, String message, RunData data)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -465,7 +492,8 @@ implements LoggingService
      * This is a log method with logLevel == INFO, printing is done by
      * the given logger
      */
-    public void info(String logName, String message, RunData data, Throwable t)
+    @Override
+	public void info(String logName, String message, RunData data, Throwable t)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -482,7 +510,8 @@ implements LoggingService
      * This is a log method with logLevel == WARN, printing is done by
      * the default logger
      */
-    public void warn(String message)
+    @Override
+	public void warn(String message)
     {
         defaultLogger.warn(message);
     }
@@ -491,7 +520,8 @@ implements LoggingService
      * This is a log method with logLevel == WARN, printing is done by
      * the default logger
      */
-    public void warn(String message, Throwable t)
+    @Override
+	public void warn(String message, Throwable t)
     {
         defaultLogger.warn(message, t);
     }
@@ -500,7 +530,8 @@ implements LoggingService
      * This is a log method with logLevel == WARN, printing is done by
      * the given logger
      */
-    public void warn(String logName, String message)
+    @Override
+	public void warn(String logName, String message)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -517,7 +548,8 @@ implements LoggingService
      * This is a log method with logLevel == WARN, printing is done by
      * the given logger
      */
-    public void warn(String logName, String message, Throwable t)
+    @Override
+	public void warn(String logName, String message, Throwable t)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -534,7 +566,8 @@ implements LoggingService
      * This is a log method with logLevel == WARN,printing is done by
      * the default logger
      */
-    public void warn(String message, RunData data)
+    @Override
+	public void warn(String message, RunData data)
     {
         defaultLogger.warn(message);
     }
@@ -543,7 +576,8 @@ implements LoggingService
      * This is a log method with logLevel == WARN, printing is done by
      * the default logger
      */
-    public void warn(String message, RunData data, Throwable t)
+    @Override
+	public void warn(String message, RunData data, Throwable t)
     {
         defaultLogger.warn(message, t);
     }
@@ -552,7 +586,8 @@ implements LoggingService
      * This is a log method with logLevel == WARN, printing is done by
      * the given logger
      */
-    public void warn(String logName, String message, RunData data)
+    @Override
+	public void warn(String logName, String message, RunData data)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -569,7 +604,8 @@ implements LoggingService
      * This is a log method with logLevel == WARN, printing is done by
      * the given logger
      */
-    public void warn(String logName, String message, RunData data, Throwable t)
+    @Override
+	public void warn(String logName, String message, RunData data, Throwable t)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -586,7 +622,8 @@ implements LoggingService
      * This is a log method with logLevel == ERROR, printing is done by
      * the default logger
      */
-    public void error(String message)
+    @Override
+	public void error(String message)
     {
         defaultLogger.error(message);
     }
@@ -595,7 +632,8 @@ implements LoggingService
      * This is a log method with logLevel == ERROR, printing is done by
      * the default logger
      */
-    public void error(String message, Throwable t)
+    @Override
+	public void error(String message, Throwable t)
     {
         defaultLogger.error(message, t);
     }
@@ -604,7 +642,8 @@ implements LoggingService
      * This is a log method with logLevel == ERROR, printing is done by
      * the given logger
      */
-    public void error(String logName, String message)
+    @Override
+	public void error(String logName, String message)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -621,7 +660,8 @@ implements LoggingService
      * This is a log method with logLevel == ERROR, printing is done by
      * the given logger
      */
-    public void error(String logName, String message, Throwable t)
+    @Override
+	public void error(String logName, String message, Throwable t)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -638,7 +678,8 @@ implements LoggingService
      * This is a log method with logLevel == ERROR, printing is done by
      * the default logger
      */
-    public void error(String message, RunData data)
+    @Override
+	public void error(String message, RunData data)
     {
         defaultLogger.error(message);
     }
@@ -647,7 +688,8 @@ implements LoggingService
      * This is a log method with logLevel == ERROR, printing is done by
      * the default logger
      */
-    public void error(String message, RunData data, Throwable t)
+    @Override
+	public void error(String message, RunData data, Throwable t)
     {
         defaultLogger.error(message, t);
     }
@@ -656,7 +698,8 @@ implements LoggingService
      * This is a log method with logLevel == ERROR, printing is done by
      * the given logger
      */
-    public void error(String logName, String message, RunData data)
+    @Override
+	public void error(String logName, String message, RunData data)
     {
         Logger logger = getLogger(logName);
         if (logger != null)
@@ -673,7 +716,8 @@ implements LoggingService
      * This is a log method with logLevel == ERROR, printing is done by
      * the given logger
      */
-    public void error(String logName, String message, RunData data, Throwable t)
+    @Override
+	public void error(String logName, String message, RunData data, Throwable t)
     {
         Logger logger = getLogger(logName);
         if (logger != null)

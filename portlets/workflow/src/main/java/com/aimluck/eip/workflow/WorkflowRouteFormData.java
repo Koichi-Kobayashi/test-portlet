@@ -35,7 +35,9 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRequest;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRoute;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowRoute;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -128,9 +130,9 @@ public class WorkflowRouteFormData extends ALAbstractFormData {
 
           SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
           Expression exp1 =
-            ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, userNames);
+            ExpressionFactory.inExp(_TurbineUser.LOGIN_NAME_PROPERTY, userNames);
           Expression exp2 =
-            ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+            ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
           query.setQualifier(exp1);
           query.andQualifier(exp2);
 
@@ -189,13 +191,13 @@ public class WorkflowRouteFormData extends ALAbstractFormData {
         Database.query(EipTWorkflowRoute.class);
       Expression exp1 =
         ExpressionFactory.matchExp(
-          EipTWorkflowRoute.ROUTE_NAME_PROPERTY,
+          _EipTWorkflowRoute.ROUTE_NAME_PROPERTY,
           route_name.getValue());
       query.setQualifier(exp1);
       if (ALEipConstants.MODE_UPDATE.equals(getMode())) {
         Expression exp2 =
           ExpressionFactory.noMatchDbExp(
-            EipTWorkflowRoute.ROUTE_ID_PK_COLUMN,
+            _EipTWorkflowRoute.ROUTE_ID_PK_COLUMN,
             route_id);
         query.andQualifier(exp2);
       }
@@ -259,7 +261,7 @@ public class WorkflowRouteFormData extends ALAbstractFormData {
       if (size > 0) {
         SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
         Expression exp =
-          ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, userarray);
+          ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, userarray);
         query.setQualifier(exp);
         // memberList.addAll(ALEipUtils.getUsersFromSelectQuery(query));
 

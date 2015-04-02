@@ -53,7 +53,8 @@ public class NoSecurityAccessController extends TurbineBaseService
      * @param action the secured action to be performed on the resource by the user.
      * @return boolean true if the user has sufficient privilege.
      */
-    final public boolean checkPermission(JetspeedUser user, Portlet portlet, String action)
+    @Override
+	final public boolean checkPermission(JetspeedUser user, Portlet portlet, String action)
     {
         return checkPermission(user, portlet, action, null);
     }
@@ -70,7 +71,8 @@ public class NoSecurityAccessController extends TurbineBaseService
      * @param owner of the entry, i.e. the username
      * @return boolean true if the user has sufficient privilege.
      */
-    final public boolean checkPermission(JetspeedUser user, Portlet portlet, String action, String owner)
+    @Override
+	final public boolean checkPermission(JetspeedUser user, Portlet portlet, String action, String owner)
     {
         return true;
     }
@@ -86,7 +88,8 @@ public class NoSecurityAccessController extends TurbineBaseService
      * @param action the secured action to be performed on the resource by the user.
      * @return boolean true if the user has sufficient privilege.
      */
-    final public boolean checkPermission(JetspeedUser user, Entry entry, String action)
+    @Override
+	final public boolean checkPermission(JetspeedUser user, Entry entry, String action)
     {
         return checkPermission(user, entry, action, null);
     }
@@ -104,7 +107,8 @@ public class NoSecurityAccessController extends TurbineBaseService
      * @param owner of the entry, i.e. the username
      * @return boolean true if the user has sufficient privilege.
      */
-    final public boolean checkPermission(JetspeedUser user, Entry entry, String action, String owner)
+    @Override
+	final public boolean checkPermission(JetspeedUser user, Entry entry, String action, String owner)
     {
         return true;
     }
@@ -121,7 +125,8 @@ public class NoSecurityAccessController extends TurbineBaseService
      * @param action the secured action to be performed on the resource by the user.
      * @return boolean true if the user has sufficient privilege.
      */
-    final public boolean checkPermission(JetspeedUser user, PortalResource resource, String action)
+    @Override
+	final public boolean checkPermission(JetspeedUser user, PortalResource resource, String action)
     {
         return true;
     }
@@ -139,7 +144,8 @@ public class NoSecurityAccessController extends TurbineBaseService
      * @exception throws a <code>InitializationException</code> if the service
      * fails to initialize
      */
-    public synchronized void init(ServletConfig conf)
+    @Override
+	public synchronized void init(ServletConfig conf)
     throws InitializationException
     {
         if (getInit())

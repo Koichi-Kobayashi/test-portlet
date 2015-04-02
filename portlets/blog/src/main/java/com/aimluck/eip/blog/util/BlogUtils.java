@@ -55,7 +55,13 @@ import com.aimluck.eip.cayenne.om.portlet.EipTBlogComment;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogEntry;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogThema;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlog;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogComment;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogEntry;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogThema;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALActivity;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -153,7 +159,7 @@ public class BlogUtils {
 
       SelectQuery<EipTBlogEntry> query = Database.query(EipTBlogEntry.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTBlogEntry.ENTRY_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipTBlogEntry.ENTRY_ID_PK_COLUMN, Integer
           .valueOf(entryid));
       query.setQualifier(exp);
       List<EipTBlogEntry> entrys = query.fetchList();
@@ -191,7 +197,7 @@ public class BlogUtils {
 
       SelectQuery<EipTBlogThema> query = Database.query(EipTBlogThema.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTBlogThema.THEMA_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipTBlogThema.THEMA_ID_PK_COLUMN, Integer
           .valueOf(themaid));
       query.setQualifier(exp);
       List<EipTBlogThema> themas = query.fetchList();
@@ -229,7 +235,7 @@ public class BlogUtils {
       int uid = ALEipUtils.getUserId(rundata);
       SelectQuery<EipTBlog> query = Database.query(EipTBlog.class);
       Expression exp =
-        ExpressionFactory.matchExp(EipTBlog.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipTBlog.OWNER_ID_PROPERTY, Integer
           .valueOf(uid));
       query.setQualifier(exp);
       List<EipTBlog> blogs = query.fetchList();
@@ -266,7 +272,7 @@ public class BlogUtils {
         Database.query(EipTBlogComment.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTBlogComment.COMMENT_ID_PK_COLUMN,
+          _EipTBlogComment.COMMENT_ID_PK_COLUMN,
           Integer.valueOf(commentid));
       query.setQualifier(exp1);
       List<EipTBlogComment> comments = query.fetchList();
@@ -305,15 +311,15 @@ public class BlogUtils {
 
       SelectQuery<EipTBlogFile> query = Database.query(EipTBlogFile.class);
       Expression exp1 =
-        ExpressionFactory.matchDbExp(EipTBlogFile.FILE_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipTBlogFile.FILE_ID_PK_COLUMN, Integer
           .valueOf(fileid));
       query.setQualifier(exp1);
       Expression exp2 =
-        ExpressionFactory.matchExp(EipTBlogFile.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipTBlogFile.OWNER_ID_PROPERTY, Integer
           .valueOf(ownerid));
       query.andQualifier(exp2);
       Expression exp3 =
-        ExpressionFactory.matchDbExp(EipTBlogEntry.ENTRY_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipTBlogEntry.ENTRY_ID_PK_COLUMN, Integer
           .valueOf(entryid));
       query.andQualifier(exp3);
 
@@ -360,7 +366,7 @@ public class BlogUtils {
 
       SelectQuery<EipTBlogEntry> query = Database.query(EipTBlogEntry.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTBlogEntry.ENTRY_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipTBlogEntry.ENTRY_ID_PK_COLUMN, Integer
           .valueOf(entryid));
       query.setQualifier(exp);
       List<EipTBlogEntry> entrys = query.fetchList();
@@ -386,7 +392,7 @@ public class BlogUtils {
       new ArrayList<BlogThemaResultData>();
     try {
       SelectQuery<EipTBlogThema> query = Database.query(EipTBlogThema.class);
-      query.orderAscending(EipTBlogThema.THEMA_NAME_PROPERTY);
+      query.orderAscending(_EipTBlogThema.THEMA_NAME_PROPERTY);
       List<EipTBlogThema> aList = query.fetchList();
       int size = aList.size();
       BlogThemaResultData lastRd = new BlogThemaResultData();
@@ -476,7 +482,7 @@ public class BlogUtils {
         user.initField();
         user.setUserId((Integer) Database.getFromDataRow(
           dataRow,
-          TurbineUser.USER_ID_PK_COLUMN));
+          _TurbineUser.USER_ID_PK_COLUMN));
         user.setName((String) Database.getFromDataRow(
           dataRow,
           TurbineUser.LOGIN_NAME_COLUMN));
@@ -653,7 +659,7 @@ public class BlogUtils {
       List<String> fpaths) throws ALFileNotRemovedException {
     ALDeleteFileUtil.deleteFiles(
       timelineId,
-      EipTBlogFile.EIP_TBLOG_ENTRY_PROPERTY,
+      _EipTBlogFile.EIP_TBLOG_ENTRY_PROPERTY,
       getSaveDirPath(orgId, uid),
       fpaths,
       EipTBlogFile.class);
@@ -787,7 +793,7 @@ public class BlogUtils {
         SelectQuery<EipTBlogFile> reqquery = Database.query(EipTBlogFile.class);
         Expression reqexp1 =
           ExpressionFactory.inDbExp(
-            EipTBlogFile.FILE_ID_PK_COLUMN,
+            _EipTBlogFile.FILE_ID_PK_COLUMN,
             hadfileidsValue);
         reqquery.setQualifier(reqexp1);
         List<EipTBlogFile> requests = reqquery.fetchList();
@@ -820,7 +826,7 @@ public class BlogUtils {
       SelectQuery<EipTBlogFile> query = Database.query(EipTBlogFile.class);
       Expression exp =
         ExpressionFactory.matchExp(
-          EipTBlogFile.EIP_TBLOG_ENTRY_PROPERTY,
+          _EipTBlogFile.EIP_TBLOG_ENTRY_PROPERTY,
           Integer.valueOf(entryId));
       query.setQualifier(exp);
       List<EipTBlogFile> files = query.fetchList();
@@ -1135,7 +1141,7 @@ public class BlogUtils {
     if (!themeId.equals("all")) {
       Expression exp =
         ExpressionFactory.matchExp(
-          EipTBlogEntry.EIP_TBLOG_THEMA_PROPERTY,
+          _EipTBlogEntry.EIP_TBLOG_THEMA_PROPERTY,
           themeId);
       query.andQualifier(exp);
     }
@@ -1148,9 +1154,9 @@ public class BlogUtils {
       if (keyword.length() > 0) {
         String keywordExp = MessageFormat.format("%{0}%", keyword);
         Expression exp1 =
-          ExpressionFactory.likeExp(EipTBlogEntry.TITLE_PROPERTY, keywordExp);
+          ExpressionFactory.likeExp(_EipTBlogEntry.TITLE_PROPERTY, keywordExp);
         Expression exp2 =
-          ExpressionFactory.likeExp(EipTBlogEntry.NOTE_PROPERTY, keywordExp);
+          ExpressionFactory.likeExp(_EipTBlogEntry.NOTE_PROPERTY, keywordExp);
         Expression exp = exp1.orExp(exp2);
         query.andQualifier(exp);
       }

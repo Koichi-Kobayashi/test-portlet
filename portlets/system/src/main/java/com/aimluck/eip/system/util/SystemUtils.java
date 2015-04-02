@@ -32,6 +32,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.account.EipMCompany;
+import com.aimluck.eip.cayenne.om.account.auto._EipMCompany;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.orm.Database;
@@ -108,7 +109,7 @@ public class SystemUtils {
       }
 
       Expression exp =
-        ExpressionFactory.matchDbExp(EipMCompany.COMPANY_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipMCompany.COMPANY_ID_PK_COLUMN, Integer
           .valueOf(id));
 
       List<EipMCompany> list =

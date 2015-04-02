@@ -29,6 +29,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.utils.ALDateUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowCategory;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -202,10 +203,10 @@ public class WorkflowCategorySelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("category_name", EipTWorkflowCategory.CATEGORY_NAME_PROPERTY);
+    map.putValue("category_name", _EipTWorkflowCategory.CATEGORY_NAME_PROPERTY);
     map.putValue(
       "route_name",
-      EipTWorkflowCategory.EIP_TWORKFLOW_ROUTE_PROPERTY);
+      _EipTWorkflowCategory.EIP_TWORKFLOW_ROUTE_PROPERTY);
     return map;
   }
 

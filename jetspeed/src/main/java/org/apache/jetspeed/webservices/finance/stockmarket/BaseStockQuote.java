@@ -37,107 +37,128 @@ public class BaseStockQuote implements StockQuote
     String opening = "";
     String low = "";
 
-    public void setPrice(String v) 
+    @Override
+	public void setPrice(String v) 
     {
         price = v;
     }
 
-    public String getPrice() 
+    @Override
+	public String getPrice() 
     {
         return price;
     }
 
-    public void setName(String v) 
+    @Override
+	public void setName(String v) 
     {
         name = v;
     }
 
-    public String getName() 
+    @Override
+	public String getName() 
     {
         return name;
     }
 
-    public void setSymbol(String v) 
+    @Override
+	public void setSymbol(String v) 
     {
         symbol = v;
     }
 
-    public String getSymbol() 
+    @Override
+	public String getSymbol() 
     {
         return symbol;
     }
 
-    public void setTime(String v)
+    @Override
+	public void setTime(String v)
     {
         time = v;
     }
 
-    public String getTime() 
+    @Override
+	public String getTime() 
     {
         return time;
     }
 
-    public void setDate(String v) 
+    @Override
+	public void setDate(String v) 
     {
         date = v;
     }
 
-    public String getDate() 
+    @Override
+	public String getDate() 
     {
         return date;
     }
 
-    public void setHigh(String v) 
+    @Override
+	public void setHigh(String v) 
     {
         high = v;
     }
 
-    public String getHigh() // subliminal
+    @Override
+	public String getHigh() // subliminal
     {
         return high;
     }
 
-    public void setVolume(String v) 
+    @Override
+	public void setVolume(String v) 
     {
         volume = v;
     }
 
-    public String getVolume() 
+    @Override
+	public String getVolume() 
     {
         return volume;
     }
 
-    public void setChange(String v) 
+    @Override
+	public void setChange(String v) 
     {
         change = v;
     }
 
-    public String getChange() 
+    @Override
+	public String getChange() 
     {
         return change;
     }
 
-    public void setOpening(String v) 
+    @Override
+	public void setOpening(String v) 
     {
         opening = v;
     }
 
-    public String getOpening() 
+    @Override
+	public String getOpening() 
     {
         return opening;
     }
 
-    public void setLow(String v) 
+    @Override
+	public void setLow(String v) 
     {
         low = v;
     }
 
-    public String getLow() 
+    @Override
+	public String getLow() 
     {
         return low;
     }
 
-    public String toString() 
+    @Override
+	public String toString() 
     {
         return toXML();
     }

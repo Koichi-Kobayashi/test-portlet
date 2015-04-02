@@ -56,7 +56,8 @@ public class ObjectBridgeDatabaseService  extends TurbineBaseService
      * @exception throws a <code>InitializationException</code> if the service
      * fails to initialize
      */
-    public synchronized void init(ServletConfig conf) throws InitializationException {
+    @Override
+	public synchronized void init(ServletConfig conf) throws InitializationException {
 
         // already initialized
         if (getInit()) return;
@@ -77,7 +78,8 @@ public class ObjectBridgeDatabaseService  extends TurbineBaseService
      }
 
 
-    public Object getPersistenceManager()
+    @Override
+	public Object getPersistenceManager()
     {
         return pm;
     }
@@ -89,7 +91,8 @@ public class ObjectBridgeDatabaseService  extends TurbineBaseService
      * @exception throws a <code>InitializationException</code> if the service
      * fails to initialize
      */
-    public void init() throws InitializationException {
+    @Override
+	public void init() throws InitializationException {
         logger.info( "Late init for ObjectBridgeDatabaseService called" );        
     }
 
@@ -97,7 +100,8 @@ public class ObjectBridgeDatabaseService  extends TurbineBaseService
      * This is the shutdown method called by the 
      * Turbine <code>Service</code> framework
      */
-    public void shutdown() 
+    @Override
+	public void shutdown() 
     {
     }
 

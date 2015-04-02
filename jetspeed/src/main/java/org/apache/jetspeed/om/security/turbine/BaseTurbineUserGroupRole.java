@@ -1,24 +1,17 @@
 package org.apache.jetspeed.om.security.turbine;
 
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.BaseObject;
 import org.apache.torque.om.ComboKey;
-import org.apache.torque.om.DateKey;
 import org.apache.torque.om.NumberKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
-import org.apache.torque.om.StringKey;
-import org.apache.torque.om.Persistent;
-import org.apache.torque.util.Criteria;
 import org.apache.torque.util.Transaction;
 
   
@@ -171,7 +164,7 @@ public abstract class BaseTurbineUserGroupRole extends BaseObject
     {
         if ( getUserId()>0 )
         {
-                return TurbineUserManager.getInstance(SimpleKey.keyFor(getUserId()));
+                return BaseTurbineUserManager.getInstance(SimpleKey.keyFor(getUserId()));
             }
         return aTurbineUser;
     }
@@ -216,7 +209,7 @@ public abstract class BaseTurbineUserGroupRole extends BaseObject
     {
         if ( getGroupId()>0 )
         {
-                return TurbineGroupManager.getInstance(SimpleKey.keyFor(getGroupId()));
+                return BaseTurbineGroupManager.getInstance(SimpleKey.keyFor(getGroupId()));
             }
         return aTurbineGroup;
     }
@@ -261,7 +254,7 @@ public abstract class BaseTurbineUserGroupRole extends BaseObject
     {
         if ( getRoleId()>0 )
         {
-                return TurbineRoleManager.getInstance(SimpleKey.keyFor(getRoleId()));
+                return BaseTurbineRoleManager.getInstance(SimpleKey.keyFor(getRoleId()));
             }
         return aTurbineRole;
     }
@@ -302,7 +295,8 @@ public abstract class BaseTurbineUserGroupRole extends BaseObject
      * Retrieves a field from the object by name passed in
      * as a String.
      */
-    public Object getByName(String name)
+    @Override
+	public Object getByName(String name)
     {
           if (name.equals("UserId"))
         {
@@ -324,17 +318,18 @@ public abstract class BaseTurbineUserGroupRole extends BaseObject
      * as a String.  The String must be one of the static
      * Strings defined in this Class' Peer.
      */
-    public Object getByPeerName(String name)
+    @Override
+	public Object getByPeerName(String name)
     {
-          if (name.equals(TurbineUserGroupRolePeer.USER_ID ))
+          if (name.equals(BaseTurbineUserGroupRolePeer.USER_ID ))
         {
                 return new Integer(getUserId());
             }
-          if (name.equals(TurbineUserGroupRolePeer.GROUP_ID ))
+          if (name.equals(BaseTurbineUserGroupRolePeer.GROUP_ID ))
         {
                 return new Integer(getGroupId());
             }
-          if (name.equals(TurbineUserGroupRolePeer.ROLE_ID ))
+          if (name.equals(BaseTurbineUserGroupRolePeer.ROLE_ID ))
         {
                 return new Integer(getRoleId());
             }
@@ -345,7 +340,8 @@ public abstract class BaseTurbineUserGroupRole extends BaseObject
      * Retrieves a field from the object by Position as specified
      * in the xml schema.  Zero-based.
      */
-    public Object getByPosition(int pos)
+    @Override
+	public Object getByPosition(int pos)
     {
             if ( pos == 0 )
         {
@@ -366,9 +362,10 @@ public abstract class BaseTurbineUserGroupRole extends BaseObject
      * Stores the object in the database.  If the object is new,
      * it inserts it; otherwise an update is performed.
      */
-    public void save() throws Exception
+    @Override
+	public void save() throws Exception
     {
-          save(TurbineUserGroupRolePeer.getMapBuilder()
+          save(BaseTurbineUserGroupRolePeer.getMapBuilder()
                 .getDatabaseMap().getName());
       }
 
@@ -379,7 +376,8 @@ public abstract class BaseTurbineUserGroupRole extends BaseObject
      * auto-generated conditionally and therefore needs to be
      * in this file instead of in the super class, BaseObject.
        */
-    public void save(String dbName) throws TorqueException
+    @Override
+	public void save(String dbName) throws TorqueException
     {
         Connection con = null;
           try
@@ -405,7 +403,8 @@ public abstract class BaseTurbineUserGroupRole extends BaseObject
      * the save() method and the connection details will be handled
      * internally
      */
-    public void save(Connection con) throws TorqueException
+    @Override
+	public void save(Connection con) throws TorqueException
     {
           if (!alreadyInSave)
         {
@@ -418,17 +417,17 @@ public abstract class BaseTurbineUserGroupRole extends BaseObject
             {
                 if (isNew())
                 {
-                    TurbineUserGroupRolePeer.doInsert((TurbineUserGroupRole)this, con);
+                    BaseTurbineUserGroupRolePeer.doInsert((TurbineUserGroupRole)this, con);
                     setNew(false);
                 }
                 else
                 {
-                    TurbineUserGroupRolePeer.doUpdate((TurbineUserGroupRole)this, con);
+                    BaseTurbineUserGroupRolePeer.doUpdate((TurbineUserGroupRole)this, con);
                 }
 
                       if (isCacheOnSave())
                 {
-                    TurbineUserGroupRoleManager.putInstance(this);
+                    BaseTurbineUserGroupRoleManager.putInstance(this);
                 }
               }
 
@@ -452,7 +451,8 @@ public abstract class BaseTurbineUserGroupRole extends BaseObject
     /**
      * Set the PrimaryKey with an ObjectKey
      */
-    public void setPrimaryKey(ObjectKey key) throws TorqueException
+    @Override
+	public void setPrimaryKey(ObjectKey key) throws TorqueException
     {
         SimpleKey[] keys = (SimpleKey[]) key.getValue();
         SimpleKey tmpKey = null;
@@ -479,7 +479,8 @@ public abstract class BaseTurbineUserGroupRole extends BaseObject
     /**
      * Set the PrimaryKey using a String.
      */
-    public void setPrimaryKey(String key) throws TorqueException
+    @Override
+	public void setPrimaryKey(String key) throws TorqueException
     {
         setPrimaryKey(new ComboKey(key));
     }
@@ -488,7 +489,8 @@ public abstract class BaseTurbineUserGroupRole extends BaseObject
      * returns an id that differentiates this object from others
      * of its class.
      */
-    public ObjectKey getPrimaryKey()
+    @Override
+	public ObjectKey getPrimaryKey()
     {
               pks[0] = SimpleKey.keyFor(getUserId());
                   pks[1] = SimpleKey.keyFor(getGroupId());

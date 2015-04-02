@@ -35,6 +35,8 @@ import org.apache.turbine.services.TurbineServices;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTTimeline;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimelineMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimeline;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimelineMap;
 import com.aimluck.eip.cayenne.om.social.Activity;
 import com.aimluck.eip.cayenne.om.social.ActivityMap;
 import com.aimluck.eip.cayenne.om.social.AppData;
@@ -42,6 +44,10 @@ import com.aimluck.eip.cayenne.om.social.Application;
 import com.aimluck.eip.cayenne.om.social.ContainerConfig;
 import com.aimluck.eip.cayenne.om.social.ModuleId;
 import com.aimluck.eip.cayenne.om.social.OAuthConsumer;
+import com.aimluck.eip.cayenne.om.social.auto._Activity;
+import com.aimluck.eip.cayenne.om.social.auto._ActivityMap;
+import com.aimluck.eip.cayenne.om.social.auto._Application;
+import com.aimluck.eip.cayenne.om.social.auto._ContainerConfig;
 import com.aimluck.eip.common.ALActivity;
 import com.aimluck.eip.common.ALActivityCount;
 import com.aimluck.eip.common.ALApplication;
@@ -431,19 +437,19 @@ public class ALDefaultSocialApplicationHanlder extends
     }
     switch (status) {
       case ACTIVE:
-        query.where(Operations.eq(Application.STATUS_PROPERTY, 1));
+        query.where(Operations.eq(_Application.STATUS_PROPERTY, 1));
         break;
       case INACTIVE:
-        query.where(Operations.eq(Application.STATUS_PROPERTY, 0));
+        query.where(Operations.eq(_Application.STATUS_PROPERTY, 0));
         break;
       default:
         // ignore
     }
     String appId = request.getAppId();
     if (appId != null && appId.length() > 0) {
-      query.where(Operations.eq(Application.APP_ID_PROPERTY, appId));
+      query.where(Operations.eq(_Application.APP_ID_PROPERTY, appId));
     }
-    query.orderAscending(Application.TITLE_PROPERTY);
+    query.orderAscending(_Application.TITLE_PROPERTY);
     return query;
   }
 
@@ -464,7 +470,7 @@ public class ALDefaultSocialApplicationHanlder extends
         Database
           .query(ContainerConfig.class)
           .where(
-            Operations.eq(ContainerConfig.NAME_PROPERTY, property.toString()))
+            Operations.eq(_ContainerConfig.NAME_PROPERTY, property.toString()))
           .fetchSingle();
       if (config == null) {
         ALEipManager.getInstance().setContainerConfig(
@@ -492,7 +498,7 @@ public class ALDefaultSocialApplicationHanlder extends
         Database
           .query(ContainerConfig.class)
           .where(
-            Operations.eq(ContainerConfig.NAME_PROPERTY, property.toString()))
+            Operations.eq(_ContainerConfig.NAME_PROPERTY, property.toString()))
           .fetchSingle();
       if (config == null) {
         config = Database.create(ContainerConfig.class);
@@ -719,25 +725,25 @@ public class ALDefaultSocialApplicationHanlder extends
     }
     int isRead = request.isRead();
     if (isRead >= 0) {
-      query.where(Operations.eq(Activity.ACTIVITY_MAPS_PROPERTY
+      query.where(Operations.eq(_Activity.ACTIVITY_MAPS_PROPERTY
         + "."
-        + ActivityMap.IS_READ_PROPERTY, isRead));
+        + _ActivityMap.IS_READ_PROPERTY, isRead));
     }
     int external_id = request.getExternalId();
 
     if (external_id > 0) {
-      query.where(Operations.eq(Activity.EXTERNAL_ID_PROPERTY, external_id));
+      query.where(Operations.eq(_Activity.EXTERNAL_ID_PROPERTY, external_id));
     }
 
     float priority = request.getPriority();
     if (priority >= 0f) {
-      query.where(Operations.eq(Activity.PRIORITY_PROPERTY, priority));
+      query.where(Operations.eq(_Activity.PRIORITY_PROPERTY, priority));
     }
     String keyword = request.getKeyword();
     if ((keyword != null) && (!keyword.equals(""))) {
       // 選択したキーワードを指定する．
-      query.where(Operations.contains(Activity.TITLE_PROPERTY, keyword).or(
-        Operations.contains(Activity.LOGIN_NAME_PROPERTY, keyword)));
+      query.where(Operations.contains(_Activity.TITLE_PROPERTY, keyword).or(
+        Operations.contains(_Activity.LOGIN_NAME_PROPERTY, keyword)));
     }
     String loginName = request.getLoginName();
     if (loginName != null && loginName.length() > 0) {
@@ -754,45 +760,45 @@ public class ALDefaultSocialApplicationHanlder extends
           (int) user.getUserId().getValue(),
           ALAccessControlConstants.POERTLET_FEATURE_MSGBOARD_TOPIC,
           ALAccessControlConstants.VALUE_ACL_LIST)) {
-          query.where(Operations.ne(Activity.APP_ID_PROPERTY, "Msgboard"));
+          query.where(Operations.ne(_Activity.APP_ID_PROPERTY, "Msgboard"));
         }
 
         if (!aclhandler.hasAuthority(
           (int) user.getUserId().getValue(),
           ALAccessControlConstants.POERTLET_FEATURE_BLOG_ENTRY_OTHER,
           ALAccessControlConstants.VALUE_ACL_LIST)) {
-          query.where(Operations.ne(Activity.APP_ID_PROPERTY, "blog"));
+          query.where(Operations.ne(_Activity.APP_ID_PROPERTY, "blog"));
         }
       }
 
-      query.where(Operations.ne(Activity.LOGIN_NAME_PROPERTY, loginName));
+      query.where(Operations.ne(_Activity.LOGIN_NAME_PROPERTY, loginName));
     }
     String targetLoginName = request.getTargetLoginName();
     boolean targetLoginNameLimit = request.isTargetLoginNameLimit();
     if (targetLoginName != null && targetLoginName.length() > 0) {
       if (!targetLoginNameLimit) {
         // 更新情報
-        query.where(Operations.in(Activity.ACTIVITY_MAPS_PROPERTY
+        query.where(Operations.in(_Activity.ACTIVITY_MAPS_PROPERTY
           + "."
-          + ActivityMap.LOGIN_NAME_PROPERTY, targetLoginName, "-1"));
+          + _ActivityMap.LOGIN_NAME_PROPERTY, targetLoginName, "-1"));
       } else {
         // あなた(自分)宛のお知らせ
-        query.where(Operations.in(Activity.ACTIVITY_MAPS_PROPERTY
+        query.where(Operations.in(_Activity.ACTIVITY_MAPS_PROPERTY
           + "."
-          + ActivityMap.LOGIN_NAME_PROPERTY, targetLoginName));
+          + _ActivityMap.LOGIN_NAME_PROPERTY, targetLoginName));
       }
     }
     String appId = request.getAppId();
     if (appId != null && appId.length() > 0) {
-      query.where(Operations.eq(Activity.APP_ID_PROPERTY, appId));
+      query.where(Operations.eq(_Activity.APP_ID_PROPERTY, appId));
     }
     long max = request.getMax();
     if (max > 0) {
       Date date = new Date();
       date.setTime(max);
-      query.where(Operations.gt(Activity.UPDATE_DATE_PROPERTY, date));
+      query.where(Operations.gt(_Activity.UPDATE_DATE_PROPERTY, date));
     }
-    query.orderDesending(Activity.UPDATE_DATE_PROPERTY);
+    query.orderDesending(_Activity.UPDATE_DATE_PROPERTY);
     return query;
   }
 
@@ -856,9 +862,9 @@ public class ALDefaultSocialApplicationHanlder extends
       cal.add(Calendar.DAY_OF_MONTH, -limit);
 
       Database.query(ActivityMap.class).where(
-        Operations.lt(ActivityMap.ACTIVITY_PROPERTY
+        Operations.lt(_ActivityMap.ACTIVITY_PROPERTY
           + "."
-          + Activity.UPDATE_DATE_PROPERTY, cal.getTime())).deleteAll();
+          + _Activity.UPDATE_DATE_PROPERTY, cal.getTime())).deleteAll();
 
       String sql =
         "delete from activity where update_date < '"
@@ -881,25 +887,25 @@ public class ALDefaultSocialApplicationHanlder extends
         tCalAfter.add(Calendar.DATE, 1);
 
         Expression exp1 =
-          ExpressionFactory.matchExp(EipTTimeline.OWNER_ID_PROPERTY, Integer
+          ExpressionFactory.matchExp(_EipTTimeline.OWNER_ID_PROPERTY, Integer
             .valueOf(request.getUserId()));
         Expression exp2 =
           ExpressionFactory.matchExp(
-            EipTTimeline.TIMELINE_TYPE_PROPERTY,
+            _EipTTimeline.TIMELINE_TYPE_PROPERTY,
             EipTTimeline.TIMELINE_TYPE_ACTIVITY);
         Expression exp3 =
-          ExpressionFactory.matchExp(EipTTimeline.PARENT_ID_PROPERTY, 0);
+          ExpressionFactory.matchExp(_EipTTimeline.PARENT_ID_PROPERTY, 0);
         Expression exp4 =
           ExpressionFactory.betweenExp(
-            EipTTimeline.CREATE_DATE_PROPERTY,
+            _EipTTimeline.CREATE_DATE_PROPERTY,
             tCalBefore.getTime(),
             tCalAfter.getTime());
         Expression exp5 =
           ExpressionFactory.matchExp(
-            EipTTimeline.APP_ID_PROPERTY,
+            _EipTTimeline.APP_ID_PROPERTY,
             "ACTIVITY_PARENT");
         Expression exp6 =
-          ExpressionFactory.matchExp(EipTTimeline.EXTERNAL_ID_PROPERTY, "0");
+          ExpressionFactory.matchExp(_EipTTimeline.EXTERNAL_ID_PROPERTY, "0");
         SelectQuery<EipTTimeline> tQuery = Database.query(EipTTimeline.class);
         tQuery.andQualifier(exp1.andExp(exp2.andExp(exp3.andExp(exp4.andExp(
           exp5).andExp(exp6)))));
@@ -949,9 +955,9 @@ public class ALDefaultSocialApplicationHanlder extends
           cal2.add(Calendar.DAY_OF_MONTH, -limit2);
 
           Database.query(EipTTimelineMap.class).where(
-            Operations.lt(EipTTimelineMap.EIP_TTIMELINE_PROPERTY
+            Operations.lt(_EipTTimelineMap.EIP_TTIMELINE_PROPERTY
               + "."
-              + EipTTimeline.UPDATE_DATE_PROPERTY, cal2.getTime())).deleteAll();
+              + _EipTTimeline.UPDATE_DATE_PROPERTY, cal2.getTime())).deleteAll();
 
           // 親データ再検索
           tQuery = Database.query(EipTTimeline.class);
@@ -968,16 +974,16 @@ public class ALDefaultSocialApplicationHanlder extends
         }
         exp1 =
           ExpressionFactory.matchExp(
-            EipTTimeline.TIMELINE_TYPE_PROPERTY,
+            _EipTTimeline.TIMELINE_TYPE_PROPERTY,
             EipTTimeline.TIMELINE_TYPE_ACTIVITY);
         exp2 =
-          ExpressionFactory.matchExp(EipTTimeline.OWNER_ID_PROPERTY, Integer
+          ExpressionFactory.matchExp(_EipTTimeline.OWNER_ID_PROPERTY, Integer
             .valueOf(request.getUserId()));
         exp3 =
-          ExpressionFactory.matchExp(EipTTimeline.APP_ID_PROPERTY, request
+          ExpressionFactory.matchExp(_EipTTimeline.APP_ID_PROPERTY, request
             .getAppId());
         exp4 =
-          ExpressionFactory.matchExp(EipTTimeline.EXTERNAL_ID_PROPERTY, request
+          ExpressionFactory.matchExp(_EipTTimeline.EXTERNAL_ID_PROPERTY, request
             .getExternalId());
         tQuery = Database.query(EipTTimeline.class);
         tQuery.andQualifier(exp1.andExp(exp2.andExp(exp3.andExp(exp4))));

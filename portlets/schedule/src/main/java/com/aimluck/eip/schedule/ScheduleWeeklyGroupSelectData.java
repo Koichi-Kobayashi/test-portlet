@@ -39,8 +39,13 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodo;
 import com.aimluck.eip.cayenne.om.portlet.VEipTScheduleList;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTodo;
+import com.aimluck.eip.cayenne.om.portlet.auto._VEipTScheduleList;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.common.ALEipGroup;
@@ -539,7 +544,7 @@ public class ScheduleWeeklyGroupSelectData extends ScheduleWeeklySelectData {
     try {
       SelectQuery<EipMFacility> query =
         Database.query(EipMFacility.class).select(
-          EipMFacility.FACILITY_ID_PK_COLUMN);
+          _EipMFacility.FACILITY_ID_PK_COLUMN);
       List<EipMFacility> aList = query.fetchList();
 
       for (EipMFacility record : aList) {
@@ -557,7 +562,7 @@ public class ScheduleWeeklyGroupSelectData extends ScheduleWeeklySelectData {
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("group", VEipTScheduleList.USER_ID_PROPERTY);
+    map.putValue("group", _VEipTScheduleList.USER_ID_PROPERTY);
     return map;
   }
 
@@ -649,47 +654,47 @@ public class ScheduleWeeklyGroupSelectData extends ScheduleWeeklySelectData {
       Context context) {
     SelectQuery<EipTTodo> query = Database.query(EipTTodo.class);
     Expression exp1 =
-      ExpressionFactory.noMatchExp(EipTTodo.STATE_PROPERTY, Short
+      ExpressionFactory.noMatchExp(_EipTTodo.STATE_PROPERTY, Short
         .valueOf((short) 100));
     query.setQualifier(exp1);
 
     Expression exp01 =
-      ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, userid);
+      ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, userid);
     Expression exp02 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, userid);
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, userid);
     Expression exp03 =
-      ExpressionFactory.matchExp(EipTTodo.PUBLIC_FLAG_PROPERTY, "T");
+      ExpressionFactory.matchExp(_EipTTodo.PUBLIC_FLAG_PROPERTY, "T");
     Expression exp04 =
-      ExpressionFactory.matchExp(EipTTodo.ADDON_SCHEDULE_FLG_PROPERTY, "T");
+      ExpressionFactory.matchExp(_EipTTodo.ADDON_SCHEDULE_FLG_PROPERTY, "T");
     query.andQualifier(exp01.orExp(exp02.andExp(exp03)).andExp(exp04));
 
     // 終了日時
     Expression exp11 =
       ExpressionFactory.greaterOrEqualExp(
-        EipTTodo.END_DATE_PROPERTY,
+        _EipTTodo.END_DATE_PROPERTY,
         getViewStart().getValue());
     // 開始日時
     Expression exp12 =
       ExpressionFactory.lessOrEqualExp(
-        EipTTodo.START_DATE_PROPERTY,
+        _EipTTodo.START_DATE_PROPERTY,
         getViewEnd().getValue());
 
     // 開始日時のみ指定されている ToDo を検索
     Expression exp21 =
       ExpressionFactory.lessOrEqualExp(
-        EipTTodo.START_DATE_PROPERTY,
+        _EipTTodo.START_DATE_PROPERTY,
         getViewEnd().getValue());
     Expression exp22 =
-      ExpressionFactory.matchExp(EipTTodo.END_DATE_PROPERTY, ToDoUtils
+      ExpressionFactory.matchExp(_EipTTodo.END_DATE_PROPERTY, ToDoUtils
         .getEmptyDate());
 
     // 終了日時のみ指定されている ToDo を検索
     Expression exp31 =
       ExpressionFactory.greaterOrEqualExp(
-        EipTTodo.END_DATE_PROPERTY,
+        _EipTTodo.END_DATE_PROPERTY,
         getViewStart().getValue());
     Expression exp32 =
-      ExpressionFactory.matchExp(EipTTodo.START_DATE_PROPERTY, ToDoUtils
+      ExpressionFactory.matchExp(_EipTTodo.START_DATE_PROPERTY, ToDoUtils
         .getEmptyDate());
 
     query.andQualifier((exp11.andExp(exp12)).orExp(exp21.andExp(exp22)).orExp(
@@ -831,7 +836,7 @@ public class ScheduleWeeklyGroupSelectData extends ScheduleWeeklySelectData {
 
   public TurbineGroup getGroup(String filter) {
     Expression exp1 =
-      ExpressionFactory.matchExp(TurbineGroup.GROUP_NAME_PROPERTY, filter);
+      ExpressionFactory.matchExp(_TurbineGroup.GROUP_NAME_PROPERTY, filter);
 
     SelectQuery<TurbineGroup> query = Database.query(TurbineGroup.class);
 

@@ -48,6 +48,8 @@ import org.apache.turbine.services.rundata.RunDataService;
 
 import com.aimluck.eip.cayenne.om.security.TurbinePermission;
 import com.aimluck.eip.cayenne.om.security.TurbineRolePermission;
+import com.aimluck.eip.cayenne.om.security.auto._TurbinePermission;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineRolePermission;
 import com.aimluck.eip.orm.Database;
 
 /**
@@ -79,7 +81,8 @@ public class ALPermissionManagement extends TurbineBaseService implements
   /**
    *
    */
-  public Iterator<?> getPermissions(String rolename)
+  @Override
+public Iterator<?> getPermissions(String rolename)
       throws JetspeedSecurityException {
     Role role = null;
     try {
@@ -101,7 +104,7 @@ public class ALPermissionManagement extends TurbineBaseService implements
     try {
       Expression exp =
         ExpressionFactory.matchDbExp(
-          TurbineRolePermission.ROLE_ID_PK_COLUMN,
+          _TurbineRolePermission.ROLE_ID_PK_COLUMN,
           Integer.valueOf(role.getId()));
       rels = Database.query(TurbineRolePermission.class, exp).fetchList();
 
@@ -126,7 +129,8 @@ public class ALPermissionManagement extends TurbineBaseService implements
   /**
    *
    */
-  public Iterator<TurbinePermission> getPermissions()
+  @Override
+public Iterator<TurbinePermission> getPermissions()
       throws JetspeedSecurityException {
     List<TurbinePermission> permissions;
     try {
@@ -142,7 +146,8 @@ public class ALPermissionManagement extends TurbineBaseService implements
   /**
    *
    */
-  public void addPermission(Permission permission)
+  @Override
+public void addPermission(Permission permission)
       throws JetspeedSecurityException {
     if (permissionExists(permission.getName())) {
       throw new PermissionException("The permission '"
@@ -169,7 +174,8 @@ public class ALPermissionManagement extends TurbineBaseService implements
   /**
    *
    */
-  public void savePermission(Permission permission)
+  @Override
+public void savePermission(Permission permission)
       throws JetspeedSecurityException {
 
     if (!permissionExists(permission.getName())) {
@@ -200,7 +206,8 @@ public class ALPermissionManagement extends TurbineBaseService implements
   /**
    *
    */
-  public void removePermission(String permissionName)
+  @Override
+public void removePermission(String permissionName)
       throws JetspeedSecurityException {
     try {
 
@@ -214,7 +221,7 @@ public class ALPermissionManagement extends TurbineBaseService implements
       if (cascadeDelete) {
         Expression exp =
           ExpressionFactory.matchDbExp(
-            TurbineRolePermission.PERMISSION_ID_PK_COLUMN,
+            _TurbineRolePermission.PERMISSION_ID_PK_COLUMN,
             Integer.valueOf(permission.getId()));
         Database.query(TurbineRolePermission.class, exp).deleteAll();
       }
@@ -238,7 +245,8 @@ public class ALPermissionManagement extends TurbineBaseService implements
   /**
    *
    */
-  public void grantPermission(String roleName, String permissionName)
+  @Override
+public void grantPermission(String roleName, String permissionName)
       throws JetspeedSecurityException {
     try {
       Role role = JetspeedSecurity.getRole(roleName);
@@ -266,7 +274,8 @@ public class ALPermissionManagement extends TurbineBaseService implements
   /**
    *
    */
-  public void revokePermission(String roleName, String permissionName)
+  @Override
+public void revokePermission(String roleName, String permissionName)
       throws JetspeedSecurityException {
     try {
       Role role = JetspeedSecurity.getRole(roleName);
@@ -274,11 +283,11 @@ public class ALPermissionManagement extends TurbineBaseService implements
 
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          TurbineRolePermission.ROLE_ID_PK_COLUMN,
+          _TurbineRolePermission.ROLE_ID_PK_COLUMN,
           Integer.valueOf(role.getId()));
       Expression exp2 =
         ExpressionFactory.matchDbExp(
-          TurbineRolePermission.PERMISSION_ID_PK_COLUMN,
+          _TurbineRolePermission.PERMISSION_ID_PK_COLUMN,
           Integer.valueOf(permission.getId()));
 
       Database
@@ -306,7 +315,8 @@ public class ALPermissionManagement extends TurbineBaseService implements
   /**
    *
    */
-  public boolean hasPermission(String roleName, String permissionName)
+  @Override
+public boolean hasPermission(String roleName, String permissionName)
       throws JetspeedSecurityException {
     List<TurbineRolePermission> permissions;
 
@@ -320,11 +330,11 @@ public class ALPermissionManagement extends TurbineBaseService implements
 
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          TurbineRolePermission.ROLE_ID_PK_COLUMN,
+          _TurbineRolePermission.ROLE_ID_PK_COLUMN,
           Integer.valueOf(role.getId()));
       Expression exp2 =
         ExpressionFactory.matchDbExp(
-          TurbineRolePermission.PERMISSION_ID_PK_COLUMN,
+          _TurbineRolePermission.PERMISSION_ID_PK_COLUMN,
           Integer.valueOf(permission.getId()));
 
       permissions =
@@ -344,7 +354,8 @@ public class ALPermissionManagement extends TurbineBaseService implements
   /**
    *
    */
-  public Permission getPermission(String permissionName)
+  @Override
+public Permission getPermission(String permissionName)
       throws JetspeedSecurityException {
     List<TurbinePermission> permissions;
 
@@ -391,7 +402,7 @@ public class ALPermissionManagement extends TurbineBaseService implements
     try {
       Expression exp =
         ExpressionFactory.matchExp(
-          TurbinePermission.PERMISSION_NAME_PROPERTY,
+          _TurbinePermission.PERMISSION_NAME_PROPERTY,
           permissionName);
       permissions = Database.query(TurbinePermission.class, exp).fetchList();
     } catch (Exception e) {

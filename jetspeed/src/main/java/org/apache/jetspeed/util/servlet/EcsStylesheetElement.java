@@ -60,7 +60,8 @@ public class EcsStylesheetElement extends ConcreteElement
      *
      * @param out The output stream to which the result shall be written.
      */
-     public void output(OutputStream out)
+     @Override
+	public void output(OutputStream out)
      {
         output(new PrintWriter(out));
      }               
@@ -71,7 +72,8 @@ public class EcsStylesheetElement extends ConcreteElement
      *
      * @param out The print writer to be used for writing the result.
      */
-    public void output(PrintWriter out)
+    @Override
+	public void output(PrintWriter out)
     {
         try {
 

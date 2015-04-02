@@ -38,9 +38,13 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.account.util.AccountUtils;
 import com.aimluck.eip.cayenne.om.account.EipMUserPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMUserPosition;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -122,7 +126,7 @@ public class AccountUserSelectData extends
       Context context) {
 
     ObjectId oid =
-      new ObjectId("TurbineUser", TurbineUser.USER_ID_PK_COLUMN, 3);
+      new ObjectId("TurbineUser", _TurbineUser.USER_ID_PK_COLUMN, 3);
     Expression exp1 =
       ExpressionFactory.matchAllDbExp(
         oid.getIdSnapshot(),
@@ -130,8 +134,8 @@ public class AccountUserSelectData extends
 
     SelectQuery<TurbineUser> query =
       Database.query(TurbineUser.class, exp1).where(
-        Operations.eq(TurbineUser.COMPANY_ID_PROPERTY, Integer.valueOf(1)),
-        Operations.ne(TurbineUser.DISABLED_PROPERTY, "T"));
+        Operations.eq(_TurbineUser.COMPANY_ID_PROPERTY, Integer.valueOf(1)),
+        Operations.ne(_TurbineUser.DISABLED_PROPERTY, "T"));
 
     String filter = ALEipUtils.getTemp(rundata, context, LIST_FILTER_STR);
     String filtertype =
@@ -148,11 +152,11 @@ public class AccountUserSelectData extends
             .query(TurbineUserGroupRole.class)
             .where(
               Operations.eq(
-                TurbineUserGroupRole.TURBINE_ROLE_PROPERTY,
+                _TurbineUserGroupRole.TURBINE_ROLE_PROPERTY,
                 adminrole.getId()),
-              Operations.eq(TurbineUserGroupRole.TURBINE_GROUP_PROPERTY, group
+              Operations.eq(_TurbineUserGroupRole.TURBINE_GROUP_PROPERTY, group
                 .getId()),
-              Operations.ne(TurbineUserGroupRole.TURBINE_USER_PROPERTY, 1))
+              Operations.ne(_TurbineUserGroupRole.TURBINE_USER_PROPERTY, 1))
             .distinct(true)
             .fetchList();
         List<Integer> admin_ids = new ArrayList<Integer>();
@@ -161,7 +165,7 @@ public class AccountUserSelectData extends
           admin_ids.add(tugr.getTurbineUser().getUserId());
         }
         query.andQualifier(ExpressionFactory.inDbExp(
-          TurbineUser.USER_ID_PK_COLUMN,
+          _TurbineUser.USER_ID_PK_COLUMN,
           admin_ids));
       } catch (Exception ex) {
         logger.error("AccountUserSelectData.getSelectQuery", ex);
@@ -179,11 +183,11 @@ public class AccountUserSelectData extends
         .getGroupName()
         .getValue();
 
-    query.where(Operations.eq(TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
+    query.where(Operations.eq(_TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
       + "."
-      + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+      + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
       + "."
-      + TurbineGroup.GROUP_NAME_PROPERTY, groupName));
+      + _TurbineGroup.GROUP_NAME_PROPERTY, groupName));
 
     return query;
   }
@@ -356,11 +360,11 @@ public class AccountUserSelectData extends
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
     map.putValue("post", "POST_ID");
-    map.putValue("login_name", TurbineUser.LOGIN_NAME_PROPERTY);
-    map.putValue("name_kana", TurbineUser.LAST_NAME_KANA_PROPERTY);
-    map.putValue("userposition", TurbineUser.EIP_MUSER_POSITION_PROPERTY
+    map.putValue("login_name", _TurbineUser.LOGIN_NAME_PROPERTY);
+    map.putValue("name_kana", _TurbineUser.LAST_NAME_KANA_PROPERTY);
+    map.putValue("userposition", _TurbineUser.EIP_MUSER_POSITION_PROPERTY
       + "."
-      + EipMUserPosition.POSITION_PROPERTY); // ユーザの順番
+      + _EipMUserPosition.POSITION_PROPERTY); // ユーザの順番
     return map;
   }
 

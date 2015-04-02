@@ -30,6 +30,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipUser;
@@ -105,7 +106,7 @@ public class MyGroupSelectData extends
     SelectQuery<TurbineGroup> query = Database.query(TurbineGroup.class);
 
     Expression exp =
-      ExpressionFactory.matchExp(TurbineGroup.OWNER_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_TurbineGroup.OWNER_ID_PROPERTY, Integer
         .valueOf(ALEipUtils.getUserId(rundata)));
     query.setQualifier(exp);
 
@@ -157,7 +158,7 @@ public class MyGroupSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("group_alias_name", TurbineGroup.GROUP_ALIAS_NAME_PROPERTY);
+    map.putValue("group_alias_name", _TurbineGroup.GROUP_ALIAS_NAME_PROPERTY);
     return map;
   }
 

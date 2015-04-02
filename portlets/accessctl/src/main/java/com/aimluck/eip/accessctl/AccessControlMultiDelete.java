@@ -29,6 +29,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.account.EipTAclRole;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclRole;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -58,7 +59,7 @@ public class AccessControlMultiDelete extends ALAbstractCheckList {
 
       SelectQuery<EipTAclRole> query = Database.query(EipTAclRole.class);
       Expression exp =
-        ExpressionFactory.inDbExp(EipTAclRole.ROLE_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipTAclRole.ROLE_ID_PK_COLUMN, values);
       query.setQualifier(exp);
       List<EipTAclRole> roles = query.fetchList();
       if (roles == null || roles.size() == 0) {

@@ -32,6 +32,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.category.util.CommonCategoryUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTCommonCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCommonCategory;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -130,14 +131,14 @@ public class CommonCategoryFormData extends ALAbstractFormData {
       SelectQuery<EipTCommonCategory> query =
         Database.query(EipTCommonCategory.class);
       Expression exp =
-        ExpressionFactory.matchExp(EipTCommonCategory.NAME_PROPERTY, name
+        ExpressionFactory.matchExp(_EipTCommonCategory.NAME_PROPERTY, name
           .getValue());
       query.setQualifier(exp);
 
       if (ALEipConstants.MODE_UPDATE.equals(getMode())) {
         Expression exp3 =
           ExpressionFactory.noMatchDbExp(
-            EipTCommonCategory.COMMON_CATEGORY_ID_PK_COLUMN,
+            _EipTCommonCategory.COMMON_CATEGORY_ID_PK_COLUMN,
             category_id);
         query.andQualifier(exp3);
       }

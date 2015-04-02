@@ -81,7 +81,8 @@ public class JetspeedStockQuoteService extends TurbineBaseService implements Sto
         @param symbol The stock symbol.
         @return String The current price.
       */
-    public String quote( String symbol )
+    @Override
+	public String quote( String symbol )
             throws RemoteException
     {
         StringBuffer envelope = new StringBuffer(BASE_SOAP_ENVELOPE);        
@@ -121,7 +122,8 @@ public class JetspeedStockQuoteService extends TurbineBaseService implements Sto
         @param symbol The stock symbol.
         @return StockQuote A full stock quote record.
       */
-    public StockQuote fullQuote( String symbol )
+    @Override
+	public StockQuote fullQuote( String symbol )
             throws RemoteException
     {
         StringBuffer envelope = new StringBuffer(BASE_SOAP_ENVELOPE);        
@@ -161,7 +163,8 @@ public class JetspeedStockQuoteService extends TurbineBaseService implements Sto
         @param symbols[] The array of stock symbols.
         @return StockQuote[] An array of full stock quotes for each stock symbol.
       */
-    public StockQuote[] fullQuotes( String [] symbols )
+    @Override
+	public StockQuote[] fullQuotes( String [] symbols )
             throws RemoteException
     {
         if (null == symbols || symbols.length < 1)
@@ -209,7 +212,8 @@ public class JetspeedStockQuoteService extends TurbineBaseService implements Sto
 
         @param service The name of the web service.
       */
-    public void setWebService( String service )
+    @Override
+	public void setWebService( String service )
     {
         this.soapEndPoint = service;
     }
@@ -219,7 +223,8 @@ public class JetspeedStockQuoteService extends TurbineBaseService implements Sto
 
         @return String The name of the web service.
       */
-    public String getWebService()
+    @Override
+	public String getWebService()
     {
         return soapEndPoint;
     }

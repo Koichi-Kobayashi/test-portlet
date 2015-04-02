@@ -90,7 +90,8 @@ public class SampleRewriter extends HTMLRewriter
      * @exception MalformedURLException a servlet exception.
      */
 
-    public String rewrite(Reader input, String baseURL)
+    @Override
+	public String rewrite(Reader input, String baseURL)
                                throws MalformedURLException
     {
         String rewrittenHTML = "";
@@ -124,7 +125,8 @@ public class SampleRewriter extends HTMLRewriter
      *
      * @exception MalformedURLException a servlet exception.
      */
-    public String generateNewUrl(String targetURL, HTML.Tag tag, HTML.Attribute attribute)
+    @Override
+	public String generateNewUrl(String targetURL, HTML.Tag tag, HTML.Attribute attribute)
     {
         if (debug)
             System.out.println("[rewriter] Tag: " + tag.toString() + "  Attribute: " + attribute.toString() + "  targetURL: " + targetURL + "  target = " + fullPortalURL + "]");
@@ -165,7 +167,8 @@ public class SampleRewriter extends HTMLRewriter
      *
      * @return true if all URLs are rewritten back to proxy server.
      */
-    public boolean proxyAllTags()
+    @Override
+	public boolean proxyAllTags()
     {
         return true;
     }
@@ -173,7 +176,8 @@ public class SampleRewriter extends HTMLRewriter
     /*
      * Start Tag Events
      */
-    public String exitStartTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
+    @Override
+	public String exitStartTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
     {
         if (tag == HTML.Tag.FORM)
         {
@@ -187,7 +191,8 @@ public class SampleRewriter extends HTMLRewriter
      * Simple Tag Events
      */
 
-    public boolean enterSimpleTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
+    @Override
+	public boolean enterSimpleTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
     {
         if (tag == HTML.Tag.META)
         {
@@ -209,7 +214,8 @@ public class SampleRewriter extends HTMLRewriter
      * Convert Tag Events
      */
 
-    public void convertTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
+    @Override
+	public void convertTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
     {
         if (tag == HTML.Tag.FORM) {
            // All forms from sample will have the same form NAME.

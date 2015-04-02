@@ -70,7 +70,8 @@ public class AccessControlResultData implements ALData {
    *
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     acl_role_id = new ALNumberField();
     acl_role_name = new ALStringField();
     feature_name = new ALStringField();

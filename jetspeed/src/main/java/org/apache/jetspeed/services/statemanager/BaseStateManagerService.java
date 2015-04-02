@@ -185,7 +185,8 @@ public abstract class BaseStateManagerService
     * @exception InitializationException, if initialization of this
     * class was not successful.
     */
-    public void init( ServletConfig config )
+    @Override
+	public void init( ServletConfig config )
         throws InitializationException
     {
         super.init(config);
@@ -199,7 +200,8 @@ public abstract class BaseStateManagerService
     * @exception InitializationException, if initialization of this
     * class was not successful.
     */
-    public void init( RunData data )
+    @Override
+	public void init( RunData data )
         throws InitializationException
     {
         super.init(data);
@@ -216,7 +218,8 @@ public abstract class BaseStateManagerService
     * @exception InitializationException, if initialization of this
     * class was not successful.
     */
-    public void init()
+    @Override
+	public void init()
         throws InitializationException
     {
         super.init();
@@ -235,7 +238,8 @@ public abstract class BaseStateManagerService
     * You can use this method to release resources thet your Service
     * allocated when Turbine shuts down.
     */
-    public void shutdown()
+    @Override
+	public void shutdown()
     {
         m_httpSessions.clear();
         m_httpSessions = null;
@@ -254,7 +258,8 @@ public abstract class BaseStateManagerService
     * @param name The attribute name.
     * @return The named attribute value of the keyed state.
     */
-    public Object getAttribute ( String key, String name )
+    @Override
+	public Object getAttribute ( String key, String name )
     {
         Map state = getState(key);
         if (state == null) return null;
@@ -268,7 +273,8 @@ public abstract class BaseStateManagerService
     * @param name The attribute name.
     * @param value The new value of the attribute (any object type).
     */
-    public void setAttribute( String key, String name, Object value )
+    @Override
+	public void setAttribute( String key, String name, Object value )
     {
         Map state = getState(key);
         if (state == null)
@@ -300,7 +306,8 @@ public abstract class BaseStateManagerService
     * @param key The state key.
     * @param name The attribute name.
     */
-    public void removeAttribute( String key, String name )
+    @Override
+	public void removeAttribute( String key, String name )
     {
         Map state = getState(key);
         if (state == null) return;
@@ -329,7 +336,8 @@ public abstract class BaseStateManagerService
     * Remove all state attribute of the keyed state.
     * @param key The state key.
     */
-    public void clear( String key )
+    @Override
+	public void clear( String key )
     {
         Map state = getState(key);
         if (state == null) return;
@@ -347,9 +355,10 @@ public abstract class BaseStateManagerService
     * @param key The state key.
     * @return An array of all names of attributes stored in the keyed state.
     */
-    public String[] getAttributeNames( String key )
+    @Override
+	public String[] getAttributeNames( String key )
     {
-        Map state = (Map) getState(key);
+        Map state = getState(key);
         if (state == null) return null;
         if (state.size() == 0) return null;
 
@@ -363,7 +372,8 @@ public abstract class BaseStateManagerService
     * @param key The SessionState key.
     * @return an SessionState object with the given key.
     */
-    public SessionState getSessionState( String key )
+    @Override
+	public SessionState getSessionState( String key )
     {
         return new MySessionState(key, this);
 
@@ -374,7 +384,8 @@ public abstract class BaseStateManagerService
 	* The session id is used as the key.
     * @return an SessionState object associated with the current request's http session.
     */
-    public SessionState getCurrentSessionState()
+    @Override
+	public SessionState getCurrentSessionState()
     {
         HttpSession session = (HttpSession) m_httpSessions.get(Thread.currentThread());
         if (session == null) return null;
@@ -388,7 +399,8 @@ public abstract class BaseStateManagerService
 	* @param key The string to add to the session id to form the SessionState key.
     * @return an SessionState object associated with the current request's http session with the given key.
     */
-    public SessionState getCurrentSessionState( String key )
+    @Override
+	public SessionState getCurrentSessionState( String key )
     {
         HttpSession session = (HttpSession) m_httpSessions.get(Thread.currentThread());
         if (session == null) return null;
@@ -401,7 +413,8 @@ public abstract class BaseStateManagerService
     * Retire, forget about and clean up all states that start with the given key.
     * @param keyStart The beginning of the key of the states to clean up.
     */
-    public synchronized void retireState( String keyStart )
+    @Override
+	public synchronized void retireState( String keyStart )
     {
         // get the current state keys into an array
         String keys[] = getStateKeys(keyStart);
@@ -421,7 +434,8 @@ public abstract class BaseStateManagerService
     * getCurrentSession() uses this for the session state key.
     * @param session the HttpSession of the current request.
     */
-    public void setCurrentContext( HttpSession session )
+    @Override
+	public void setCurrentContext( HttpSession session )
     {
         // store the session associated with this thread
         m_httpSessions.put(Thread.currentThread(), session);
@@ -432,7 +446,8 @@ public abstract class BaseStateManagerService
     * Clear the "current context for this thread -
     * Call at the end of each request, balanced with calls to setCurrentContext()
     */
-    public void clearCurrentContext()
+    @Override
+	public void clearCurrentContext()
     {
         // clear the session associated with this thread
         m_httpSessions.remove(Thread.currentThread());
@@ -473,7 +488,8 @@ public abstract class BaseStateManagerService
         * @param name The attribute name.
         * @return The named attribute value.
         */
-        public Object getAttribute( String name )
+        @Override
+		public Object getAttribute( String name )
         {
             return m_service.getAttribute(m_key, name);
 
@@ -484,7 +500,8 @@ public abstract class BaseStateManagerService
         * @param name The attribute name.
         * @param value The value of the attribute (any object type).
         */
-        public void setAttribute( String name, Object value )
+        @Override
+		public void setAttribute( String name, Object value )
         {
             m_service.setAttribute(m_key, name, value);
 
@@ -494,7 +511,8 @@ public abstract class BaseStateManagerService
         * Remove the named attribute, if it exists.
         * @param name The attribute name.
         */
-        public void removeAttribute( String name )
+        @Override
+		public void removeAttribute( String name )
         {
             m_service.removeAttribute(m_key, name);
 
@@ -503,7 +521,8 @@ public abstract class BaseStateManagerService
         /**
         * Remove all attributes.
         */
-        public void clear()
+        @Override
+		public void clear()
         {
             m_service.clear(m_key);
 
@@ -513,7 +532,8 @@ public abstract class BaseStateManagerService
         * Access an array of all names of attributes stored in the SessionState.
         * @return An array of all names of attribute stored in the SessionState.
         */
-        public String[] getAttributeNames()
+        @Override
+		public String[] getAttributeNames()
         {
             return m_service.getAttributeNames(m_key);
 
@@ -523,7 +543,8 @@ public abstract class BaseStateManagerService
         * Access the full unique StateManager key for the SessionState.
         * @return the full unique StateManager key for the SessionState.
         */
-        public String getKey()
+        @Override
+		public String getKey()
         {
             return m_key;
 
@@ -532,7 +553,8 @@ public abstract class BaseStateManagerService
         /**
         * Retire, forget about and clean up this state.
         */
-        public void retire()
+        @Override
+		public void retire()
         {
             m_service.retireState(m_key);
 

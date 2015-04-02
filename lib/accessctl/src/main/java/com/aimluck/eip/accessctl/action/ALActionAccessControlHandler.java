@@ -32,7 +32,10 @@ import org.apache.turbine.util.RunData;
 import com.aimluck.eip.cayenne.om.account.EipTAclPortletFeature;
 import com.aimluck.eip.cayenne.om.account.EipTAclRole;
 import com.aimluck.eip.cayenne.om.account.EipTAclUserRoleMap;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclPortletFeature;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclRole;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALEipManager;
 import com.aimluck.eip.common.ALEipUser;
 import com.aimluck.eip.orm.Database;
@@ -68,11 +71,11 @@ public class ALActionAccessControlHandler extends ALAccessControlHandler {
       int acl_type) {
     StringBuffer sb = new StringBuffer();
     sb.append("SELECT ");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" FROM turbine_user WHERE (");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" IN (SELECT ");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" FROM eip_t_acl_user_role_map WHERE ");
     sb.append(EipTAclUserRoleMap.ROLE_ID_COLUMN);
     sb.append(" IN (SELECT ");
@@ -84,15 +87,15 @@ public class ALActionAccessControlHandler extends ALAccessControlHandler {
     sb.append(") = ");
     sb.append(Integer.toString(acl_type));
     sb.append(") AND (");
-    sb.append(EipTAclPortletFeature.FEATURE_ID_PK_COLUMN);
+    sb.append(_EipTAclPortletFeature.FEATURE_ID_PK_COLUMN);
     sb.append(" IN (SELECT ");
-    sb.append(EipTAclPortletFeature.FEATURE_ID_PK_COLUMN);
+    sb.append(_EipTAclPortletFeature.FEATURE_ID_PK_COLUMN);
     sb.append(" FROM eip_t_acl_portlet_feature WHERE ");
     sb.append(EipTAclPortletFeature.FEATURE_NAME_COLUMN);
     sb.append("='");
     sb.append(feat.trim());
     sb.append("'))))) AND (");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" != ");
     sb.append(Integer.toString(uid));
     sb.append(")");
@@ -120,11 +123,11 @@ public class ALActionAccessControlHandler extends ALAccessControlHandler {
 
     StringBuffer sb = new StringBuffer();
     sb.append("SELECT ");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" FROM turbine_user WHERE (");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" IN (SELECT ");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" FROM turbine_user_group_role WHERE ");
     sb.append(EipTAclUserRoleMap.ROLE_ID_COLUMN);
     sb.append(" IN (SELECT ");
@@ -136,15 +139,15 @@ public class ALActionAccessControlHandler extends ALAccessControlHandler {
     sb.append(") = ");
     sb.append("#bind($aclType)");
     sb.append(") AND (");
-    sb.append(EipTAclPortletFeature.FEATURE_ID_PK_COLUMN);
+    sb.append(_EipTAclPortletFeature.FEATURE_ID_PK_COLUMN);
     sb.append(" IN (SELECT ");
-    sb.append(EipTAclPortletFeature.FEATURE_ID_PK_COLUMN);
+    sb.append(_EipTAclPortletFeature.FEATURE_ID_PK_COLUMN);
     sb.append(" FROM eip_t_acl_portlet_feature WHERE ");
     sb.append(EipTAclPortletFeature.FEATURE_NAME_COLUMN);
     sb.append("= ");
     sb.append("#bind($feat)");
     sb.append("))))) AND (");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" in (");
 
     for (int i = 0; i < u_size; i++) {
@@ -155,7 +158,7 @@ public class ALActionAccessControlHandler extends ALAccessControlHandler {
     }
 
     sb.append(")) AND (");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" != ");
     sb.append("#bind($uid)");
     sb.append(")");
@@ -196,7 +199,7 @@ public class ALActionAccessControlHandler extends ALAccessControlHandler {
     StringBuffer sb = new StringBuffer();
 
     sb.append("(SELECT ");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" FROM eip_t_acl_user_role_map WHERE ");
     sb.append(EipTAclUserRoleMap.ROLE_ID_COLUMN);
     sb.append(" IN (SELECT ");
@@ -208,9 +211,9 @@ public class ALActionAccessControlHandler extends ALAccessControlHandler {
     sb.append(") = ");
     sb.append("#bind($aclNumber)");
     sb.append(") AND (");
-    sb.append(EipTAclPortletFeature.FEATURE_ID_PK_COLUMN);
+    sb.append(_EipTAclPortletFeature.FEATURE_ID_PK_COLUMN);
     sb.append(" IN (SELECT ");
-    sb.append(EipTAclPortletFeature.FEATURE_ID_PK_COLUMN);
+    sb.append(_EipTAclPortletFeature.FEATURE_ID_PK_COLUMN);
     sb.append(" FROM eip_t_acl_portlet_feature WHERE ");
     sb.append(EipTAclPortletFeature.FEATURE_NAME_COLUMN);
     sb.append("= ");
@@ -259,7 +262,7 @@ public class ALActionAccessControlHandler extends ALAccessControlHandler {
       integerList.add(Integer.valueOf(i + 1));
     }
     Expression exp =
-      ExpressionFactory.inDbExp(EipTAclRole.ROLE_ID_PK_COLUMN, integerList);
+      ExpressionFactory.inDbExp(_EipTAclRole.ROLE_ID_PK_COLUMN, integerList);
     List<EipTAclRole> list = Database.query(EipTAclRole.class, exp).fetchList();
     for (EipTAclRole role2 : list) {
       EipTAclUserRoleMap map = Database.create(EipTAclUserRoleMap.class);

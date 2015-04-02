@@ -43,9 +43,15 @@ import com.aimluck.eip.cayenne.om.portlet.EipMAddressGroup;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressbook;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressbookCompany;
 import com.aimluck.eip.cayenne.om.portlet.EipTAddressbookGroupMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressGroup;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressbook;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressbookCompany;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTAddressbookGroupMap;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -84,11 +90,11 @@ public class AddressBookUtils {
         Database.query(EipMAddressGroup.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipMAddressGroup.GROUP_ID_PK_COLUMN,
+          _EipMAddressGroup.GROUP_ID_PK_COLUMN,
           Integer.valueOf(groupid));
       query.setQualifier(exp1);
       Expression exp2 =
-        ExpressionFactory.matchExp(EipMAddressGroup.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMAddressGroup.OWNER_ID_PROPERTY, Integer
           .valueOf(ALEipUtils.getUserId(rundata)));
       query.andQualifier(exp2);
 
@@ -127,7 +133,7 @@ public class AddressBookUtils {
         Database.query(EipMAddressbookCompany.class);
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipMAddressbookCompany.COMPANY_ID_PK_COLUMN,
+          _EipMAddressbookCompany.COMPANY_ID_PK_COLUMN,
           Integer.valueOf(companyid));
       query.setQualifier(exp);
 
@@ -154,14 +160,14 @@ public class AddressBookUtils {
         Database.query(EipTAddressbookGroupMap.class);
       Expression exp1 =
         ExpressionFactory.matchExp(
-          EipTAddressbookGroupMap.ADDRESS_ID_PROPERTY,
+          _EipTAddressbookGroupMap.ADDRESS_ID_PROPERTY,
           Integer.valueOf(addressid));
       query.setQualifier(exp1);
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipTAddressbookGroupMap.EIP_TADDRESS_GROUP_PROPERTY
+          _EipTAddressbookGroupMap.EIP_TADDRESS_GROUP_PROPERTY
             + "."
-            + EipMAddressGroup.OWNER_ID_PROPERTY,
+            + _EipMAddressGroup.OWNER_ID_PROPERTY,
           Integer.valueOf(userid));
       query.andQualifier(exp2);
 
@@ -216,18 +222,18 @@ public class AddressBookUtils {
         Database.query(EipMAddressbook.class);
       Expression exp11 =
         ExpressionFactory.matchDbExp(
-          EipMAddressbook.ADDRESS_ID_PK_COLUMN,
+          _EipMAddressbook.ADDRESS_ID_PK_COLUMN,
           Integer.valueOf(addressid));
       query.setQualifier(exp11);
 
       Expression exp21 =
-        ExpressionFactory.matchExp(EipMAddressbook.PUBLIC_FLAG_PROPERTY, "T");
+        ExpressionFactory.matchExp(_EipMAddressbook.PUBLIC_FLAG_PROPERTY, "T");
       Expression exp22 =
         ExpressionFactory.matchExp(
-          EipMAddressbook.OWNER_ID_PROPERTY,
+          _EipMAddressbook.OWNER_ID_PROPERTY,
           ALEipUtils.getUserId(rundata));
       Expression exp23 =
-        ExpressionFactory.matchExp(EipMAddressbook.PUBLIC_FLAG_PROPERTY, "F");
+        ExpressionFactory.matchExp(_EipMAddressbook.PUBLIC_FLAG_PROPERTY, "F");
       query.andQualifier(exp21.orExp(exp22.andExp(exp23)));
 
       List<EipMAddressbook> addresses = query.fetchList();
@@ -272,7 +278,7 @@ public class AddressBookUtils {
       SelectQuery<EipMAddressGroup> query =
         Database.query(EipMAddressGroup.class);
       Expression exp =
-        ExpressionFactory.matchExp(EipMAddressGroup.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMAddressGroup.OWNER_ID_PROPERTY, Integer
           .valueOf(ALEipUtils.getUserId(rundata)));
       query.setQualifier(exp);
 
@@ -299,7 +305,7 @@ public class AddressBookUtils {
       SelectQuery<EipMAddressGroup> query =
         Database.query(EipMAddressGroup.class);
       Expression exp =
-        ExpressionFactory.matchExp(EipMAddressGroup.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMAddressGroup.OWNER_ID_PROPERTY, Integer
           .valueOf(uid));
       query.setQualifier(exp);
 
@@ -378,16 +384,16 @@ public class AddressBookUtils {
       Database.query(TurbineUserGroupRole.class);
     Expression exp1 =
       ExpressionFactory.matchExp(
-        TurbineUserGroupRole.TURBINE_USER_PROPERTY,
+        _TurbineUserGroupRole.TURBINE_USER_PROPERTY,
         Integer.valueOf(uid));
     Expression exp2 =
       ExpressionFactory.greaterExp(
-        TurbineUserGroupRole.TURBINE_GROUP_PROPERTY,
+        _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY,
         Integer.valueOf(3));
     Expression exp3 =
-      ExpressionFactory.matchExp(TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+      ExpressionFactory.matchExp(_TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
         + "."
-        + TurbineGroup.OWNER_ID_PROPERTY, Integer.valueOf(1));
+        + _TurbineGroup.OWNER_ID_PROPERTY, Integer.valueOf(1));
     query.setQualifier(exp1);
     query.andQualifier(exp2);
     query.andQualifier(exp3);
@@ -496,7 +502,7 @@ public class AddressBookUtils {
   public static Expression excludeDefaultCompanyCriteria() {
     Expression exp =
       ExpressionFactory.noMatchDbExp(
-        EipMAddressbookCompany.COMPANY_ID_PK_COLUMN,
+        _EipMAddressbookCompany.COMPANY_ID_PK_COLUMN,
         Integer.valueOf(1));
     return exp;
   }
@@ -515,9 +521,9 @@ public class AddressBookUtils {
       SelectQuery<EipMAddressGroup> query =
         Database.query(EipMAddressGroup.class);
       Expression exp =
-        ExpressionFactory.matchExp(EipMAddressGroup.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMAddressGroup.OWNER_ID_PROPERTY, Integer
           .valueOf(ALEipUtils.getUserId(rundata)));
-      query.orderAscending(EipMAddressGroup.GROUP_NAME_PROPERTY);
+      query.orderAscending(_EipMAddressGroup.GROUP_NAME_PROPERTY);
       query.setQualifier(exp);
       List<EipMAddressGroup> aList = query.fetchList();
       for (EipMAddressGroup record : aList) {

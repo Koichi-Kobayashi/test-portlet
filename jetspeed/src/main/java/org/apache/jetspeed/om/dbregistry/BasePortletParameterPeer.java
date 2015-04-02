@@ -1,11 +1,8 @@
 package org.apache.jetspeed.om.dbregistry;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,9 +12,6 @@ import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
 import org.apache.torque.map.MapBuilder;
 import org.apache.torque.map.TableMap;
-import org.apache.torque.om.DateKey;
-import org.apache.torque.om.NumberKey;
-import org.apache.torque.om.StringKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
 import org.apache.torque.util.BasePeer;
@@ -337,7 +331,7 @@ public abstract class BasePortletParameterPeer
         try
         {
             PortletParameter obj = (PortletParameter) cls.newInstance();
-            PortletParameterPeer.populateObject(row, offset, obj);
+            BasePortletParameterPeer.populateObject(row, offset, obj);
                   obj.setModified(false);
               obj.setNew(false);
 
@@ -534,8 +528,8 @@ public abstract class BasePortletParameterPeer
         for (int i = 0; i < records.size(); i++)
         {
             Record row = (Record) records.get(i);
-              results.add(PortletParameterPeer.row2Object(row, 1,
-                PortletParameterPeer.getOMClass()));
+              results.add(BasePortletParameterPeer.row2Object(row, 1,
+                BasePortletParameterPeer.getOMClass()));
           }
         return results;
     }
@@ -1048,13 +1042,13 @@ public abstract class BasePortletParameterPeer
             c.setDbName(DATABASE_NAME);
         }
 
-        PortletParameterPeer.addSelectColumns(c);
+        BasePortletParameterPeer.addSelectColumns(c);
         int offset = numColumns + 1;
-        PortletDbEntryPeer.addSelectColumns(c);
+        BasePortletDbEntryPeer.addSelectColumns(c);
 
 
-                        c.addJoin(PortletParameterPeer.PORTLET_ID,
-            PortletDbEntryPeer.ID);
+                        c.addJoin(BasePortletParameterPeer.PORTLET_ID,
+            BasePortletDbEntryPeer.ID);
         
 
                                                                                                   // check for conversion from boolean to int
@@ -1113,18 +1107,18 @@ public abstract class BasePortletParameterPeer
         {
             Record row = (Record) rows.get(i);
 
-                            Class omClass = PortletParameterPeer.getOMClass();
-                    PortletParameter obj1 = (PortletParameter) PortletParameterPeer
+                            Class omClass = BasePortletParameterPeer.getOMClass();
+                    PortletParameter obj1 = BasePortletParameterPeer
                 .row2Object(row, 1, omClass);
-                     omClass = PortletDbEntryPeer.getOMClass();
-                    PortletDbEntry obj2 = (PortletDbEntry)PortletDbEntryPeer
+                     omClass = BasePortletDbEntryPeer.getOMClass();
+                    PortletDbEntry obj2 = BasePortletDbEntryPeer
                 .row2Object(row, offset, omClass);
 
             boolean newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 PortletParameter temp_obj1 = (PortletParameter)results.get(j);
-                PortletDbEntry temp_obj2 = (PortletDbEntry)temp_obj1.getPortletDbEntry();
+                PortletDbEntry temp_obj2 = temp_obj1.getPortletDbEntry();
                 if (temp_obj2.getPrimaryKey().equals(obj2.getPrimaryKey()))
                 {
                     newObject = false;

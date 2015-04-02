@@ -36,6 +36,8 @@ import com.aimluck.commons.utils.ALStringUtil;
 import com.aimluck.eip.addressbook.util.AddressBookUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressbook;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressbookCompany;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressbook;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressbookCompany;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -525,9 +527,9 @@ public class AddressBookCompanyFormData extends ALAbstractFormData {
         Database.query(EipMAddressbook.class);
       Expression addrexp =
         ExpressionFactory.matchDbExp(
-          EipMAddressbook.EIP_MADDRESSBOOK_COMPANY_PROPERTY
+          _EipMAddressbook.EIP_MADDRESSBOOK_COMPANY_PROPERTY
             + "."
-            + EipMAddressbookCompany.COMPANY_ID_PK_COLUMN,
+            + _EipMAddressbookCompany.COMPANY_ID_PK_COLUMN,
           companyid);
       addrquery.setQualifier(addrexp);
 

@@ -1,24 +1,16 @@
 package org.apache.jetspeed.om.dbregistry;
 
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.BaseObject;
-import org.apache.torque.om.ComboKey;
-import org.apache.torque.om.DateKey;
 import org.apache.torque.om.NumberKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
-import org.apache.torque.om.StringKey;
-import org.apache.torque.om.Persistent;
-import org.apache.torque.util.Criteria;
 import org.apache.torque.util.Transaction;
 
   
@@ -136,7 +128,7 @@ public abstract class BasePortletMediatype extends BaseObject
     {
         if ( getId()>0 )
         {
-                return PortletDbEntryManager.getInstance(SimpleKey.keyFor(getId()));
+                return BasePortletDbEntryManager.getInstance(SimpleKey.keyFor(getId()));
             }
         return aPortletDbEntry;
     }
@@ -181,7 +173,7 @@ public abstract class BasePortletMediatype extends BaseObject
     {
         if ( getMediaId()>0 )
         {
-                return MediatypeManager.getInstance(SimpleKey.keyFor(getMediaId()));
+                return BaseMediatypeManager.getInstance(SimpleKey.keyFor(getMediaId()));
             }
         return aMediatype;
     }
@@ -221,7 +213,8 @@ public abstract class BasePortletMediatype extends BaseObject
      * Retrieves a field from the object by name passed in
      * as a String.
      */
-    public Object getByName(String name)
+    @Override
+	public Object getByName(String name)
     {
           if (name.equals("Id"))
         {
@@ -239,13 +232,14 @@ public abstract class BasePortletMediatype extends BaseObject
      * as a String.  The String must be one of the static
      * Strings defined in this Class' Peer.
      */
-    public Object getByPeerName(String name)
+    @Override
+	public Object getByPeerName(String name)
     {
-          if (name.equals(PortletMediatypePeer.ID ))
+          if (name.equals(BasePortletMediatypePeer.ID ))
         {
                 return new Long(getId());
             }
-          if (name.equals(PortletMediatypePeer.MEDIA_ID ))
+          if (name.equals(BasePortletMediatypePeer.MEDIA_ID ))
         {
                 return new Long(getMediaId());
             }
@@ -256,7 +250,8 @@ public abstract class BasePortletMediatype extends BaseObject
      * Retrieves a field from the object by Position as specified
      * in the xml schema.  Zero-based.
      */
-    public Object getByPosition(int pos)
+    @Override
+	public Object getByPosition(int pos)
     {
             if ( pos == 0 )
         {
@@ -273,9 +268,10 @@ public abstract class BasePortletMediatype extends BaseObject
      * Stores the object in the database.  If the object is new,
      * it inserts it; otherwise an update is performed.
      */
-    public void save() throws Exception
+    @Override
+	public void save() throws Exception
     {
-          save(PortletMediatypePeer.getMapBuilder()
+          save(BasePortletMediatypePeer.getMapBuilder()
                 .getDatabaseMap().getName());
       }
 
@@ -286,7 +282,8 @@ public abstract class BasePortletMediatype extends BaseObject
      * auto-generated conditionally and therefore needs to be
      * in this file instead of in the super class, BaseObject.
        */
-    public void save(String dbName) throws TorqueException
+    @Override
+	public void save(String dbName) throws TorqueException
     {
         Connection con = null;
           try
@@ -312,7 +309,8 @@ public abstract class BasePortletMediatype extends BaseObject
      * the save() method and the connection details will be handled
      * internally
      */
-    public void save(Connection con) throws TorqueException
+    @Override
+	public void save(Connection con) throws TorqueException
     {
           if (!alreadyInSave)
         {
@@ -325,12 +323,12 @@ public abstract class BasePortletMediatype extends BaseObject
             {
                 if (isNew())
                 {
-                    PortletMediatypePeer.doInsert((PortletMediatype)this, con);
+                    BasePortletMediatypePeer.doInsert((PortletMediatype)this, con);
                     setNew(false);
                 }
                 else
                 {
-                    PortletMediatypePeer.doUpdate((PortletMediatype)this, con);
+                    BasePortletMediatypePeer.doUpdate((PortletMediatype)this, con);
                 }
 
               }
@@ -346,7 +344,8 @@ public abstract class BasePortletMediatype extends BaseObject
      * returns an id that differentiates this object from others
      * of its class.
      */
-    public ObjectKey getPrimaryKey()
+    @Override
+	public ObjectKey getPrimaryKey()
     {
           return null;
       }

@@ -23,7 +23,7 @@ import org.apache.jetspeed.om.profile.Security;
  * Castor serialization.
  * 
  * @see org.apache.jetspeed.om.registry.Security
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: PsmlSecurity.java,v 1.5 2004/02/23 03:02:54 jford Exp $
  */
 public class PsmlSecurity implements Security, java.io.Serializable
@@ -40,7 +40,8 @@ public class PsmlSecurity implements Security, java.io.Serializable
      *
      * @return the id of this entry. 
      */
-    public String getId()
+    @Override
+	public String getId()
     {
         return id;
     }
@@ -51,7 +52,8 @@ public class PsmlSecurity implements Security, java.io.Serializable
      *
      * @param id the unique id of the security entry.
      */
-    public void setId(String id)
+    @Override
+	public void setId(String id)
     {
         this.id = id;
     }
@@ -59,7 +61,8 @@ public class PsmlSecurity implements Security, java.io.Serializable
     /**
      * Create a clone of this object
      */
-    public Object clone()
+    @Override
+	public Object clone()
         throws java.lang.CloneNotSupportedException
     {
         return super.clone();

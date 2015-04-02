@@ -71,7 +71,8 @@ implements ViewProcessor
     {
     }
 
-    public Object processView(GenericMVCContext context)
+    @Override
+	public Object processView(GenericMVCContext context)
     {
 
         Portlet portlet = (Portlet) context.get("portlet");
@@ -144,7 +145,7 @@ implements ViewProcessor
                 while (names.hasNext()) 
                 {
                     String name = (String) names.next();
-                    String value = (String) portlet.getPortletConfig().getInitParameter(name);
+                    String value = portlet.getPortletConfig().getInitParameter(name);
                     data.getParameters().setString(name, value);
                 }
 
@@ -181,7 +182,8 @@ implements ViewProcessor
      * in question.
      *
      */
-    public void init(Portlet portlet)
+    @Override
+	public void init(Portlet portlet)
     {
     }
 }

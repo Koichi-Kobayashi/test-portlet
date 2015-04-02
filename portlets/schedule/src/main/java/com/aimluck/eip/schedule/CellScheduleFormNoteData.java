@@ -42,6 +42,8 @@ import com.aimluck.eip.category.util.CommonCategoryUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTCommonCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTSchedule;
 import com.aimluck.eip.cayenne.om.portlet.EipTScheduleMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTSchedule;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTScheduleMap;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.common.ALEipGroup;
@@ -825,7 +827,7 @@ public class CellScheduleFormNoteData extends AbstractCellScheduleFormData {
         Database.query(EipTScheduleMap.class);
       Expression mapexp =
         ExpressionFactory.matchExp(
-          EipTScheduleMap.SCHEDULE_ID_PROPERTY,
+          _EipTScheduleMap.SCHEDULE_ID_PROPERTY,
           schedule.getScheduleId());
       mapquery.setQualifier(mapexp);
       List<EipTScheduleMap> list = mapquery.fetchList();
@@ -1068,7 +1070,7 @@ public class CellScheduleFormNoteData extends AbstractCellScheduleFormData {
           Database.query(EipTScheduleMap.class);
         Expression exp =
           ExpressionFactory.matchExp(
-            EipTScheduleMap.SCHEDULE_ID_PROPERTY,
+            _EipTScheduleMap.SCHEDULE_ID_PROPERTY,
             schedule.getScheduleId());
         query.setQualifier(exp);
         List<EipTScheduleMap> schedulemaps = query.fetchList();
@@ -1456,13 +1458,13 @@ public class CellScheduleFormNoteData extends AbstractCellScheduleFormData {
     // ダミースケジュールの取得
     SelectQuery<EipTSchedule> query = Database.query(EipTSchedule.class);
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTSchedule.PARENT_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTSchedule.PARENT_ID_PROPERTY, Integer
         .valueOf(scheduleId));
     query.setQualifier(exp1);
     Expression exp2 =
-      ExpressionFactory.matchExp(EipTSchedule.EIP_TSCHEDULE_MAPS_PROPERTY
+      ExpressionFactory.matchExp(_EipTSchedule.EIP_TSCHEDULE_MAPS_PROPERTY
         + "."
-        + EipTScheduleMap.STATUS_PROPERTY, "D");
+        + _EipTScheduleMap.STATUS_PROPERTY, "D");
     query.andQualifier(exp2);
     List<EipTSchedule> dellist = query.fetchList();
     // ダミースケジュールの削除

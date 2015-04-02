@@ -24,7 +24,7 @@ import org.apache.jetspeed.om.profile.*;
  * Default bean like implementation of the Entry interface
  * suitable for serialization with Castor
  * 
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:taylor@apache.org">David Sean Taylor</a>
  * @version $Id: PsmlEntry.java,v 1.6 2004/02/23 03:02:54 jford Exp $
  */
@@ -37,7 +37,8 @@ public class PsmlEntry extends PsmlIdentityElement implements Entry
     private SecurityReference securityRef;    
     
     /** @return the entry name from which this one is derived */
-    public String getParent()
+    @Override
+	public String getParent()
     {
         return this.parent;
     }
@@ -47,7 +48,8 @@ public class PsmlEntry extends PsmlIdentityElement implements Entry
      * @param parent the new ancestor entry name. This name should
      * be defined in the system registry
      */
-    public void setParent( String parent )
+    @Override
+	public void setParent( String parent )
     {
         this.parent = parent;
     }
@@ -55,7 +57,8 @@ public class PsmlEntry extends PsmlIdentityElement implements Entry
     /** Getter for property securityRef.
      * @return Value of property securityRef.
      */
-    public SecurityReference getSecurityRef()
+    @Override
+	public SecurityReference getSecurityRef()
     {
         return securityRef;
     }    
@@ -63,7 +66,8 @@ public class PsmlEntry extends PsmlIdentityElement implements Entry
     /** Setter for property securityRef.
      * @param securityRef New value of property securityRef.
      */
-    public void setSecurityRef(SecurityReference securityRef)
+    @Override
+	public void setSecurityRef(SecurityReference securityRef)
     {
         this.securityRef = securityRef;
     }
@@ -92,7 +96,8 @@ public class PsmlEntry extends PsmlIdentityElement implements Entry
     /**
      * Create a clone of this object
      */
-    public Object clone()
+    @Override
+	public Object clone()
         throws java.lang.CloneNotSupportedException
     {
         Object cloned = super.clone();

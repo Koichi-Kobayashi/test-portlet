@@ -40,6 +40,8 @@ import com.aimluck.eip.cayenne.om.portlet.EipMAddressGroup;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressbook;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressbookCompany;
 import com.aimluck.eip.cayenne.om.portlet.EipTAddressbookGroupMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressGroup;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTAddressbookGroupMap;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -308,7 +310,7 @@ public class AddressBookFormData extends ALAbstractFormData {
       SelectQuery<EipMAddressGroup> query =
         Database.query(EipMAddressGroup.class);
       Expression exp =
-        ExpressionFactory.matchExp(EipMAddressGroup.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMAddressGroup.OWNER_ID_PROPERTY, Integer
           .valueOf(ALEipUtils.getUserId(rundata)));
       query.setQualifier(exp);
 
@@ -347,15 +349,15 @@ public class AddressBookFormData extends ALAbstractFormData {
         Database.query(EipTAddressbookGroupMap.class);
       Expression exp1 =
         ExpressionFactory.matchExp(
-          EipTAddressbookGroupMap.EIP_TADDRESS_GROUP_PROPERTY
+          _EipTAddressbookGroupMap.EIP_TADDRESS_GROUP_PROPERTY
             + "."
-            + EipMAddressGroup.OWNER_ID_PROPERTY,
+            + _EipMAddressGroup.OWNER_ID_PROPERTY,
           Integer.valueOf(ALEipUtils.getUserId(rundata)));
       query.setQualifier(exp1);
 
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipTAddressbookGroupMap.ADDRESS_ID_PROPERTY,
+          _EipTAddressbookGroupMap.ADDRESS_ID_PROPERTY,
           Integer.valueOf(addressid));
       query.andQualifier(exp2);
 
@@ -808,7 +810,7 @@ public class AddressBookFormData extends ALAbstractFormData {
         Database.query(EipTAddressbookGroupMap.class);
       Expression exp =
         ExpressionFactory.matchExp(
-          EipTAddressbookGroupMap.ADDRESS_ID_PROPERTY,
+          _EipTAddressbookGroupMap.ADDRESS_ID_PROPERTY,
           Integer.valueOf(addressid));
       query.setQualifier(exp);
 
@@ -922,7 +924,7 @@ public class AddressBookFormData extends ALAbstractFormData {
       SelectQuery<EipMAddressGroup> query1 =
         Database.query(EipMAddressGroup.class);
       Expression exp1 =
-        ExpressionFactory.matchExp(EipMAddressGroup.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMAddressGroup.OWNER_ID_PROPERTY, Integer
           .valueOf(uid));
       query1.setQualifier(exp1);
 
@@ -941,7 +943,7 @@ public class AddressBookFormData extends ALAbstractFormData {
         query2.setQualifier(exp2);
         Expression exp3 =
           ExpressionFactory.matchExp(
-            EipTAddressbookGroupMap.ADDRESS_ID_PROPERTY,
+            _EipTAddressbookGroupMap.ADDRESS_ID_PROPERTY,
             addressid);
         query2.setQualifier(exp3);
 
@@ -1007,7 +1009,7 @@ public class AddressBookFormData extends ALAbstractFormData {
         SelectQuery<EipMAddressGroup> query =
           Database.query(EipMAddressGroup.class);
         Expression exp =
-          ExpressionFactory.inDbExp(EipMAddressGroup.GROUP_ID_PK_COLUMN, str);
+          ExpressionFactory.inDbExp(_EipMAddressGroup.GROUP_ID_PK_COLUMN, str);
         query.setQualifier(exp);
 
         List<EipMAddressGroup> list = query.fetchList();

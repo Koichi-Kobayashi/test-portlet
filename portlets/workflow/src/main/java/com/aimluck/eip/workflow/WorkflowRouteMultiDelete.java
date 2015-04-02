@@ -32,6 +32,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRequest;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRoute;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowRoute;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -72,7 +73,7 @@ public class WorkflowRouteMultiDelete extends ALAbstractCheckList {
         Database.query(EipTWorkflowRoute.class);
       Expression exp1 =
         ExpressionFactory.inDbExp(
-          EipTWorkflowRoute.ROUTE_ID_PK_COLUMN,
+          _EipTWorkflowRoute.ROUTE_ID_PK_COLUMN,
           intValues);
       query.setQualifier(exp1);
       List<EipTWorkflowRoute> routelist = query.fetchList();

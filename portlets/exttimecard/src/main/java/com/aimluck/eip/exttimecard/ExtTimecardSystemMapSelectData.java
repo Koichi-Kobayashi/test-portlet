@@ -34,11 +34,16 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.account.util.AccountUtils;
 import com.aimluck.eip.cayenne.om.account.EipMUserPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMUserPosition;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystem;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystemMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTExtTimecardSystemMap;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -148,7 +153,7 @@ public class ExtTimecardSystemMapSelectData extends
           Database.query(EipTExtTimecardSystemMap.class);
         Expression exp =
           ExpressionFactory.matchExp(
-            EipTExtTimecardSystemMap.USER_ID_PROPERTY,
+            _EipTExtTimecardSystemMap.USER_ID_PROPERTY,
             Integer.valueOf(user.getUserId()));
         map_query.setQualifier(exp);
         ResultList<EipTExtTimecardSystemMap> map_list =
@@ -178,16 +183,16 @@ public class ExtTimecardSystemMapSelectData extends
     SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
 
     ObjectId oid =
-      new ObjectId("TurbineUser", TurbineUser.USER_ID_PK_COLUMN, 3);
+      new ObjectId("TurbineUser", _TurbineUser.USER_ID_PK_COLUMN, 3);
     Expression exp1 =
       ExpressionFactory.matchAllDbExp(
         oid.getIdSnapshot(),
         Expression.GREATER_THAN);
     Expression exp2 =
-      ExpressionFactory.matchExp(TurbineUser.COMPANY_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_TurbineUser.COMPANY_ID_PROPERTY, Integer
         .valueOf(1));
     Expression exp3 =
-      ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+      ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
 
     query.setQualifier(exp1);
     query.andQualifier(exp2);
@@ -213,11 +218,11 @@ public class ExtTimecardSystemMapSelectData extends
         .getValue();
 
     Expression exp4 =
-      ExpressionFactory.matchExp(TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
+      ExpressionFactory.matchExp(_TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
         + "."
-        + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+        + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
         + "."
-        + TurbineGroup.GROUP_NAME_PROPERTY, groupName);
+        + _TurbineGroup.GROUP_NAME_PROPERTY, groupName);
     query.andQualifier(exp4);
 
     return query;
@@ -277,10 +282,10 @@ public class ExtTimecardSystemMapSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("name_kana", TurbineUser.LAST_NAME_KANA_PROPERTY);
-    map.putValue("userposition", TurbineUser.EIP_MUSER_POSITION_PROPERTY
+    map.putValue("name_kana", _TurbineUser.LAST_NAME_KANA_PROPERTY);
+    map.putValue("userposition", _TurbineUser.EIP_MUSER_POSITION_PROPERTY
       + "."
-      + EipMUserPosition.POSITION_PROPERTY); // ユーザの順番
+      + _EipMUserPosition.POSITION_PROPERTY); // ユーザの順番
     return map;
   }
 

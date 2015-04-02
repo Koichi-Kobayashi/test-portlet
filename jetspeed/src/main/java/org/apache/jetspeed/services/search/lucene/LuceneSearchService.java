@@ -57,7 +57,6 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.Query;
@@ -92,7 +91,8 @@ public class LuceneSearchService extends TurbineBaseService implements SearchSer
      * @exception throws a <code>InitializationException</code> if the service
      * fails to initialize
      */
-    public synchronized void init(ServletConfig conf) throws InitializationException
+    @Override
+	public synchronized void init(ServletConfig conf) throws InitializationException
     {
 
         // already initialized
@@ -115,7 +115,8 @@ public class LuceneSearchService extends TurbineBaseService implements SearchSer
      * @exception throws a <code>InitializationException</code> if the service
      * fails to initialize
      */
-    public void init() throws InitializationException
+    @Override
+	public void init() throws InitializationException
     {
         logger.info("Late init for " + SearchService.SERVICE_NAME + " called");
         while (!getInit())
@@ -137,7 +138,8 @@ public class LuceneSearchService extends TurbineBaseService implements SearchSer
      * This is the shutdown method called by the
      * Turbine <code>Service</code> framework
      */
-    public void shutdown()
+    @Override
+	public void shutdown()
     {
     }
 
@@ -216,7 +218,8 @@ public class LuceneSearchService extends TurbineBaseService implements SearchSer
      *               is the what is being searched for
      * @return Hits, if no hits then null.
      */
-    public SearchResults search(String searchString)
+    @Override
+	public SearchResults search(String searchString)
     {
         Searcher searcher = null;
         Hits hits = null;
@@ -386,7 +389,8 @@ public class LuceneSearchService extends TurbineBaseService implements SearchSer
      * @param o
      * @return 
      */
-    public boolean add(Object o)
+    @Override
+	public boolean add(Object o)
     {
         Collection c = new ArrayList(1);
         c.add(o);
@@ -400,7 +404,8 @@ public class LuceneSearchService extends TurbineBaseService implements SearchSer
      * @param c
      * @return 
      */
-    public boolean add(Collection c)
+    @Override
+	public boolean add(Collection c)
     {
         boolean result = false;
 
@@ -572,7 +577,8 @@ public class LuceneSearchService extends TurbineBaseService implements SearchSer
      * @param o
      * @return 
      */
-    public boolean remove(Object o)
+    @Override
+	public boolean remove(Object o)
     {
         Collection c = new ArrayList(1);
         c.add(o);
@@ -586,7 +592,8 @@ public class LuceneSearchService extends TurbineBaseService implements SearchSer
      * @param c
      * @return 
      */
-    public boolean remove(Collection c)
+    @Override
+	public boolean remove(Collection c)
     {
         boolean result = false;
 
@@ -640,7 +647,8 @@ public class LuceneSearchService extends TurbineBaseService implements SearchSer
      * @param o
      * @return 
      */
-    public boolean update(Object o)
+    @Override
+	public boolean update(Object o)
     {
         Collection c = new ArrayList(1);
         c.add(o);
@@ -654,7 +662,8 @@ public class LuceneSearchService extends TurbineBaseService implements SearchSer
      * @return 
      * @see org.apache.jetspeed.services.search.SearchService#update(java.lang.Collection)
      */
-    public boolean update(Collection c)
+    @Override
+	public boolean update(Collection c)
     {
         boolean result = false;
 

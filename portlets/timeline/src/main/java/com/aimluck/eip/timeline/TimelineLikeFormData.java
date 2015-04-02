@@ -32,7 +32,9 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTTimeline;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimelineLike;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimelineLike;
 import com.aimluck.eip.cayenne.om.social.Activity;
+import com.aimluck.eip.cayenne.om.social.auto._Activity;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -158,7 +160,7 @@ public class TimelineLikeFormData extends ALAbstractFormData {
         Database.query(EipTTimelineLike.class);
       Expression exp =
         ExpressionFactory.inDbExp(
-          EipTTimelineLike.TIMELINE_LIKE_ID_PK_COLUMN,
+          _EipTTimelineLike.TIMELINE_LIKE_ID_PK_COLUMN,
           topicIdList);
       query.setQualifier(exp);
 
@@ -197,10 +199,10 @@ public class TimelineLikeFormData extends ALAbstractFormData {
       SelectQuery<EipTTimelineLike> query =
         Database.query(EipTTimelineLike.class);
       Expression exp1 =
-        ExpressionFactory.matchExp(EipTTimelineLike.OWNER_ID_PROPERTY, user_id);
+        ExpressionFactory.matchExp(_EipTTimelineLike.OWNER_ID_PROPERTY, user_id);
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipTTimelineLike.TIMELINE_ID_PROPERTY,
+          _EipTTimelineLike.TIMELINE_ID_PROPERTY,
           timeline_id);
 
       query.setQualifier(exp1);
@@ -245,10 +247,10 @@ public class TimelineLikeFormData extends ALAbstractFormData {
 
             SelectQuery<Activity> dQuery = Database.query(Activity.class);
             Expression exp3 =
-              ExpressionFactory.matchExp(Activity.EXTERNAL_ID_PROPERTY, String
+              ExpressionFactory.matchExp(_Activity.EXTERNAL_ID_PROPERTY, String
                 .valueOf(parententry.getTimelineId()));
             Expression exp4 =
-              ExpressionFactory.matchExp(Activity.APP_ID_PROPERTY, "timeline");
+              ExpressionFactory.matchExp(_Activity.APP_ID_PROPERTY, "timeline");
 
             dQuery.setQualifier(exp3);
             dQuery.andQualifier(exp4);

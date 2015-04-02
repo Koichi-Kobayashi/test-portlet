@@ -31,6 +31,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodoCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTodoCategory;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -152,30 +153,30 @@ public class ToDoCategoryFormData extends ALAbstractFormData {
 
       Expression exp =
         ExpressionFactory.matchExp(
-          EipTTodoCategory.CATEGORY_NAME_PROPERTY,
+          _EipTTodoCategory.CATEGORY_NAME_PROPERTY,
           category_name.getValue());
 
       Expression exp2 =
-        ExpressionFactory.matchExp(EipTTodoCategory.USER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipTTodoCategory.USER_ID_PROPERTY, Integer
           .valueOf(0));
 
       Expression exp3;
       if (ALEipConstants.MODE_UPDATE.equals(getMode())) {
         Expression exp4 =
           ExpressionFactory.noMatchDbExp(
-            EipTTodoCategory.CATEGORY_ID_PK_COLUMN,
+            _EipTTodoCategory.CATEGORY_ID_PK_COLUMN,
             category_id);
         EipTTodoCategory category =
           ToDoUtils.getEipTTodoCategory(Long.valueOf(category_id));
         exp3 =
           ExpressionFactory.matchExp(
-            EipTTodoCategory.USER_ID_PROPERTY,
+            _EipTTodoCategory.USER_ID_PROPERTY,
             category.getUserId());
         // exp AND (exp4 AND (exp3 OR exp2))
         query.setQualifier(exp4.andExp(exp.andExp(exp3.orExp(exp2))));
       } else {
         exp3 =
-          ExpressionFactory.matchExp(EipTTodoCategory.USER_ID_PROPERTY, Integer
+          ExpressionFactory.matchExp(_EipTTodoCategory.USER_ID_PROPERTY, Integer
             .valueOf(this.user_id));
         // exp1 AND ( exp2 OR exp3 )
         query.setQualifier(exp.andExp(exp2.orExp(exp3)));

@@ -136,7 +136,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
      * This is the early initialization method called by the
      * Turbine <code>Service</code> framework
      */
-    public void init(ServletConfig conf) throws InitializationException
+    @Override
+	public void init(ServletConfig conf) throws InitializationException
     {
         if (getInit())
         {
@@ -217,7 +218,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
     }
 
     /** Late init method from Turbine Service model */
-    public void init() throws InitializationException
+    @Override
+	public void init() throws InitializationException
     {
         //Mark that we are done
         setInit(true);
@@ -270,7 +272,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
      * This is the shutdown method called by the
      * Turbine <code>Service</code> framework
      */
-    public void shutdown()
+    @Override
+	public void shutdown()
     {
         if (this.refresher != null)
         {
@@ -310,7 +313,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
         /**
          * Method as needed for a Thread to run
          */
-        public void run()
+        @Override
+		public void run()
         {
             try
             {
@@ -467,21 +471,24 @@ public class DatabasePsmlManagerService extends TurbineBaseService
 
     }
 
-    public PSMLDocument getDocument(String name)
+    @Override
+	public PSMLDocument getDocument(String name)
     {
         // do nothing, deprecated
         logger.warn("*** NOT SUPPORTED: GETDOC FROM DATABASE PSML MANAGER!!!");
         return null;
     }
 
-    public boolean saveDocument(String fileOrUrl, PSMLDocument doc)
+    @Override
+	public boolean saveDocument(String fileOrUrl, PSMLDocument doc)
     {
         // do nothing, deprecated
         logger.warn("*** NOT SUPPORTED: SAVING DOC FROM DATABASE PSML MANAGER!!!");
         return false;
     }
 
-    public boolean saveDocument(PSMLDocument doc)
+    @Override
+	public boolean saveDocument(PSMLDocument doc)
     {
         // do nothing, will be deprecated
         logger.warn("*** NOT SUPPORTED: SAVING DOC FROM DATABASE PSML MANAGER!!!");
@@ -496,7 +503,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
      * document to be retrieved.
      * @return psmldoc The PSMLDocument object
      */
-    public PSMLDocument getDocument(ProfileLocator locator)
+    @Override
+	public PSMLDocument getDocument(ProfileLocator locator)
     {
         // check the cache for the req'e document if not available in cache
         // get the document from database
@@ -554,7 +562,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
      * @param profile The profile that holds the PSMLDocument.
      * @return PSMLDocument The PSMLDocument that got created in DB.
      */
-    public PSMLDocument createDocument(Profile profile)
+    @Override
+	public PSMLDocument createDocument(Profile profile)
     {
         return createOrSaveDocument(profile, INSERT);
     }
@@ -565,7 +574,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
      * @param profile The profile that holds the PSMLDocument.
      * @return PSMLDocument The PSMLDocument that got created in DB.
      */
-    public boolean store(Profile profile)
+    @Override
+	public boolean store(Profile profile)
     {
         return createOrSaveDocument(profile, UPDATE) != null;
     }
@@ -660,7 +670,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
      *
      * @param locator The profile locator criteria for profile to be removed.
      */
-    public void removeDocument(ProfileLocator locator)
+    @Override
+	public void removeDocument(ProfileLocator locator)
     {
         if (locator == null)
         {
@@ -724,7 +735,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
      * @param locator The profile locator criteria.
      * @return Iterator object with the PSMLDocuments satisfying query
      */
-    public Iterator query(QueryLocator locator)
+    @Override
+	public Iterator query(QueryLocator locator)
     {
         if (locator == null)
         {
@@ -870,7 +882,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
      * @param locator The ordered list of profile locators.
      * @return PSMLDocument object for the first document matching a locator
      */
-    public PSMLDocument getDocument(List locators)
+    @Override
+	public PSMLDocument getDocument(List locators)
     {
         if (locators == null)
         {
@@ -899,7 +912,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
      * document to be retrieved.
      * @return psmldoc The PSMLDocument object
      */
-    public PSMLDocument refresh(ProfileLocator locator)
+    @Override
+	public PSMLDocument refresh(ProfileLocator locator)
     {
         // go to database and get the blob, and marshal the Portlets
 
@@ -1010,7 +1024,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
      *
      * @param user The user object.
      */
-    public void removeUserDocuments(JetspeedUser user)
+    @Override
+	public void removeUserDocuments(JetspeedUser user)
     {
         Connection dbCon = getDbConnection();
 
@@ -1038,7 +1053,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
      *
      * @param role The role object.
      */
-    public void removeRoleDocuments(Role role)
+    @Override
+	public void removeRoleDocuments(Role role)
     {
         Connection dbCon = getDbConnection();
 
@@ -1065,7 +1081,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
      *
      * @param group The group object.
      */
-    public void removeGroupDocuments(Group group)
+    @Override
+	public void removeGroupDocuments(Group group)
     {
         Connection dbCon = getDbConnection();
 
@@ -1094,7 +1111,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
      * @param locator The profile locator criteria.
      * @return The count of profiles exported.
      */
-    public int export(PsmlManagerService consumer, QueryLocator locator)
+    @Override
+	public int export(PsmlManagerService consumer, QueryLocator locator)
     {
         Iterator profiles = null;
         int count = 0;
@@ -1139,7 +1157,8 @@ public class DatabasePsmlManagerService extends TurbineBaseService
     }
 
 
-    public Mapping getMapping()
+    @Override
+	public Mapping getMapping()
     {
         return this.mapping;
     }

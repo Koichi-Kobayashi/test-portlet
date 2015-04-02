@@ -29,7 +29,7 @@ import org.apache.jetspeed.services.Registry;
  * Default bean like implementation of the PortletEntry interface
  * suitable for serialization with Castor
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BasePortletEntry.java,v 1.5 2004/02/23 03:08:26 jford Exp $
  */
 public class BasePortletEntry extends BasePortletInfoEntry
@@ -52,7 +52,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object==null)
         {
@@ -142,7 +143,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
     }
 
     /** @return the URL associated with this portlet or null */
-    public String getURL()
+    @Override
+	public String getURL()
     {
         return this.url.getURL();
     }
@@ -151,34 +153,40 @@ public class BasePortletEntry extends BasePortletInfoEntry
      * Sets the URL for this PortletEntry
      * @param url the new PortletEntry URL
      */
-    public void setURL( String url )
+    @Override
+	public void setURL( String url )
     {
         this.url.setURL(url);
     }
 
-    public boolean isCachedOnURL()
+    @Override
+	public boolean isCachedOnURL()
     {
         return url.isCacheKey();
     }
 
-    public void setCachedOnURL(boolean cache)
+    @Override
+	public void setCachedOnURL(boolean cache)
     {
         url.setCachedOnURL(cache);
     }
 
-    public ContentURL getURLEntry()
+    @Override
+	public ContentURL getURLEntry()
     {
         return url;
     }
 
     /** @return the entry name from which this one is derived */
-    public String getParent()
+    @Override
+	public String getParent()
     {
         return this.parent;
     }
 
     /** @return the classname associated to this entry */
-    public String getClassname()
+    @Override
+	public String getClassname()
     {
         if (isRef && (classname == null) )
         {
@@ -194,7 +202,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
      * @param parent the new ancestor entry name. This name should
      * be defined in the system registry
      */
-    public void setParent( String parent )
+    @Override
+	public void setParent( String parent )
     {
         this.parent = parent;
     }
@@ -202,7 +211,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
     /** @return true is this entry is only accessible by the
       * portal administrators.
       */
-    public boolean isAdmin()
+    @Override
+	public boolean isAdmin()
     {
         if (getSecurity()!=null)
         {
@@ -213,7 +223,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
     }
 
     /** @return true is the PortletEntry is marked as an application */
-    public boolean isApplication()
+    @Override
+	public boolean isApplication()
     {
         return this.application;
     }
@@ -224,13 +235,15 @@ public class BasePortletEntry extends BasePortletInfoEntry
      *
      *  @param application the new application status
      */
-    public void setApplication( boolean application )
+    @Override
+	public void setApplication( boolean application )
     {
         this.application = application;
     }
 
     /** @return the type of this entry */
-    public String getType()
+    @Override
+	public String getType()
     {
         return this.type;
     }
@@ -240,7 +253,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
      *
      *  @param type the new type for the PortletEntry
      */
-    public void setType( String type )
+    @Override
+	public void setType( String type )
     {
         this.isRef = PortletEntry.TYPE_REF.equals(type);
         this.type = type;
@@ -257,7 +271,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
         return this.application;
     }
 
-    public String getTitle()
+    @Override
+	public String getTitle()
     {
         String title = super.getTitle();
         if (title != null)
@@ -269,7 +284,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
         return null;
     }
 
-    public String getDescription()
+    @Override
+	public String getDescription()
     {
         String desc = super.getDescription();
         if (desc != null)
@@ -296,7 +312,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
         return parent;
     }
 
-    public MetaInfo getMetaInfo()
+    @Override
+	public MetaInfo getMetaInfo()
     {
         MetaInfo meta = super.getMetaInfo();
         if (meta == null)
@@ -307,7 +324,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
     }
 
     /** @return an enumeration of this entry parameter names */
-    public Iterator getParameterNames()
+    @Override
+	public Iterator getParameterNames()
     {
         if (isRef)
         {
@@ -335,7 +353,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
      *  @return the parameter object for a given parameter name
      *  @param name the parameter name to look for
      */
-    public Parameter getParameter( String name )
+    @Override
+	public Parameter getParameter( String name )
     {
         Parameter p = super.getParameter(name);
         if (isRef && p == null)
@@ -345,7 +364,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
         return p;
     }
 
-    public CachedParameter getCachedParameter( String name )
+    @Override
+	public CachedParameter getCachedParameter( String name )
     {
         Parameter p = getParameter(name);
         return (CachedParameter)p;
@@ -354,7 +374,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
     /** Returns a map of parameter values keyed on the parameter names
      *  @return the parameter values map
      */
-    public Map getParameterMap()
+    @Override
+	public Map getParameterMap()
     {
         Hashtable params = (Hashtable)super.getParameterMap();
 
@@ -373,7 +394,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
      *
      * @return an iterator on the supported media type names
      */
-    public Iterator listMediaTypes()
+    @Override
+	public Iterator listMediaTypes()
     {
         if (isRef)
         {
@@ -404,7 +426,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
      * @param name the media type name to test for.
      * @return true is the media type is supported false otherwise
      */
-    public boolean hasMediaType(String name)
+    @Override
+	public boolean hasMediaType(String name)
     {
         if (isRef)
         {
@@ -447,7 +470,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
      *
      * @return an iterator on the supported media type names
      */
-    public Iterator listCategories()
+    @Override
+	public Iterator listCategories()
     {
         return new PortletIterator(this, "getCategories");
     }
@@ -458,7 +482,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
      * @param name the category name
      * @return true is the category exists in the default group
      */
-    public boolean hasCategory(String name)
+    @Override
+	public boolean hasCategory(String name)
     {
         return hasCategory(name, PortletEntry.DEFAULT_GROUP);
     }
@@ -470,7 +495,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
      * @param group the category group
      * @return true is the category exists in the specified group
      */
-    public boolean hasCategory(String name, String group)
+    @Override
+	public boolean hasCategory(String name, String group)
     {
         Iterator it = listCategories();
         while (it.hasNext())
@@ -488,7 +514,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
      *
      * @param name the category name
      */
-    public void addCategory(String name)
+    @Override
+	public void addCategory(String name)
     {
         addCategory(name, PortletEntry.DEFAULT_GROUP);
     }
@@ -499,7 +526,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
      * @param name the category name
      * @param group the category group name
      */
-    public void addCategory(String name, String group)
+    @Override
+	public void addCategory(String name, String group)
     {
         if (!hasCategory(name, group))
         {
@@ -515,7 +543,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
      *
      * @param name the category name
      */
-    public void removeCategory(String name)
+    @Override
+	public void removeCategory(String name)
     {
         removeCategory(name, PortletEntry.DEFAULT_GROUP);
     }
@@ -526,7 +555,8 @@ public class BasePortletEntry extends BasePortletInfoEntry
      * @param name the media type name to remove.
      * @param group the category group name
      */
-    public void removeCategory(String name, String group)
+    @Override
+	public void removeCategory(String name, String group)
     {
         for (int ix = 0; ix < categories.size(); ix++)
         {

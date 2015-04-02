@@ -78,7 +78,8 @@ public class LicenseFormData extends ALAbstractFormData {
    * 各フィールドを初期化します。
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     // License
     license_1 = new ALStringField();
     license_1.setFieldName("ライセンスキーの 1 マス目");

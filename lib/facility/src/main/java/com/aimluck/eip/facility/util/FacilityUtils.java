@@ -31,6 +31,9 @@ import org.apache.turbine.util.RunData;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroup;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroupMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroup;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroupMap;
 import com.aimluck.eip.facility.beans.FacilityGroupLiteBean;
 import com.aimluck.eip.facility.beans.FacilityLiteBean;
 import com.aimluck.eip.orm.Database;
@@ -51,9 +54,9 @@ public class FacilityUtils {
 
     try {
       SelectQuery<EipMFacility> query = Database.query(EipMFacility.class);
-      query.orderAscending(EipMFacility.SORT_PROPERTY);
+      query.orderAscending(_EipMFacility.SORT_PROPERTY);
       List<EipMFacility> facility_list =
-        query.orderAscending(EipMFacility.FACILITY_NAME_PROPERTY).fetchList();
+        query.orderAscending(_EipMFacility.FACILITY_NAME_PROPERTY).fetchList();
 
       for (EipMFacility record : facility_list) {
         FacilityLiteBean bean = new FacilityLiteBean();
@@ -76,7 +79,7 @@ public class FacilityUtils {
       Database.query(EipMFacilityGroupMap.class);
     Expression mapexp =
       ExpressionFactory.matchExp(
-        EipMFacilityGroupMap.GROUP_ID_PROPERTY,
+        _EipMFacilityGroupMap.GROUP_ID_PROPERTY,
         groupid);
     mapquery.setQualifier(mapexp);
     List<EipMFacilityGroupMap> FacilityMaps = mapquery.fetchList();
@@ -94,10 +97,10 @@ public class FacilityUtils {
       SelectQuery<EipMFacility> fquery = Database.query(EipMFacility.class);
       Expression fexp =
         ExpressionFactory.inDbExp(
-          EipMFacility.FACILITY_ID_PK_COLUMN,
+          _EipMFacility.FACILITY_ID_PK_COLUMN,
           facilityIds);
       fquery.setQualifier(fexp);
-      fquery.orderAscending(EipMFacility.SORT_PROPERTY);
+      fquery.orderAscending(_EipMFacility.SORT_PROPERTY);
       facility_list = fquery.fetchList();
     }
 
@@ -119,7 +122,7 @@ public class FacilityUtils {
       Database.query(EipMFacilityGroup.class);
     Expression exp =
       ExpressionFactory.matchExp(
-        EipMFacilityGroup.GROUP_NAME_PROPERTY,
+        _EipMFacilityGroup.GROUP_NAME_PROPERTY,
         groupname);
     query.setQualifier(exp);
     EipMFacilityGroup group = query.fetchSingle();
@@ -134,7 +137,7 @@ public class FacilityUtils {
         Database.query(EipMFacilityGroup.class);
 
       List<EipMFacilityGroup> facility_list =
-        query.orderAscending(EipMFacilityGroup.GROUP_NAME_PROPERTY).fetchList();
+        query.orderAscending(_EipMFacilityGroup.GROUP_NAME_PROPERTY).fetchList();
 
       for (EipMFacilityGroup record : facility_list) {
         FacilityGroupLiteBean bean = new FacilityGroupLiteBean();

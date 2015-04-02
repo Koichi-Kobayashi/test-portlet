@@ -50,7 +50,8 @@ public class AjaxScheduleDayContainer implements ALData {
   /*
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     // 日付
     today = new ALDateTimeField("yyyy-MM-dd-HH-mm");
     // スケジュールリスト

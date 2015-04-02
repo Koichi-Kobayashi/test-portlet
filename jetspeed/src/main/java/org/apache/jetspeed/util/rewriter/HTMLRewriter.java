@@ -56,7 +56,8 @@ public class HTMLRewriter implements Rewriter
      * @return the rewritten URL to the proxy server.
      *
      */
-    public String generateNewUrl( String targetURL, HTML.Tag tag, HTML.Attribute attribute)
+    @Override
+	public String generateNewUrl( String targetURL, HTML.Tag tag, HTML.Attribute attribute)
     {
         String fullPath = "";
         try
@@ -86,12 +87,14 @@ public class HTMLRewriter implements Rewriter
      *
      * @return true if all URLs are rewritten back to proxy server.
      */
-    public boolean proxyAllTags()
+    @Override
+	public boolean proxyAllTags()
     {
         return true; //false;
     }
 
-    public String rewrite(Reader input, String baseURL)
+    @Override
+	public String rewrite(Reader input, String baseURL)
                                throws MalformedURLException
     {
         String rewrittenHTML = "";
@@ -106,12 +109,14 @@ public class HTMLRewriter implements Rewriter
     /*
      * Simple Tag Events
      */
-    public boolean enterSimpleTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
+    @Override
+	public boolean enterSimpleTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
     {
         return true;
     }
 
-    public String exitSimpleTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
+    @Override
+	public String exitSimpleTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
     {
         return null;
     }
@@ -119,12 +124,14 @@ public class HTMLRewriter implements Rewriter
     /*
      * Start Tag Events
      */
-    public boolean enterStartTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
+    @Override
+	public boolean enterStartTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
     {
         return true;
     }
 
-    public String exitStartTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
+    @Override
+	public String exitStartTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
     {
         return null;
     }
@@ -132,12 +139,14 @@ public class HTMLRewriter implements Rewriter
     /*
      * Exit Tag Events
      */
-    public boolean enterEndTagEvent(HTML.Tag tag)
+    @Override
+	public boolean enterEndTagEvent(HTML.Tag tag)
     {
         return true;
     }
 
-    public String exitEndTagEvent(HTML.Tag tag)
+    @Override
+	public String exitEndTagEvent(HTML.Tag tag)
     {
         return null;
     }
@@ -145,7 +154,8 @@ public class HTMLRewriter implements Rewriter
     /*
      * Text Event
      */
-    public boolean enterText(char[] values, int param)
+    @Override
+	public boolean enterText(char[] values, int param)
     {
         return true;
     }
@@ -153,7 +163,8 @@ public class HTMLRewriter implements Rewriter
     /*
      * Convert Tag Events
      */
-    public void convertTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
+    @Override
+	public void convertTagEvent(HTML.Tag tag, MutableAttributeSet attrs)
     {
     }
 

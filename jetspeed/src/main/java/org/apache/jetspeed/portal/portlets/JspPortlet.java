@@ -37,7 +37,8 @@ public class JspPortlet extends GenericMVCPortlet
      * STW:  Backward compatibility: set the viewType to "JSP". 
      * By default the data is non cacheable
     */
-    public void init() throws PortletException
+    @Override
+	public void init() throws PortletException
     {
         setCacheable(false);
         setViewType("JSP");

@@ -33,6 +33,7 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.commons.utils.ALStringUtil;
 import com.aimluck.eip.addressbook.util.AddressBookUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressbookCompany;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressbookCompany;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -186,7 +187,7 @@ public class AddressBookCompanyWordSelectData extends
     Attributes map = new Attributes();
     map.putValue(
       "company_name_kana",
-      EipMAddressbookCompany.COMPANY_NAME_KANA_PROPERTY);
+      _EipMAddressbookCompany.COMPANY_NAME_KANA_PROPERTY);
     return map;
   }
 
@@ -212,67 +213,67 @@ public class AddressBookCompanyWordSelectData extends
 
     Expression exp11 =
       ExpressionFactory.likeExp(
-        EipMAddressbookCompany.COMPANY_NAME_PROPERTY,
+        _EipMAddressbookCompany.COMPANY_NAME_PROPERTY,
         "%" + word + "%");
     Expression exp12 =
       ExpressionFactory.likeExp(
-        EipMAddressbookCompany.COMPANY_NAME_KANA_PROPERTY,
+        _EipMAddressbookCompany.COMPANY_NAME_KANA_PROPERTY,
         "%" + word + "%");
     Expression exp13 =
-      ExpressionFactory.likeExp(EipMAddressbookCompany.POST_NAME_PROPERTY, "%"
+      ExpressionFactory.likeExp(_EipMAddressbookCompany.POST_NAME_PROPERTY, "%"
         + word
         + "%");
     Expression exp14 =
-      ExpressionFactory.likeExp(EipMAddressbookCompany.ZIPCODE_PROPERTY, "%"
+      ExpressionFactory.likeExp(_EipMAddressbookCompany.ZIPCODE_PROPERTY, "%"
         + word
         + "%");
     Expression exp15 =
-      ExpressionFactory.likeExp(EipMAddressbookCompany.ADDRESS_PROPERTY, "%"
+      ExpressionFactory.likeExp(_EipMAddressbookCompany.ADDRESS_PROPERTY, "%"
         + word
         + "%");
     Expression exp16 =
-      ExpressionFactory.likeExp(EipMAddressbookCompany.TELEPHONE_PROPERTY, "%"
+      ExpressionFactory.likeExp(_EipMAddressbookCompany.TELEPHONE_PROPERTY, "%"
         + word
         + "%");
     Expression exp17 =
-      ExpressionFactory.likeExp(EipMAddressbookCompany.FAX_NUMBER_PROPERTY, "%"
+      ExpressionFactory.likeExp(_EipMAddressbookCompany.FAX_NUMBER_PROPERTY, "%"
         + word
         + "%");
     Expression exp18 =
-      ExpressionFactory.likeExp(EipMAddressbookCompany.URL_PROPERTY, "%"
+      ExpressionFactory.likeExp(_EipMAddressbookCompany.URL_PROPERTY, "%"
         + word
         + "%");
 
     Expression exp21 =
       ExpressionFactory.likeExp(
-        EipMAddressbookCompany.COMPANY_NAME_PROPERTY,
+        _EipMAddressbookCompany.COMPANY_NAME_PROPERTY,
         "%" + transWord + "%");
     Expression exp22 =
       ExpressionFactory.likeExp(
-        EipMAddressbookCompany.COMPANY_NAME_KANA_PROPERTY,
+        _EipMAddressbookCompany.COMPANY_NAME_KANA_PROPERTY,
         "%" + transWord + "%");
     Expression exp23 =
-      ExpressionFactory.likeExp(EipMAddressbookCompany.POST_NAME_PROPERTY, "%"
+      ExpressionFactory.likeExp(_EipMAddressbookCompany.POST_NAME_PROPERTY, "%"
         + transWord
         + "%");
     Expression exp24 =
-      ExpressionFactory.likeExp(EipMAddressbookCompany.ZIPCODE_PROPERTY, "%"
+      ExpressionFactory.likeExp(_EipMAddressbookCompany.ZIPCODE_PROPERTY, "%"
         + transWord
         + "%");
     Expression exp25 =
-      ExpressionFactory.likeExp(EipMAddressbookCompany.ADDRESS_PROPERTY, "%"
+      ExpressionFactory.likeExp(_EipMAddressbookCompany.ADDRESS_PROPERTY, "%"
         + transWord
         + "%");
     Expression exp26 =
-      ExpressionFactory.likeExp(EipMAddressbookCompany.TELEPHONE_PROPERTY, "%"
+      ExpressionFactory.likeExp(_EipMAddressbookCompany.TELEPHONE_PROPERTY, "%"
         + transWord
         + "%");
     Expression exp27 =
-      ExpressionFactory.likeExp(EipMAddressbookCompany.FAX_NUMBER_PROPERTY, "%"
+      ExpressionFactory.likeExp(_EipMAddressbookCompany.FAX_NUMBER_PROPERTY, "%"
         + transWord
         + "%");
     Expression exp28 =
-      ExpressionFactory.likeExp(EipMAddressbookCompany.URL_PROPERTY, "%"
+      ExpressionFactory.likeExp(_EipMAddressbookCompany.URL_PROPERTY, "%"
         + transWord
         + "%");
 

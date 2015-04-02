@@ -35,6 +35,7 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFilter;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFolder;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMailFilter;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -251,16 +252,16 @@ public class WebMailFilterFormData extends ALAbstractFormData {
     try {
       SelectQuery<EipTMailFilter> query = Database.query(EipTMailFilter.class);
       Expression exp =
-        ExpressionFactory.matchExp(EipTMailFilter.FILTER_NAME_PROPERTY, fname);
+        ExpressionFactory.matchExp(_EipTMailFilter.FILTER_NAME_PROPERTY, fname);
       if (is_update) {
         exp =
           exp.andExp(ExpressionFactory.noMatchDbExp(
-            EipTMailFilter.FILTER_ID_PK_COLUMN,
+            _EipTMailFilter.FILTER_ID_PK_COLUMN,
             filterId));
       }
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
+          _EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
           mailAccount);
 
       List<EipTMailFilter> list =
@@ -346,11 +347,11 @@ public class WebMailFilterFormData extends ALAbstractFormData {
 
       Expression exp =
         ExpressionFactory.matchExp(
-          EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
+          _EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
           filter.getEipMMailAccount());
       Expression exp2 =
         ExpressionFactory.greaterOrEqualExp(
-          EipTMailFilter.SORT_ORDER_PROPERTY,
+          _EipTMailFilter.SORT_ORDER_PROPERTY,
           sortOrder + 1);
 
       List<EipTMailFilter> filters =

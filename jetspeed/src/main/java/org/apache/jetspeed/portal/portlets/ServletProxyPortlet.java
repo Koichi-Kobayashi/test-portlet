@@ -71,7 +71,8 @@ public class ServletProxyPortlet extends AbstractPortlet
 	 * @param rundata The RunData object for the current request
 	 * @return an ECS StringElement
 	 */
-    public ConcreteElement getContent(RunData rundata)
+    @Override
+	public ConcreteElement getContent(RunData rundata)
     {
         String servletURL = processURL(rundata);
 		if(servletURL == null)

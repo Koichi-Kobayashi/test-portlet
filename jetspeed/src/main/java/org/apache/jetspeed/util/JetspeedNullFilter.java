@@ -28,23 +28,28 @@ A filter for ECS that doesn't do anything.
 public class JetspeedNullFilter implements Filter, Serializable 
 {
     
-    public Filter addAttribute(String name, Object attribute) {
+    @Override
+	public Filter addAttribute(String name, Object attribute) {
         return this;
     }
     
-    public Filter removeAttribute(String name) {
+    @Override
+	public Filter removeAttribute(String name) {
         return this;
     }
     
-    public boolean hasAttribute(String name) {
+    @Override
+	public boolean hasAttribute(String name) {
         return false;
     }
     
-    public String process(String to_process) {
+    @Override
+	public String process(String to_process) {
         return to_process;
     }
     
-    public String getInfo() {
+    @Override
+	public String getInfo() {
         return "info";
     }
     

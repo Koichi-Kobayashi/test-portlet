@@ -172,7 +172,8 @@ public class DatabaseRegistryWatcher extends Thread
         * The algorithm used does not guarantee a constant refresh rate
         * between invocations.
         */
-    public void run()
+    @Override
+	public void run()
     {
         try
         {
@@ -262,7 +263,7 @@ public class DatabaseRegistryWatcher extends Thread
                     while (i.hasNext())
                     {
                         RegistryFragment frag =
-                            (RegistryFragment) fragments.get((String) i.next());
+                            (RegistryFragment) fragments.get(i.next());
                         frag.setDirty(false);
                         frag.setChanged(false);
                     }

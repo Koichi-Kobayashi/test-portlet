@@ -21,6 +21,7 @@ package com.aimluck.eip.cayenne.om.account;
 
 import com.aimluck.eip.cayenne.om.account.auto._EipMUserPosition;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 
 public class EipMUserPosition extends _EipMUserPosition {
 
@@ -36,7 +37,7 @@ public class EipMUserPosition extends _EipMUserPosition {
 
     if (user != null) {
       Object obj = getObjectId().getIdSnapshot().get(
-          TurbineUser.USER_ID_PK_COLUMN);
+          _TurbineUser.USER_ID_PK_COLUMN);
       if (obj instanceof Long) {
         Long value = (Long) obj;
         return Integer.valueOf(value.intValue());

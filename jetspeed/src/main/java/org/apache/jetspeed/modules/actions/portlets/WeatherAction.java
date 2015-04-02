@@ -56,7 +56,8 @@ public class WeatherAction extends VelocityPortletAction
      * @param rundata
      * @see VelocityPortletAction#buildMaximizedContext
      */
-    protected void buildMaximizedContext( VelocityPortlet portlet,
+    @Override
+	protected void buildMaximizedContext( VelocityPortlet portlet,
                                           Context context,
                                           RunData rundata )
     {
@@ -72,7 +73,8 @@ public class WeatherAction extends VelocityPortletAction
      * @param rundata
      * @see VelocityPortletAction#buildNormalContext
      */
-    protected void buildNormalContext( VelocityPortlet portlet,
+    @Override
+	protected void buildNormalContext( VelocityPortlet portlet,
                                        Context context,
                                        RunData rundata )
     {

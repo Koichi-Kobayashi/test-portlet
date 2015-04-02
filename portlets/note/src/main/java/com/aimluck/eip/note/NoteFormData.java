@@ -50,6 +50,8 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.commons.utils.ALStringUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipTNote;
 import com.aimluck.eip.cayenne.om.portlet.EipTNoteMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTNote;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTNoteMap;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -571,18 +573,18 @@ public class NoteFormData extends ALAbstractFormData {
 
     if ("received_notes".equals(NoteUtils.getCurrentTab(rundata, context))) {
       Expression exp1 =
-        ExpressionFactory.matchExp(EipTNoteMap.USER_ID_PROPERTY, userId);
+        ExpressionFactory.matchExp(_EipTNoteMap.USER_ID_PROPERTY, userId);
       query.setQualifier(exp1);
       Expression exp2 =
-        ExpressionFactory.noMatchExp(EipTNoteMap.EIP_TNOTE_PROPERTY
+        ExpressionFactory.noMatchExp(_EipTNoteMap.EIP_TNOTE_PROPERTY
           + "."
-          + EipTNote.OWNER_ID_PROPERTY, userId);
+          + _EipTNote.OWNER_ID_PROPERTY, userId);
       query.setQualifier(exp2);
     } else {
       Expression exp =
-        ExpressionFactory.matchExp(EipTNoteMap.EIP_TNOTE_PROPERTY
+        ExpressionFactory.matchExp(_EipTNoteMap.EIP_TNOTE_PROPERTY
           + "."
-          + EipTNote.OWNER_ID_PROPERTY, userId);
+          + _EipTNote.OWNER_ID_PROPERTY, userId);
       query.setQualifier(exp);
 
     }

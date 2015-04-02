@@ -100,7 +100,8 @@ public class JetspeedWebPageService
      * @exception IOException a servlet exception.
      * @exception ServletException a servlet exception.
      */
-    public void get(HttpServlet servlet,
+    @Override
+	public void get(HttpServlet servlet,
                     HttpServletRequest request, 
                     HttpServletResponse response)                         
     throws ServletException, IOException
@@ -118,7 +119,8 @@ public class JetspeedWebPageService
      * @exception IOException a servlet exception.
      * @exception ServletException a servlet exception.
      */    
-    public void post(HttpServlet servlet,
+    @Override
+	public void post(HttpServlet servlet,
                      HttpServletRequest request, 
                      HttpServletResponse response)
     throws ServletException, IOException
@@ -426,13 +428,13 @@ public class JetspeedWebPageService
                 smap.incHitCount();
                 pxSession.incHitCount();
             }
-            return (JetspeedSiteSession)pxSession;
+            return pxSession;
         }
 
         smap.incHitCount();
         pxSession.incHitCount();
         pxSession.proxy(newURL, data);
-        return(JetspeedSiteSession)pxSession;       
+        return pxSession;       
     }
 
     /**
@@ -501,7 +503,8 @@ public class JetspeedWebPageService
      * @exception IOException a servlet exception.
      * @exception ServletException a servlet exception.
      */
-    public boolean init(ServletConfig config)
+    @Override
+	public boolean init(ServletConfig config)
     throws ServletException, IOException
     {
 
@@ -531,7 +534,8 @@ public class JetspeedWebPageService
      *
      * @retun true if the service was initialized successfully.
      */
-    public boolean isInit()
+    @Override
+	public boolean isInit()
     {
         return init;
     }
@@ -540,7 +544,8 @@ public class JetspeedWebPageService
      * One time de-initialization of the proxy service
      *
      */
-    public void destroy()
+    @Override
+	public void destroy()
     {
         try
         {
@@ -578,7 +583,8 @@ public class JetspeedWebPageService
      *
      * @return the collection of sessions.
      */
-    public Collection getSessions()
+    @Override
+	public Collection getSessions()
     {
         return sessions.values();
     }
@@ -589,7 +595,8 @@ public class JetspeedWebPageService
      * @param id The ID of the session.
      * @return The corresponding session.
      */
-    public SessionMap getSession(String id)
+    @Override
+	public SessionMap getSession(String id)
     {
         return (SessionMap)sessions.get(id);
     }
@@ -599,7 +606,8 @@ public class JetspeedWebPageService
      *
      * @return the collection of sites.
      */
-    public Collection getSites()
+    @Override
+	public Collection getSites()
     {
         return sites.values();
     }
@@ -610,7 +618,8 @@ public class JetspeedWebPageService
      *
      * @return the error string from last error.
      */
-    public String getErrorString()
+    @Override
+	public String getErrorString()
     {
         return lastError;
     }

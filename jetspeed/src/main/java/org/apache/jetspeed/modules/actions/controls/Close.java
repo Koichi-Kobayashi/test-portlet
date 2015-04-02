@@ -27,7 +27,7 @@ import org.apache.jetspeed.services.rundata.JetspeedRunData;
  * Change the internal state of a portlet from normal to closed
  * 
  * @author <a href="mailto:re_carrasco@bco011.sonda.cl">Roberto Carrasco</a>
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:paulsp@apache.org">Paul Spencer</a>
  */
 public class Close extends Action
@@ -35,7 +35,8 @@ public class Close extends Action
     /**
      * @param rundata The RunData object for the current request
      */    
-    public void doPerform( RunData rundata ) throws Exception
+    @Override
+	public void doPerform( RunData rundata ) throws Exception
     {
 
         // Only logged in users can minmize

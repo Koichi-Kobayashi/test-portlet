@@ -36,7 +36,8 @@ public class ParameterPresentationStyleFactory extends JavaBaseFactory
      * @param name   assembler name
      * @return assembler instance
      */
-    public Assembler getAssembler(String name)
+    @Override
+	public Assembler getAssembler(String name)
     {
 
         return getAssembler("parameters",name);

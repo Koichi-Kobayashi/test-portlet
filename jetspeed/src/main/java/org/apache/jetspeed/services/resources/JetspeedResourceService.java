@@ -89,7 +89,8 @@ extends TurbineResourceService
      * @param name The resource name.
      * @return The value of the named resource as a boolean.
      */
-    public boolean getBoolean(String name)
+    @Override
+	public boolean getBoolean(String name)
     {
 
         return new Boolean(interpolate(getConfiguration().getString(name))).booleanValue();
@@ -104,7 +105,8 @@ extends TurbineResourceService
      * @param def The default value of the resource.
      * @return The value of the named resource as a boolean.
      */
-    public boolean getBoolean(String name, boolean def)
+    @Override
+	public boolean getBoolean(String name, boolean def)
     {
 
         String temp = interpolate(getConfiguration().getString(name));
@@ -118,7 +120,8 @@ extends TurbineResourceService
      * @param name The resoource name.
      * @return The value of the named resource as double.
      */
-    public double getDouble(String name)
+    @Override
+	public double getDouble(String name)
     {
 
         return new Double(interpolate(getConfiguration().getString(name))).doubleValue();
@@ -132,7 +135,8 @@ extends TurbineResourceService
      * @param def The default value of the resource.
      * @return The value of the named resource as a double.
      */
-    public double getDouble(String name, double def)
+    @Override
+	public double getDouble(String name, double def)
     {
 
         String temp = interpolate(getConfiguration().getString(name));
@@ -146,7 +150,8 @@ extends TurbineResourceService
      * @param name The resource name.
      * @return The value of the resource as a float.
      */
-    public float getFloat(String name)
+    @Override
+	public float getFloat(String name)
     {
 
         return new Float(interpolate(getConfiguration().getString(name))).floatValue();
@@ -160,7 +165,8 @@ extends TurbineResourceService
      * @param def The default value of the resource.
      * @return The value of the resource as a float.
      */
-    public float getFloat(String name, float def)
+    @Override
+	public float getFloat(String name, float def)
     {
 
         String temp = interpolate(getConfiguration().getString(name));
@@ -174,7 +180,8 @@ extends TurbineResourceService
      * @param name The resource name.
      * @return The value of the resource as an integer.
      */
-    public int getInt(String name)
+    @Override
+	public int getInt(String name)
     {
 
         return new Integer(interpolate(getConfiguration().getString(name))).intValue();
@@ -188,7 +195,8 @@ extends TurbineResourceService
      * @param def The default value of the resource.
      * @return The value of the resource as an integer.
      */
-    public int getInt(String name, int def)
+    @Override
+	public int getInt(String name, int def)
     {
 
         String temp = interpolate(getConfiguration().getString(name));
@@ -202,7 +210,8 @@ extends TurbineResourceService
      * @param name The resource name.
      * @return The value of the resource as a long.
      */
-    public long getLong(String name)
+    @Override
+	public long getLong(String name)
     {
 
         return new Long(interpolate(getConfiguration().getString(name))).longValue();
@@ -216,7 +225,8 @@ extends TurbineResourceService
      * @param def The default value of the resource.
      * @return The value of the resource as a long.
      */
-    public long getLong(String name, long def)
+    @Override
+	public long getLong(String name, long def)
     {
 
         String temp = interpolate(getConfiguration().getString(name));
@@ -231,7 +241,8 @@ extends TurbineResourceService
      * @param prefix the common name prefix
      * @return A ResourceService providing the subset of configuration.
      */
-    public ResourceService getResources(String prefix)
+    @Override
+	public ResourceService getResources(String prefix)
     {
         Configuration config = getConfiguration().subset(prefix);
 
@@ -251,7 +262,7 @@ extends TurbineResourceService
             e.printStackTrace();
         }
 
-        return (ResourceService) res;
+        return res;
     }
 
     /**
@@ -273,14 +284,16 @@ extends TurbineResourceService
      * 
      * @param config a ServletConfig object
      */
-    public void init()
+    @Override
+	public void init()
         throws InitializationException
     {     
         System.out.println("Jetspeed Services: Starting with no parameters");
         super.init();
     }
        
-    public synchronized void init(ServletConfig config) throws InitializationException        
+    @Override
+	public synchronized void init(ServletConfig config) throws InitializationException        
     {               
         String propsDir = null;
         String appName = config.getServletName();

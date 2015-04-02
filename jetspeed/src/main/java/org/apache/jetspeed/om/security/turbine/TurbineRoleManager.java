@@ -2,9 +2,7 @@
 
 package org.apache.jetspeed.om.security.turbine;
 
-import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
-import org.apache.torque.om.Persistent;
 
 /**
  * This class manages TurbineRole objects.

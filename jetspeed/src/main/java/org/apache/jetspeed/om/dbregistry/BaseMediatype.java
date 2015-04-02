@@ -1,23 +1,17 @@
 package org.apache.jetspeed.om.dbregistry;
 
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.BaseObject;
-import org.apache.torque.om.ComboKey;
-import org.apache.torque.om.DateKey;
 import org.apache.torque.om.NumberKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
-import org.apache.torque.om.StringKey;
-import org.apache.torque.om.Persistent;
 import org.apache.torque.util.Criteria;
 import org.apache.torque.util.Transaction;
 
@@ -352,8 +346,8 @@ public abstract class BaseMediatype extends BaseObject
             }
             else
             {
-                      criteria.add(PortletMediatypePeer.MEDIA_ID, getId() );
-                      collPortletMediatypes = PortletMediatypePeer.doSelect(criteria);
+                      criteria.add(BasePortletMediatypePeer.MEDIA_ID, getId() );
+                      collPortletMediatypes = BasePortletMediatypePeer.doSelect(criteria);
             }
         }
         else
@@ -364,10 +358,10 @@ public abstract class BaseMediatype extends BaseObject
                 // the following code is to determine if a new query is
                 // called for.  If the criteria is the same as the last
                 // one, just return the collection.
-                      criteria.add(PortletMediatypePeer.MEDIA_ID, getId() );
+                      criteria.add(BasePortletMediatypePeer.MEDIA_ID, getId() );
                       if (!lastPortletMediatypesCriteria.equals(criteria))
                 {
-                    collPortletMediatypes = PortletMediatypePeer.doSelect(criteria);
+                    collPortletMediatypes = BasePortletMediatypePeer.doSelect(criteria);
                 }
             }
         }
@@ -415,8 +409,8 @@ public abstract class BaseMediatype extends BaseObject
             }
             else
             {
-                       criteria.add(PortletMediatypePeer.MEDIA_ID, getId() );
-                       collPortletMediatypes = PortletMediatypePeer.doSelect(criteria,con);
+                       criteria.add(BasePortletMediatypePeer.MEDIA_ID, getId() );
+                       collPortletMediatypes = BasePortletMediatypePeer.doSelect(criteria,con);
              }
          }
          else
@@ -427,10 +421,10 @@ public abstract class BaseMediatype extends BaseObject
                  // the following code is to determine if a new query is
                  // called for.  If the criteria is the same as the last
                  // one, just return the collection.
-                     criteria.add(PortletMediatypePeer.MEDIA_ID, getId() );
+                     criteria.add(BasePortletMediatypePeer.MEDIA_ID, getId() );
                      if (!lastPortletMediatypesCriteria.equals(criteria))
                  {
-                     collPortletMediatypes = PortletMediatypePeer.doSelect(criteria,con);
+                     collPortletMediatypes = BasePortletMediatypePeer.doSelect(criteria,con);
                  }
              }
          }
@@ -472,8 +466,8 @@ public abstract class BaseMediatype extends BaseObject
             }
             else
             {
-                            criteria.add(PortletMediatypePeer.MEDIA_ID, getId() );
-                            collPortletMediatypes = PortletMediatypePeer.doSelectJoinPortletDbEntry(criteria);
+                            criteria.add(BasePortletMediatypePeer.MEDIA_ID, getId() );
+                            collPortletMediatypes = BasePortletMediatypePeer.doSelectJoinPortletDbEntry(criteria);
             }
         }
         else
@@ -482,10 +476,10 @@ public abstract class BaseMediatype extends BaseObject
             // called for.  If the criteria is the same as the last
             // one, just return the collection.
             boolean newCriteria = true;
-                            criteria.add(PortletMediatypePeer.MEDIA_ID, getId() );
+                            criteria.add(BasePortletMediatypePeer.MEDIA_ID, getId() );
                         if (!lastPortletMediatypesCriteria.equals(criteria))
             {
-                collPortletMediatypes = PortletMediatypePeer.doSelectJoinPortletDbEntry(criteria);
+                collPortletMediatypes = BasePortletMediatypePeer.doSelectJoinPortletDbEntry(criteria);
             }
         }
         lastPortletMediatypesCriteria = criteria;
@@ -523,8 +517,8 @@ public abstract class BaseMediatype extends BaseObject
             }
             else
             {
-                            criteria.add(PortletMediatypePeer.MEDIA_ID, getId() );
-                            collPortletMediatypes = PortletMediatypePeer.doSelectJoinMediatype(criteria);
+                            criteria.add(BasePortletMediatypePeer.MEDIA_ID, getId() );
+                            collPortletMediatypes = BasePortletMediatypePeer.doSelectJoinMediatype(criteria);
             }
         }
         else
@@ -533,10 +527,10 @@ public abstract class BaseMediatype extends BaseObject
             // called for.  If the criteria is the same as the last
             // one, just return the collection.
             boolean newCriteria = true;
-                            criteria.add(PortletMediatypePeer.MEDIA_ID, getId() );
+                            criteria.add(BasePortletMediatypePeer.MEDIA_ID, getId() );
                         if (!lastPortletMediatypesCriteria.equals(criteria))
             {
-                collPortletMediatypes = PortletMediatypePeer.doSelectJoinMediatype(criteria);
+                collPortletMediatypes = BasePortletMediatypePeer.doSelectJoinMediatype(criteria);
             }
         }
         lastPortletMediatypesCriteria = criteria;
@@ -574,7 +568,8 @@ public abstract class BaseMediatype extends BaseObject
      * Retrieves a field from the object by name passed in
      * as a String.
      */
-    public Object getByName(String name)
+    @Override
+	public Object getByName(String name)
     {
           if (name.equals("Id"))
         {
@@ -616,37 +611,38 @@ public abstract class BaseMediatype extends BaseObject
      * as a String.  The String must be one of the static
      * Strings defined in this Class' Peer.
      */
-    public Object getByPeerName(String name)
+    @Override
+	public Object getByPeerName(String name)
     {
-          if (name.equals(MediatypePeer.ID ))
+          if (name.equals(BaseMediatypePeer.ID ))
         {
                 return new Long(getId());
             }
-          if (name.equals(MediatypePeer.NAME ))
+          if (name.equals(BaseMediatypePeer.NAME ))
         {
                 return getName();
             }
-          if (name.equals(MediatypePeer.HIDDEN ))
+          if (name.equals(BaseMediatypePeer.HIDDEN ))
         {
                 return new Boolean(getHidden());
             }
-          if (name.equals(MediatypePeer.MIMETYPE ))
+          if (name.equals(BaseMediatypePeer.MIMETYPE ))
         {
                 return getMimetype();
             }
-          if (name.equals(MediatypePeer.ROLE ))
+          if (name.equals(BaseMediatypePeer.ROLE ))
         {
                 return getRole();
             }
-          if (name.equals(MediatypePeer.TITLE ))
+          if (name.equals(BaseMediatypePeer.TITLE ))
         {
                 return getTitle();
             }
-          if (name.equals(MediatypePeer.DESCRIPTION ))
+          if (name.equals(BaseMediatypePeer.DESCRIPTION ))
         {
                 return getDescription();
             }
-          if (name.equals(MediatypePeer.IMAGE ))
+          if (name.equals(BaseMediatypePeer.IMAGE ))
         {
                 return getImage();
             }
@@ -657,7 +653,8 @@ public abstract class BaseMediatype extends BaseObject
      * Retrieves a field from the object by Position as specified
      * in the xml schema.  Zero-based.
      */
-    public Object getByPosition(int pos)
+    @Override
+	public Object getByPosition(int pos)
     {
             if ( pos == 0 )
         {
@@ -698,9 +695,10 @@ public abstract class BaseMediatype extends BaseObject
      * Stores the object in the database.  If the object is new,
      * it inserts it; otherwise an update is performed.
      */
-    public void save() throws Exception
+    @Override
+	public void save() throws Exception
     {
-          save(MediatypePeer.getMapBuilder()
+          save(BaseMediatypePeer.getMapBuilder()
                 .getDatabaseMap().getName());
       }
 
@@ -711,7 +709,8 @@ public abstract class BaseMediatype extends BaseObject
      * auto-generated conditionally and therefore needs to be
      * in this file instead of in the super class, BaseObject.
        */
-    public void save(String dbName) throws TorqueException
+    @Override
+	public void save(String dbName) throws TorqueException
     {
         Connection con = null;
           try
@@ -737,7 +736,8 @@ public abstract class BaseMediatype extends BaseObject
      * the save() method and the connection details will be handled
      * internally
      */
-    public void save(Connection con) throws TorqueException
+    @Override
+	public void save(Connection con) throws TorqueException
     {
           if (!alreadyInSave)
         {
@@ -750,17 +750,17 @@ public abstract class BaseMediatype extends BaseObject
             {
                 if (isNew())
                 {
-                    MediatypePeer.doInsert((Mediatype)this, con);
+                    BaseMediatypePeer.doInsert((Mediatype)this, con);
                     setNew(false);
                 }
                 else
                 {
-                    MediatypePeer.doUpdate((Mediatype)this, con);
+                    BaseMediatypePeer.doUpdate((Mediatype)this, con);
                 }
 
                       if (isCacheOnSave())
                 {
-                    MediatypeManager.putInstance(this);
+                    BaseMediatypeManager.putInstance(this);
                 }
               }
 
@@ -791,7 +791,8 @@ public abstract class BaseMediatype extends BaseObject
      *
      * @param ObjectKey id
      */
-    public void setPrimaryKey(ObjectKey id)
+    @Override
+	public void setPrimaryKey(ObjectKey id)
         throws TorqueException {
             setId(((NumberKey)id).longValue());
         }
@@ -799,7 +800,8 @@ public abstract class BaseMediatype extends BaseObject
     /**
      * Set the PrimaryKey using a String.
      */
-    public void setPrimaryKey(String key) throws TorqueException
+    @Override
+	public void setPrimaryKey(String key) throws TorqueException
     {
             setId(Long.parseLong(key));
         }
@@ -809,7 +811,8 @@ public abstract class BaseMediatype extends BaseObject
      * returns an id that differentiates this object from others
      * of its class.
      */
-    public ObjectKey getPrimaryKey()
+    @Override
+	public ObjectKey getPrimaryKey()
     {
           return SimpleKey.keyFor(getId());
       }

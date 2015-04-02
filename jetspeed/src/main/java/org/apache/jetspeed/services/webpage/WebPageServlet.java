@@ -46,7 +46,8 @@ public class WebPageServlet extends HttpServlet
      * handles an HTTP GET request.
      *
      */
-    public void doGet (HttpServletRequest request, HttpServletResponse response) 
+    @Override
+	public void doGet (HttpServletRequest request, HttpServletResponse response) 
         throws ServletException, IOException
     {        
         if (!WebPageManager.isInit())    
@@ -83,7 +84,8 @@ public class WebPageServlet extends HttpServlet
      * handles an HTTP POST request.
      *
      */
-    public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    @Override
+	public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         if (!WebPageManager.isInit())    
         {
@@ -232,7 +234,8 @@ public class WebPageServlet extends HttpServlet
      * @param config typical Servlet initialization parameter.
      * @exception ServletException a servlet exception.
      */
-    public final void init(ServletConfig config)
+    @Override
+	public final void init(ServletConfig config)
         throws ServletException
     {
         super.init(config);
@@ -264,7 +267,8 @@ public class WebPageServlet extends HttpServlet
      * logging out of sessions.
      *
      */
-    public final void destroy()
+    @Override
+	public final void destroy()
     {
         WebPageManager.destroy();
     }

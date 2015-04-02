@@ -31,6 +31,9 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroupMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTScheduleMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroupMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTScheduleMap;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.Operations;
@@ -63,9 +66,9 @@ public class FacilityMultiDelete extends ALAbstractCheckList {
       SelectQuery<EipTScheduleMap> query1 =
         Database.query(EipTScheduleMap.class);
       Expression exp1 =
-        ExpressionFactory.inExp(EipTScheduleMap.USER_ID_PROPERTY, values);
+        ExpressionFactory.inExp(_EipTScheduleMap.USER_ID_PROPERTY, values);
       Expression exp2 =
-        ExpressionFactory.matchExp(EipTScheduleMap.TYPE_PROPERTY, "F");
+        ExpressionFactory.matchExp(_EipTScheduleMap.TYPE_PROPERTY, "F");
       query1.setQualifier(exp1.andExp(exp2));
 
       List<EipTScheduleMap> slist = query1.fetchList();
@@ -76,7 +79,7 @@ public class FacilityMultiDelete extends ALAbstractCheckList {
       // delete facilities
       SelectQuery<EipMFacility> query = Database.query(EipMFacility.class);
       Expression exp =
-        ExpressionFactory.inDbExp(EipMFacility.FACILITY_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipMFacility.FACILITY_ID_PK_COLUMN, values);
       query.setQualifier(exp);
 
       List<EipMFacility> flist = query.fetchList();
@@ -89,7 +92,7 @@ public class FacilityMultiDelete extends ALAbstractCheckList {
       SelectQuery<EipMFacilityGroupMap> fmaps =
         Database.query(EipMFacilityGroupMap.class);
       fmaps.where(Operations.in(
-        EipMFacilityGroupMap.FACILITY_ID_PROPERTY,
+        _EipMFacilityGroupMap.FACILITY_ID_PROPERTY,
         values));
       fmaps.deleteAll();
 

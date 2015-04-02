@@ -2,8 +2,6 @@
 
 package org.apache.jetspeed.om.dbpsml;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.torque.Torque;
@@ -45,8 +43,8 @@ public abstract class BaseJetspeedUserProfileManager
     public static JetspeedUserProfileManager getManager()
     {
         return (JetspeedUserProfileManager)
-            Torque.getManager(JetspeedUserProfileManager.MANAGED_CLASS,
-                JetspeedUserProfileManager.DEFAULT_MANAGER_CLASS);
+            Torque.getManager(BaseJetspeedUserProfileManager.MANAGED_CLASS,
+                BaseJetspeedUserProfileManager.DEFAULT_MANAGER_CLASS);
     }
 
     /**
@@ -255,16 +253,17 @@ public abstract class BaseJetspeedUserProfileManager
     protected boolean existsImpl(JetspeedUserProfile om)
         throws TorqueException
     {
-        Criteria crit = JetspeedUserProfilePeer
-            .buildCriteria((JetspeedUserProfile)om);
-        return JetspeedUserProfilePeer.doSelect(crit).size() > 0;
+        Criteria crit = BaseJetspeedUserProfilePeer
+            .buildCriteria(om);
+        return BaseJetspeedUserProfilePeer.doSelect(crit).size() > 0;
     }
 
 
-    protected Persistent retrieveStoredOM(ObjectKey id)
+    @Override
+	protected Persistent retrieveStoredOM(ObjectKey id)
         throws TorqueException
     {
-        return JetspeedUserProfilePeer.retrieveByPK(id);
+        return BaseJetspeedUserProfilePeer.retrieveByPK(id);
     }
 
     /**
@@ -274,9 +273,10 @@ public abstract class BaseJetspeedUserProfileManager
      * @return a <code>List</code> value
      * @exception TorqueException if an error occurs
      */
-    protected List retrieveStoredOMs(List ids)
+    @Override
+	protected List retrieveStoredOMs(List ids)
         throws TorqueException
     {
-        return JetspeedUserProfilePeer.retrieveByPKs(ids);
+        return BaseJetspeedUserProfilePeer.retrieveByPKs(ids);
     }
 }

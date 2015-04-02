@@ -45,7 +45,8 @@ public class FileWatchExpire extends BaseExpire
     @author <a href="mailto:burton@apache.org">Kevin A. Burton</a>
     @version $Id: FileWatchExpire.java,v 1.10 2004/02/23 03:24:40 jford Exp $
     */
-    public boolean isExpired() {
+    @Override
+	public boolean isExpired() {
         
         if ( this.fw != null ) {
             return this.fw.hasChanged();

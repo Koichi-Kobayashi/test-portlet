@@ -51,7 +51,8 @@ public class VelocityViewProcessor implements ViewProcessor
       {
       }
 
-    public void init(Portlet portlet)
+    @Override
+	public void init(Portlet portlet)
               throws PortletException
       {
       }
@@ -62,7 +63,8 @@ public class VelocityViewProcessor implements ViewProcessor
      * in question.
      *
      */
-    public Object processView(GenericMVCContext context)
+    @Override
+	public Object processView(GenericMVCContext context)
       {
 
         // generate the content

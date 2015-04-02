@@ -33,6 +33,7 @@ import org.apache.jetspeed.services.logging.JetspeedLogger;
 import org.apache.turbine.util.RunData;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTEventlog;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTEventlog;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.common.ALPermissionException;
 import com.aimluck.eip.eventlog.EventlogResultData;
@@ -115,10 +116,10 @@ public class EventlogCsvExportScreen extends ALCSVScreen {
       endDay = cal.getTime();
       Expression exp1 =
         ExpressionFactory.greaterOrEqualExp(
-          EipTEventlog.EVENT_DATE_PROPERTY,
+          _EipTEventlog.EVENT_DATE_PROPERTY,
           startDay);
       Expression exp2 =
-        ExpressionFactory.lessExp(EipTEventlog.EVENT_DATE_PROPERTY, endDay);
+        ExpressionFactory.lessExp(_EipTEventlog.EVENT_DATE_PROPERTY, endDay);
       query.andQualifier(exp1.andExp(exp2));
       ResultList<EipTEventlog> list = query.getResultList();
       String LINE_SEPARATOR = System.getProperty("line.separator");

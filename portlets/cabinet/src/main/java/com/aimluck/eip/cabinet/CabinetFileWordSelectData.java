@@ -33,6 +33,8 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cabinet.util.CabinetUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTCabinetFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTCabinetFolder;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCabinetFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCabinetFolder;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -230,15 +232,15 @@ public class CabinetFileWordSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("folder_name", EipTCabinetFile.EIP_TCABINET_FOLDER_PROPERTY
+    map.putValue("folder_name", _EipTCabinetFile.EIP_TCABINET_FOLDER_PROPERTY
       + "."
-      + EipTCabinetFolder.FOLDER_NAME_PROPERTY);
-    map.putValue("file_title", EipTCabinetFile.FILE_TITLE_PROPERTY);
-    map.putValue("file_name", EipTCabinetFile.FILE_NAME_PROPERTY);
+      + _EipTCabinetFolder.FOLDER_NAME_PROPERTY);
+    map.putValue("file_title", _EipTCabinetFile.FILE_TITLE_PROPERTY);
+    map.putValue("file_name", _EipTCabinetFile.FILE_NAME_PROPERTY);
     // map.putValue("update_user", TurbineUserConstants.LAST_NAME_KANA);
-    map.putValue("update_date", EipTCabinetFile.UPDATE_DATE_PROPERTY);
-    map.putValue("file_size", EipTCabinetFile.FILE_SIZE_PROPERTY);
-    map.putValue("counter", EipTCabinetFile.COUNTER_PROPERTY);
+    map.putValue("update_date", _EipTCabinetFile.UPDATE_DATE_PROPERTY);
+    map.putValue("file_size", _EipTCabinetFile.FILE_SIZE_PROPERTY);
+    map.putValue("counter", _EipTCabinetFile.COUNTER_PROPERTY);
     return map;
   }
 
@@ -256,18 +258,18 @@ public class CabinetFileWordSelectData extends
     String word = searchWord.getValue();
 
     Expression exp11 =
-      ExpressionFactory.likeExp(EipTCabinetFile.FILE_TITLE_PROPERTY, "%"
+      ExpressionFactory.likeExp(_EipTCabinetFile.FILE_TITLE_PROPERTY, "%"
         + word
         + "%");
     Expression exp12 =
-      ExpressionFactory.likeExp(EipTCabinetFile.FILE_NAME_PROPERTY, "%"
+      ExpressionFactory.likeExp(_EipTCabinetFile.FILE_NAME_PROPERTY, "%"
         + word
         + "%");
     Expression exp13 =
       ExpressionFactory
-        .likeExp(EipTCabinetFile.NOTE_PROPERTY, "%" + word + "%");
+        .likeExp(_EipTCabinetFile.NOTE_PROPERTY, "%" + word + "%");
     Expression exp14 =
-      ExpressionFactory.inExp(EipTCabinetFile.FOLDER_ID_PROPERTY, CabinetUtils
+      ExpressionFactory.inExp(_EipTCabinetFile.FOLDER_ID_PROPERTY, CabinetUtils
         .getAuthorizedVisibleFolderIds(rundata));
 
     query.setQualifier(exp11.orExp(exp12).orExp(exp13));

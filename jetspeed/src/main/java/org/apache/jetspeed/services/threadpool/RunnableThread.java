@@ -93,7 +93,8 @@ public class RunnableThread extends Thread {
   /**
    * Processes the Runnable object assigned to it, whenever one is available
    */
-  public void run() {
+  @Override
+public void run() {
 
     /*
      * FIXME: move to a static class variable to allow for pool shutdown
@@ -210,7 +211,8 @@ public class RunnableThread extends Thread {
    * 
    * @return the identifier of the thread
    */
-  public long getId() {
+  @Override
+public long getId() {
     return this.id;
   }
 

@@ -33,7 +33,7 @@ import java.util.Vector;
  * Provides a basic registry implementation that keep the elements
  * ordered.
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BaseOrderedRegistry.java,v 1.4 2004/02/23 03:08:26 jford Exp $
  */
 public class BaseOrderedRegistry implements LocalRegistry
@@ -48,13 +48,15 @@ public class BaseOrderedRegistry implements LocalRegistry
     private static final JetspeedLogger logger = JetspeedLogFactoryService.getLogger(BaseOrderedRegistry.class.getName());    
     
     /** @see Registry#getEntryCount */
-    public int getEntryCount()
+    @Override
+	public int getEntryCount()
     {
         return this.entries.size();
     }
 
     /** @see Registry#getEntry */
-    public RegistryEntry getEntry( String name ) throws InvalidEntryException
+    @Override
+	public RegistryEntry getEntry( String name ) throws InvalidEntryException
     {
 
         RegistryEntry entry = null;
@@ -103,7 +105,8 @@ public class BaseOrderedRegistry implements LocalRegistry
     /**
     @see Registry#setEntry
     */
-    public void setEntry( RegistryEntry entry ) throws InvalidEntryException
+    @Override
+	public void setEntry( RegistryEntry entry ) throws InvalidEntryException
     {
         setLocalEntry( entry );
     }
@@ -111,7 +114,8 @@ public class BaseOrderedRegistry implements LocalRegistry
     /**
     @see Registry#addEntry
     */
-    public void addEntry( RegistryEntry entry ) throws InvalidEntryException
+    @Override
+	public void addEntry( RegistryEntry entry ) throws InvalidEntryException
     {
         addLocalEntry( entry );
     }
@@ -119,7 +123,8 @@ public class BaseOrderedRegistry implements LocalRegistry
     /**
     @see Registry#removeEntry
     */
-    public void removeEntry( String name )
+    @Override
+	public void removeEntry( String name )
     {
         removeLocalEntry( name );
     }
@@ -128,7 +133,8 @@ public class BaseOrderedRegistry implements LocalRegistry
     @see Registry#removeEntry
     */
 
-    public void removeEntry( RegistryEntry entry )
+    @Override
+	public void removeEntry( RegistryEntry entry )
     {
         removeLocalEntry( entry );
     }
@@ -136,7 +142,8 @@ public class BaseOrderedRegistry implements LocalRegistry
     /**
        @see Registry#hasEntry
     */
-    public boolean hasEntry( String name )
+    @Override
+	public boolean hasEntry( String name )
     {
         synchronized (entries)
         {
@@ -152,7 +159,8 @@ public class BaseOrderedRegistry implements LocalRegistry
     /**
        @see Registry#getEntries
      */
-    public Enumeration getEntries()
+    @Override
+	public Enumeration getEntries()
     {
         Vector v = new Vector(entries);
 
@@ -162,7 +170,8 @@ public class BaseOrderedRegistry implements LocalRegistry
     /**
        @see Registry#listEntryNames
      */
-    public Iterator listEntryNames()
+    @Override
+	public Iterator listEntryNames()
     {
         synchronized (entries)
         {
@@ -178,7 +187,8 @@ public class BaseOrderedRegistry implements LocalRegistry
     /**
        @see Registry#toArray
      */
-    public RegistryEntry[] toArray()
+    @Override
+	public RegistryEntry[] toArray()
     {
         RegistryEntry[] array = new RegistryEntry[ entries.size() ];
 
@@ -192,7 +202,8 @@ public class BaseOrderedRegistry implements LocalRegistry
      *
      * @return the newly created RegistryEntry
      */
-    public RegistryEntry createEntry()
+    @Override
+	public RegistryEntry createEntry()
     {
         return new BaseRegistryEntry();
     }
@@ -207,7 +218,8 @@ public class BaseOrderedRegistry implements LocalRegistry
      *
      * @param entry the RegistryEntry to store
      */
-    public void setLocalEntry( RegistryEntry entry ) throws InvalidEntryException
+    @Override
+	public void setLocalEntry( RegistryEntry entry ) throws InvalidEntryException
     {
         synchronized (entries)
         {
@@ -234,7 +246,8 @@ public class BaseOrderedRegistry implements LocalRegistry
      *
      * @param entry the RegistryEntry to store
      */
-    public void addLocalEntry( RegistryEntry entry ) throws InvalidEntryException
+    @Override
+	public void addLocalEntry( RegistryEntry entry ) throws InvalidEntryException
     {
         synchronized (entries)
         {
@@ -261,7 +274,8 @@ public class BaseOrderedRegistry implements LocalRegistry
      *
      * @param name the name of the RegistryEntry to remove
      */
-    public void removeLocalEntry( String name )
+    @Override
+	public void removeLocalEntry( String name )
     {
         synchronized(entries)
         {
@@ -286,7 +300,8 @@ public class BaseOrderedRegistry implements LocalRegistry
      *
      * @param entry the RegistryEntry to remove
      */
-    public void removeLocalEntry( RegistryEntry entry )
+    @Override
+	public void removeLocalEntry( RegistryEntry entry )
     {
         synchronized(entries)
         {

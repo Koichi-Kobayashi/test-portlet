@@ -35,7 +35,8 @@ public abstract class SecureGenericMVCAction extends GenericMVCAction
      * @param context context information.
      * @exception Exception, a generic exception.
      */
-    public void executeEvents(RunData data, Context context) throws Exception
+    @Override
+	public void executeEvents(RunData data, Context context) throws Exception
     {
 		checkAdministrativeAction(data);
 		

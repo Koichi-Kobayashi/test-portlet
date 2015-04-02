@@ -33,6 +33,9 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFilter;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFolder;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMMailAccount;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMailFilter;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMailFolder;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipUser;
@@ -127,7 +130,7 @@ public class WebMailFilterSelectData extends
 
         Expression exp =
           ExpressionFactory.matchExp(
-            EipMMailAccount.USER_ID_PROPERTY,
+            _EipMMailAccount.USER_ID_PROPERTY,
             login_user.getUserId());
         EipMMailAccount account = query.setQualifier(exp).fetchSingle();
 
@@ -203,7 +206,7 @@ public class WebMailFilterSelectData extends
 
     Expression exp =
       ExpressionFactory.matchDbExp(
-        EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
+        _EipTMailFilter.EIP_MMAIL_ACCOUNT_PROPERTY,
         mailAccount);
     query.setQualifier(exp);
 
@@ -295,12 +298,12 @@ public class WebMailFilterSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("sort_order", EipTMailFilter.SORT_ORDER_PROPERTY);
-    map.putValue("filter_name", EipTMailFilter.FILTER_NAME_PROPERTY);
-    map.putValue("filter_string", EipTMailFilter.FILTER_TYPE_PROPERTY);
-    map.putValue("dst_folder_name", EipTMailFilter.EIP_TMAIL_FOLDER_PROPERTY
+    map.putValue("sort_order", _EipTMailFilter.SORT_ORDER_PROPERTY);
+    map.putValue("filter_name", _EipTMailFilter.FILTER_NAME_PROPERTY);
+    map.putValue("filter_string", _EipTMailFilter.FILTER_TYPE_PROPERTY);
+    map.putValue("dst_folder_name", _EipTMailFilter.EIP_TMAIL_FOLDER_PROPERTY
       + "."
-      + EipTMailFolder.FOLDER_NAME_PROPERTY);
+      + _EipTMailFolder.FOLDER_NAME_PROPERTY);
     return map;
   }
 

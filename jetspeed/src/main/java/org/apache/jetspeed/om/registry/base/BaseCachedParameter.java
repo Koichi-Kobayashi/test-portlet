@@ -36,7 +36,8 @@ public class BaseCachedParameter extends BaseParameter
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object==null)
         {
@@ -58,22 +59,26 @@ public class BaseCachedParameter extends BaseParameter
         return super.equals(object);
     }
 
-    public boolean isCachedOnName()
+    @Override
+	public boolean isCachedOnName()
     {
         return cachedOnName;
     }
 
-    public boolean isCachedOnValue()
+    @Override
+	public boolean isCachedOnValue()
     {
         return cachedOnValue;
     }
 
-    public void setCachedOnName(boolean cached)
+    @Override
+	public void setCachedOnName(boolean cached)
     {
         this.cachedOnName = cached;
     }
 
-    public void setCachedOnValue(boolean cached)
+    @Override
+	public void setCachedOnValue(boolean cached)
     {
         this.cachedOnValue = cached;
     }

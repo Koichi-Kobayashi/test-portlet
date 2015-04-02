@@ -28,6 +28,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTTimelineUrl;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimelineUrl;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.Operations;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -58,7 +59,7 @@ public class FileuploadYoutubeViewScreen extends ALVelocityScreen {
     boolean isAndroid = ALEipUtils.isAndroidBrowser(rundata);
 
     SelectQuery<EipTTimelineUrl> query = Database.query(EipTTimelineUrl.class);
-    query.where(Operations.in(EipTTimelineUrl.TIMELINE_ID_PROPERTY, id));
+    query.where(Operations.in(_EipTTimelineUrl.TIMELINE_ID_PROPERTY, id));
     List<EipTTimelineUrl> list = query.fetchList();
 
     if (list.size() > 0) {

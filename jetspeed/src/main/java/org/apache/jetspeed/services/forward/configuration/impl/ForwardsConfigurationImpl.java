@@ -42,7 +42,8 @@ public class ForwardsConfigurationImpl implements ForwardsConfiguration, java.io
         this.forwards = forwards;
     }
 
-    public Collection getForwards()
+    @Override
+	public Collection getForwards()
     {
         return this.forwards;
     }
@@ -57,7 +58,8 @@ public class ForwardsConfigurationImpl implements ForwardsConfiguration, java.io
         this.portletForwards = portletForwards;
     }
 
-    public Collection getPortletForwards()
+    @Override
+	public Collection getPortletForwards()
     {
         return this.portletForwards;
     }

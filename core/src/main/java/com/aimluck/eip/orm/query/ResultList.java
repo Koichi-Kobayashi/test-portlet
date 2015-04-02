@@ -76,95 +76,118 @@ public class ResultList<T> implements List<T>, Serializable {
     return page;
   }
 
-  public void add(int index, T element) {
+  @Override
+public void add(int index, T element) {
     delegate.add(index, element);
   }
 
-  public boolean add(T o) {
+  @Override
+public boolean add(T o) {
     return delegate.add(o);
   }
 
-  public boolean addAll(Collection<? extends T> c) {
+  @Override
+public boolean addAll(Collection<? extends T> c) {
     return delegate.addAll(c);
   }
 
-  public boolean addAll(int index, Collection<? extends T> c) {
+  @Override
+public boolean addAll(int index, Collection<? extends T> c) {
     return delegate.addAll(index, c);
   }
 
-  public void clear() {
+  @Override
+public void clear() {
     delegate.clear();
   }
 
-  public boolean contains(Object o) {
+  @Override
+public boolean contains(Object o) {
     return delegate.contains(o);
   }
 
-  public boolean containsAll(Collection<?> c) {
+  @Override
+public boolean containsAll(Collection<?> c) {
     return delegate.containsAll(c);
   }
 
-  public T get(int index) {
+  @Override
+public T get(int index) {
     return delegate.get(index);
   }
 
-  public int indexOf(Object o) {
+  @Override
+public int indexOf(Object o) {
     return delegate.indexOf(o);
   }
 
-  public boolean isEmpty() {
+  @Override
+public boolean isEmpty() {
     return delegate.isEmpty();
   }
 
-  public Iterator<T> iterator() {
+  @Override
+public Iterator<T> iterator() {
     return delegate.iterator();
   }
 
-  public int lastIndexOf(Object o) {
+  @Override
+public int lastIndexOf(Object o) {
     return delegate.lastIndexOf(o);
   }
 
-  public ListIterator<T> listIterator() {
+  @Override
+public ListIterator<T> listIterator() {
     return delegate.listIterator();
   }
 
-  public ListIterator<T> listIterator(int index) {
+  @Override
+public ListIterator<T> listIterator(int index) {
     return delegate.listIterator(index);
   }
 
-  public T remove(int index) {
+  @Override
+public T remove(int index) {
     return delegate.remove(index);
   }
 
-  public boolean remove(Object o) {
+  @Override
+public boolean remove(Object o) {
     return delegate.remove(o);
   }
 
-  public boolean removeAll(Collection<?> c) {
+  @Override
+public boolean removeAll(Collection<?> c) {
     return delegate.removeAll(c);
   }
 
-  public boolean retainAll(Collection<?> c) {
+  @Override
+public boolean retainAll(Collection<?> c) {
     return delegate.retainAll(c);
   }
 
-  public T set(int index, T element) {
+  @Override
+public T set(int index, T element) {
     return delegate.set(index, element);
   }
 
-  public int size() {
+  @Override
+public int size() {
     return delegate.size();
   }
 
-  public List<T> subList(int fromIndex, int toIndex) {
+  @Override
+public List<T> subList(int fromIndex, int toIndex) {
     return delegate.subList(fromIndex, toIndex);
   }
 
-  public Object[] toArray() {
+  @Override
+public Object[] toArray() {
     return delegate.toArray();
   }
 
-  public <A> A[] toArray(A[] a) {
+  @Override
+public <A> A[] toArray(A[] a) {
     return delegate.toArray(a);
   }
 

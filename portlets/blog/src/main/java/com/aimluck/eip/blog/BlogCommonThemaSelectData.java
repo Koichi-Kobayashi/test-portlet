@@ -36,6 +36,7 @@ import com.aimluck.commons.utils.ALDateUtil;
 import com.aimluck.eip.blog.util.BlogUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogEntry;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogThema;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogThema;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -197,7 +198,7 @@ public class BlogCommonThemaSelectData extends
   private SelectQuery<EipTBlogThema> getSelectQuery(RunData rundata,
       Context context) {
     SelectQuery<EipTBlogThema> query = Database.query(EipTBlogThema.class);
-    query.prefetch(EipTBlogThema.EIP_TBLOG_ENTRYS_PROPERTY);
+    query.prefetch(_EipTBlogThema.EIP_TBLOG_ENTRYS_PROPERTY);
     return query;
   }
 
@@ -327,7 +328,7 @@ public class BlogCommonThemaSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("thema_name", EipTBlogThema.THEMA_NAME_PROPERTY);
+    map.putValue("thema_name", _EipTBlogThema.THEMA_NAME_PROPERTY);
     return map;
   }
 

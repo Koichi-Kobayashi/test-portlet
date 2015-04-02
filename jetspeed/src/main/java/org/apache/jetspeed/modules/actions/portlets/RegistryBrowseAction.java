@@ -33,7 +33,7 @@ import org.apache.velocity.context.Context;
  * This action enables to browse any of the system registries for displaying
  * available entries and information on these entries
  * 
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $ID$
  */
 public class RegistryBrowseAction extends GenericMVCAction
@@ -52,7 +52,8 @@ public class RegistryBrowseAction extends GenericMVCAction
      * Subclasses must override this method to provide default behavior 
      * for the portlet action
      */
-    protected void buildNormalContext( Portlet portlet, 
+    @Override
+	protected void buildNormalContext( Portlet portlet, 
                                        Context context,
                                        RunData rundata )
     {
@@ -109,7 +110,8 @@ public class RegistryBrowseAction extends GenericMVCAction
 
             Collections.sort(regEntries,
                 new Comparator() {
-                    public int compare(Object o1, Object o2)
+                    @Override
+					public int compare(Object o1, Object o2)
                     {
                         String t1 = ((RegistryEntry) o1).getName().toLowerCase();
                         String t2 = ((RegistryEntry) o2).getName().toLowerCase();

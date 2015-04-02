@@ -574,7 +574,7 @@ public class URILookup
             else if (rundata.getAction().equals(ACTION_LOGOUT)) return SUBTYPE_LOGOUT;
         }
 
-        String value = (String)rundata.getRequest().getParameter("type");
+        String value = rundata.getRequest().getParameter("type");
 
         if (value!=null)
         {

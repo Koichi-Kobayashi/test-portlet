@@ -70,7 +70,8 @@ public class SecurityCacheImpl  extends TurbineBaseService
     *
     * @param JetspeedUser the user to cache all role and permission information for.
     */
-    public void load(String username)
+    @Override
+	public void load(String username)
         throws JetspeedSecurityException
     {                
         CachedAcl acl = new CachedAcl(username);
@@ -82,7 +83,8 @@ public class SecurityCacheImpl  extends TurbineBaseService
         }
     }
 
-    public void unload(String username)
+    @Override
+	public void unload(String username)
     {
         acls.remove(username);
     }
@@ -92,7 +94,8 @@ public class SecurityCacheImpl  extends TurbineBaseService
         return (Role)perms.get(roleName);
     }
 
-    public Role getRole(String username, String roleName)
+    @Override
+	public Role getRole(String username, String roleName)
     {
         CachedAcl acl = (CachedAcl)acls.get(username);
         if (acl == null)
@@ -102,6 +105,7 @@ public class SecurityCacheImpl  extends TurbineBaseService
         return acl.getRole(roleName);
     }
     
+	@Override
 	public Role getRole(String username, String roleName, String groupName)
 	{
 		CachedAcl acl = (CachedAcl) acls.get(username);
@@ -112,7 +116,8 @@ public class SecurityCacheImpl  extends TurbineBaseService
 		return acl.getRole(roleName, groupName);
 	}
     
-    public void addRole(Role role)
+    @Override
+	public void addRole(Role role)
     {
         if (!perms.containsKey(role.getName()))
         {
@@ -120,7 +125,8 @@ public class SecurityCacheImpl  extends TurbineBaseService
         }        
     }
 
-    public void addRole(String username, Role role)
+    @Override
+	public void addRole(String username, Role role)
     {
         CachedAcl acl = (CachedAcl)acls.get(username);
         if (null != acl)
@@ -133,6 +139,7 @@ public class SecurityCacheImpl  extends TurbineBaseService
         }        
     }
 
+	@Override
 	public void addRole(String username, Role role, Group group)
 	{
 		CachedAcl acl = (CachedAcl) acls.get(username);
@@ -146,11 +153,13 @@ public class SecurityCacheImpl  extends TurbineBaseService
 		}
 	}
 
+	@Override
 	public boolean hasRole(String username, String roleName)
 	{
 		return hasRole(username, roleName, GroupManagement.DEFAULT_GROUP_NAME);
 	}
 
+	@Override
 	public boolean hasRole(String username, String roleName, String groupName)
 	{
 		CachedAcl acl = (CachedAcl) acls.get(username);
@@ -161,11 +170,13 @@ public class SecurityCacheImpl  extends TurbineBaseService
 		return false;
 	}
 
+	@Override
 	public void removeRole(String username, String roleName)
 	{
 		removeRole(username, roleName, GroupManagement.DEFAULT_GROUP_NAME);
 	}
 
+	@Override
 	public void removeRole(String username, String roleName, String groupName)
 	{
 		CachedAcl acl = (CachedAcl) acls.get(username);
@@ -177,13 +188,15 @@ public class SecurityCacheImpl  extends TurbineBaseService
 		perms.remove(roleName);
 	}
 
-    public CachedAcl getAcl(String username)
+    @Override
+	public CachedAcl getAcl(String username)
     {
         return (CachedAcl)acls.get(username);
     }
 
 
-    public Iterator getRoles(String username)
+    @Override
+	public Iterator getRoles(String username)
     {
         CachedAcl acl = (CachedAcl)acls.get(username);
         if (null != acl)
@@ -193,7 +206,8 @@ public class SecurityCacheImpl  extends TurbineBaseService
         return null;        
     }
 
-    public Permission getPermission(String roleName, String permissionName)
+    @Override
+	public Permission getPermission(String roleName, String permissionName)
     {        
         Map map = (Map)perms.get(roleName);
         if (null != map)
@@ -203,7 +217,8 @@ public class SecurityCacheImpl  extends TurbineBaseService
         return null;        
     }
     
-    public void addPermission(String roleName, Permission permission)
+    @Override
+	public void addPermission(String roleName, Permission permission)
     {
         Map map = (Map)perms.get(roleName);
         if (null != map)
@@ -212,7 +227,8 @@ public class SecurityCacheImpl  extends TurbineBaseService
         }
     }
 
-    public boolean hasPermission(String roleName, String permissionName)
+    @Override
+	public boolean hasPermission(String roleName, String permissionName)
     {
         Map map = (Map)perms.get(roleName);
         if (null != map)
@@ -222,7 +238,8 @@ public class SecurityCacheImpl  extends TurbineBaseService
         return false;
     }
 
-    public void removePermission(String roleName, String permissionName)
+    @Override
+	public void removePermission(String roleName, String permissionName)
     {
         Map map = (Map)perms.get(roleName);
         if (null != map)
@@ -231,7 +248,8 @@ public class SecurityCacheImpl  extends TurbineBaseService
         }
     }
 
-    public Iterator getPermissions(String roleName)
+    @Override
+	public Iterator getPermissions(String roleName)
     {
         Map map = (Map)perms.get(roleName);
         if (map != null)
@@ -242,7 +260,8 @@ public class SecurityCacheImpl  extends TurbineBaseService
     }
 
 
-    public void removeAllRoles(String rolename)
+    @Override
+	public void removeAllRoles(String rolename)
     {
         Iterator iterator = acls.values().iterator();
         while (iterator.hasNext())
@@ -253,7 +272,8 @@ public class SecurityCacheImpl  extends TurbineBaseService
         perms.remove(rolename);
     }
 
-    public void removeAllPermissions(String permissionName)
+    @Override
+	public void removeAllPermissions(String permissionName)
     {
         Iterator iterator = perms.values().iterator();
         while (iterator.hasNext())
@@ -263,7 +283,8 @@ public class SecurityCacheImpl  extends TurbineBaseService
         }
     }
 
-    public void loadRolePermissions()
+    @Override
+	public void loadRolePermissions()
     {
         try
         {
@@ -298,7 +319,8 @@ public class SecurityCacheImpl  extends TurbineBaseService
      * @exception throws a <code>InitializationException</code> if the service
      * fails to initialize
      */
-    public synchronized void init(ServletConfig conf) 
+    @Override
+	public synchronized void init(ServletConfig conf) 
         throws InitializationException 
     {
         if (getInit()) return;

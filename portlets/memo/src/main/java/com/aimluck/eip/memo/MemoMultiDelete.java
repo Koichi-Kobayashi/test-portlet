@@ -30,6 +30,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTMemo;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMemo;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.memo.util.MemoUtils;
 import com.aimluck.eip.orm.Database;
@@ -69,11 +70,11 @@ public class MemoMultiDelete extends ALAbstractCheckList {
 
       SelectQuery<EipTMemo> query = Database.query(EipTMemo.class);
       Expression exp1 =
-        ExpressionFactory.matchExp(EipTMemo.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipTMemo.OWNER_ID_PROPERTY, Integer
           .valueOf(ALEipUtils.getUserId(rundata)));
       query.setQualifier(exp1);
       Expression exp2 =
-        ExpressionFactory.inDbExp(EipTMemo.MEMO_ID_PK_COLUMN, ids);
+        ExpressionFactory.inDbExp(_EipTMemo.MEMO_ID_PK_COLUMN, ids);
 
       query.andQualifier(exp2);
 

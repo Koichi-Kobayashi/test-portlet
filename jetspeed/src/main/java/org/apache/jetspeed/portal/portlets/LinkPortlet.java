@@ -52,6 +52,7 @@ public class LinkPortlet extends AbstractPortlet
  * @return org.apache.ecs.ConcreteElement
  * @param data org.apache.turbine.util.RunData
  */
+@Override
 public org.apache.ecs.ConcreteElement getContent(org.apache.turbine.util.RunData data)
 {
 

@@ -19,7 +19,7 @@ package org.apache.jetspeed.portal;
 /**
  * Trivial implementation of PortletSetConstraints
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BasePortletSetConstraints.java,v 1.3 2004/02/23 04:05:35 jford Exp $
  */
 public class BasePortletSetConstraints extends java.util.HashMap
@@ -29,7 +29,8 @@ public class BasePortletSetConstraints extends java.util.HashMap
      *
      * @return a positive column number or null
      */
-    public Integer getColumn()
+    @Override
+	public Integer getColumn()
     {
         Object column = get("column");
         if (column instanceof String)
@@ -53,7 +54,8 @@ public class BasePortletSetConstraints extends java.util.HashMap
      *
      * @param col the column position
      */
-    public void setColumn(Integer col) throws IllegalArgumentException
+    @Override
+	public void setColumn(Integer col) throws IllegalArgumentException
     {
         if (col.intValue() < 0)
         {
@@ -67,7 +69,8 @@ public class BasePortletSetConstraints extends java.util.HashMap
      *
      * @return a positive row number or null
      */
-    public Integer getRow()
+    @Override
+	public Integer getRow()
     {
         Object row = get("row");
         if (row instanceof String)
@@ -91,7 +94,8 @@ public class BasePortletSetConstraints extends java.util.HashMap
      *
      * @param row the column position
      */
-    public void setRow(Integer row) throws IllegalArgumentException
+    @Override
+	public void setRow(Integer row) throws IllegalArgumentException
     {
         if (row.intValue() < 0)
         {

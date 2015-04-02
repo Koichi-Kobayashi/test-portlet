@@ -35,7 +35,7 @@ import java.util.ArrayList;
  * Extends BaseRegistry implementation to override object creation
  * method
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BaseMediaTypeRegistry.java,v 1.7 2004/02/23 03:08:26 jford Exp $
  */
 public class BaseMediaTypeRegistry extends BaseOrderedRegistry
@@ -53,7 +53,8 @@ public class BaseMediaTypeRegistry extends BaseOrderedRegistry
      * @param category The category and optional subcategories.
      * @return Iterator The result as an iterator.
      */
-    public Iterator findForCapability(CapabilityMap cm)
+    @Override
+	public Iterator findForCapability(CapabilityMap cm)
     {
         if (cm == null)
         {
@@ -107,7 +108,8 @@ public class BaseMediaTypeRegistry extends BaseOrderedRegistry
     /**
     @see Registry#setEntry
     */
-    public void setEntry( RegistryEntry entry ) throws InvalidEntryException
+    @Override
+	public void setEntry( RegistryEntry entry ) throws InvalidEntryException
     {
         // Delegate to the RegistryService to ensure correct handling of
         // persistence if using file fragments
@@ -125,7 +127,8 @@ public class BaseMediaTypeRegistry extends BaseOrderedRegistry
     /**
     @see Registry#addEntry
     */
-    public void addEntry( RegistryEntry entry ) throws InvalidEntryException
+    @Override
+	public void addEntry( RegistryEntry entry ) throws InvalidEntryException
     {
         // Delegate to the RegistryService to ensure correct handling of
         // persistence if using file fragments
@@ -143,7 +146,8 @@ public class BaseMediaTypeRegistry extends BaseOrderedRegistry
     /**
     @see Registry#removeEntry
     */
-    public void removeEntry( String name )
+    @Override
+	public void removeEntry( String name )
     {
         // Delegate to the RegistryService to ensure correct handling of
         // persistence if using file fragments
@@ -154,7 +158,8 @@ public class BaseMediaTypeRegistry extends BaseOrderedRegistry
     /**
     @see Registry#removeEntry
     */
-    public void removeEntry( RegistryEntry entry )
+    @Override
+	public void removeEntry( RegistryEntry entry )
     {
         // Delegate to the RegistryService to ensure correct handling of
         // persistence if using file fragments
@@ -171,7 +176,8 @@ public class BaseMediaTypeRegistry extends BaseOrderedRegistry
      *
      * @return the newly created RegistryEntry
      */
-    public RegistryEntry createEntry()
+    @Override
+	public RegistryEntry createEntry()
     {
         return new BaseMediaTypeEntry();
     }

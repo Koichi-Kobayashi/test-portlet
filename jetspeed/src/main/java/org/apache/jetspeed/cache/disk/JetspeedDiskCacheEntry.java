@@ -161,14 +161,16 @@ public class JetspeedDiskCacheEntry implements DiskCacheEntry {
     
     /**
     */
-    public String getURL() {
+    @Override
+	public String getURL() {
         return this.url;
     }
     
     /**
     Reconstruct the original URL based on this URL.
     */
-    public String getSourceURL() {
+    @Override
+	public String getSourceURL() {
         //if getFile() is null then this isn't cached
         if ( this.getFile() == null ) {
             return this.getURL();
@@ -180,7 +182,8 @@ public class JetspeedDiskCacheEntry implements DiskCacheEntry {
     /**
     Get the File that this URL obtains within the cache.
     */
-    public File getFile() {
+    @Override
+	public File getFile() {
         return this.file;
     }
     
@@ -208,7 +211,8 @@ public class JetspeedDiskCacheEntry implements DiskCacheEntry {
     /**
     Open this URL and read its data, then return it as a string
     */
-    public String getData() throws IOException {
+    @Override
+	public String getData() throws IOException {
 
       Reader is = this.getReader();
       StringWriter bos = new StringWriter();
@@ -230,7 +234,8 @@ public class JetspeedDiskCacheEntry implements DiskCacheEntry {
     /**
     Get an input stream  from this entry 
     */
-    public InputStream getInputStream() throws IOException {
+    @Override
+	public InputStream getInputStream() throws IOException {
         logger.info( "CacheEntry getInputStream() called: " + this.getURL()  );
         if(this.getFile() != null)
             {
@@ -260,7 +265,8 @@ public class JetspeedDiskCacheEntry implements DiskCacheEntry {
     For remote entries, we assume that the cache saved them in the local store
         using UTF8 encoding
     */
-    public Reader getReader() throws IOException {
+    @Override
+	public Reader getReader() throws IOException {
 
         if(DiskCacheUtils.isLocal( this.getURL() ) )
             {
@@ -316,7 +322,8 @@ public class JetspeedDiskCacheEntry implements DiskCacheEntry {
     For remote entries, we throws a IOException
 
     */
-    public Writer getWriter() throws IOException {
+    @Override
+	public Writer getWriter() throws IOException {
 
         if( DiskCacheUtils.isRemote( this.getURL() ) ) {
             throw new IOException("Cannot write to remote URLs!");
@@ -351,7 +358,8 @@ public class JetspeedDiskCacheEntry implements DiskCacheEntry {
     /**
        Return the last modified date of this entry.
     */
-    public long getLastModified() { 
+    @Override
+	public long getLastModified() { 
         if( isLocal() ) {
             try {
                 String localfile = this.getURL().substring(5); //remove "file:"
@@ -370,7 +378,8 @@ public class JetspeedDiskCacheEntry implements DiskCacheEntry {
     /**
     Set the last modified date of this entry.
     */
-    public void setLastModified(long time) { 
+    @Override
+	public void setLastModified(long time) { 
         this.lastModified = time;
         
     }
@@ -390,14 +399,16 @@ public class JetspeedDiskCacheEntry implements DiskCacheEntry {
     /**
     Set the expiration  date of this entry.
     */
-    public long getExpirationTime() { 
+    @Override
+	public long getExpirationTime() { 
         return this.expires;
     }
 
     /**
     Set the expiration  date of this entry.
     */
-    public void setExpirationTime(long time) { 
+    @Override
+	public void setExpirationTime(long time) { 
         this.expires = time;
         if(this.expires < System.currentTimeMillis())
             {
@@ -409,14 +420,16 @@ public class JetspeedDiskCacheEntry implements DiskCacheEntry {
 
     /**
     */
-    public boolean hasExpired() { 
+    @Override
+	public boolean hasExpired() { 
         return this.expires <= 0 || 
             this.expires < System.currentTimeMillis();
     }
 
     /**
     */
-    public boolean isLocal() { 
+    @Override
+	public boolean isLocal() { 
 
         return DiskCacheUtils.isLocal(this.getSourceURL());
     }
@@ -434,7 +447,8 @@ public class JetspeedDiskCacheEntry implements DiskCacheEntry {
                      encoding + " method -> " + this.conn.getRequestMethod() );
         }
 
-        public void close() throws IOException
+        @Override
+		public void close() throws IOException
         {
             //We close the stream
             super.close();
@@ -459,7 +473,8 @@ public class JetspeedDiskCacheEntry implements DiskCacheEntry {
             logger.info("FileURLWriter opening file -> " + filename );
         }
 
-        public void close() throws IOException
+        @Override
+		public void close() throws IOException
         {
             //We close the stream
             super.close();

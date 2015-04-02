@@ -26,7 +26,8 @@ import org.apache.cayenne.access.ObjectStore;
 
 public class IsolatedDataContextFactory implements DataContextFactory {
 
-  public DataContext createDataContext(DataChannel parent,
+  @Override
+public DataContext createDataContext(DataChannel parent,
       ObjectStore objectStore) {
 
     // stop listening for peer events

@@ -25,15 +25,18 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 
+
 // javax.servlet
 import javax.servlet.http.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletConfig;
 
+
 // velocity
 import org.apache.velocity.Template;
 import org.apache.velocity.context.Context;
+import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.servlet.VelocityServlet;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.exception.ResourceNotFoundException;
@@ -62,7 +65,8 @@ public class WebPageConsoleServlet extends VelocityServlet
      *     
      * @return The newly merged template.
      */
-    public Template handleRequest( HttpServletRequest request, 
+    @Override
+	public Template handleRequest( HttpServletRequest request, 
                                    HttpServletResponse response, 
                                    Context ctx )
     {
@@ -127,7 +131,8 @@ public class WebPageConsoleServlet extends VelocityServlet
      * @return The Properties collection of Velocity properties.
      * @throws exceptions when failed to read the properties or log files
      */        
-    protected Properties loadConfiguration(ServletConfig config)
+    @Override
+	protected Properties loadConfiguration(ServletConfig config)
     throws IOException, FileNotFoundException
     {
         /*
@@ -155,7 +160,7 @@ public class WebPageConsoleServlet extends VelocityServlet
          *  webapp
          */
 
-        String log = p.getProperty( Velocity.RUNTIME_LOG);
+        String log = p.getProperty( RuntimeConstants.RUNTIME_LOG);
 
         if (log != null )
         {
@@ -163,7 +168,7 @@ public class WebPageConsoleServlet extends VelocityServlet
 
             if (log != null)
             {
-                p.setProperty( Velocity.RUNTIME_LOG, log );
+                p.setProperty( RuntimeConstants.RUNTIME_LOG, log );
             }
         }
 
@@ -173,7 +178,7 @@ public class WebPageConsoleServlet extends VelocityServlet
          *  same way.
          */
 
-        String path = p.getProperty( Velocity.FILE_RESOURCE_LOADER_PATH );
+        String path = p.getProperty( RuntimeConstants.FILE_RESOURCE_LOADER_PATH );
 
         if ( path != null)
         {
@@ -181,7 +186,7 @@ public class WebPageConsoleServlet extends VelocityServlet
 
             if ( path != null)
             {
-                p.setProperty( Velocity.FILE_RESOURCE_LOADER_PATH, path );
+                p.setProperty( RuntimeConstants.FILE_RESOURCE_LOADER_PATH, path );
             }
         }
 

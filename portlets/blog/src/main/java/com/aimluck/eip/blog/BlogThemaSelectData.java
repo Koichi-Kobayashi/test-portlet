@@ -32,6 +32,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.utils.ALDateUtil;
 import com.aimluck.eip.blog.util.BlogUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogThema;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogThema;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -121,7 +122,7 @@ public class BlogThemaSelectData extends
     SelectQuery<EipTBlogThema> query = Database.query(EipTBlogThema.class);
 
     Expression exp =
-      ExpressionFactory.noMatchDbExp(EipTBlogThema.THEMA_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_EipTBlogThema.THEMA_ID_PK_COLUMN, Integer
         .valueOf(1));
     query.setQualifier(exp);
 
@@ -194,7 +195,7 @@ public class BlogThemaSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("thema_name", EipTBlogThema.THEMA_NAME_PROPERTY);
+    map.putValue("thema_name", _EipTBlogThema.THEMA_NAME_PROPERTY);
     return map;
   }
 

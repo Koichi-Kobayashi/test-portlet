@@ -42,6 +42,7 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.commons.utils.ALStringUtil;
 import com.aimluck.eip.cayenne.om.account.AipoLicense;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -205,7 +206,7 @@ public class NewsFormData extends ALAbstractFormData {
     // ユーザ数
     SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
     Expression exp =
-      ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+      ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
     query.setQualifier(exp);
 
     List<TurbineUser> list = query.fetchList();

@@ -30,6 +30,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.account.EipMPost;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPost;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.common.ALEipManager;
 import com.aimluck.eip.common.ALEipUser;
@@ -116,7 +117,7 @@ public class AccountPostMultiDelete extends ALAbstractCheckList {
       }
 
       Expression exp =
-        ExpressionFactory.inDbExp(EipMPost.POST_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipMPost.POST_ID_PK_COLUMN, values);
       SelectQuery<EipMPost> query = Database.query(EipMPost.class, exp);
       list = query.fetchList();
       if (list == null || list.size() == 0) {

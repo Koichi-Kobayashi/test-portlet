@@ -110,7 +110,8 @@ public class DatabaseBrowserAction extends VelocityPortletAction implements Brow
      * @param context The velocity context for this request.
      * @param rundata The turbine rundata context for this request.
      */
-    protected void buildMaximizedContext( VelocityPortlet portlet,
+    @Override
+	protected void buildMaximizedContext( VelocityPortlet portlet,
                                           Context context,
                                           RunData rundata )
     {
@@ -122,7 +123,8 @@ public class DatabaseBrowserAction extends VelocityPortletAction implements Brow
      * provide their own customization behavior.
      * Default is to use Portal base customizer action
      */
-    protected void buildConfigureContext( VelocityPortlet portlet,
+    @Override
+	protected void buildConfigureContext( VelocityPortlet portlet,
                                           Context context,
                                           RunData rundata )
     {
@@ -146,7 +148,8 @@ public class DatabaseBrowserAction extends VelocityPortletAction implements Brow
      * @param context The velocity context for this request.
      * @param rundata The turbine rundata context for this request.
      */
-    protected void buildNormalContext( VelocityPortlet portlet,
+    @Override
+	protected void buildNormalContext( VelocityPortlet portlet,
                                        Context context,
                                        RunData rundata )
     {
@@ -156,7 +159,7 @@ public class DatabaseBrowserAction extends VelocityPortletAction implements Brow
         String sortColName = getRequestParameter(portlet, rundata, SORT_COLUMN_NAME);
         int start = getStartVariable(portlet, rundata, START, sortColName, iterator);
 
-        windowSize = Integer.parseInt((String)getParameterUsingFallback(portlet, rundata, WINDOW_SIZE, "10"));
+        windowSize = Integer.parseInt(getParameterUsingFallback(portlet, rundata, WINDOW_SIZE, "10"));
         next = start + windowSize;
         prev = start - windowSize;
 
@@ -274,7 +277,8 @@ public class DatabaseBrowserAction extends VelocityPortletAction implements Brow
     /* (non-Javadoc)
      * @see org.apache.jetspeed.modules.actions.portlets.browser.BrowserQuery#filter(java.util.List, RunData)
      */
-    public boolean filter(List row, RunData rundata)
+    @Override
+	public boolean filter(List row, RunData rundata)
     {
         return false;
     }
@@ -485,7 +489,8 @@ public class DatabaseBrowserAction extends VelocityPortletAction implements Brow
      * be opened in the browser.
      *
      */
-    public String getQueryString(RunData rundata, Context context)
+    @Override
+	public String getQueryString(RunData rundata, Context context)
     {
         return null;
     }
@@ -640,12 +645,14 @@ public class DatabaseBrowserAction extends VelocityPortletAction implements Brow
 
     }
 
-    public void setSQLParameters(List parameters)
+    @Override
+	public void setSQLParameters(List parameters)
     {
         this.sqlParameters = parameters;
     }
 
-    public List getSQLParameters()
+    @Override
+	public List getSQLParameters()
     {
         return sqlParameters;
     }
@@ -686,7 +693,7 @@ public class DatabaseBrowserAction extends VelocityPortletAction implements Brow
         Object userObjRead = getParameterFromTemp(portlet, rundata, USER_OBJECTS);
         if ( userObjRead != null)
         {
-            context.put(USER_OBJECTS, (List)userObjRead);
+            context.put(USER_OBJECTS, userObjRead);
             //System.out.println("userObjectListSize: "+ ((List)userObjRead).size());
         }
         else
@@ -721,13 +728,13 @@ public class DatabaseBrowserAction extends VelocityPortletAction implements Brow
             Object tmp = getParameterFromTemp(portlet, rundata, ROW_LINK);
             if(tmp != null)
             {
-                context.put(ROW_LINK, (List)tmp);
+                context.put(ROW_LINK, tmp);
                 //System.out.println("rowListSize"+ ((List)tmp).size());
             }
             tmp = getParameterFromTemp(portlet, rundata, TABLE_LINK);
             if(tmp != null)
             {
-                context.put(TABLE_LINK, (List)tmp);
+                context.put(TABLE_LINK, tmp);
                 //System.out.println("tableListSize: "+((List)tmp).size());
             }
         }

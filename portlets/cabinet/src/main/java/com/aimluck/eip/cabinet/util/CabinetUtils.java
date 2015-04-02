@@ -36,6 +36,9 @@ import com.aimluck.eip.cabinet.FolderInfo;
 import com.aimluck.eip.cayenne.om.portlet.EipTCabinetFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTCabinetFolder;
 import com.aimluck.eip.cayenne.om.portlet.EipTCabinetFolderMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCabinetFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCabinetFolder;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCabinetFolderMap;
 import com.aimluck.eip.common.ALActivity;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -135,7 +138,7 @@ public class CabinetUtils {
         Database.query(EipTCabinetFolder.class);
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
+          _EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
           folderid);
       query.setQualifier(exp);
       List<EipTCabinetFolder> folders = query.fetchList();
@@ -172,7 +175,7 @@ public class CabinetUtils {
       SelectQuery<EipTCabinetFile> query =
         Database.query(EipTCabinetFile.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTCabinetFile.FILE_ID_PK_COLUMN, fileid);
+        ExpressionFactory.matchDbExp(_EipTCabinetFile.FILE_ID_PK_COLUMN, fileid);
       query.setQualifier(exp);
       List<EipTCabinetFile> files = query.fetchList();
       if (files == null || files.size() == 0) {
@@ -201,7 +204,7 @@ public class CabinetUtils {
       SelectQuery<EipTCabinetFile> query =
         Database.query(EipTCabinetFile.class);
       Expression exp =
-        ExpressionFactory.matchExp(EipTCabinetFile.FOLDER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipTCabinetFile.FOLDER_ID_PROPERTY, Integer
           .valueOf(folderId));
       query.setQualifier(exp);
       List<EipTCabinetFile> files = query.fetchList();
@@ -220,7 +223,7 @@ public class CabinetUtils {
     try {
       SelectQuery<EipTCabinetFolder> query =
         Database.query(EipTCabinetFolder.class);
-      query.orderAscending(EipTCabinetFolder.FOLDER_NAME_PROPERTY);
+      query.orderAscending(_EipTCabinetFolder.FOLDER_NAME_PROPERTY);
       List<EipTCabinetFolder> list = query.fetchList();
       if (list == null || list.size() < 0) {
         return null;
@@ -489,11 +492,11 @@ public class CabinetUtils {
           Database.query(EipTCabinetFolderMap.class);
         Expression exp1 =
           ExpressionFactory.matchDbExp(
-            EipTCabinetFolderMap.EIP_TCABINET_FOLDER_PROPERTY,
+            _EipTCabinetFolderMap.EIP_TCABINET_FOLDER_PROPERTY,
             folder);
         Expression exp2 =
           ExpressionFactory.matchExp(
-            EipTCabinetFolderMap.USER_ID_PROPERTY,
+            _EipTCabinetFolderMap.USER_ID_PROPERTY,
             current_user_id);
         query.setQualifier(exp1);
         query.andQualifier(exp2);
@@ -523,11 +526,11 @@ public class CabinetUtils {
           Database.query(EipTCabinetFolderMap.class);
         Expression exp1 =
           ExpressionFactory.matchDbExp(
-            EipTCabinetFolderMap.EIP_TCABINET_FOLDER_PROPERTY,
+            _EipTCabinetFolderMap.EIP_TCABINET_FOLDER_PROPERTY,
             folder);
         Expression exp2 =
           ExpressionFactory.matchExp(
-            EipTCabinetFolderMap.USER_ID_PROPERTY,
+            _EipTCabinetFolderMap.USER_ID_PROPERTY,
             current_user_id);
         query.setQualifier(exp1);
         query.andQualifier(exp2);
@@ -569,11 +572,11 @@ public class CabinetUtils {
           Database.query(EipTCabinetFolderMap.class);
         Expression exp1 =
           ExpressionFactory.matchDbExp(
-            EipTCabinetFolderMap.EIP_TCABINET_FOLDER_PROPERTY,
+            _EipTCabinetFolderMap.EIP_TCABINET_FOLDER_PROPERTY,
             folder);
         Expression exp2 =
           ExpressionFactory.matchExp(
-            EipTCabinetFolderMap.USER_ID_PROPERTY,
+            _EipTCabinetFolderMap.USER_ID_PROPERTY,
             current_user_id);
         query.setQualifier(exp1);
         query.andQualifier(exp2);
@@ -600,11 +603,11 @@ public class CabinetUtils {
           Database.query(EipTCabinetFolderMap.class);
         Expression exp1 =
           ExpressionFactory.matchDbExp(
-            EipTCabinetFolderMap.EIP_TCABINET_FOLDER_PROPERTY,
+            _EipTCabinetFolderMap.EIP_TCABINET_FOLDER_PROPERTY,
             folder);
         Expression exp2 =
           ExpressionFactory.matchExp(
-            EipTCabinetFolderMap.USER_ID_PROPERTY,
+            _EipTCabinetFolderMap.USER_ID_PROPERTY,
             current_user_id);
         query.setQualifier(exp1);
         query.andQualifier(exp2);
@@ -722,7 +725,7 @@ public class CabinetUtils {
       Database.query(EipTCabinetFolder.class);
     Expression pk_exp =
       ExpressionFactory.matchExp(
-        EipTCabinetFolder.PARENT_ID_PROPERTY,
+        _EipTCabinetFolder.PARENT_ID_PROPERTY,
         parent_id);
     query.setQualifier(pk_exp);
     List<EipTCabinetFolder> list = query.fetchList();
@@ -734,7 +737,7 @@ public class CabinetUtils {
       Database.query(EipTCabinetFolder.class);
     Expression pk_exp =
       ExpressionFactory.matchDbExp(
-        EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
+        _EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
         folder_id);
     query.setQualifier(pk_exp);
     List<EipTCabinetFolder> list = query.fetchList();
@@ -832,7 +835,7 @@ public class CabinetUtils {
 
         Expression exp1 =
           ExpressionFactory.matchExp(
-            EipTCabinetFolderMap.FOLDER_ID_PROPERTY,
+            _EipTCabinetFolderMap.FOLDER_ID_PROPERTY,
             Integer.valueOf(folderid));
         query.setQualifier(exp1);
 

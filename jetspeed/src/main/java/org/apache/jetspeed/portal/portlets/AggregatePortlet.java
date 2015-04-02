@@ -54,7 +54,8 @@ public class AggregatePortlet extends AbstractPortlet
     initialized itself within init() and then when getContent is called it
     would return its presentation.
     */
-    public ConcreteElement getContent(RunData rundata)
+    @Override
+	public ConcreteElement getContent(RunData rundata)
     {
         String key = ((JetspeedRunData)rundata).getProfile().getId()
                     + "." + this.getID();

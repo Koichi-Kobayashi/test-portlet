@@ -32,6 +32,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMMailAccount;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALPageNotFoundException;
@@ -102,11 +103,11 @@ public class WebMailAccountSelectData extends
     if (accountId == 0) {
       try {
         Expression exp =
-          ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, userId);
+          ExpressionFactory.matchExp(_EipMMailAccount.USER_ID_PROPERTY, userId);
         SelectQuery<EipMMailAccount> query =
           Database.query(EipMMailAccount.class, exp);
 
-        query.select(EipMMailAccount.ACCOUNT_ID_PK_COLUMN);
+        query.select(_EipMMailAccount.ACCOUNT_ID_PK_COLUMN);
         List<EipMMailAccount> accounts = query.fetchList();
         if (accounts != null && accounts.size() > 0) {
           EipMMailAccount account = accounts.get(0);
@@ -173,11 +174,11 @@ public class WebMailAccountSelectData extends
     SelectQuery<EipMMailAccount> query = Database.query(EipMMailAccount.class);
 
     Expression exp1 =
-      ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipMMailAccount.USER_ID_PROPERTY, Integer
         .valueOf(ALEipUtils.getUserId(rundata)));
     Expression exp2 =
       ExpressionFactory.noMatchExp(
-        EipMMailAccount.ACCOUNT_TYPE_PROPERTY,
+        _EipMMailAccount.ACCOUNT_TYPE_PROPERTY,
         Integer.valueOf(ALMailUtils.ACCOUNT_TYPE_INIT));
 
     return query.setQualifier(exp1.andExp(exp2));
@@ -275,7 +276,7 @@ public class WebMailAccountSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("account_name", EipMMailAccount.ACCOUNT_NAME_PROPERTY);
+    map.putValue("account_name", _EipMMailAccount.ACCOUNT_NAME_PROPERTY);
     return map;
   }
 

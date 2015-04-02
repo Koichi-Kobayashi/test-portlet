@@ -35,7 +35,8 @@ public class PortletForwardImpl implements PortletForward, java.io.Serializable
     private Map queryParams = new HashMap();
 
 
-    public String getPortlet()
+    @Override
+	public String getPortlet()
     {
         return this.portlet;
     }
@@ -45,7 +46,8 @@ public class PortletForwardImpl implements PortletForward, java.io.Serializable
         this.portlet = portlet;
     }
 
-    public String getForward()
+    @Override
+	public String getForward()
     {
         return this.forward;
     }
@@ -55,7 +57,8 @@ public class PortletForwardImpl implements PortletForward, java.io.Serializable
         this.forward = forward;
     }
 
-    public String getTarget()
+    @Override
+	public String getTarget()
     {
         return this.target;
     }
@@ -65,7 +68,8 @@ public class PortletForwardImpl implements PortletForward, java.io.Serializable
         this.target = target;
     }
 
-    public Map getQueryParams()
+    @Override
+	public Map getQueryParams()
     {
         return this.queryParams;
     }

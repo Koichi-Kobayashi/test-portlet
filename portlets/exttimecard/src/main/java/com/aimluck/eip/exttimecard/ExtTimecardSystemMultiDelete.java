@@ -32,6 +32,8 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystem;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystemMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTExtTimecardSystem;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTExtTimecardSystemMap;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -73,7 +75,7 @@ public class ExtTimecardSystemMultiDelete extends ALAbstractCheckList {
         Database.query(EipTExtTimecardSystem.class);
       Expression exp1 =
         ExpressionFactory.inDbExp(
-          EipTExtTimecardSystem.SYSTEM_ID_PK_COLUMN,
+          _EipTExtTimecardSystem.SYSTEM_ID_PK_COLUMN,
           intValues);
       query.setQualifier(exp1);
       List<EipTExtTimecardSystem> list = query.fetchList();
@@ -106,7 +108,7 @@ public class ExtTimecardSystemMultiDelete extends ALAbstractCheckList {
   private void setAllTimecardMapDefault(EipTExtTimecardSystem work) {
     Expression exp1 =
       ExpressionFactory.matchExp(
-        EipTExtTimecardSystemMap.EIP_TEXT_TIMECARD_SYSTEM_PROPERTY,
+        _EipTExtTimecardSystemMap.EIP_TEXT_TIMECARD_SYSTEM_PROPERTY,
         work);
     List<EipTExtTimecardSystemMap> list =
       Database

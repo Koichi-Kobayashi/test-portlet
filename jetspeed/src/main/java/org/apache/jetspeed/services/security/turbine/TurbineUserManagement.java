@@ -33,6 +33,7 @@ import org.apache.jetspeed.om.security.BaseJetspeedUser;
 import org.apache.jetspeed.om.security.JetspeedUser;
 import org.apache.jetspeed.om.security.UserIdPrincipal;
 import org.apache.jetspeed.om.security.UserNamePrincipal;
+import org.apache.jetspeed.om.security.turbine.BaseTurbineUserPeer;
 import org.apache.jetspeed.om.security.turbine.TurbineUser;
 import org.apache.jetspeed.om.security.turbine.TurbineUserPeer;
 import org.apache.jetspeed.services.JetspeedSecurity;
@@ -124,15 +125,16 @@ public class TurbineUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *              when the requestor is denied due to insufficient privilege
    */
-  public JetspeedUser getUser(Principal principal)
+  @Override
+public JetspeedUser getUser(Principal principal)
       throws JetspeedSecurityException {
     // TODO: check requestor for permission
 
     Criteria criteria = new Criteria();
     if (principal instanceof UserNamePrincipal) {
-      criteria.add(TurbineUserPeer.LOGIN_NAME, principal.getName());
+      criteria.add(BaseTurbineUserPeer.LOGIN_NAME, principal.getName());
     } else if (principal instanceof UserIdPrincipal) {
-      criteria.add(TurbineUserPeer.USER_ID, principal.getName());
+      criteria.add(BaseTurbineUserPeer.USER_ID, principal.getName());
     } else {
       throw new UserException("Invalid Principal Type in getUser: "
           + principal.getClass().getName());
@@ -156,7 +158,8 @@ public class TurbineUserManagement extends TurbineBaseService implements
 
   }
 
-  public JetspeedUser getUser(RunData rundata, Principal principal)
+  @Override
+public JetspeedUser getUser(RunData rundata, Principal principal)
       throws JetspeedSecurityException {
     return getUser(principal);
   }
@@ -173,7 +176,8 @@ public class TurbineUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *              when the requestor is denied due to insufficient privilege
    */
-  public Iterator getUsers() throws JetspeedSecurityException {
+  @Override
+public Iterator getUsers() throws JetspeedSecurityException {
     Criteria criteria = new Criteria();
     List users;
     try {
@@ -198,7 +202,8 @@ public class TurbineUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *              when the requestor is denied due to insufficient privilege
    */
-  public Iterator getUsers(String filter) throws JetspeedSecurityException {
+  @Override
+public Iterator getUsers(String filter) throws JetspeedSecurityException {
     // TODO: implement this with a SQL string
 
     Criteria criteria = new Criteria();
@@ -224,14 +229,15 @@ public class TurbineUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *              when the requestor is denied due to insufficient privilege
    */
-  public void saveUser(JetspeedUser user) throws JetspeedSecurityException {
+  @Override
+public void saveUser(JetspeedUser user) throws JetspeedSecurityException {
     if (!accountExists(user, true)) {
       throw new UnknownUserException("Cannot save user '" + user.getUserName()
           + "', User doesn't exist");
     }
     Criteria criteria = TurbineUserPeer.buildCriteria(user);
     try {
-      TurbineUserPeer.doUpdate(criteria);
+      BaseTurbineUserPeer.doUpdate(criteria);
     } catch (Exception e) {
       logger.error("Failed to save user object ", e);
       throw new UserException("Failed to save user object ", e);
@@ -255,7 +261,8 @@ public class TurbineUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *              when the requestor is denied due to insufficient privilege
    */
-  public void addUser(JetspeedUser user) throws JetspeedSecurityException {
+  @Override
+public void addUser(JetspeedUser user) throws JetspeedSecurityException {
     if (accountExists(user)) {
       throw new NotUniqueUserException("The account '" + user.getUserName()
           + "' already exists");
@@ -266,7 +273,7 @@ public class TurbineUserManagement extends TurbineBaseService implements
     Criteria criteria = TurbineUserPeer.buildCriteria(user);
     try {
 
-      NumberKey key = (NumberKey) TurbineUserPeer.doInsert(criteria);
+      NumberKey key = (NumberKey) BaseTurbineUserPeer.doInsert(criteria);
 
       ((BaseJetspeedUser) user).setUserId(key.toString());
 
@@ -330,7 +337,8 @@ public class TurbineUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *              when the requestor is denied due to insufficient privilege
    */
-  public void removeUser(Principal principal) throws JetspeedSecurityException {
+  @Override
+public void removeUser(Principal principal) throws JetspeedSecurityException {
     if (systemUsers.contains(principal.getName())) {
       throw new UserException("[" + principal.getName()
           + "] is a system user and cannot be removed");
@@ -340,16 +348,16 @@ public class TurbineUserManagement extends TurbineBaseService implements
 
     Criteria criteria = new Criteria();
     if (principal instanceof UserNamePrincipal) {
-      criteria.add(TurbineUserPeer.LOGIN_NAME, principal.getName());
+      criteria.add(BaseTurbineUserPeer.LOGIN_NAME, principal.getName());
     } else if (principal instanceof UserIdPrincipal) {
-      criteria.add(TurbineUserPeer.USER_ID, principal.getName());
+      criteria.add(BaseTurbineUserPeer.USER_ID, principal.getName());
     } else {
       throw new UserException("Invalid Principal Type in removeUser: "
           + principal.getClass().getName());
     }
 
     try {
-      TurbineUserPeer.doDelete(criteria);
+      BaseTurbineUserPeer.doDelete(criteria);
       PsmlManager.removeUserDocuments(user);
     } catch (Exception e) {
       String message = "Failed to remove account '" + user.getUserName() + "'";
@@ -381,7 +389,8 @@ public class TurbineUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *              when the requestor is denied due to insufficient privilege
    */
-  public void changePassword(JetspeedUser user, String oldPassword,
+  @Override
+public void changePassword(JetspeedUser user, String oldPassword,
       String newPassword) throws JetspeedSecurityException {
     oldPassword = JetspeedSecurity.convertPassword(oldPassword);
     newPassword = JetspeedSecurity.convertPassword(newPassword);
@@ -426,7 +435,8 @@ public class TurbineUserManagement extends TurbineBaseService implements
    * @exception InsufficientPrivilegeException
    *              when the requestor is denied due to insufficient privilege
    */
-  public void forcePassword(JetspeedUser user, String password)
+  @Override
+public void forcePassword(JetspeedUser user, String password)
       throws JetspeedSecurityException {
     if (!accountExists(user)) {
       throw new UnknownUserException("The account '" + user.getUserName()
@@ -452,7 +462,8 @@ public class TurbineUserManagement extends TurbineBaseService implements
    *          the password to process
    * @return processed password
    */
-  public String encryptPassword(String password)
+  @Override
+public String encryptPassword(String password)
       throws JetspeedSecurityException {
     if (securePasswords == false) {
       return password;
@@ -492,7 +503,8 @@ public class TurbineUserManagement extends TurbineBaseService implements
    * @exception throws a <code>InitializationException</code> if the service
    *            fails to initialize
    */
-  public synchronized void init(ServletConfig conf)
+  @Override
+public synchronized void init(ServletConfig conf)
       throws InitializationException {
     if (getInit())
       return;
@@ -551,10 +563,10 @@ public class TurbineUserManagement extends TurbineBaseService implements
       throws UserException {
     String id = user.getUserId();
     Criteria criteria = new Criteria();
-    criteria.add(TurbineUserPeer.LOGIN_NAME, user.getUserName());
+    criteria.add(BaseTurbineUserPeer.LOGIN_NAME, user.getUserName());
     List users;
     try {
-      users = TurbineUserPeer.doSelect(criteria);
+      users = BaseTurbineUserPeer.doSelect(criteria);
     } catch (Exception e) {
       logger.error("Failed to check account's presence", e);
       throw new UserException("Failed to check account's presence", e);

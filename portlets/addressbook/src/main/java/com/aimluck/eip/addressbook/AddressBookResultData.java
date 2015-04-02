@@ -116,7 +116,8 @@ public class AddressBookResultData implements ALData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     address_id = new ALNumberField();
     name = new ALStringField();
     name_kana = new ALStringField();

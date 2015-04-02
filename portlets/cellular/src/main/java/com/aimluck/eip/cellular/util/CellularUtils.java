@@ -33,6 +33,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.account.EipMCompany;
+import com.aimluck.eip.cayenne.om.account.auto._EipMCompany;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -69,7 +70,7 @@ public class CellularUtils {
 
       SelectQuery<EipMCompany> query = Database.query(EipMCompany.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(EipMCompany.COMPANY_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipMCompany.COMPANY_ID_PK_COLUMN, Integer
           .valueOf(id));
       query.setQualifier(exp);
       List<EipMCompany> list = query.fetchList();

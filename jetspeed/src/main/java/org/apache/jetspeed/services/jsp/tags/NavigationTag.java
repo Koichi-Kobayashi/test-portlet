@@ -85,7 +85,8 @@ public class NavigationTag extends TagSupport
      *
      * @return SKIP_BODY, as it is intended to be a single tag.
      */
-    public int doStartTag() throws JspException 
+    @Override
+	public int doStartTag() throws JspException 
     {
         String template = defaultTemplate;
         String module   = null;

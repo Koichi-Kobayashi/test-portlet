@@ -40,12 +40,13 @@ import org.apache.jetspeed.services.resources.JetspeedResources;
  * <p>Each portlet must call setPortlet(this) on it before entering the template
  * rendering code. This is done currently in VelocityPortlet.</p>
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:sgala@apache.org">Santiago Gala</a>
  * @version $Id: JetspeedTemplateLink.java,v 1.14 2004/02/23 03:20:46 jford Exp $
  *
  * @deprecated Use JetspeedBaseLink
  */
+@Deprecated
 public class JetspeedTemplateLink
     extends TemplateLink implements ApplicationTool
 {
@@ -105,7 +106,8 @@ public class JetspeedTemplateLink
      *
      * @param data assumed to be a RunData object
      */
-    public void init(Object data)
+    @Override
+	public void init(Object data)
     {
         super.init(data);
         this.data = (JetspeedRunData)data;
@@ -131,7 +133,8 @@ public class JetspeedTemplateLink
     /**
      * Refresh method - does nothing
      */
-    public void refresh()
+    @Override
+	public void refresh()
     {
         super.refresh();
 
@@ -163,7 +166,8 @@ public class JetspeedTemplateLink
      * @deprecated the name is confusing. Use @see(#forPortlet()) instead.
      * @return a DynamicURI referencing the named portlet for easy link construction in template
      */
-    public DynamicURI setPortlet(String portlet)
+    @Deprecated
+	public DynamicURI setPortlet(String portlet)
     {
         return this.forPortlet( portlet );
     }
@@ -276,7 +280,8 @@ public class JetspeedTemplateLink
      *
      *
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         String tmpl = this.data.getRequestedTemplate();
         if (tmpl!=null)

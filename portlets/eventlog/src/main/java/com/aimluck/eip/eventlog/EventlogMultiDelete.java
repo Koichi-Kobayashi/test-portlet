@@ -29,6 +29,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTEventlog;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTEventlog;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -58,7 +59,7 @@ public class EventlogMultiDelete extends ALAbstractCheckList {
 
       SelectQuery<EipTEventlog> query = Database.query(EipTEventlog.class);
       Expression exp =
-        ExpressionFactory.inDbExp(EipTEventlog.EVENTLOG_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipTEventlog.EVENTLOG_ID_PK_COLUMN, values);
       query.setQualifier(exp);
 
       List<EipTEventlog> logs = query.fetchList();

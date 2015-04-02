@@ -62,7 +62,8 @@ public class SendConfirmationEmail extends Action
      */    
     private static final JetspeedLogger logger = JetspeedLogFactoryService.getLogger(SendConfirmationEmail.class.getName());    
     
-    public void doPerform( RunData data ) throws Exception
+    @Override
+	public void doPerform( RunData data ) throws Exception
     {
         JetspeedUser user = JetspeedSecurity.getUser(data.getParameters().getString("username", ""));        
         DynamicURI url = new DynamicURI(data)

@@ -1,24 +1,17 @@
 package org.apache.jetspeed.om.apps.email;
 
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.BaseObject;
-import org.apache.torque.om.ComboKey;
-import org.apache.torque.om.DateKey;
 import org.apache.torque.om.NumberKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
-import org.apache.torque.om.StringKey;
-import org.apache.torque.om.Persistent;
-import org.apache.torque.util.Criteria;
 import org.apache.torque.util.Transaction;
 
 
@@ -209,7 +202,8 @@ public abstract class BaseEmailInbox extends BaseObject
      * Retrieves a field from the object by name passed in
      * as a String.
      */
-    public Object getByName(String name)
+    @Override
+	public Object getByName(String name)
     {
           if (name.equals("EmailInboxId"))
         {
@@ -239,25 +233,26 @@ public abstract class BaseEmailInbox extends BaseObject
      * as a String.  The String must be one of the static
      * Strings defined in this Class' Peer.
      */
-    public Object getByPeerName(String name)
+    @Override
+	public Object getByPeerName(String name)
     {
-          if (name.equals(EmailInboxPeer.EMAIL_INBOX_ID ))
+          if (name.equals(BaseEmailInboxPeer.EMAIL_INBOX_ID ))
         {
                 return new Integer(getEmailInboxId());
             }
-          if (name.equals(EmailInboxPeer.MESSAGE_ID ))
+          if (name.equals(BaseEmailInboxPeer.MESSAGE_ID ))
         {
                 return getMessageId();
             }
-          if (name.equals(EmailInboxPeer.FILENAME ))
+          if (name.equals(BaseEmailInboxPeer.FILENAME ))
         {
                 return getFilename();
             }
-          if (name.equals(EmailInboxPeer.ATTACHMENT ))
+          if (name.equals(BaseEmailInboxPeer.ATTACHMENT ))
         {
                 return getAttachment();
             }
-          if (name.equals(EmailInboxPeer.READFLAG ))
+          if (name.equals(BaseEmailInboxPeer.READFLAG ))
         {
                 return new Integer(getReadflag());
             }
@@ -268,7 +263,8 @@ public abstract class BaseEmailInbox extends BaseObject
      * Retrieves a field from the object by Position as specified
      * in the xml schema.  Zero-based.
      */
-    public Object getByPosition(int pos)
+    @Override
+	public Object getByPosition(int pos)
     {
             if ( pos == 0 )
         {
@@ -297,9 +293,10 @@ public abstract class BaseEmailInbox extends BaseObject
      * Stores the object in the database.  If the object is new,
      * it inserts it; otherwise an update is performed.
      */
-    public void save() throws Exception
+    @Override
+	public void save() throws Exception
     {
-          save(EmailInboxPeer.getMapBuilder()
+          save(BaseEmailInboxPeer.getMapBuilder()
                 .getDatabaseMap().getName());
       }
 
@@ -310,7 +307,8 @@ public abstract class BaseEmailInbox extends BaseObject
      * auto-generated conditionally and therefore needs to be
      * in this file instead of in the super class, BaseObject.
        */
-    public void save(String dbName) throws TorqueException
+    @Override
+	public void save(String dbName) throws TorqueException
     {
         Connection con = null;
           try
@@ -336,7 +334,8 @@ public abstract class BaseEmailInbox extends BaseObject
      * the save() method and the connection details will be handled
      * internally
      */
-    public void save(Connection con) throws TorqueException
+    @Override
+	public void save(Connection con) throws TorqueException
     {
           if (!alreadyInSave)
         {
@@ -349,17 +348,17 @@ public abstract class BaseEmailInbox extends BaseObject
             {
                 if (isNew())
                 {
-                    EmailInboxPeer.doInsert((EmailInbox)this, con);
+                    BaseEmailInboxPeer.doInsert((EmailInbox)this, con);
                     setNew(false);
                 }
                 else
                 {
-                    EmailInboxPeer.doUpdate((EmailInbox)this, con);
+                    BaseEmailInboxPeer.doUpdate((EmailInbox)this, con);
                 }
 
                       if (isCacheOnSave())
                 {
-                    EmailInboxManager.putInstance(this);
+                    BaseEmailInboxManager.putInstance(this);
                 }
               }
 
@@ -382,7 +381,8 @@ public abstract class BaseEmailInbox extends BaseObject
      *
      * @param ObjectKey emailInboxId
      */
-    public void setPrimaryKey(ObjectKey emailInboxId)
+    @Override
+	public void setPrimaryKey(ObjectKey emailInboxId)
          {
             setEmailInboxId(((NumberKey)emailInboxId).intValue());
         }
@@ -390,7 +390,8 @@ public abstract class BaseEmailInbox extends BaseObject
     /**
      * Set the PrimaryKey using a String.
      */
-    public void setPrimaryKey(String key) 
+    @Override
+	public void setPrimaryKey(String key) 
     {
             setEmailInboxId(Integer.parseInt(key));
         }
@@ -400,7 +401,8 @@ public abstract class BaseEmailInbox extends BaseObject
      * returns an id that differentiates this object from others
      * of its class.
      */
-    public ObjectKey getPrimaryKey()
+    @Override
+	public ObjectKey getPrimaryKey()
     {
           return SimpleKey.keyFor(getEmailInboxId());
       }

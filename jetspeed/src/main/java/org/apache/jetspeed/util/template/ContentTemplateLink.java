@@ -26,7 +26,7 @@ import org.apache.jetspeed.services.resources.JetspeedResources;
  * A customized version of the DynamicURI for linking to non-servlet
  * webapp resources.
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:sgala@apache.org">Santiago Gala</a>
  * @version $Id: ContentTemplateLink.java,v 1.7 2004/02/23 03:20:45 jford Exp $
  */
@@ -65,7 +65,8 @@ public class ContentTemplateLink
      *
      * @param data assumed to be a RunData object
      */
-    public void init(Object data)
+    @Override
+	public void init(Object data)
     {
         super.init((RunData)data);
         initForceSecure();
@@ -110,7 +111,8 @@ public class ContentTemplateLink
     /**
      * Refresh method - does nothing
      */
-    public void refresh()
+    @Override
+	public void refresh()
     {
         // empty
     }
@@ -154,7 +156,8 @@ public class ContentTemplateLink
      *
      * @return A String with the URI in either external or absolute form
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         
         StringBuffer sb = new StringBuffer();

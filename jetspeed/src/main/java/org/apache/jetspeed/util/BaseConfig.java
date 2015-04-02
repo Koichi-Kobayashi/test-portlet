@@ -26,7 +26,7 @@ Defines a standard object configuration
 A Config provides the parameters passed in the current request as well
 as init parameters.
 
-@author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+@author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
 @version $Id: BaseConfig.java,v 1.3 2004/02/23 03:23:42 jford Exp $
 */
 
@@ -38,7 +38,8 @@ public class BaseConfig extends Hashtable implements Config
     /**
     Returns the name for this configuration
     */
-    public String getName()
+    @Override
+	public String getName()
     {
         return this.name;
     }
@@ -46,7 +47,8 @@ public class BaseConfig extends Hashtable implements Config
     /**
     Sets the name of this configuration
     */
-    public void setName(String name)
+    @Override
+	public void setName(String name)
     {
         this.name = name;
     }
@@ -54,7 +56,8 @@ public class BaseConfig extends Hashtable implements Config
     /**
     Used to define a Portlet's parameters.
     */
-    public void setInitParameters( Map init_params )
+    @Override
+	public void setInitParameters( Map init_params )
     {
         clear();
         putAll( init_params );
@@ -63,7 +66,8 @@ public class BaseConfig extends Hashtable implements Config
     /**
     Used to override Portlet's parameters.
     */
-    public void addInitParameters( Map init_params )
+    @Override
+	public void addInitParameters( Map init_params )
     {
         Iterator keys = init_params.keySet().iterator();
         
@@ -73,7 +77,7 @@ public class BaseConfig extends Hashtable implements Config
             
             if( ! containsKey( key ) )
             {
-                put( key , (String)init_params.get( key ) );
+                put( key , init_params.get( key ) );
             }
         }
     }
@@ -82,7 +86,8 @@ public class BaseConfig extends Hashtable implements Config
     /**
     Retrieves the PortletController parameters
     */
-    public Map getInitParameters()
+    @Override
+	public Map getInitParameters()
     {
         return this;
     }
@@ -92,7 +97,8 @@ public class BaseConfig extends Hashtable implements Config
     Used to define a PortletController's parameter.if value is null, removes
     the key from the stored properties
     */
-    public void setInitParameter(String name, Object value)
+    @Override
+	public void setInitParameter(String name, Object value)
     {
         if (name!=null)
         {
@@ -110,7 +116,8 @@ public class BaseConfig extends Hashtable implements Config
     /**
     Returns a parameter (or null) that was given the controller.
     */
-    public String getInitParameter(String name)
+    @Override
+	public String getInitParameter(String name)
     {
         return getInitParameter( name, null );
     }
@@ -118,7 +125,8 @@ public class BaseConfig extends Hashtable implements Config
     /**
     Returns a parameter (or defaultValue) that was given the controller.
     */
-    public String getInitParameter(String name, String defaultValue)
+    @Override
+	public String getInitParameter(String name, String defaultValue)
     {
         String value = null;
 
@@ -138,7 +146,8 @@ public class BaseConfig extends Hashtable implements Config
     /**
     Returns the parameter names of this Config.
     */
-    public Iterator getInitParameterNames()
+    @Override
+	public Iterator getInitParameterNames()
     {
         return keySet().iterator();
     }

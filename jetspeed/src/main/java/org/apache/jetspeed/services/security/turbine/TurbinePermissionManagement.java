@@ -25,13 +25,12 @@ import java.util.Vector;
 import javax.servlet.ServletConfig;
 
 
+
 // Jetspeed Security
 import org.apache.jetspeed.services.security.PermissionManagement;
 import org.apache.jetspeed.services.security.JetspeedSecurityCache;
-
 import org.apache.jetspeed.om.security.Role;
 import org.apache.jetspeed.om.security.Permission;
-
 import org.apache.jetspeed.services.JetspeedSecurity;
 import org.apache.jetspeed.services.security.JetspeedSecurityService;
 
@@ -39,6 +38,8 @@ import org.apache.jetspeed.services.security.JetspeedSecurityService;
 import org.apache.jetspeed.services.security.PermissionException;
 import org.apache.jetspeed.services.security.JetspeedSecurityException;
 
+import org.apache.jetspeed.om.security.turbine.BaseTurbinePermissionPeer;
+import org.apache.jetspeed.om.security.turbine.BaseTurbineRolePermissionPeer;
 // Jetspeed Database OM
 import org.apache.jetspeed.om.security.turbine.TurbinePermission;
 import org.apache.jetspeed.om.security.turbine.TurbinePermissionPeer;
@@ -105,7 +106,8 @@ public class TurbinePermissionManagement extends TurbineBaseService
      * @exception PermissionException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Iterator getPermissions(String rolename)
+    @Override
+	public Iterator getPermissions(String rolename)
         throws JetspeedSecurityException
     {
         Role role = null;
@@ -127,13 +129,13 @@ public class TurbinePermissionManagement extends TurbineBaseService
             throw new PermissionException("Failed to Retrieve Role: ", e);
         }
         Criteria criteria = new Criteria();
-        criteria.add(TurbineRolePermissionPeer.ROLE_ID, role.getId());
+        criteria.add(BaseTurbineRolePermissionPeer.ROLE_ID, role.getId());
         List rels;
         HashMap perms;
 
         try
         {
-            rels = TurbineRolePermissionPeer.doSelect(criteria);
+            rels = BaseTurbineRolePermissionPeer.doSelect(criteria);
             if (rels.size() > 0)
             {
                 perms = new HashMap(rels.size());
@@ -166,14 +168,15 @@ public class TurbinePermissionManagement extends TurbineBaseService
      * @exception PermissionException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Iterator getPermissions()
+    @Override
+	public Iterator getPermissions()
         throws JetspeedSecurityException
     {
         Criteria criteria = new Criteria();
         List permissions;
         try
         {
-            permissions = TurbinePermissionPeer.doSelect(criteria);
+            permissions = BaseTurbinePermissionPeer.doSelect(criteria);
         }
         catch(Exception e)
         {
@@ -192,7 +195,8 @@ public class TurbinePermissionManagement extends TurbineBaseService
      * @exception PermissionException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void addPermission(Permission permission)
+    @Override
+	public void addPermission(Permission permission)
         throws JetspeedSecurityException
     {
         if(permissionExists(permission.getName()))
@@ -205,8 +209,8 @@ public class TurbinePermissionManagement extends TurbineBaseService
         {
             TurbinePermission tpermission = new TurbinePermission();
             tpermission.setPermissionName(permission.getName());
-            Criteria criteria = TurbinePermissionPeer.buildCriteria(tpermission);
-            NumberKey key = (NumberKey)TurbinePermissionPeer.doInsert(criteria);
+            Criteria criteria = BaseTurbinePermissionPeer.buildCriteria(tpermission);
+            NumberKey key = (NumberKey)BaseTurbinePermissionPeer.doInsert(criteria);
             permission.setId(key.toString());
         }
         catch(Exception e)
@@ -227,7 +231,8 @@ public class TurbinePermissionManagement extends TurbineBaseService
      * @exception PermissionException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void savePermission(Permission permission)
+    @Override
+	public void savePermission(Permission permission)
         throws JetspeedSecurityException
     {
         if(!permissionExists(permission.getName()))
@@ -240,7 +245,7 @@ public class TurbinePermissionManagement extends TurbineBaseService
         {
             if (permission instanceof TurbinePermission)
             {
-                TurbinePermissionPeer.doUpdate((TurbinePermission)permission);
+                BaseTurbinePermissionPeer.doUpdate((TurbinePermission)permission);
             }
             else
             {
@@ -267,7 +272,8 @@ public class TurbinePermissionManagement extends TurbineBaseService
      * @exception PermissionException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void removePermission(String permissionName)
+    @Override
+	public void removePermission(String permissionName)
         throws JetspeedSecurityException
     {
         Connection conn = null;
@@ -283,16 +289,16 @@ public class TurbinePermissionManagement extends TurbineBaseService
             Permission permission = this.getPermission(permissionName);
 
             Criteria criteria = new Criteria();
-            criteria.add(TurbinePermissionPeer.PERMISSION_NAME, permissionName);
+            criteria.add(BaseTurbinePermissionPeer.PERMISSION_NAME, permissionName);
 
             if(cascadeDelete)
             {
                 // CASCADE to TURBINE_ROLE_PERMISSION
                 Criteria critRolePerm = new Criteria();
-                critRolePerm.add(TurbineRolePermissionPeer.PERMISSION_ID, permission.getId());
-                TurbineRolePermissionPeer.doDelete(critRolePerm, conn);
+                critRolePerm.add(BaseTurbineRolePermissionPeer.PERMISSION_ID, permission.getId());
+                BaseTurbineRolePermissionPeer.doDelete(critRolePerm, conn);
             }
-            TurbinePermissionPeer.doDelete(criteria, conn);
+            BaseTurbinePermissionPeer.doDelete(criteria, conn);
                 
             conn.commit();
             
@@ -340,7 +346,8 @@ public class TurbinePermissionManagement extends TurbineBaseService
      * @exception PermissionException when the security provider has a general failure retrieving permissions.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void grantPermission(String roleName, String permissionName)
+    @Override
+	public void grantPermission(String roleName, String permissionName)
         throws JetspeedSecurityException
     {
         try
@@ -349,9 +356,9 @@ public class TurbinePermissionManagement extends TurbineBaseService
             Permission permission = this.getPermission(permissionName);
 
             Criteria criteria = new Criteria();
-            criteria.add(TurbineRolePermissionPeer.ROLE_ID, role.getId());
-            criteria.add(TurbineRolePermissionPeer.PERMISSION_ID, permission.getId());
-            TurbineRolePermissionPeer.doInsert(criteria);
+            criteria.add(BaseTurbineRolePermissionPeer.ROLE_ID, role.getId());
+            criteria.add(BaseTurbineRolePermissionPeer.PERMISSION_ID, permission.getId());
+            BaseTurbineRolePermissionPeer.doInsert(criteria);
             if (cachingEnable)
             {
                 JetspeedSecurityCache.addPermission(roleName,permission);
@@ -376,7 +383,8 @@ public class TurbinePermissionManagement extends TurbineBaseService
      * @exception PermissionException when the security provider has a general failure retrieving permissions.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void revokePermission(String roleName, String permissionName)
+    @Override
+	public void revokePermission(String roleName, String permissionName)
         throws JetspeedSecurityException
     {
         try
@@ -385,9 +393,9 @@ public class TurbinePermissionManagement extends TurbineBaseService
             Permission permission = this.getPermission(permissionName);
 
             Criteria criteria = new Criteria();
-            criteria.add(TurbineRolePermissionPeer.ROLE_ID, role.getId());
-            criteria.add(TurbineRolePermissionPeer.PERMISSION_ID, permission.getId());
-            TurbineRolePermissionPeer.doDelete(criteria);
+            criteria.add(BaseTurbineRolePermissionPeer.ROLE_ID, role.getId());
+            criteria.add(BaseTurbineRolePermissionPeer.PERMISSION_ID, permission.getId());
+            BaseTurbineRolePermissionPeer.doDelete(criteria);
             if (cachingEnable)
             {
                 JetspeedSecurityCache.removePermission(roleName, permissionName);
@@ -413,7 +421,8 @@ public class TurbinePermissionManagement extends TurbineBaseService
      * @exception PermissionException when the security provider has a general failure retrieving permissions.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public boolean hasPermission(String roleName, String permissionName)
+    @Override
+	public boolean hasPermission(String roleName, String permissionName)
         throws JetspeedSecurityException
     {
         List permissions;
@@ -429,9 +438,9 @@ public class TurbinePermissionManagement extends TurbineBaseService
             Permission permission = this.getPermission(permissionName);
 
             Criteria criteria = new Criteria();
-            criteria.add(TurbineRolePermissionPeer.ROLE_ID, role.getId());
-            criteria.add(TurbineRolePermissionPeer.PERMISSION_ID, permission.getId());
-            permissions = TurbineRolePermissionPeer.doSelect(criteria);
+            criteria.add(BaseTurbineRolePermissionPeer.ROLE_ID, role.getId());
+            criteria.add(BaseTurbineRolePermissionPeer.PERMISSION_ID, permission.getId());
+            permissions = BaseTurbineRolePermissionPeer.doSelect(criteria);
 
         }
         catch(Exception e)
@@ -455,7 +464,8 @@ public class TurbinePermissionManagement extends TurbineBaseService
      * @exception PermissionException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Permission getPermission(String permissionName)
+    @Override
+	public Permission getPermission(String permissionName)
         throws JetspeedSecurityException
     {
         List permissions;
@@ -463,8 +473,8 @@ public class TurbinePermissionManagement extends TurbineBaseService
         try
         {
             Criteria criteria = new Criteria();
-            criteria.add(TurbinePermissionPeer.PERMISSION_NAME, permissionName);
-            permissions = TurbinePermissionPeer.doSelect(criteria);
+            criteria.add(BaseTurbinePermissionPeer.PERMISSION_NAME, permissionName);
+            permissions = BaseTurbinePermissionPeer.doSelect(criteria);
         }
         catch(Exception e)
         {
@@ -515,11 +525,11 @@ public class TurbinePermissionManagement extends TurbineBaseService
         throws PermissionException
     {
         Criteria criteria = new Criteria();
-        criteria.add(TurbinePermissionPeer.PERMISSION_NAME, permissionName);
+        criteria.add(BaseTurbinePermissionPeer.PERMISSION_NAME, permissionName);
         List permissions;
         try
         {
-            permissions = TurbinePermissionPeer.doSelect(criteria);
+            permissions = BaseTurbinePermissionPeer.doSelect(criteria);
         }
         catch(Exception e)
         {
@@ -546,7 +556,8 @@ public class TurbinePermissionManagement extends TurbineBaseService
      * @exception throws a <code>InitializationException</code> if the service
      * fails to initialize
      */
-    public synchronized void init(ServletConfig conf)
+    @Override
+	public synchronized void init(ServletConfig conf)
         throws InitializationException
     {
         if (getInit()) return;

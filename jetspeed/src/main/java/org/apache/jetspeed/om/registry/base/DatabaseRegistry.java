@@ -32,7 +32,8 @@ public class DatabaseRegistry extends BaseRegistry implements Registry
     /**
     @see Registry#setEntry
     */
-    public void setEntry( RegistryEntry entry ) throws InvalidEntryException
+    @Override
+	public void setEntry( RegistryEntry entry ) throws InvalidEntryException
     {
         // TODO: save it to the database here
 
@@ -44,7 +45,8 @@ public class DatabaseRegistry extends BaseRegistry implements Registry
     /**
     @see Registry#addEntry
     */
-    public void addEntry( RegistryEntry entry ) throws InvalidEntryException
+    @Override
+	public void addEntry( RegistryEntry entry ) throws InvalidEntryException
     {
         // TODO: add it to the database here
 
@@ -56,7 +58,8 @@ public class DatabaseRegistry extends BaseRegistry implements Registry
     /**
     @see Registry#removeEntry
     */
-    public void removeEntry( String name )
+    @Override
+	public void removeEntry( String name )
     {
         // TODO: add it to the database here
 
@@ -69,7 +72,8 @@ public class DatabaseRegistry extends BaseRegistry implements Registry
     @see Registry#removeEntry
     */
 
-    public void removeEntry( RegistryEntry entry )
+    @Override
+	public void removeEntry( RegistryEntry entry )
     {
         // TODO: add it to the database here
 

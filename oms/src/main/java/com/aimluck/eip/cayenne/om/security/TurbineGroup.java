@@ -28,7 +28,8 @@ public class TurbineGroup extends _TurbineGroup implements Group {
 
   public static final String GROUP_NAME_COLUMN = "GROUP_NAME";
 
-  public String getId() {
+  @Override
+public String getId() {
     if (getObjectId() != null && !getObjectId().isTemporary()) {
       Object obj = getObjectId().getIdSnapshot().get(GROUP_ID_PK_COLUMN);
       if (obj instanceof Long) {
@@ -42,16 +43,19 @@ public class TurbineGroup extends _TurbineGroup implements Group {
     }
   }
 
-  public void setId(String id) {
+  @Override
+public void setId(String id) {
     setObjectId(new ObjectId("TurbineGroup", GROUP_ID_PK_COLUMN, Integer
         .valueOf(id)));
   }
 
-  public String getName() {
+  @Override
+public String getName() {
     return getGroupName();
   }
 
-  public void setName(String name) {
+  @Override
+public void setName(String name) {
     setGroupName(name);
   }
 }

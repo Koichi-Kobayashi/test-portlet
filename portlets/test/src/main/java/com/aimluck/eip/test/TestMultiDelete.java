@@ -30,7 +30,9 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTTest;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTest;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.common.ALPermissionException;
 import com.aimluck.eip.orm.Database;
@@ -72,10 +74,10 @@ public class TestMultiDelete extends ALAbstractCheckList {
     }
 
     Expression exp1 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .valueOf(ALEipUtils.getUserId(rundata)));
     Expression exp2 =
-      ExpressionFactory.inDbExp(EipTTest.TEST_ID_PK_COLUMN, values);
+      ExpressionFactory.inDbExp(_EipTTest.TEST_ID_PK_COLUMN, values);
 
     if (Database.query(EipTTest.class, exp1).andQualifier(exp2).getCount() > 0) {
       aclPortletFeature =
@@ -101,7 +103,7 @@ public class TestMultiDelete extends ALAbstractCheckList {
     try {
 
       Expression exp1 =
-        ExpressionFactory.inDbExp(EipTTest.TEST_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipTTest.TEST_ID_PK_COLUMN, values);
 
       List<EipTTest> testList =
         Database.query(EipTTest.class, exp1).fetchList();

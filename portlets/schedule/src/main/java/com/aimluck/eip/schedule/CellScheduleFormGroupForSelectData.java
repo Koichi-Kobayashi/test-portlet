@@ -110,7 +110,8 @@ public class CellScheduleFormGroupForSelectData extends ALAbstractFormData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
   }
 
   /**

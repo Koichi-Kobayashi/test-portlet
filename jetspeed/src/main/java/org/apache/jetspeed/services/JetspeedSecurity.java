@@ -477,7 +477,7 @@ abstract public class JetspeedSecurity /* extends TurbineSecurity */
    * @see JetspeedSecurityService#getUserInstance
    */
   public static JetspeedUser getUserInstance() {
-    return ((JetspeedSecurityService) getService()).getUserInstance();
+    return getService().getUserInstance();
   }
 
   // ////////////////////////////////////////////////////////////////////////
@@ -492,21 +492,21 @@ abstract public class JetspeedSecurity /* extends TurbineSecurity */
    * @see JetspeedSecurityService#convertUserName
    */
   public static String convertUserName(String username) {
-    return ((JetspeedSecurityService) getService()).convertUserName(username);
+    return getService().convertUserName(username);
   }
 
   /**
    * @see JetspeedSecurityService#convertPassword
    */
   public static String convertPassword(String password) {
-    return ((JetspeedSecurityService) getService()).convertPassword(password);
+    return getService().convertPassword(password);
   }
 
   /**
    * @see JetspeedSecurityService#checkDisableAcccount
    */
   public static boolean checkDisableAccount(String username) {
-    return ((JetspeedSecurityService) getService())
+    return getService()
         .checkDisableAccount(username);
   }
 
@@ -514,7 +514,7 @@ abstract public class JetspeedSecurity /* extends TurbineSecurity */
    * @see JetspeedSecurityService#isDisableCountCheckEnabled
    */
   public static boolean isDisableAccountCheckEnabled() {
-    return ((JetspeedSecurityService) getService())
+    return getService()
         .isDisableAccountCheckEnabled();
   }
 
@@ -522,21 +522,21 @@ abstract public class JetspeedSecurity /* extends TurbineSecurity */
    * @see JetspeedSecurityService#resetDisableAccountCheck
    */
   public static void resetDisableAccountCheck(String username) {
-    ((JetspeedSecurityService) getService()).resetDisableAccountCheck(username);
+    getService().resetDisableAccountCheck(username);
   }
 
   /**
    * @see JetspeedSecurityService#areActionsDisabledForAnon
    */
   public static boolean areActionsDisabledForAnon() {
-    return ((JetspeedSecurityService) getService()).areActionsDisabledForAnon();
+    return getService().areActionsDisabledForAnon();
   }
 
   /**
    * @see JetspeedSecurityService#areActionsDisabledForAllUsers
    */
   public static boolean areActionsDisabledForAllUsers() {
-    return ((JetspeedSecurityService) getService())
+    return getService()
         .areActionsDisabledForAllUsers();
   }
 
@@ -544,21 +544,21 @@ abstract public class JetspeedSecurity /* extends TurbineSecurity */
    * @see JetspeedSecurityService#getAnonymousUserName
    */
   public static String getAnonymousUserName() {
-    return ((JetspeedSecurityService) getService()).getAnonymousUserName();
+    return getService().getAnonymousUserName();
   }
 
   /*
    * @see JetspeedSecurityService#getAdminRoles
    */
   public static List getAdminRoles() {
-    return ((JetspeedSecurityService) getService()).getAdminRoles();
+    return getService().getAdminRoles();
   }
 
   /*
    * @see JetspeedSecurityService#hasAdminRole
    */
   public static boolean hasAdminRole(User user) {
-    return ((JetspeedSecurityService) getService()).hasAdminRole(user);
+    return getService().hasAdminRole(user);
   }
 
   // ////////////////////////////////////////////////////////////////////////

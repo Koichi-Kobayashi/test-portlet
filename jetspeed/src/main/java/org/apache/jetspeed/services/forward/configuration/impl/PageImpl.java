@@ -33,7 +33,8 @@ public class PageImpl implements Page, java.io.Serializable
     private String group;
 
 
-    public String getName()
+    @Override
+	public String getName()
     {
         return this.name;
     }
@@ -43,7 +44,8 @@ public class PageImpl implements Page, java.io.Serializable
         this.name = name;
     }
 
-    public String getUser()
+    @Override
+	public String getUser()
     {
         return this.user;
     }
@@ -53,7 +55,8 @@ public class PageImpl implements Page, java.io.Serializable
         this.user = user;
     }
 
-    public String getRole()
+    @Override
+	public String getRole()
     {
         return this.role;
     }
@@ -63,7 +66,8 @@ public class PageImpl implements Page, java.io.Serializable
         this.role = role;
     }
 
-    public String getGroup()
+    @Override
+	public String getGroup()
     {
         return this.group;
     }

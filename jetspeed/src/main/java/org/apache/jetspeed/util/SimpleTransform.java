@@ -452,7 +452,8 @@ public class SimpleTransform
                 // PipedStreams 
                 Thread t = new Thread( new Runnable()
                     {
-                        public void run()
+                        @Override
+						public void run()
                         {
                             // Have the processor object transform 
                             // "foo.xml" to

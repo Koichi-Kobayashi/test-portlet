@@ -54,19 +54,23 @@ public class PsmlPortlets extends PsmlIdentityElement implements Portlets,
   public PsmlPortlets() {
   }
 
-  public Controller getController() {
+  @Override
+public Controller getController() {
     return this.controller;
   }
 
-  public void setController(Controller controller) {
+  @Override
+public void setController(Controller controller) {
     this.controller = controller;
   }
 
-  public void setSecurity(Security security) {
+  @Override
+public void setSecurity(Security security) {
     this.security = security;
   }
 
-  public Security getSecurity() {
+  @Override
+public Security getSecurity() {
     return this.security;
   }
 
@@ -114,31 +118,37 @@ public class PsmlPortlets extends PsmlIdentityElement implements Portlets,
     portlets.addElement(ref);
   }
 
-  public void addReference(Reference ref)
+  @Override
+public void addReference(Reference ref)
       throws java.lang.IndexOutOfBoundsException {
     this.refs.addElement(ref);
     portlets.addElement(ref);
   }
 
-  public int getEntryCount() {
+  @Override
+public int getEntryCount() {
     return this.entries.size();
   }
 
-  public int getReferenceCount() {
+  @Override
+public int getReferenceCount() {
     return this.refs.size();
   }
 
-  public int getPortletsCount() {
+  @Override
+public int getPortletsCount() {
     return this.portlets.size();
   }
 
-  public Entry removeEntry(int index) {
+  @Override
+public Entry removeEntry(int index) {
     Object obj = entries.elementAt(index);
     entries.removeElementAt(index);
     return (Entry) obj;
   }
 
-  public Portlets removePortlets(int index) {
+  @Override
+public Portlets removePortlets(int index) {
     Object obj = portlets.elementAt(index);
     if (null == obj) {
       return (Portlets) obj;
@@ -151,14 +161,16 @@ public class PsmlPortlets extends PsmlIdentityElement implements Portlets,
     return (Portlets) obj;
   }
 
-  public Reference removeReference(int index) {
+  @Override
+public Reference removeReference(int index) {
     Object obj = refs.elementAt(index);
     refs.removeElementAt(index);
     portlets.remove(obj);
     return (Reference) obj;
   }
 
-  public Entry getEntry(int index) throws java.lang.IndexOutOfBoundsException {
+  @Override
+public Entry getEntry(int index) throws java.lang.IndexOutOfBoundsException {
     // -- check bounds for index
     if ((index < 0) || (index > entries.size())) {
       throw new IndexOutOfBoundsException();
@@ -167,7 +179,8 @@ public class PsmlPortlets extends PsmlIdentityElement implements Portlets,
     return (Entry) entries.elementAt(index);
   }
 
-  public Portlets getPortlets(int index)
+  @Override
+public Portlets getPortlets(int index)
       throws java.lang.IndexOutOfBoundsException {
     // -- check bounds for index
     if ((index < 0) || (index > portlets.size())) {
@@ -177,7 +190,8 @@ public class PsmlPortlets extends PsmlIdentityElement implements Portlets,
     return (Portlets) portlets.elementAt(index);
   }
 
-  public Reference getReference(int index)
+  @Override
+public Reference getReference(int index)
       throws java.lang.IndexOutOfBoundsException {
     if ((index < 0) || (index > refs.size())) {
       throw new IndexOutOfBoundsException();
@@ -186,23 +200,28 @@ public class PsmlPortlets extends PsmlIdentityElement implements Portlets,
     return (Reference) refs.elementAt(index);
   }
 
-  public Iterator getEntriesIterator() {
+  @Override
+public Iterator getEntriesIterator() {
     return entries.iterator();
   }
 
-  public Iterator getPortletsIterator() {
+  @Override
+public Iterator getPortletsIterator() {
     return portlets.iterator();
   }
 
-  public Iterator getReferenceIterator() {
+  @Override
+public Iterator getReferenceIterator() {
     return refs.iterator();
   }
 
-  public void addEntry(Entry entry) throws java.lang.IndexOutOfBoundsException {
+  @Override
+public void addEntry(Entry entry) throws java.lang.IndexOutOfBoundsException {
     entries.addElement(entry);
   }
 
-  public void addPortlets(Portlets p)
+  @Override
+public void addPortlets(Portlets p)
       throws java.lang.IndexOutOfBoundsException {
     portlets.addElement(p);
     // STW make sure layout gets set
@@ -224,7 +243,8 @@ public class PsmlPortlets extends PsmlIdentityElement implements Portlets,
     }
   }
 
-  public Entry[] getEntriesArray() {
+  @Override
+public Entry[] getEntriesArray() {
     int size = entries.size();
     Entry[] mArray = new Entry[size];
     for (int index = 0; index < size; index++) {
@@ -233,7 +253,8 @@ public class PsmlPortlets extends PsmlIdentityElement implements Portlets,
     return mArray;
   }
 
-  public Portlets[] getPortletsArray() {
+  @Override
+public Portlets[] getPortletsArray() {
     int size = portlets.size();
     Portlets[] mArray = new Portlets[size];
     for (int index = 0; index < size; index++) {
@@ -242,7 +263,8 @@ public class PsmlPortlets extends PsmlIdentityElement implements Portlets,
     return mArray;
   }
 
-  public Reference[] getReferenceArray() {
+  @Override
+public Reference[] getReferenceArray() {
     int size = refs.size();
     Reference[] mArray = new Reference[size];
     for (int index = 0; index < size; index++) {
@@ -256,7 +278,8 @@ public class PsmlPortlets extends PsmlIdentityElement implements Portlets,
    * 
    * @return Value of property securityRef.
    */
-  public SecurityReference getSecurityRef() {
+  @Override
+public SecurityReference getSecurityRef() {
     return securityRef;
   }
 
@@ -266,14 +289,16 @@ public class PsmlPortlets extends PsmlIdentityElement implements Portlets,
    * @param securityRef
    *            New value of property securityRef.
    */
-  public void setSecurityRef(SecurityReference securityRef) {
+  @Override
+public void setSecurityRef(SecurityReference securityRef) {
     this.securityRef = securityRef;
   }
 
   /**
    * Create a clone of this object
    */
-  public Object clone() throws java.lang.CloneNotSupportedException {
+  @Override
+public Object clone() throws java.lang.CloneNotSupportedException {
     Object cloned = super.clone();
 
     ((PsmlPortlets) cloned).controller = ((this.controller == null) ? null
@@ -317,7 +342,8 @@ public class PsmlPortlets extends PsmlIdentityElement implements Portlets,
    * 
    * @return Portlets
    */
-  public Portlets getParentPortlets() {
+  @Override
+public Portlets getParentPortlets() {
     return parentPortlets;
   }
 
@@ -327,7 +353,8 @@ public class PsmlPortlets extends PsmlIdentityElement implements Portlets,
    * @param parent
    *            The parent to set
    */
-  public void setParentPortlets(Portlets parent) {
+  @Override
+public void setParentPortlets(Portlets parent) {
     this.parentPortlets = parent;
   }
 

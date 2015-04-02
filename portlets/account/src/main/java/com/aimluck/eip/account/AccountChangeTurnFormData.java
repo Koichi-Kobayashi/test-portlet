@@ -35,7 +35,9 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.account.EipMUserPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMUserPosition;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipUser;
@@ -109,16 +111,16 @@ public class AccountChangeTurnFormData extends ALAbstractFormData {
         if (positions.getValue() == null || positions.getValue().equals("")) {
           SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
           ObjectId oid =
-            new ObjectId("TurbineUser", TurbineUser.USER_ID_PK_COLUMN, 3);
+            new ObjectId("TurbineUser", _TurbineUser.USER_ID_PK_COLUMN, 3);
           Expression exp1 =
             ExpressionFactory.matchAllDbExp(
               oid.getIdSnapshot(),
               Expression.GREATER_THAN);
           Expression exp2 =
-            ExpressionFactory.matchExp(TurbineUser.COMPANY_ID_PROPERTY, Integer
+            ExpressionFactory.matchExp(_TurbineUser.COMPANY_ID_PROPERTY, Integer
               .valueOf(1));
           Expression exp3 =
-            ExpressionFactory.noMatchExp(TurbineUser.DISABLED_PROPERTY, "T");
+            ExpressionFactory.noMatchExp(_TurbineUser.DISABLED_PROPERTY, "T");
           query.setQualifier(exp1);
           query.andQualifier(exp2);
           query.andQualifier(exp3);
@@ -133,9 +135,9 @@ public class AccountChangeTurnFormData extends ALAbstractFormData {
           }
           SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
           Expression exp1 =
-            ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, userNames);
+            ExpressionFactory.inExp(_TurbineUser.LOGIN_NAME_PROPERTY, userNames);
           Expression exp2 =
-            ExpressionFactory.noMatchExp(TurbineUser.DISABLED_PROPERTY, "T");
+            ExpressionFactory.noMatchExp(_TurbineUser.DISABLED_PROPERTY, "T");
           query.setQualifier(exp1);
           query.andQualifier(exp2);
 
@@ -258,11 +260,11 @@ public class AccountChangeTurnFormData extends ALAbstractFormData {
     boolean res = true;
     try {
       Expression exp1 =
-        ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, userNames);
+        ExpressionFactory.inExp(_TurbineUser.LOGIN_NAME_PROPERTY, userNames);
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class, exp1);
-      query.orderAscending(TurbineUser.EIP_MUSER_POSITION_PROPERTY
+      query.orderAscending(_TurbineUser.EIP_MUSER_POSITION_PROPERTY
         + "."
-        + EipMUserPosition.POSITION_PROPERTY);
+        + _EipMUserPosition.POSITION_PROPERTY);
       List<TurbineUser> list = query.fetchList();
 
       LinkedHashMap<String, TurbineUser> loginnameUserMap =

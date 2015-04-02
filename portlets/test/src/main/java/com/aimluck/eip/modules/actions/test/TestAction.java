@@ -29,6 +29,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTTest;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTest;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.modules.actions.common.ALBaseAction;
 import com.aimluck.eip.test.TestFormData;
@@ -100,7 +101,7 @@ public class TestAction extends ALBaseAction {
       rundata,
       context,
       LIST_SORT_STR,
-      EipTTest.UPDATE_DATE_PROPERTY);
+      _EipTTest.UPDATE_DATE_PROPERTY);
     ALEipUtils.setTemp(
       rundata,
       context,

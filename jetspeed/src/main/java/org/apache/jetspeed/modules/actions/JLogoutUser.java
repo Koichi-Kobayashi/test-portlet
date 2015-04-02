@@ -48,7 +48,8 @@ public class JLogoutUser extends ActionEvent
      */
     private static final JetspeedLogger logger = JetspeedLogFactoryService.getLogger(JLogoutUser.class.getName());
     
-    public void doPerform( RunData data ) throws Exception
+    @Override
+	public void doPerform( RunData data ) throws Exception
     {    
         logger.info("Entering action JLogoutUser");
 

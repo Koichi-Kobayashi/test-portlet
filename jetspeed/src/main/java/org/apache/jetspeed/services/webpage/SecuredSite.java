@@ -53,7 +53,8 @@ public class SecuredSite implements Site
      *
      * return the string value of the URL
      */
-    public String getURL()
+    @Override
+	public String getURL()
     {
         return this.url;
     }
@@ -63,7 +64,8 @@ public class SecuredSite implements Site
      *
      * return the string value of the Site ID
      */
-    public long getID()
+    @Override
+	public long getID()
     {
         return this.id;
     }
@@ -83,7 +85,8 @@ public class SecuredSite implements Site
      *
      * return the string value of the site name.
      */
-    public String getName()
+    @Override
+	public String getName()
     {
         return name;
     }
@@ -103,7 +106,8 @@ public class SecuredSite implements Site
      *
      * return the string value of the site user name.
      */
-    public String getUserName()
+    @Override
+	public String getUserName()
     {
         return username;
     }
@@ -123,7 +127,8 @@ public class SecuredSite implements Site
      *
      * return the string value of the site password.
      */
-    public String getPassword()
+    @Override
+	public String getPassword()
     {
         return password;
     }
@@ -143,7 +148,8 @@ public class SecuredSite implements Site
      *
      * return the int value of the site availability status.
      */
-    public int getStatus()
+    @Override
+	public int getStatus()
     {
         return status;
     }
@@ -153,7 +159,8 @@ public class SecuredSite implements Site
      *
      * @param the int value of the site availability status.
      */
-    public void setStatus(int status)
+    @Override
+	public void setStatus(int status)
     {
         this.status = status;
     }
@@ -163,7 +170,8 @@ public class SecuredSite implements Site
      *
      * return True if the target is secured.
      */
-    public boolean isSecured()
+    @Override
+	public boolean isSecured()
     {
         return true;
     }

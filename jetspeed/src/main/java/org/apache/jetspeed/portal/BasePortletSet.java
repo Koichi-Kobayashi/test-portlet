@@ -47,7 +47,7 @@ import org.apache.ecs.StringElement;
  * runtime context for a set of portlets.
  * A portlet can get its current set by calling via its PortletConfig
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:burton@apache.org">Kevin A. Burton</a>
  * @author <a href="mailto:taylor@apache.org">David Sean Taylor</a>
  * @author <a href="mailto:morciuch@apache.org">Mark Orciuch</a>
@@ -128,7 +128,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
 
     /**
     */
-    public void init() throws PortletException
+    @Override
+	public void init() throws PortletException
     {            
         if (getPortletConfig() == null)
         {
@@ -141,7 +142,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     Returns the number of portlets currently stored in this set
     */
-    public int size()
+    @Override
+	public int size()
     {
         return portlets.size();
     }
@@ -149,7 +151,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     Returns the portlet set as an array.
     */
-    public Portlet[] toArray()
+    @Override
+	public Portlet[] toArray()
     {
         sortPortletSet();
         Portlet[] p = new Portlet[portlets.size()];
@@ -161,7 +164,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     Returns the Portlet at position pos
     */
-    public Portlet getPortletAt(int pos)
+    @Override
+	public Portlet getPortletAt(int pos)
     {
         sortPortletSet();
         return (Portlet) portlets.elementAt(pos);
@@ -170,7 +174,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     Returns the Portlet with the given id
     */
-    public Portlet getPortletByID(String id)
+    @Override
+	public Portlet getPortletByID(String id)
     {
         if (portlets == null)
         {
@@ -192,7 +197,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     Returns the Portlet with the given name
     */
-    public Portlet getPortletByName(String name)
+    @Override
+	public Portlet getPortletByName(String name)
     {
         if (portlets == null)
         {
@@ -214,7 +220,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     Returns the portlet set as an Enumeration
     */
-    public Enumeration getPortlets()
+    @Override
+	public Enumeration getPortlets()
     {
         sortPortletSet();
         return portlets.elements();
@@ -226,7 +233,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     Add a portlet to this set.It updates its config to modify the current set
     */
-    public void addPortlet(Portlet portlet)
+    @Override
+	public void addPortlet(Portlet portlet)
     {
         addPortlet(portlet, null, -1);
     }
@@ -234,7 +242,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     Add a portlet to this set.It updates its config to modify the current set
     */
-    public void addPortlet(Portlet portlet, int position)
+    @Override
+	public void addPortlet(Portlet portlet, int position)
     {
         addPortlet(portlet, null, position);
     }
@@ -242,7 +251,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     Add a portlet to this set.It updates its config to modify the current set
     */
-    public void addPortlet(Portlet portlet, PortletSet.Constraints constraints)
+    @Override
+	public void addPortlet(Portlet portlet, PortletSet.Constraints constraints)
     {
         addPortlet(portlet, constraints, -1);
     }
@@ -250,7 +260,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     Add a portlet to this set.It updates its config to modify the current set
     */
-    public void addPortlet(Portlet portlet, PortletSet.Constraints constraints, int position)
+    @Override
+	public void addPortlet(Portlet portlet, PortletSet.Constraints constraints, int position)
     {
         synchronized (portlets)
         {
@@ -280,7 +291,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     Return the current controller for this set
     */
-    public PortletController getController()
+    @Override
+	public PortletController getController()
     {
         return this.controller;
     }
@@ -288,7 +300,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     Set the controller for this set
     */
-    public synchronized void setController(PortletController controller)
+    @Override
+	public synchronized void setController(PortletController controller)
     {
         this.controller = controller;
         controller.setPortlets(this);
@@ -299,7 +312,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
 
     /**
     */
-    public ConcreteElement getContent(RunData rundata)
+    @Override
+	public ConcreteElement getContent(RunData rundata)
     {
         ConcreteElement content = null; 
         PortletController controller = getController();
@@ -363,7 +377,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
 
     /**
     */
-    public String getName()
+    @Override
+	public String getName()
     {
         if (name == null)
         {
@@ -375,28 +390,32 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
 
     /**
     */
-    public void setName(String name)
+    @Override
+	public void setName(String name)
     {
         this.name = name;
     }
 
     /**
     */
-    public PortletConfig getPortletConfig()
+    @Override
+	public PortletConfig getPortletConfig()
     {
         return this.pc;
     }
 
     /**
     */
-    public void setPortletConfig(PortletConfig pc)
+    @Override
+	public void setPortletConfig(PortletConfig pc)
     {
         this.pc = pc;
     }
 
     /**
     */
-    public String getDescription()
+    @Override
+	public String getDescription()
     {
         if (getPortletConfig() != null)
         {
@@ -413,7 +432,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      * Getter for property description.
      * @return Name of portlet description.
      */
-    public String getDescription(String instanceDescription)
+    @Override
+	public String getDescription(String instanceDescription)
     {
       if (instanceDescription != null)
       {
@@ -424,7 +444,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
 
     /**
     */
-    public void setDescription(String description)
+    @Override
+	public void setDescription(String description)
     {
         PortletConfig pc = getPortletConfig();
         if (pc == null)
@@ -446,7 +467,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
      * Setter for property image.
      */
-    public void setImage(String instanceImage)
+    @Override
+	public void setImage(String instanceImage)
     {
     }    
      
@@ -469,7 +491,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      * Getter for property image.
      * @return Name of portlet image, icon.  The name is expected to be in the form of a URL.
      */
-    public String getImage(String instanceImage)
+    @Override
+	public String getImage(String instanceImage)
     {
       if (instanceImage != null)
       {
@@ -480,7 +503,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
 
     /**
     */
-    public String getTitle()
+    @Override
+	public String getTitle()
     {
         if (getPortletConfig() != null)
         {
@@ -505,7 +529,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      *
      * @param instanceTitle Title from PSML
      */
-    public String getTitle(String instanceTitle)
+    @Override
+	public String getTitle(String instanceTitle)
     {
         if (instanceTitle != null)
         {
@@ -516,7 +541,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
 
     /**
     */
-    public void setTitle(String title)
+    @Override
+	public void setTitle(String title)
     {
 
         PortletConfig pc = getPortletConfig();
@@ -538,21 +564,24 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
 
     /**
     */
-    public boolean getAllowEdit(RunData rundata)
+    @Override
+	public boolean getAllowEdit(RunData rundata)
     {
         return true;
     }
 
     /**
      */
-     public boolean getAllowView(RunData rundata)
+     @Override
+	public boolean getAllowView(RunData rundata)
      {
          return true;
      }
     
     /**
     */
-    public boolean getAllowMaximize(RunData rundata)
+    @Override
+	public boolean getAllowMaximize(RunData rundata)
     {
         return false;
     }
@@ -590,7 +619,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     @see Portlet#getCreationTime()
     */
-    public long getCreationTime()
+    @Override
+	public long getCreationTime()
     {
         return this.creationTime;
     }
@@ -598,7 +628,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     @see Portlet#setCreationTime
     */
-    public void setCreationTime(long creationTime)
+    @Override
+	public void setCreationTime(long creationTime)
     {
         this.creationTime = creationTime;
     }
@@ -607,7 +638,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      Method retruns true if at least one of the portlets of the portletset
      fits the requested MimeTyp. Otherwise it retruns false. 
     */
-    public boolean supportsType(MimeType mimeType)
+    @Override
+	public boolean supportsType(MimeType mimeType)
     {
         Enumeration portlets = this.getPortlets();
         while (portlets.hasMoreElements())
@@ -630,7 +662,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowClose(RunData rundata)
+    @Override
+	public boolean allowClose(RunData rundata)
     {
         return false;
     }
@@ -638,7 +671,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
      * Returns true if this portlet is currently closed
      */
-    public boolean isClosed(RunData data)
+    @Override
+	public boolean isClosed(RunData data)
     {
         return false;
     }
@@ -649,7 +683,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      * @param minimized the new portlet state
      * @param data the RunData for this request
      */
-    public void setClosed(boolean close, RunData data)
+    @Override
+	public void setClosed(boolean close, RunData data)
     {
         // empty
     }
@@ -660,7 +695,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowInfo(RunData rundata)
+    @Override
+	public boolean allowInfo(RunData rundata)
     {
         return false;
     }
@@ -671,7 +707,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowPrintFriendly(RunData rundata)
+    @Override
+	public boolean allowPrintFriendly(RunData rundata)
     {
         return false;
     }
@@ -682,7 +719,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowCustomize(RunData rundata)
+    @Override
+	public boolean allowCustomize(RunData rundata)
     {
         PortalResource portalResource = new PortalResource(this);
         try
@@ -708,7 +746,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowMaximize(RunData rundata)
+    @Override
+	public boolean allowMaximize(RunData rundata)
     {
         return false;
     }
@@ -719,7 +758,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowMinimize(RunData rundata)
+    @Override
+	public boolean allowMinimize(RunData rundata)
     {
         return false;
     }
@@ -727,7 +767,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
      * Returns true if this portlet is currently minimized
      */
-    public boolean isMinimized(RunData rundata)
+    @Override
+	public boolean isMinimized(RunData rundata)
     {
         return false;
     }
@@ -738,7 +779,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     @param minimize True if the portlet change to minimized
     @param rundata A RunData object
     */
-    public void setMinimized(boolean minimize, RunData rundata)
+    @Override
+	public void setMinimized(boolean minimize, RunData rundata)
     {
         // empty
     }
@@ -753,7 +795,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      * @param rundata The RunData object for the current request
      * @return The attribute value
      */
-    public String getAttribute(String attrName, String attrDefValue, RunData rundata)
+    @Override
+	public String getAttribute(String attrName, String attrDefValue, RunData rundata)
     {
         // return attrDefValue;
         
@@ -773,7 +816,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      * @paarm attrValue The value to store
      * @param rundata The RunData object for the current request
      */
-    public void setAttribute(String attrName, String attrValue, RunData rundata)
+    @Override
+	public void setAttribute(String attrName, String attrValue, RunData rundata)
     {
         try
         {
@@ -792,18 +836,21 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      *
      * @return PortletInstance
      */
-    public PortletInstance getInstance(RunData rundata)
+    @Override
+	public PortletInstance getInstance(RunData rundata)
     {
        return PersistenceManager.getInstance(this, rundata);
     }
 
 
-    public String getID()
+    @Override
+	public String getID()
     {
         return id;
     }
 
-    public void setID(String id)
+    @Override
+	public void setID(String id)
     {
         this.id = id;
     }
@@ -811,7 +858,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
     /**
     * @return true if the portlet does its own customization
     */
-    public boolean providesCustomization()
+    @Override
+	public boolean providesCustomization()
     {
         return false;
     }
@@ -821,7 +869,8 @@ public class BasePortletSet implements PortletSet, Portlet, PortletState
      *
      * @param rundata The RunData object for the current request
      */
-    public boolean isShowTitleBar(RunData rundata)
+    @Override
+	public boolean isShowTitleBar(RunData rundata)
     {
         return true;
     }

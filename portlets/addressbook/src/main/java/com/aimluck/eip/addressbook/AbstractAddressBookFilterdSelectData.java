@@ -31,6 +31,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressbook;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressbook;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -330,12 +331,12 @@ public abstract class AbstractAddressBookFilterdSelectData<M1, M2> extends
       && ALEipConstants.LIST_SORT_TYPE_DESC.equals(sort_type)) {
       query.orderDesending(crt_key);
       if (sort.equals("name_kana")) {
-        query.orderDesending(EipMAddressbook.FIRST_NAME_KANA_PROPERTY);
+        query.orderDesending(_EipMAddressbook.FIRST_NAME_KANA_PROPERTY);
       }
     } else {
       query.orderAscending(crt_key);
       if (sort.equals("name_kana")) {
-        query.orderAscending(EipMAddressbook.FIRST_NAME_KANA_PROPERTY);
+        query.orderAscending(_EipMAddressbook.FIRST_NAME_KANA_PROPERTY);
       }
       sort_type = ALEipConstants.LIST_SORT_TYPE_ASC;
     }

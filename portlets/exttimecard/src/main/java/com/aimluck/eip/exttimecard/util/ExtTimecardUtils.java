@@ -35,6 +35,9 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecard;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystem;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystemMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTExtTimecard;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTExtTimecardSystem;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTExtTimecardSystemMap;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -106,7 +109,7 @@ public class ExtTimecardUtils {
         Database.query(EipTExtTimecard.class);
       Expression exp11 =
         ExpressionFactory.matchDbExp(
-          EipTExtTimecard.TIMECARD_ID_PK_COLUMN,
+          _EipTExtTimecard.TIMECARD_ID_PK_COLUMN,
           timecardid);
       query.setQualifier(exp11);
 
@@ -116,7 +119,7 @@ public class ExtTimecardUtils {
         ALAccessControlConstants.POERTLET_FEATURE_TIMECARD_TIMECARD_OTHER,
         ALAccessControlConstants.VALUE_ACL_UPDATE))) {
         Expression exp21 =
-          ExpressionFactory.matchExp(EipTExtTimecard.USER_ID_PROPERTY, Integer
+          ExpressionFactory.matchExp(_EipTExtTimecard.USER_ID_PROPERTY, Integer
             .valueOf(ALEipUtils.getUserId(rundata)));
         query.andQualifier(exp21);
       }
@@ -161,7 +164,7 @@ public class ExtTimecardUtils {
         Database.query(EipTExtTimecardSystemMap.class);
       Expression exp1 =
         ExpressionFactory.matchExp(
-          EipTExtTimecardSystemMap.USER_ID_PROPERTY,
+          _EipTExtTimecardSystemMap.USER_ID_PROPERTY,
           Integer.valueOf(user_id));
       query.setQualifier(exp1);
       List<EipTExtTimecardSystemMap> slist = query.fetchList();
@@ -181,7 +184,7 @@ public class ExtTimecardUtils {
         Database.query(EipTExtTimecardSystem.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTExtTimecardSystem.SYSTEM_ID_PK_COLUMN,
+          _EipTExtTimecardSystem.SYSTEM_ID_PK_COLUMN,
           system_id);
       query.setQualifier(exp1);
       List<EipTExtTimecardSystem> slist = query.fetchList();
@@ -235,7 +238,7 @@ public class ExtTimecardUtils {
         Database.query(EipTExtTimecardSystem.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTExtTimecardSystem.SYSTEM_ID_PK_COLUMN,
+          _EipTExtTimecardSystem.SYSTEM_ID_PK_COLUMN,
           systemid);
 
       query.setQualifier(exp1);
@@ -309,11 +312,11 @@ public class ExtTimecardUtils {
 
     SelectQuery<EipTExtTimecard> query = Database.query(EipTExtTimecard.class);
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTExtTimecard.USER_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTExtTimecard.USER_ID_PROPERTY, Integer
         .valueOf(ALEipUtils.getUserId(rundata)));
     Expression exp2 =
       ExpressionFactory.matchExp(
-        EipTExtTimecard.PUNCH_DATE_PROPERTY,
+        _EipTExtTimecard.PUNCH_DATE_PROPERTY,
         from_calendar.getTime());
     query.setQualifier(exp1.andExp(exp2));
     List<EipTExtTimecard> slist = query.fetchList();

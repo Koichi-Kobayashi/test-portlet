@@ -41,6 +41,7 @@ import com.aimluck.eip.blog.BlogUserSelectData;
 import com.aimluck.eip.blog.BlogWordSelectData;
 import com.aimluck.eip.blog.util.BlogUtils;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.common.ALEipUser;
 import com.aimluck.eip.orm.Database;
@@ -259,16 +260,16 @@ public class CellBlogAction extends BlogAction {
     // ユーザー一覧を得る
     SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
     Expression exp1 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .toString(1));
     Expression exp2 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .toString(2));
     Expression exp3 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .toString(3));
     Expression exp11 =
-      ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+      ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
     query.setQualifier(exp1.andExp(exp2.andExp(exp3.andExp(exp11))));
     List<ALEipUser> list = ALEipUtils.getUsersFromSelectQuery(query);
     context.put("users", list);

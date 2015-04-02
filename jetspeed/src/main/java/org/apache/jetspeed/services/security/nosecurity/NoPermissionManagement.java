@@ -56,7 +56,8 @@ public class NoPermissionManagement
      * @exception PermissionException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege 
      */
-    public Iterator getPermissions(String rolename)
+    @Override
+	public Iterator getPermissions(String rolename)
         throws JetspeedSecurityException
     {
         return new Vector().iterator();
@@ -72,7 +73,8 @@ public class NoPermissionManagement
      * @exception PermissionException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege 
      */
-    public Iterator getPermissions()
+    @Override
+	public Iterator getPermissions()
         throws JetspeedSecurityException
     {
         return new Vector().iterator();
@@ -87,7 +89,8 @@ public class NoPermissionManagement
      * @exception PermissionException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege 
      */
-    public void addPermission(Permission permission)
+    @Override
+	public void addPermission(Permission permission)
         throws JetspeedSecurityException
     {
     }
@@ -101,7 +104,8 @@ public class NoPermissionManagement
      * @exception PermissionException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege 
      */
-    public void savePermission(Permission permission)
+    @Override
+	public void savePermission(Permission permission)
         throws JetspeedSecurityException
     {
     }
@@ -116,7 +120,8 @@ public class NoPermissionManagement
      * @exception PermissionException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege 
      */
-    public void removePermission(String permissionName)
+    @Override
+	public void removePermission(String permissionName)
         throws JetspeedSecurityException
     {
     }
@@ -132,7 +137,8 @@ public class NoPermissionManagement
      * @exception PermissionException when the security provider has a general failure retrieving permissions.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege 
      */
-    public void grantPermission(String roleName, String permissionName)
+    @Override
+	public void grantPermission(String roleName, String permissionName)
         throws JetspeedSecurityException
     {
     }
@@ -148,7 +154,8 @@ public class NoPermissionManagement
      * @exception PermissionException when the security provider has a general failure retrieving permissions.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege 
      */
-    public void revokePermission(String roleName, String permissionName)
+    @Override
+	public void revokePermission(String roleName, String permissionName)
         throws JetspeedSecurityException
     {
     }
@@ -164,7 +171,8 @@ public class NoPermissionManagement
      * @exception PermissionException when the security provider has a general failure retrieving permissions.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege 
      */
-    public boolean hasPermission(String roleName, String permissionName)
+    @Override
+	public boolean hasPermission(String roleName, String permissionName)
         throws JetspeedSecurityException
     {
         return false;
@@ -181,7 +189,8 @@ public class NoPermissionManagement
      * @exception PermissionException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege 
      */
-    public Permission getPermission(String permissionName)
+    @Override
+	public Permission getPermission(String permissionName)
         throws JetspeedSecurityException
     {
         BaseJetspeedPermission r = new BaseJetspeedPermission();

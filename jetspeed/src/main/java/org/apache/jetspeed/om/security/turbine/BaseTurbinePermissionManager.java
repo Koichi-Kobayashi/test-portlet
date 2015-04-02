@@ -2,8 +2,6 @@
 
 package org.apache.jetspeed.om.security.turbine;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.torque.Torque;
@@ -45,8 +43,8 @@ public abstract class BaseTurbinePermissionManager
     public static TurbinePermissionManager getManager()
     {
         return (TurbinePermissionManager)
-            Torque.getManager(TurbinePermissionManager.MANAGED_CLASS,
-                TurbinePermissionManager.DEFAULT_MANAGER_CLASS);
+            Torque.getManager(BaseTurbinePermissionManager.MANAGED_CLASS,
+                BaseTurbinePermissionManager.DEFAULT_MANAGER_CLASS);
     }
 
     /**
@@ -255,16 +253,17 @@ public abstract class BaseTurbinePermissionManager
     protected boolean existsImpl(TurbinePermission om)
         throws TorqueException
     {
-        Criteria crit = TurbinePermissionPeer
-            .buildCriteria((TurbinePermission)om);
-        return TurbinePermissionPeer.doSelect(crit).size() > 0;
+        Criteria crit = BaseTurbinePermissionPeer
+            .buildCriteria(om);
+        return BaseTurbinePermissionPeer.doSelect(crit).size() > 0;
     }
 
 
-    protected Persistent retrieveStoredOM(ObjectKey id)
+    @Override
+	protected Persistent retrieveStoredOM(ObjectKey id)
         throws TorqueException
     {
-        return TurbinePermissionPeer.retrieveByPK(id);
+        return BaseTurbinePermissionPeer.retrieveByPK(id);
     }
 
     /**
@@ -274,9 +273,10 @@ public abstract class BaseTurbinePermissionManager
      * @return a <code>List</code> value
      * @exception TorqueException if an error occurs
      */
-    protected List retrieveStoredOMs(List ids)
+    @Override
+	protected List retrieveStoredOMs(List ids)
         throws TorqueException
     {
-        return TurbinePermissionPeer.retrieveByPKs(ids);
+        return BaseTurbinePermissionPeer.retrieveByPKs(ids);
     }
 }

@@ -50,7 +50,7 @@ import java.util.Enumeration;
  * A Velocity based portlet control designed for handling a PortletSet
  * child
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  *
  * @version $Id: VelocityPortletSetControl.java,v 1.15 2004/02/23 03:25:35 jford Exp $
  */
@@ -68,7 +68,8 @@ public class VelocityPortletSetControl extends VelocityPortletControl
      * @param rundata the RunData object for this request
      * @param context the Context used by the template
      */
-    public void buildContext(RunData rundata, Context context)
+    @Override
+	public void buildContext(RunData rundata, Context context)
     {
         if (getPortlet() instanceof PortletSet)
         {
@@ -243,7 +244,8 @@ public class VelocityPortletSetControl extends VelocityPortletControl
         /**
          * @see Comparator#compare(Object, Object)
          */
-        public int compare(Object o1, Object o2)
+        @Override
+		public int compare(Object o1, Object o2)
         {
             try
             {

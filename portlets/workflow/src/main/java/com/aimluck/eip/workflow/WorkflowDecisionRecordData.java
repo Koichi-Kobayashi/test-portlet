@@ -55,7 +55,8 @@ public class WorkflowDecisionRecordData implements ALData {
    * 
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     user_id = new ALNumberField();
     user_alias_name = new ALStringField();
     status = new ALStringField();

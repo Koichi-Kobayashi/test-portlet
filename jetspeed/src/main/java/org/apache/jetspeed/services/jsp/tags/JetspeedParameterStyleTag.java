@@ -138,7 +138,8 @@ public class JetspeedParameterStyleTag extends BodyTagSupport
      * @return code
      * @exception JspException
      */
-    public int doStartTag() throws JspException 
+    @Override
+	public int doStartTag() throws JspException 
     {
         return EVAL_BODY_TAG;
     }
@@ -148,7 +149,8 @@ public class JetspeedParameterStyleTag extends BodyTagSupport
      * @return code
      * @exception JspException
      */
-    public int doEndTag() throws JspException 
+    @Override
+	public int doEndTag() throws JspException 
     {
         RunData data = (RunData) pageContext.getAttribute(JspService.RUNDATA, PageContext.REQUEST_SCOPE);    
         String result = null;

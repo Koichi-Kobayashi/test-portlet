@@ -1,7 +1,6 @@
 package org.apache.jetspeed.om.security.turbine;
 
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,13 +10,9 @@ import java.util.List;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.BaseObject;
-import org.apache.torque.om.ComboKey;
-import org.apache.torque.om.DateKey;
 import org.apache.torque.om.NumberKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
-import org.apache.torque.om.StringKey;
-import org.apache.torque.om.Persistent;
 import org.apache.torque.util.Criteria;
 import org.apache.torque.util.Transaction;
 
@@ -497,8 +492,8 @@ public abstract class BaseTurbineUser extends BaseObject
             }
             else
             {
-                      criteria.add(TurbineUserGroupRolePeer.USER_ID, getUserId() );
-                      collTurbineUserGroupRoles = TurbineUserGroupRolePeer.doSelect(criteria);
+                      criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, getUserId() );
+                      collTurbineUserGroupRoles = BaseTurbineUserGroupRolePeer.doSelect(criteria);
             }
         }
         else
@@ -509,10 +504,10 @@ public abstract class BaseTurbineUser extends BaseObject
                 // the following code is to determine if a new query is
                 // called for.  If the criteria is the same as the last
                 // one, just return the collection.
-                      criteria.add(TurbineUserGroupRolePeer.USER_ID, getUserId() );
+                      criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, getUserId() );
                       if (!lastTurbineUserGroupRolesCriteria.equals(criteria))
                 {
-                    collTurbineUserGroupRoles = TurbineUserGroupRolePeer.doSelect(criteria);
+                    collTurbineUserGroupRoles = BaseTurbineUserGroupRolePeer.doSelect(criteria);
                 }
             }
         }
@@ -560,8 +555,8 @@ public abstract class BaseTurbineUser extends BaseObject
             }
             else
             {
-                       criteria.add(TurbineUserGroupRolePeer.USER_ID, getUserId() );
-                       collTurbineUserGroupRoles = TurbineUserGroupRolePeer.doSelect(criteria,con);
+                       criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, getUserId() );
+                       collTurbineUserGroupRoles = BaseTurbineUserGroupRolePeer.doSelect(criteria,con);
              }
          }
          else
@@ -572,10 +567,10 @@ public abstract class BaseTurbineUser extends BaseObject
                  // the following code is to determine if a new query is
                  // called for.  If the criteria is the same as the last
                  // one, just return the collection.
-                     criteria.add(TurbineUserGroupRolePeer.USER_ID, getUserId() );
+                     criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, getUserId() );
                      if (!lastTurbineUserGroupRolesCriteria.equals(criteria))
                  {
-                     collTurbineUserGroupRoles = TurbineUserGroupRolePeer.doSelect(criteria,con);
+                     collTurbineUserGroupRoles = BaseTurbineUserGroupRolePeer.doSelect(criteria,con);
                  }
              }
          }
@@ -617,8 +612,8 @@ public abstract class BaseTurbineUser extends BaseObject
             }
             else
             {
-                            criteria.add(TurbineUserGroupRolePeer.USER_ID, getUserId() );
-                            collTurbineUserGroupRoles = TurbineUserGroupRolePeer.doSelectJoinTurbineUser(criteria);
+                            criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, getUserId() );
+                            collTurbineUserGroupRoles = BaseTurbineUserGroupRolePeer.doSelectJoinTurbineUser(criteria);
             }
         }
         else
@@ -627,10 +622,10 @@ public abstract class BaseTurbineUser extends BaseObject
             // called for.  If the criteria is the same as the last
             // one, just return the collection.
             boolean newCriteria = true;
-                            criteria.add(TurbineUserGroupRolePeer.USER_ID, getUserId() );
+                            criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, getUserId() );
                         if (!lastTurbineUserGroupRolesCriteria.equals(criteria))
             {
-                collTurbineUserGroupRoles = TurbineUserGroupRolePeer.doSelectJoinTurbineUser(criteria);
+                collTurbineUserGroupRoles = BaseTurbineUserGroupRolePeer.doSelectJoinTurbineUser(criteria);
             }
         }
         lastTurbineUserGroupRolesCriteria = criteria;
@@ -668,8 +663,8 @@ public abstract class BaseTurbineUser extends BaseObject
             }
             else
             {
-                            criteria.add(TurbineUserGroupRolePeer.USER_ID, getUserId() );
-                            collTurbineUserGroupRoles = TurbineUserGroupRolePeer.doSelectJoinTurbineGroup(criteria);
+                            criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, getUserId() );
+                            collTurbineUserGroupRoles = BaseTurbineUserGroupRolePeer.doSelectJoinTurbineGroup(criteria);
             }
         }
         else
@@ -678,10 +673,10 @@ public abstract class BaseTurbineUser extends BaseObject
             // called for.  If the criteria is the same as the last
             // one, just return the collection.
             boolean newCriteria = true;
-                            criteria.add(TurbineUserGroupRolePeer.USER_ID, getUserId() );
+                            criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, getUserId() );
                         if (!lastTurbineUserGroupRolesCriteria.equals(criteria))
             {
-                collTurbineUserGroupRoles = TurbineUserGroupRolePeer.doSelectJoinTurbineGroup(criteria);
+                collTurbineUserGroupRoles = BaseTurbineUserGroupRolePeer.doSelectJoinTurbineGroup(criteria);
             }
         }
         lastTurbineUserGroupRolesCriteria = criteria;
@@ -719,8 +714,8 @@ public abstract class BaseTurbineUser extends BaseObject
             }
             else
             {
-                            criteria.add(TurbineUserGroupRolePeer.USER_ID, getUserId() );
-                            collTurbineUserGroupRoles = TurbineUserGroupRolePeer.doSelectJoinTurbineRole(criteria);
+                            criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, getUserId() );
+                            collTurbineUserGroupRoles = BaseTurbineUserGroupRolePeer.doSelectJoinTurbineRole(criteria);
             }
         }
         else
@@ -729,10 +724,10 @@ public abstract class BaseTurbineUser extends BaseObject
             // called for.  If the criteria is the same as the last
             // one, just return the collection.
             boolean newCriteria = true;
-                            criteria.add(TurbineUserGroupRolePeer.USER_ID, getUserId() );
+                            criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, getUserId() );
                         if (!lastTurbineUserGroupRolesCriteria.equals(criteria))
             {
-                collTurbineUserGroupRoles = TurbineUserGroupRolePeer.doSelectJoinTurbineRole(criteria);
+                collTurbineUserGroupRoles = BaseTurbineUserGroupRolePeer.doSelectJoinTurbineRole(criteria);
             }
         }
         lastTurbineUserGroupRolesCriteria = criteria;
@@ -775,7 +770,8 @@ public abstract class BaseTurbineUser extends BaseObject
      * Retrieves a field from the object by name passed in
      * as a String.
      */
-    public Object getByName(String name)
+    @Override
+	public Object getByName(String name)
     {
           if (name.equals("UserId"))
         {
@@ -837,57 +833,58 @@ public abstract class BaseTurbineUser extends BaseObject
      * as a String.  The String must be one of the static
      * Strings defined in this Class' Peer.
      */
-    public Object getByPeerName(String name)
+    @Override
+	public Object getByPeerName(String name)
     {
-          if (name.equals(TurbineUserPeer.USER_ID ))
+          if (name.equals(BaseTurbineUserPeer.USER_ID ))
         {
                 return new Integer(getUserId());
             }
-          if (name.equals(TurbineUserPeer.LOGIN_NAME ))
+          if (name.equals(BaseTurbineUserPeer.LOGIN_NAME ))
         {
                 return getLoginName();
             }
-          if (name.equals(TurbineUserPeer.PASSWORD_VALUE ))
+          if (name.equals(BaseTurbineUserPeer.PASSWORD_VALUE ))
         {
                 return getPasswordValue();
             }
-          if (name.equals(TurbineUserPeer.FIRST_NAME ))
+          if (name.equals(BaseTurbineUserPeer.FIRST_NAME ))
         {
                 return getFirstName();
             }
-          if (name.equals(TurbineUserPeer.LAST_NAME ))
+          if (name.equals(BaseTurbineUserPeer.LAST_NAME ))
         {
                 return getLastName();
             }
-          if (name.equals(TurbineUserPeer.EMAIL ))
+          if (name.equals(BaseTurbineUserPeer.EMAIL ))
         {
                 return getEmail();
             }
-          if (name.equals(TurbineUserPeer.CONFIRM_VALUE ))
+          if (name.equals(BaseTurbineUserPeer.CONFIRM_VALUE ))
         {
                 return getConfirmValue();
             }
-          if (name.equals(TurbineUserPeer.MODIFIED ))
+          if (name.equals(BaseTurbineUserPeer.MODIFIED ))
         {
                 return getModified();
             }
-          if (name.equals(TurbineUserPeer.CREATED ))
+          if (name.equals(BaseTurbineUserPeer.CREATED ))
         {
                 return getCreated();
             }
-          if (name.equals(TurbineUserPeer.LAST_LOGIN ))
+          if (name.equals(BaseTurbineUserPeer.LAST_LOGIN ))
         {
                 return getLastLogin();
             }
-          if (name.equals(TurbineUserPeer.DISABLED ))
+          if (name.equals(BaseTurbineUserPeer.DISABLED ))
         {
                 return getDisabled();
             }
-          if (name.equals(TurbineUserPeer.OBJECTDATA ))
+          if (name.equals(BaseTurbineUserPeer.OBJECTDATA ))
         {
                 return getObjectdata();
             }
-          if (name.equals(TurbineUserPeer.PASSWORD_CHANGED ))
+          if (name.equals(BaseTurbineUserPeer.PASSWORD_CHANGED ))
         {
                 return getPasswordChanged();
             }
@@ -898,7 +895,8 @@ public abstract class BaseTurbineUser extends BaseObject
      * Retrieves a field from the object by Position as specified
      * in the xml schema.  Zero-based.
      */
-    public Object getByPosition(int pos)
+    @Override
+	public Object getByPosition(int pos)
     {
             if ( pos == 0 )
         {
@@ -959,9 +957,10 @@ public abstract class BaseTurbineUser extends BaseObject
      * Stores the object in the database.  If the object is new,
      * it inserts it; otherwise an update is performed.
      */
-    public void save() throws Exception
+    @Override
+	public void save() throws Exception
     {
-          save(TurbineUserPeer.getMapBuilder()
+          save(BaseTurbineUserPeer.getMapBuilder()
                 .getDatabaseMap().getName());
       }
 
@@ -972,7 +971,8 @@ public abstract class BaseTurbineUser extends BaseObject
      * auto-generated conditionally and therefore needs to be
      * in this file instead of in the super class, BaseObject.
        */
-    public void save(String dbName) throws TorqueException
+    @Override
+	public void save(String dbName) throws TorqueException
     {
         Connection con = null;
           try
@@ -998,7 +998,8 @@ public abstract class BaseTurbineUser extends BaseObject
      * the save() method and the connection details will be handled
      * internally
      */
-    public void save(Connection con) throws TorqueException
+    @Override
+	public void save(Connection con) throws TorqueException
     {
           if (!alreadyInSave)
         {
@@ -1011,17 +1012,17 @@ public abstract class BaseTurbineUser extends BaseObject
             {
                 if (isNew())
                 {
-                    TurbineUserPeer.doInsert((TurbineUser)this, con);
+                    BaseTurbineUserPeer.doInsert((TurbineUser)this, con);
                     setNew(false);
                 }
                 else
                 {
-                    TurbineUserPeer.doUpdate((TurbineUser)this, con);
+                    BaseTurbineUserPeer.doUpdate((TurbineUser)this, con);
                 }
 
                       if (isCacheOnSave())
                 {
-                    TurbineUserManager.putInstance(this);
+                    BaseTurbineUserManager.putInstance(this);
                 }
               }
 
@@ -1052,7 +1053,8 @@ public abstract class BaseTurbineUser extends BaseObject
      *
      * @param ObjectKey userId
      */
-    public void setPrimaryKey(ObjectKey userId)
+    @Override
+	public void setPrimaryKey(ObjectKey userId)
         throws TorqueException {
             setUserId(((NumberKey)userId).intValue());
         }
@@ -1060,7 +1062,8 @@ public abstract class BaseTurbineUser extends BaseObject
     /**
      * Set the PrimaryKey using a String.
      */
-    public void setPrimaryKey(String key) throws TorqueException
+    @Override
+	public void setPrimaryKey(String key) throws TorqueException
     {
             setUserId(Integer.parseInt(key));
         }
@@ -1070,7 +1073,8 @@ public abstract class BaseTurbineUser extends BaseObject
      * returns an id that differentiates this object from others
      * of its class.
      */
-    public ObjectKey getPrimaryKey()
+    @Override
+	public ObjectKey getPrimaryKey()
     {
           return SimpleKey.keyFor(getUserId());
       }

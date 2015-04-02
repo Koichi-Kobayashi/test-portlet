@@ -29,6 +29,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMMailAccount;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALPageNotFoundException;
@@ -119,15 +120,15 @@ public class CellWebMailAccountSelectData extends
     SelectQuery<EipMMailAccount> query = Database.query(EipMMailAccount.class);
 
     Expression exp1 =
-      ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipMMailAccount.USER_ID_PROPERTY, Integer
         .valueOf(ALEipUtils.getUserId(rundata)));
     Expression exp2 =
       ExpressionFactory.noMatchExp(
-        EipMMailAccount.ACCOUNT_TYPE_PROPERTY,
+        _EipMMailAccount.ACCOUNT_TYPE_PROPERTY,
         Integer.valueOf(ALMailUtils.ACCOUNT_TYPE_INIT));
 
     query.setQualifier(exp1.andExp(exp2));
-    query.orderDesending(EipMMailAccount.ACCOUNT_TYPE_PROPERTY);
+    query.orderDesending(_EipMMailAccount.ACCOUNT_TYPE_PROPERTY);
 
     return query;
   }
@@ -179,7 +180,7 @@ public class CellWebMailAccountSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("account_name", EipMMailAccount.ACCOUNT_NAME_PROPERTY);
+    map.putValue("account_name", _EipMMailAccount.ACCOUNT_NAME_PROPERTY);
     return map;
   }
 

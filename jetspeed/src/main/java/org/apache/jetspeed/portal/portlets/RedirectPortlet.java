@@ -16,7 +16,6 @@
 package org.apache.jetspeed.portal.portlets;
 
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +45,8 @@ public class RedirectPortlet extends AbstractInstancePortlet
 {           
     private static final JetspeedLogger logger = JetspeedLogFactoryService.getLogger(RedirectPortlet.class.getName());      
     
-    public ConcreteElement getContent(RunData rundata)
+    @Override
+	public ConcreteElement getContent(RunData rundata)
     {
         String menuLevel = this.getPortletConfig().getInitParameter("menuLevel");        
         int menus = 1;        

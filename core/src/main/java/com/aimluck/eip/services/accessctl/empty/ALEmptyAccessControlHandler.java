@@ -27,6 +27,7 @@ import org.apache.jetspeed.services.logging.JetspeedLogger;
 import org.apache.turbine.util.RunData;
 
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALEipUser;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SQLTemplate;
@@ -61,9 +62,9 @@ public class ALEmptyAccessControlHandler extends ALAccessControlHandler {
       int acl_type) {
     StringBuffer sb = new StringBuffer();
     sb.append("SELECT ");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" FROM turbine_user WHERE ");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" != #bind($uid)");
 
     String sqlString = sb.toString();
@@ -92,9 +93,9 @@ public class ALEmptyAccessControlHandler extends ALAccessControlHandler {
     }
     StringBuffer sb = new StringBuffer();
     sb.append("SELECT ");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" FROM turbine_user WHERE (");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" in (");
 
     for (int i = 0; i < u_size; i++) {
@@ -105,7 +106,7 @@ public class ALEmptyAccessControlHandler extends ALAccessControlHandler {
     }
 
     sb.append(")) AND (");
-    sb.append(TurbineUser.USER_ID_PK_COLUMN);
+    sb.append(_TurbineUser.USER_ID_PK_COLUMN);
     sb.append(" != #bind($uid)");
     sb.append(")");
 

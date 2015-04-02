@@ -105,7 +105,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @param rundata to be a RunData object
      */
-    public void init(RunData rundata)
+    @Override
+	public void init(RunData rundata)
     {
         init((Object) rundata);
     }
@@ -117,7 +118,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param value An Object with the value to add.
      * @return DynamicURI that to the desired page
      */
-    public DynamicURI addQueryData(String name, Object value)
+    @Override
+	public DynamicURI addQueryData(String name, Object value)
     {
         try
         {
@@ -137,7 +139,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param value An Object with the value to add.
      * @return DynamicURI that to the desired page
      */
-    public DynamicURI addPathInfo(String name, Object value)
+    @Override
+	public DynamicURI addPathInfo(String name, Object value)
     {
         try
         {
@@ -158,7 +161,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated Use getPortletById() or getPaneById()
      */
-    public DynamicURI setPortalElement(String peid)
+    @Deprecated
+	@Override
+	public DynamicURI setPortalElement(String peid)
     {
         if (initDone == false)
         {
@@ -182,7 +187,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated Use getPortletById()
      */
-    public DynamicURI setPortletById(String peid)
+    @Deprecated
+	@Override
+	public DynamicURI setPortletById(String peid)
     {
         return getPortletById(peid);
     }
@@ -194,7 +201,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @return DynamicURI to the home page
      */
-    public DynamicURI getHomePage()
+    @Override
+	public DynamicURI getHomePage()
     {
         return getLink(JetspeedLink.DEFAULT, null, "", JetspeedLink.DEFAULT, null, "", "", "", "", "");
     }
@@ -205,7 +213,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @return DynamicURI to template
      */
-    public DynamicURI getTemplate()
+    @Override
+	public DynamicURI getTemplate()
     {
         String template = rundata.getRequestedTemplate();
         return getLink(JetspeedLink.CURRENT, null, null, JetspeedLink.DEFAULT, null, null, template, null, null, null);
@@ -219,7 +228,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated Use getTemplate()
      */
-    public DynamicURI setTemplate(String template)
+    @Deprecated
+	@Override
+	public DynamicURI setTemplate(String template)
     {
         return getTemplate(template);
     }
@@ -232,7 +243,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated Use getAction()
      */
-    public DynamicURI setAction(String action)
+    @Deprecated
+	@Override
+	public DynamicURI setAction(String action)
     {
         return getAction(action);
     }
@@ -247,9 +260,11 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated Use getAction()
      */
-    public DynamicURI setAction(String action, Portlets portlets)
+    @Deprecated
+	@Override
+	public DynamicURI setAction(String action, Portlets portlets)
     {
-        return getAction(action, (Portlets) portlets);
+        return getAction(action, portlets);
     }
 
     /**
@@ -261,9 +276,11 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated Use getAction()
      */
-    public DynamicURI setAction(String action, Portlet portlet)
+    @Deprecated
+	@Override
+	public DynamicURI setAction(String action, Portlet portlet)
     {
-        return getAction(action, (Portlet) portlet);
+        return getAction(action, portlet);
     }
 
     /**
@@ -276,9 +293,11 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated Use getAction()
      */
-    public DynamicURI setAction(String action, Entry entry)
+    @Deprecated
+	@Override
+	public DynamicURI setAction(String action, Entry entry)
     {
-        return getAction(action, (Entry) entry);
+        return getAction(action, entry);
     }
 
     /**
@@ -290,9 +309,10 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @return DynamicURI that includes the desire action
      * @deprecated Use getAction()
      */
-    public DynamicURI setAction(String action, String peid)
+    @Deprecated
+	public DynamicURI setAction(String action, String peid)
     {
-        return getAction(action, (String) peid);
+        return getAction(action, peid);
     }
 
     /**
@@ -303,7 +323,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated Use getGroup()
      */
-    public DynamicURI setGroup(String group)
+    @Deprecated
+	@Override
+	public DynamicURI setGroup(String group)
     {
         return getGroup(group);
     }
@@ -317,7 +339,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated Use getGroup()
      */
-    public DynamicURI setGroup(String group, String page)
+    @Deprecated
+	@Override
+	public DynamicURI setGroup(String group, String page)
     {
         return getGroup(group, page);
     }
@@ -330,7 +354,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated Use getPage()
      */
-    public DynamicURI setPage()
+    @Deprecated
+	@Override
+	public DynamicURI setPage()
     {
         return getPage();
     }
@@ -344,7 +370,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated Use getPage()
      */
-    public DynamicURI setPage(String page)
+    @Deprecated
+	@Override
+	public DynamicURI setPage(String page)
     {
         return getPage(page);
     }
@@ -358,7 +386,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @return DynamicURI that to the desired page
      * @deprecated Use getPage()
      */
-    public DynamicURI setPage(String page, String paneName)
+    @Deprecated
+	@Override
+	public DynamicURI setPage(String page, String paneName)
     {
         return getPage(page, paneName);
     }
@@ -372,7 +402,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated use getRole()
      */
-    public DynamicURI setRole(String role)
+    @Deprecated
+	@Override
+	public DynamicURI setRole(String role)
     {
         return getRole(role);
     }
@@ -386,7 +418,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated use getRole()
      */
-    public DynamicURI setRole(String role, String page)
+    @Deprecated
+	@Override
+	public DynamicURI setRole(String role, String page)
     {
         return getRole(role, page);
     }
@@ -399,7 +433,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated Use getUser()
      */
-    public DynamicURI setUser(String user)
+    @Deprecated
+	@Override
+	public DynamicURI setUser(String user)
     {
         return getUser(user);
     }
@@ -413,7 +449,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated  Use getUser()
      */
-    public DynamicURI setUser(String user, String page)
+    @Deprecated
+	@Override
+	public DynamicURI setUser(String user, String page)
     {
         return getUser(user, page);
     }
@@ -426,7 +464,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @deprecated Use getPaneById()
      */
-    public DynamicURI setPaneById(String paneId)
+    @Deprecated
+	@Override
+	public DynamicURI setPaneById(String paneId)
     {
         return getPaneById(paneId);
     }
@@ -438,7 +478,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @return URI to specific portlet
      * @deprecated Use getPaneByName()
      */
-    public DynamicURI setPaneByName(String paneName)
+    @Deprecated
+	public DynamicURI setPaneByName(String paneName)
     {
         return getPaneByName(paneName);
     }
@@ -477,7 +518,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param country    Desired country.  null = default language
      * @return URI to specific portlet
      */
-    public DynamicURI getLink(int rootType, String rootValue, String pageName, int elementType, String elementValue, String actionName, String templateName, String mediaType, String language, String country)
+    @Override
+	public DynamicURI getLink(int rootType, String rootValue, String pageName, int elementType, String elementValue, String actionName, String templateName, String mediaType, String language, String country)
     {
         String uriPathType = null;
         String uriPathElement = null;
@@ -710,29 +752,34 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
             return null;
         }
     }
-    public DynamicURI getLink(int rootType, String rootValue, String pageName, int elementType, String elementValue, String actionName, String templateName, String mediaType, String language)
+    @Override
+	public DynamicURI getLink(int rootType, String rootValue, String pageName, int elementType, String elementValue, String actionName, String templateName, String mediaType, String language)
     {
         return getLink(rootType, rootValue, pageName, elementType, elementValue, actionName, templateName, mediaType, language, null);
     }
 
-    public DynamicURI getLink(int rootType, String rootValue, String pageName, int elementType, String elementValue, String actionName, String templateName, String mediaType)
+    @Override
+	public DynamicURI getLink(int rootType, String rootValue, String pageName, int elementType, String elementValue, String actionName, String templateName, String mediaType)
     {
         return getLink(rootType, rootValue, pageName, elementType, elementValue, actionName, templateName, mediaType, null, null);
     }
 
-    public DynamicURI getLink(int rootType, String rootValue, String pageName, int elementType, String elementValue, String actionName, String templateName)
+    @Override
+	public DynamicURI getLink(int rootType, String rootValue, String pageName, int elementType, String elementValue, String actionName, String templateName)
     {
         return getLink(rootType, rootValue, pageName, elementType, elementValue, actionName, actionName, null, null, null);
     }
 
-    public DynamicURI getLink(int rootType, String rootValue, String pageName, int elementType, String elementValue, String actionName)
+    @Override
+	public DynamicURI getLink(int rootType, String rootValue, String pageName, int elementType, String elementValue, String actionName)
     {
         return getLink(rootType, rootValue, pageName, elementType, elementValue, actionName, null, null, null, null);
     }
 
     /**
      */
-    public DynamicURI getLink(int rootType, String rootValue, String pageName, int elementType, String elementValue)
+    @Override
+	public DynamicURI getLink(int rootType, String rootValue, String pageName, int elementType, String elementValue)
     {
         return getLink(rootType, rootValue, pageName, elementType, elementValue, null, null, null, null, null);
     }
@@ -743,7 +790,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param action action
      * @return DynamicURI that includes the desire action
      */
-    public DynamicURI getAction(String action)
+    @Override
+	public DynamicURI getAction(String action)
     {
         return getLink(JetspeedLink.CURRENT, null, null, JetspeedLink.CURRENT, null, action, null, null, null, null);
     }
@@ -756,7 +804,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param entry to receive the action
      * @return DynamicURI that includes the desire action
      */
-    public DynamicURI getAction(String action, Entry entry)
+    @Override
+	public DynamicURI getAction(String action, Entry entry)
     {
         if (entry != null)
         {
@@ -775,7 +824,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param portlet to receive the action
      * @return DynamicURI that includes the desire action
      */
-    public DynamicURI getAction(String action, Portlet portlet)
+    @Override
+	public DynamicURI getAction(String action, Portlet portlet)
     {
         if (portlet != null)
         {
@@ -795,7 +845,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param portlets to receive the action
      * @return DynamicURI that includes the desire action
      */
-    public DynamicURI getAction(String action, Portlets portlets)
+    @Override
+	public DynamicURI getAction(String action, Portlets portlets)
     {
         if (portlets != null)
         {
@@ -815,7 +866,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param peid Id of the portlet to receive the action
      * @return DynamicURI that includes the desire action
      */
-    public DynamicURI getAction(String action, String peid)
+    @Override
+	public DynamicURI getAction(String action, String peid)
     {
         return getLink(JetspeedLink.CURRENT, null, null, JetspeedLink.PORTLET_ID, peid, action, null, null, null, null);
     }
@@ -826,7 +878,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param group Desired group
      * @return DynamicURI that to the default page for the group
      */
-    public DynamicURI getGroup(String group)
+    @Override
+	public DynamicURI getGroup(String group)
     {
         return getLink(JetspeedLink.GROUP, group, "", JetspeedLink.DEFAULT, null, null, null, null, null, null);
     }
@@ -838,7 +891,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param group Desired group
      * @return DynamicURI that to the desired group and page
      */
-    public DynamicURI getGroup(String group, String page)
+    @Override
+	public DynamicURI getGroup(String group, String page)
     {
         return getLink(JetspeedLink.GROUP, group, page, JetspeedLink.DEFAULT, null, null, null, null, null, null);
     }
@@ -848,7 +902,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @return DynamicURI that to the default page
      */
-    public DynamicURI getPage()
+    @Override
+	public DynamicURI getPage()
     {
         return getLink(JetspeedLink.CURRENT, null, "", JetspeedLink.DEFAULT, null, null, null, null, null, null);
     }
@@ -860,7 +915,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param page Desired page
      * @return DynamicURI that to the desired page
      */
-    public DynamicURI getPage(String page)
+    @Override
+	public DynamicURI getPage(String page)
     {
         return getLink(JetspeedLink.CURRENT, null, page, JetspeedLink.DEFAULT, null, null, null, null, null, null);
     }
@@ -873,7 +929,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param paneName Name of the desired pane
      * @return DynamicURI that to the desired page
      */
-    public DynamicURI getPage(String page, String paneName)
+    @Override
+	public DynamicURI getPage(String page, String paneName)
     {
         return getLink(JetspeedLink.CURRENT, null, page, JetspeedLink.PANE_NAME, paneName, null, null, null, null, null);
     }
@@ -883,7 +940,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param paneId of the Pane
      * @return URI to specific portlet
      */
-    public DynamicURI getPaneById(String paneId)
+    @Override
+	public DynamicURI getPaneById(String paneId)
     {
         return getLink(JetspeedLink.CURRENT, null, this.getPageName(), JetspeedLink.PANE_ID, paneId, null, null, null, null, null);
     }
@@ -894,7 +952,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param paneName Name of the Pane
      * @return URI to specific portlet
      */
-    public DynamicURI getPaneByName(String paneName)
+    @Override
+	public DynamicURI getPaneByName(String paneName)
     {
         return getLink(JetspeedLink.CURRENT, null, this.getPageName(), JetspeedLink.PANE_NAME, paneName, null, null, null, null, null);
     }
@@ -905,7 +964,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param peid of the portlet
      * @return DynamicURI to specific portlet
      */
-    public DynamicURI getPortletById(String peid)
+    @Override
+	public DynamicURI getPortletById(String peid)
     {
         return getLink(JetspeedLink.CURRENT, null, this.getPageName(), JetspeedLink.PORTLET_ID, peid, null, null, null, null, null);
     }
@@ -918,7 +978,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param portletName the name of the portlet to link to
      * @return a DynamicURI referencing the named portlet
      */
-    public DynamicURI getPortletByName(String portletName)
+    @Override
+	public DynamicURI getPortletByName(String portletName)
     {
         return getLink(JetspeedLink.CURRENT, null, this.getPageName(), JetspeedLink.PORTLET_NAME, portletName, null, null, null, null, null);
     }
@@ -928,7 +989,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param role Desired role
      * @return DynamicURI that to the desired page
      */
-    public DynamicURI getRole(String role)
+    @Override
+	public DynamicURI getRole(String role)
     {
         return getLink(JetspeedLink.ROLE, role, "", JetspeedLink.DEFAULT, null, null, null, null, null, null);
     }
@@ -940,7 +1002,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param page Desired page
      * @return DynamicURI that to the desired page
      */
-    public DynamicURI getRole(String role, String page)
+    @Override
+	public DynamicURI getRole(String role, String page)
     {
         return getLink(JetspeedLink.ROLE, role, page, JetspeedLink.DEFAULT, null, null, null, null, null, null);
     }
@@ -951,7 +1014,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param template to add to link
      * @return DynamicURI to specific portlet
      */
-    public DynamicURI getTemplate(String template)
+    @Override
+	public DynamicURI getTemplate(String template)
     {
         return getLink(JetspeedLink.CURRENT, null, null, JetspeedLink.DEFAULT, null, null, template, null, null, null);
     }
@@ -962,7 +1026,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param user Desired user
      * @return DynamicURI that to the desired page
      */
-    public DynamicURI getUser(String user)
+    @Override
+	public DynamicURI getUser(String user)
     {
         return getLink(JetspeedLink.USER, user, "", JetspeedLink.DEFAULT, null, null, null, null, null, null);
     }
@@ -974,7 +1039,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param user Desired user
      * @return DynamicURI that to the desired page
      */
-    public DynamicURI getUser(String user, String page)
+    @Override
+	public DynamicURI getUser(String user, String page)
     {
         return getLink(JetspeedLink.USER, user, page, JetspeedLink.DEFAULT, null, null, null, null, null, null);
     }
@@ -1010,7 +1076,7 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
             // Get ProfileLocator for path info.
             if ((profile instanceof ProfileLocator) == true)
             {
-                locator = (ProfileLocator) profile;
+                locator = profile;
             }
         }
         initDone = true;
@@ -1050,7 +1116,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @return a URL, as a string, the the root page or pane.
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         try
         {
@@ -1068,7 +1135,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @return the action parameter name
      */
-    public String getActionKey()
+    @Override
+	public String getActionKey()
     {
         return JetspeedResources.PATH_ACTION_KEY;
     }
@@ -1078,7 +1146,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @return True = PSML is for the anonymous user
      */
-    public boolean getAnonymous()
+    @Override
+	public boolean getAnonymous()
     {
         initLink();
         try
@@ -1097,7 +1166,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @return Country of PSML, or null if no country
      */
-    public String getCountry()
+    @Override
+	public String getCountry()
     {
         initLink();
         try
@@ -1116,7 +1186,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @return Group name of PSML, or null if no Group name
      */
-    public String getGroupName()
+    @Override
+	public String getGroupName()
     {
         initLink();
         try
@@ -1135,7 +1206,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @return Language of PSML, or null if no Language
      */
-    public String getLanguage()
+    @Override
+	public String getLanguage()
     {
         initLink();
         try
@@ -1154,7 +1226,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @return Media Type of PSML, or null if no Media Type
      */
-    public String getMediaType()
+    @Override
+	public String getMediaType()
     {
         initLink();
         try
@@ -1173,7 +1246,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @return Page name of PSML, or null if no Page name
      */
-    public String getPageName()
+    @Override
+	public String getPageName()
     {
         initLink();
         try
@@ -1192,7 +1266,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @return Role name of PSML, or null if no Role name
      */
-    public String getRoleName()
+    @Override
+	public String getRoleName()
     {
         initLink();
         try
@@ -1211,7 +1286,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      *
      * @return User name of PSML, or null if no User name
      */
-    public String getUserName()
+    @Override
+	public String getUserName()
     {
         initLink();
         try
@@ -1284,7 +1360,9 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param portlet the name of the active portlet
      * @deprecated the name is confusing. Use @see(#forPaneById()) instead.
      */
-    public void setPortlet(Portlet portlet)
+    @Deprecated
+	@Override
+	public void setPortlet(Portlet portlet)
     {
         this.activePortlet = portlet;
     }
@@ -1299,7 +1377,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param portletName the name of the portlet to link to
      * @return a DynamicURI referencing the named portlet for easy link construction in template
      */
-    public DynamicURI setPortletByName(String portletName)
+    @Override
+	public DynamicURI setPortletByName(String portletName)
     {
         DynamicURI uri = null;
         try
@@ -1331,7 +1410,8 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
      * @param data assumed to be a RunData object
      */
 
-    public void init(Object data)
+    @Override
+	public void init(Object data)
     {
         // Keeping init small and fast
         if (data instanceof JetspeedRunData)
@@ -1350,12 +1430,14 @@ public class BaseJetspeedLink implements ApplicationTool, JetspeedLink
     /**
      * Refresh method - does nothing
      */
-    public void refresh()
+    @Override
+	public void refresh()
     {
         // empty
     }
 
-    public DynamicURI setMediaType(String mediaType)
+    @Override
+	public DynamicURI setMediaType(String mediaType)
     {
         return getLink(JetspeedLink.CURRENT, null, null, JetspeedLink.DEFAULT, null, null, null, mediaType);
     }

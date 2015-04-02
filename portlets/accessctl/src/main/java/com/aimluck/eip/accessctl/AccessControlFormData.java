@@ -39,7 +39,11 @@ import com.aimluck.eip.accessctl.util.AccessControlUtils;
 import com.aimluck.eip.cayenne.om.account.EipTAclPortletFeature;
 import com.aimluck.eip.cayenne.om.account.EipTAclRole;
 import com.aimluck.eip.cayenne.om.account.EipTAclUserRoleMap;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclPortletFeature;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclRole;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclUserRoleMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -200,7 +204,7 @@ public class AccessControlFormData extends ALAbstractFormData {
         if (str != null && str.length > 0) {
           SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
           Expression exp =
-            ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, str);
+            ExpressionFactory.inExp(_TurbineUser.LOGIN_NAME_PROPERTY, str);
           query.setQualifier(exp);
           memberList.addAll(ALEipUtils.getUsersFromSelectQuery(query));
         }
@@ -229,18 +233,18 @@ public class AccessControlFormData extends ALAbstractFormData {
         if (ALEipConstants.MODE_INSERT.equals(getMode())) {
           Expression exp =
             ExpressionFactory.matchExp(
-              EipTAclRole.ROLE_NAME_PROPERTY,
+              _EipTAclRole.ROLE_NAME_PROPERTY,
               tmp_acl_role_name);
           query.setQualifier(exp);
         } else if (ALEipConstants.MODE_UPDATE.equals(getMode())) {
           Expression exp1 =
             ExpressionFactory.matchExp(
-              EipTAclRole.ROLE_NAME_PROPERTY,
+              _EipTAclRole.ROLE_NAME_PROPERTY,
               tmp_acl_role_name);
           query.setQualifier(exp1);
           Expression exp2 =
             ExpressionFactory.noMatchDbExp(
-              EipTAclRole.ROLE_ID_PK_COLUMN,
+              _EipTAclRole.ROLE_ID_PK_COLUMN,
               Integer.valueOf(acl_role_id));
           query.andQualifier(exp2);
         }
@@ -297,24 +301,24 @@ public class AccessControlFormData extends ALAbstractFormData {
         SelectQuery<EipTAclRole> rolequery = Database.query(EipTAclRole.class);
         Expression exp11 =
           ExpressionFactory.matchDbExp(
-            EipTAclRole.EIP_TACL_PORTLET_FEATURE_PROPERTY
+            _EipTAclRole.EIP_TACL_PORTLET_FEATURE_PROPERTY
               + "."
-              + EipTAclPortletFeature.FEATURE_ID_PK_COLUMN,
+              + _EipTAclPortletFeature.FEATURE_ID_PK_COLUMN,
             Integer.valueOf((int) feature_id.getValue()));
         Expression exp12 =
           ExpressionFactory.inDbExp(
-            EipTAclRole.EIP_TACL_USER_ROLE_MAPS_PROPERTY
+            _EipTAclRole.EIP_TACL_USER_ROLE_MAPS_PROPERTY
               + "."
-              + EipTAclUserRoleMap.TURBINE_USER_PROPERTY
+              + _EipTAclUserRoleMap.TURBINE_USER_PROPERTY
               + "."
-              + TurbineUser.USER_ID_PK_COLUMN,
+              + _TurbineUser.USER_ID_PK_COLUMN,
             uids);
         rolequery.setQualifier(exp11.andExp(exp12));
 
         if (ALEipConstants.MODE_UPDATE.equals(getMode())) {
           Expression exp13 =
             ExpressionFactory.noMatchDbExp(
-              EipTAclRole.ROLE_ID_PK_COLUMN,
+              _EipTAclRole.ROLE_ID_PK_COLUMN,
               Integer.valueOf(acl_role_id));
           rolequery.andQualifier(exp13);
         }
@@ -441,7 +445,7 @@ public class AccessControlFormData extends ALAbstractFormData {
       }
 
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTAclRole.ROLE_ID_PK_COLUMN, aclroleid);
+        ExpressionFactory.matchDbExp(_EipTAclRole.ROLE_ID_PK_COLUMN, aclroleid);
       SelectQuery<EipTAclRole> query = Database.query(EipTAclRole.class, exp);
       List<EipTAclRole> aclroles = query.fetchList();
       if (aclroles == null || aclroles.size() == 0) {
@@ -585,9 +589,9 @@ public class AccessControlFormData extends ALAbstractFormData {
     SelectQuery<EipTAclUserRoleMap> query =
       Database.query(EipTAclUserRoleMap.class);
     Expression exp =
-      ExpressionFactory.matchDbExp(EipTAclUserRoleMap.EIP_TACL_ROLE_PROPERTY
+      ExpressionFactory.matchDbExp(_EipTAclUserRoleMap.EIP_TACL_ROLE_PROPERTY
         + "."
-        + EipTAclRole.ROLE_ID_PK_COLUMN, aclroleid);
+        + _EipTAclRole.ROLE_ID_PK_COLUMN, aclroleid);
     query.setQualifier(exp);
     List<EipTAclUserRoleMap> maps = query.fetchList();
     if (maps == null || maps.size() == 0) {

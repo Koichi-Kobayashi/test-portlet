@@ -36,8 +36,12 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipFacilityGroup;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipFacilityGroup;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -139,7 +143,7 @@ public class MyGroupFormData extends ALAbstractFormData {
         if (str != null && str.length > 0) {
           SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
           Expression exp =
-            ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, str);
+            ExpressionFactory.inExp(_TurbineUser.LOGIN_NAME_PROPERTY, str);
           query.setQualifier(exp);
 
           List<TurbineUser> list = query.fetchList();
@@ -159,7 +163,7 @@ public class MyGroupFormData extends ALAbstractFormData {
         if (f_id != null && f_id.length > 0) {
           SelectQuery<EipMFacility> fquery = Database.query(EipMFacility.class);
           Expression exp =
-            ExpressionFactory.inDbExp(EipMFacility.FACILITY_ID_PK_COLUMN, f_id);
+            ExpressionFactory.inDbExp(_EipMFacility.FACILITY_ID_PK_COLUMN, f_id);
           fquery.setQualifier(exp);
           List<EipMFacility> f_list = fquery.fetchList();
 
@@ -232,26 +236,26 @@ public class MyGroupFormData extends ALAbstractFormData {
       if (ALEipConstants.MODE_INSERT.equals(getMode())) {
         Expression exp1 =
           ExpressionFactory.matchExp(
-            TurbineGroup.GROUP_ALIAS_NAME_PROPERTY,
+            _TurbineGroup.GROUP_ALIAS_NAME_PROPERTY,
             group_alias_name.getValue());
         Expression exp2 =
-          ExpressionFactory.matchExp(TurbineGroup.OWNER_ID_PROPERTY, Integer
+          ExpressionFactory.matchExp(_TurbineGroup.OWNER_ID_PROPERTY, Integer
             .valueOf(userId));
         query.setQualifier(exp1);
         query.andQualifier(exp2);
       } else if (ALEipConstants.MODE_UPDATE.equals(getMode())) {
         Expression exp1 =
           ExpressionFactory.matchExp(
-            TurbineGroup.GROUP_ALIAS_NAME_PROPERTY,
+            _TurbineGroup.GROUP_ALIAS_NAME_PROPERTY,
             group_alias_name.getValue());
         Expression exp2 =
-          ExpressionFactory.matchExp(TurbineGroup.OWNER_ID_PROPERTY, Integer
+          ExpressionFactory.matchExp(_TurbineGroup.OWNER_ID_PROPERTY, Integer
             .valueOf(userId));
         query.setQualifier(exp1);
         query.andQualifier(exp2);
         Expression exp3 =
           ExpressionFactory.noMatchExp(
-            TurbineGroup.GROUP_NAME_PROPERTY,
+            _TurbineGroup.GROUP_NAME_PROPERTY,
             mygroup_name);
         query.andQualifier(exp3);
       }
@@ -429,13 +433,13 @@ public class MyGroupFormData extends ALAbstractFormData {
           Database.query(EipFacilityGroup.class);
         Expression exp1 =
           ExpressionFactory.inDbExp(
-            EipMFacility.FACILITY_ID_PK_COLUMN,
+            _EipMFacility.FACILITY_ID_PK_COLUMN,
             oldFIdList);
         query.setQualifier(exp1);
         Expression exp2 =
-          ExpressionFactory.matchDbExp(EipFacilityGroup.TURBINE_GROUP_PROPERTY
+          ExpressionFactory.matchDbExp(_EipFacilityGroup.TURBINE_GROUP_PROPERTY
             + "."
-            + TurbineGroup.GROUP_ID_PK_COLUMN, record.getId());
+            + _TurbineGroup.GROUP_ID_PK_COLUMN, record.getId());
         query.andQualifier(exp2);
         List<EipFacilityGroup> flist = query.fetchList();
         if (flist != null && flist.size() > 0) {
@@ -453,7 +457,7 @@ public class MyGroupFormData extends ALAbstractFormData {
 
         Expression fexp =
           ExpressionFactory.matchDbExp(
-            EipMFacility.FACILITY_ID_PK_COLUMN,
+            _EipMFacility.FACILITY_ID_PK_COLUMN,
             Integer.valueOf(fid));
         SelectQuery<EipMFacility> fquery =
           Database.query(EipMFacility.class, fexp);
@@ -506,7 +510,7 @@ public class MyGroupFormData extends ALAbstractFormData {
       }
 
       Expression exp =
-        ExpressionFactory.matchDbExp(TurbineGroup.GROUP_ID_PK_COLUMN, record
+        ExpressionFactory.matchDbExp(_TurbineGroup.GROUP_ID_PK_COLUMN, record
           .getId());
       SelectQuery<EipFacilityGroup> query =
         Database.query(EipFacilityGroup.class, exp);

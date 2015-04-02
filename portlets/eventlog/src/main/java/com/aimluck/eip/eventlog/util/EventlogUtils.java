@@ -49,6 +49,7 @@ import com.aimluck.eip.cayenne.om.portlet.EipTTodo;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodoCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRequest;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTEventlog;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.orm.Database;
@@ -148,7 +149,7 @@ public class EventlogUtils {
       }
 
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTEventlog.EVENTLOG_ID_PK_COLUMN, logid);
+        ExpressionFactory.matchDbExp(_EipTEventlog.EVENTLOG_ID_PK_COLUMN, logid);
       SelectQuery<EipTEventlog> query = Database.query(EipTEventlog.class, exp);
       List<EipTEventlog> logs = query.fetchList();
       if (logs == null || logs.size() == 0) {

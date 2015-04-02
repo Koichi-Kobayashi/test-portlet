@@ -29,6 +29,8 @@ import org.apache.jetspeed.om.security.Group;
 import org.apache.jetspeed.om.security.JetspeedUser;
 import org.apache.jetspeed.om.security.Role;
 import org.apache.jetspeed.om.security.UserNamePrincipal;
+import org.apache.jetspeed.om.security.turbine.BaseTurbineGroupPeer;
+import org.apache.jetspeed.om.security.turbine.BaseTurbineUserGroupRolePeer;
 import org.apache.jetspeed.om.security.turbine.TurbineGroup;
 import org.apache.jetspeed.om.security.turbine.TurbineGroupPeer;
 import org.apache.jetspeed.om.security.turbine.TurbineUserGroupRole;
@@ -86,7 +88,8 @@ public class TurbineGroupManagement extends TurbineBaseService
      * @exception GroupException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Iterator getGroups(String username)
+    @Override
+	public Iterator getGroups(String username)
         throws JetspeedSecurityException
     {
         JetspeedUser user = null;
@@ -99,13 +102,13 @@ public class TurbineGroupManagement extends TurbineBaseService
             throw new GroupException("Failed to Retrieve User: ", e);
         }
         Criteria criteria = new Criteria();
-        criteria.add(TurbineUserGroupRolePeer.USER_ID, user.getUserId());
+        criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, user.getUserId());
         List rels;
         HashMap groups;
 
         try
         {
-            rels = TurbineUserGroupRolePeer.doSelect(criteria);
+            rels = BaseTurbineUserGroupRolePeer.doSelect(criteria);
             if (rels.size() > 0)
             {
                 groups = new HashMap(rels.size());
@@ -137,14 +140,15 @@ public class TurbineGroupManagement extends TurbineBaseService
      * @exception GroupException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Iterator getGroups()
+    @Override
+	public Iterator getGroups()
         throws JetspeedSecurityException
     {
         Criteria criteria = new Criteria();
         List groups;
         try
         {
-            groups = TurbineGroupPeer.doSelect(criteria);
+            groups = BaseTurbineGroupPeer.doSelect(criteria);
         }
         catch(Exception e)
         {
@@ -166,7 +170,8 @@ public class TurbineGroupManagement extends TurbineBaseService
      *                                   the security provider-specific unique constraints.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void addGroup(Group group)
+    @Override
+	public void addGroup(Group group)
         throws JetspeedSecurityException
     {
         if(groupExists(group.getName()))
@@ -179,8 +184,8 @@ public class TurbineGroupManagement extends TurbineBaseService
         {
             TurbineGroup tgroup = new TurbineGroup();
             tgroup.setGroupName(group.getName());
-            Criteria criteria = TurbineGroupPeer.buildCriteria(tgroup);
-            NumberKey key = (NumberKey)TurbineGroupPeer.doInsert(criteria);
+            Criteria criteria = BaseTurbineGroupPeer.buildCriteria(tgroup);
+            NumberKey key = (NumberKey)BaseTurbineGroupPeer.doInsert(criteria);
             group.setId(key.toString());
         }
         catch(Exception e)
@@ -245,7 +250,8 @@ public class TurbineGroupManagement extends TurbineBaseService
      * @exception GroupException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void saveGroup(Group group)
+    @Override
+	public void saveGroup(Group group)
         throws JetspeedSecurityException
     {
         if(!groupExists(group.getName()))
@@ -258,7 +264,7 @@ public class TurbineGroupManagement extends TurbineBaseService
         {
             if (group instanceof TurbineGroup)
             {
-                TurbineGroupPeer.doUpdate((TurbineGroup)group);
+                BaseTurbineGroupPeer.doUpdate((TurbineGroup)group);
             }
             else
             {
@@ -284,7 +290,8 @@ public class TurbineGroupManagement extends TurbineBaseService
      * @exception GroupException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void removeGroup(String groupname)
+    @Override
+	public void removeGroup(String groupname)
         throws JetspeedSecurityException
     {
         Connection conn = null;
@@ -294,17 +301,17 @@ public class TurbineGroupManagement extends TurbineBaseService
             Group group = this.getGroup(groupname);
 
             Criteria criteria = new Criteria();
-            criteria.add(TurbineGroupPeer.GROUP_NAME, groupname);
+            criteria.add(BaseTurbineGroupPeer.GROUP_NAME, groupname);
 
             if(cascadeDelete)
             {
                 //CASCADE TURBINE_USER_GROUP_ROLE
                 Criteria criteria1 = new Criteria();
-                criteria1.add(TurbineUserGroupRolePeer.GROUP_ID, group.getId());
-                TurbineUserGroupRolePeer.doDelete(criteria1, conn);
+                criteria1.add(BaseTurbineUserGroupRolePeer.GROUP_ID, group.getId());
+                BaseTurbineUserGroupRolePeer.doDelete(criteria1, conn);
             }
 
-            TurbineGroupPeer.doDelete(criteria, conn);
+            BaseTurbineGroupPeer.doDelete(criteria, conn);
             PsmlManager.removeGroupDocuments(group);
 
             conn.commit();
@@ -343,7 +350,8 @@ public class TurbineGroupManagement extends TurbineBaseService
      * @exception GroupException when the security provider has a general failure retrieving users.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void joinGroup(String username, String groupname)
+    @Override
+	public void joinGroup(String username, String groupname)
         throws JetspeedSecurityException
     {
     	joinGroup(username, groupname, defaultRole);
@@ -358,7 +366,8 @@ public class TurbineGroupManagement extends TurbineBaseService
      * @exception GroupException when the security provider has a general failure retrieving groups.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void joinGroup(String username, String groupname, String rolename)
+    @Override
+	public void joinGroup(String username, String groupname, String rolename)
         throws JetspeedSecurityException
     {
         try
@@ -368,10 +377,10 @@ public class TurbineGroupManagement extends TurbineBaseService
             Role role = JetspeedSecurity.getRole(rolename);
 
             Criteria criteria = new Criteria();
-            criteria.add(TurbineUserGroupRolePeer.USER_ID, user.getUserId());
-            criteria.add(TurbineUserGroupRolePeer.GROUP_ID, group.getId());
-            criteria.add(TurbineUserGroupRolePeer.ROLE_ID, role.getId());
-            TurbineUserGroupRolePeer.doInsert(criteria);
+            criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, user.getUserId());
+            criteria.add(BaseTurbineUserGroupRolePeer.GROUP_ID, group.getId());
+            criteria.add(BaseTurbineUserGroupRolePeer.ROLE_ID, role.getId());
+            BaseTurbineUserGroupRolePeer.doInsert(criteria);
         }
         catch(Exception e)
         {
@@ -388,7 +397,8 @@ public class TurbineGroupManagement extends TurbineBaseService
      * @exception GroupException when the security provider has a general failure retrieving users.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void unjoinGroup(String username, String groupname)
+    @Override
+	public void unjoinGroup(String username, String groupname)
         throws JetspeedSecurityException
     {
     	unjoinGroup(username, groupname, defaultRole);
@@ -404,7 +414,8 @@ public class TurbineGroupManagement extends TurbineBaseService
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
 
-    public void unjoinGroup(String username, String groupname, String rolename)
+    @Override
+	public void unjoinGroup(String username, String groupname, String rolename)
         throws JetspeedSecurityException
     {
         try
@@ -414,10 +425,10 @@ public class TurbineGroupManagement extends TurbineBaseService
             Role role = JetspeedSecurity.getRole(rolename);
 
             Criteria criteria = new Criteria();
-            criteria.add(TurbineUserGroupRolePeer.USER_ID, user.getUserId());
-            criteria.add(TurbineUserGroupRolePeer.GROUP_ID, group.getId());
-            criteria.add(TurbineUserGroupRolePeer.ROLE_ID, role.getId());
-            TurbineUserGroupRolePeer.doDelete(criteria);
+            criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, user.getUserId());
+            criteria.add(BaseTurbineUserGroupRolePeer.GROUP_ID, group.getId());
+            criteria.add(BaseTurbineUserGroupRolePeer.ROLE_ID, role.getId());
+            BaseTurbineUserGroupRolePeer.doDelete(criteria);
         }
         catch(Exception e)
         {
@@ -435,7 +446,8 @@ public class TurbineGroupManagement extends TurbineBaseService
      * @exception GroupException when the security provider has a general failure retrieving users.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public boolean inGroup(String username, String groupname)
+    @Override
+	public boolean inGroup(String username, String groupname)
         throws JetspeedSecurityException
     {
         List groups;
@@ -446,9 +458,9 @@ public class TurbineGroupManagement extends TurbineBaseService
             Group group = this.getGroup(groupname);
 
             Criteria criteria = new Criteria();
-            criteria.add(TurbineUserGroupRolePeer.USER_ID, user.getUserId());
-            criteria.add(TurbineUserGroupRolePeer.GROUP_ID, group.getId());
-            groups = TurbineUserGroupRolePeer.doSelect(criteria);
+            criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, user.getUserId());
+            criteria.add(BaseTurbineUserGroupRolePeer.GROUP_ID, group.getId());
+            groups = BaseTurbineUserGroupRolePeer.doSelect(criteria);
 
         }
         catch(Exception e)
@@ -470,15 +482,16 @@ public class TurbineGroupManagement extends TurbineBaseService
      * @exception GroupException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Group getGroup(String groupname)
+    @Override
+	public Group getGroup(String groupname)
         throws JetspeedSecurityException
     {
         List groups;
         try
         {
             Criteria criteria = new Criteria();
-            criteria.add(TurbineGroupPeer.GROUP_NAME, groupname);
-            groups = TurbineGroupPeer.doSelect(criteria);
+            criteria.add(BaseTurbineGroupPeer.GROUP_NAME, groupname);
+            groups = BaseTurbineGroupPeer.doSelect(criteria);
         }
         catch(Exception e)
         {
@@ -527,11 +540,11 @@ public class TurbineGroupManagement extends TurbineBaseService
         throws GroupException
     {
         Criteria criteria = new Criteria();
-        criteria.add(TurbineGroupPeer.GROUP_NAME, groupName);
+        criteria.add(BaseTurbineGroupPeer.GROUP_NAME, groupName);
         List groups;
         try
         {
-            groups = TurbineGroupPeer.doSelect(criteria);
+            groups = BaseTurbineGroupPeer.doSelect(criteria);
         }
         catch(Exception e)
         {
@@ -557,7 +570,8 @@ public class TurbineGroupManagement extends TurbineBaseService
      * @exception throws a <code>InitializationException</code> if the service
      * fails to initialize
      */
-    public synchronized void init(ServletConfig conf)
+    @Override
+	public synchronized void init(ServletConfig conf)
         throws InitializationException
     {
         if (getInit()) return;

@@ -54,7 +54,8 @@ public class HeaderAction extends VelocityPortletAction
     };
     
     
-    protected void buildNormalContext(VelocityPortlet portlet, Context context,
+    @Override
+	protected void buildNormalContext(VelocityPortlet portlet, Context context,
             RunData rundata) throws Exception
     {
 

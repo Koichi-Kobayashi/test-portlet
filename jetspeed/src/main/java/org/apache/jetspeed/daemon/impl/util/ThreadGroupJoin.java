@@ -70,7 +70,7 @@ public class ThreadGroupJoin
         
         for ( int i = 0; i < threads.length; ++i ) {
 
-            if ( !threads[i].interrupted() ) 
+            if ( !Thread.interrupted() ) 
             {
                 try 
                 {

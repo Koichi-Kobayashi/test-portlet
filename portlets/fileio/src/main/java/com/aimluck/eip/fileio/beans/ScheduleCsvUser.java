@@ -22,6 +22,7 @@ package com.aimluck.eip.fileio.beans;
 import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.Operations;
 
@@ -158,14 +159,14 @@ public class ScheduleCsvUser {
   public void complementUserName() throws Exception {
     TurbineUser user =
       Database.query(TurbineUser.class).where(
-        Operations.eq(TurbineUser.LOGIN_NAME_PROPERTY, name.getValue())).where(
-        Operations.eq(TurbineUser.DISABLED_PROPERTY, "F")).fetchSingle();
+        Operations.eq(_TurbineUser.LOGIN_NAME_PROPERTY, name.getValue())).where(
+        Operations.eq(_TurbineUser.DISABLED_PROPERTY, "F")).fetchSingle();
 
     if (user == null) {
       user =
         Database.query(TurbineUser.class).where(
-          Operations.eq(TurbineUser.EMAIL_PROPERTY, name.getValue())).where(
-          Operations.eq(TurbineUser.DISABLED_PROPERTY, "F")).fetchSingle();
+          Operations.eq(_TurbineUser.EMAIL_PROPERTY, name.getValue())).where(
+          Operations.eq(_TurbineUser.DISABLED_PROPERTY, "F")).fetchSingle();
       if (user == null) {
         name.setValue("");// error化
         alias_name.setValue("---");
@@ -185,8 +186,8 @@ public class ScheduleCsvUser {
 
     TurbineUser user =
       Database.query(TurbineUser.class).where(
-        Operations.eq(TurbineUser.FIRST_NAME_PROPERTY, firstName.getValue()),
-        Operations.and(Operations.eq(TurbineUser.LAST_NAME_PROPERTY, lastName
+        Operations.eq(_TurbineUser.FIRST_NAME_PROPERTY, firstName.getValue()),
+        Operations.and(Operations.eq(_TurbineUser.LAST_NAME_PROPERTY, lastName
           .getValue()))).fetchSingle();
 
     if (user == null) {

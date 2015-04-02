@@ -45,7 +45,8 @@ public abstract class FileWatchPortlet extends AbstractInstancePortlet
     /**
     Expire this Portlet if it's URL Changes on disk.
     */
-    public Expire getExpire() {
+    @Override
+	public Expire getExpire() {
         
         try {
 

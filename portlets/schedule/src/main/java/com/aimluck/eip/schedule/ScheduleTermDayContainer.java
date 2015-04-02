@@ -51,7 +51,8 @@ public class ScheduleTermDayContainer implements ALData {
   /*
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     today = new ALDateTimeField("yyyy-MM-dd-HH-mm");
     termRd = null;
   }

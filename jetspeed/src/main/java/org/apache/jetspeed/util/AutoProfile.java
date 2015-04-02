@@ -154,7 +154,7 @@ public class AutoProfile
       {
         for (int ii = 0; ii < allPortlets.getEntryCount(); ii++) 
         {
-          iPortlet = (Entry) allPortlets.getEntry (ii);
+          iPortlet = allPortlets.getEntry (ii);
           installed.add (iPortlet);
         }
       }

@@ -29,6 +29,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.account.util.AccountUtils;
 import com.aimluck.eip.cayenne.om.account.EipMPost;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPost;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipUser;
@@ -151,7 +152,7 @@ public class AccountPostSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("post_name", EipMPost.POST_NAME_PROPERTY);
+    map.putValue("post_name", _EipMPost.POST_NAME_PROPERTY);
     return map;
   }
 

@@ -57,7 +57,8 @@ public class WebMailFilterResultData implements ALData {
    * 
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     filter_id = new ALNumberField();
     sort_order = new ALNumberField();
     filter_name = new ALStringField();

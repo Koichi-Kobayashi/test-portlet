@@ -46,7 +46,8 @@ public /*abstract*/ class PsmlIdentityElement extends PsmlConfigElement implemen
     {}
 
     /** @see org.apache.jetspeed.om.profile.IdentityElement#getId */
-    public String getId()
+    @Override
+	public String getId()
     {
         if (this.id == null)
         {
@@ -56,43 +57,50 @@ public /*abstract*/ class PsmlIdentityElement extends PsmlConfigElement implemen
     }
                                 
     /** @see org.apache.jetspeed.om.profile.IdentityElement#setId */
-    public void setId( String id )
+    @Override
+	public void setId( String id )
     {
         this.id = id;
     }
   
     /** @see org.apache.jetspeed.om.profile.IdentityElement#getSkin */
-    public Skin getSkin()
+    @Override
+	public Skin getSkin()
     {
         return this.skin;
     }
 
     /** @see org.apache.jetspeed.om.profile.IdentityElement#setSkin */
-    public void setSkin(Skin skin)
+    @Override
+	public void setSkin(Skin skin)
     {
         this.skin = skin;
     }
 
     /** @see org.apache.jetspeed.om.profile.IdentityElement#getLayout */
-    public Layout getLayout()
+    @Override
+	public Layout getLayout()
     {
         return this.layout;
     }
 
     /** @see org.apache.jetspeed.om.profile.IdentityElement#setLayout */
-    public void setLayout(Layout layout)
+    @Override
+	public void setLayout(Layout layout)
     {
         this.layout = layout;
     }
 
     /** @see org.apache.jetspeed.om.profile.IdentityElement#getControl */
-    public Control getControl()
+    @Override
+	public Control getControl()
     {
         return this.control;
     }
 
     /** @see org.apache.jetspeed.om.profile.IdentityElement#setControl */
-    public void setControl(Control control)
+    @Override
+	public void setControl(Control control)
     {
         this.control = control;
     }
@@ -114,7 +122,8 @@ public /*abstract*/ class PsmlIdentityElement extends PsmlConfigElement implemen
      * Required by Castor 0.8.11 XML serialization for retrieving the metainfo
      * @see org.apache.jetspeed.om.profile.IdentityElement#getMetaInfo 
      */
-    public MetaInfo getMetaInfo()
+    @Override
+	public MetaInfo getMetaInfo()
     {
         return this.metaInfo;
     }
@@ -124,7 +133,8 @@ public /*abstract*/ class PsmlIdentityElement extends PsmlConfigElement implemen
      * metainfo
      * @see org.apache.jetspeed.om.profile.IdentityElement#setMetaInfo 
      */
-    public void setMetaInfo( MetaInfo metaInfo )
+    @Override
+	public void setMetaInfo( MetaInfo metaInfo )
     {
         this.metaInfo = metaInfo;
     }
@@ -132,7 +142,8 @@ public /*abstract*/ class PsmlIdentityElement extends PsmlConfigElement implemen
     // helper getter setters into meta info
 
     /** @see org.apache.jetspeed.om.profile.MetaInfo#getTitle */
-    public String getTitle()
+    @Override
+	public String getTitle()
     {
         if (this.metaInfo != null)
         {
@@ -143,7 +154,8 @@ public /*abstract*/ class PsmlIdentityElement extends PsmlConfigElement implemen
     }
                                 
     /** @see org.apache.jetspeed.om.profile.MetaInfo#setTitle */
-    public void setTitle(String title)
+    @Override
+	public void setTitle(String title)
     {
         if (this.metaInfo == null)
         {
@@ -154,7 +166,8 @@ public /*abstract*/ class PsmlIdentityElement extends PsmlConfigElement implemen
     }
 
     /** @see org.apache.jetspeed.om.profile.MetaInfo#getDescription */
-    public String getDescription()
+    @Override
+	public String getDescription()
     {
         if (this.metaInfo != null)
         {
@@ -165,7 +178,8 @@ public /*abstract*/ class PsmlIdentityElement extends PsmlConfigElement implemen
     }
                                 
     /** @see org.apache.jetspeed.om.profile.MetaInfo#setDescription */
-    public void setDescription(String description)
+    @Override
+	public void setDescription(String description)
     {
         if (this.metaInfo == null)
         {
@@ -176,7 +190,8 @@ public /*abstract*/ class PsmlIdentityElement extends PsmlConfigElement implemen
     }
 
     /** @see org.apache.jetspeed.om.profile.MetaInfo#getImage */
-    public String getImage()
+    @Override
+	public String getImage()
     {
         if (this.metaInfo != null)
         {
@@ -187,7 +202,8 @@ public /*abstract*/ class PsmlIdentityElement extends PsmlConfigElement implemen
     }
                                 
     /** @see org.apache.jetspeed.om.profile.MetaInfo#setImage */
-    public void setImage(String image)
+    @Override
+	public void setImage(String image)
     {
         if (this.metaInfo == null)
         {
@@ -200,7 +216,8 @@ public /*abstract*/ class PsmlIdentityElement extends PsmlConfigElement implemen
     /**
      * Create a clone of this object
      */
-    public Object clone()
+    @Override
+	public Object clone()
         throws java.lang.CloneNotSupportedException
     {
         Object cloned = super.clone();

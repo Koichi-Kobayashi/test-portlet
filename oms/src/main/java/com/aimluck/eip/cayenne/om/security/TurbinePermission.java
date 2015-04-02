@@ -26,7 +26,8 @@ import com.aimluck.eip.cayenne.om.security.auto._TurbinePermission;
 
 public class TurbinePermission extends _TurbinePermission implements Permission {
 
-  public String getId() {
+  @Override
+public String getId() {
     if (getObjectId() != null && !getObjectId().isTemporary()) {
       Object obj = getObjectId().getIdSnapshot().get(PERMISSION_ID_PK_COLUMN);
       if (obj instanceof Long) {
@@ -40,16 +41,19 @@ public class TurbinePermission extends _TurbinePermission implements Permission 
     }
   }
 
-  public void setId(String id) {
+  @Override
+public void setId(String id) {
     setObjectId(new ObjectId("TurbinePermission", PERMISSION_ID_PK_COLUMN,
         Integer.valueOf(id)));
   }
 
-  public String getName() {
+  @Override
+public String getName() {
     return getPermissionName();
   }
 
-  public void setName(String name) {
+  @Override
+public void setName(String name) {
     setPermissionName(name);
   }
 

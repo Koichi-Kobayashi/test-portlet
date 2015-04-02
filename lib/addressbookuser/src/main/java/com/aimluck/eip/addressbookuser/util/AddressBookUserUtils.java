@@ -34,6 +34,9 @@ import com.aimluck.eip.addressbookuser.beans.AddressBookUserLiteBean;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressGroup;
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressbook;
 import com.aimluck.eip.cayenne.om.portlet.EipTAddressbookGroupMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressGroup;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressbook;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTAddressbookGroupMap;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
 import com.aimluck.eip.util.ALEipUtils;
@@ -96,10 +99,10 @@ public class AddressBookUserUtils {
         Database.query(EipMAddressGroup.class);
 
       Expression exp =
-        ExpressionFactory.matchExp(EipMAddressGroup.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMAddressGroup.OWNER_ID_PROPERTY, Integer
           .valueOf(ALEipUtils.getUserId(rundata)));
       query.setQualifier(exp).orderAscending(
-        EipMAddressGroup.GROUP_NAME_PROPERTY);
+        _EipMAddressGroup.GROUP_NAME_PROPERTY);
 
       List<EipMAddressGroup> addressgroup_list = query.fetchList();
       for (EipMAddressGroup record : addressgroup_list) {
@@ -153,22 +156,22 @@ public class AddressBookUserUtils {
     SelectQuery<EipMAddressbook> query = Database.query(EipMAddressbook.class);
 
     Expression exp21 =
-      ExpressionFactory.matchExp(EipMAddressbook.PUBLIC_FLAG_PROPERTY, "T");
+      ExpressionFactory.matchExp(_EipMAddressbook.PUBLIC_FLAG_PROPERTY, "T");
     Expression exp22 =
       ExpressionFactory
-        .matchExp(EipMAddressbook.OWNER_ID_PROPERTY, loginuserid);
+        .matchExp(_EipMAddressbook.OWNER_ID_PROPERTY, loginuserid);
     Expression exp23 =
-      ExpressionFactory.matchExp(EipMAddressbook.PUBLIC_FLAG_PROPERTY, "F");
+      ExpressionFactory.matchExp(_EipMAddressbook.PUBLIC_FLAG_PROPERTY, "F");
     query.setQualifier(exp21.orExp(exp22.andExp(exp23)));
 
     if (groupid != null && !"".equals(groupid) && !"all".equals(groupid)) {
       Expression exp31 =
         ExpressionFactory.matchDbExp(
-          EipMAddressbook.EIP_TADDRESSBOOK_GROUP_MAP_PROPERTY
+          _EipMAddressbook.EIP_TADDRESSBOOK_GROUP_MAP_PROPERTY
             + "."
-            + EipTAddressbookGroupMap.EIP_TADDRESS_GROUP_PROPERTY
+            + _EipTAddressbookGroupMap.EIP_TADDRESS_GROUP_PROPERTY
             + "."
-            + EipMAddressGroup.GROUP_ID_PK_COLUMN,
+            + _EipMAddressGroup.GROUP_ID_PK_COLUMN,
           groupid);
       query.andQualifier(exp31);
     }

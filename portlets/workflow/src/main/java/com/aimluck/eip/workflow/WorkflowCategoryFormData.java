@@ -35,6 +35,8 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRequest;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRoute;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowRequest;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -154,13 +156,13 @@ public class WorkflowCategoryFormData extends ALAbstractFormData {
         Database.query(EipTWorkflowCategory.class);
       Expression exp1 =
         ExpressionFactory.matchExp(
-          EipTWorkflowCategory.CATEGORY_NAME_PROPERTY,
+          _EipTWorkflowCategory.CATEGORY_NAME_PROPERTY,
           category_name.getValue());
       query.setQualifier(exp1);
       if (ALEipConstants.MODE_UPDATE.equals(getMode())) {
         Expression exp2 =
           ExpressionFactory.noMatchDbExp(
-            EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
+            _EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
             category_id);
         query.andQualifier(exp2);
       }
@@ -345,9 +347,9 @@ public class WorkflowCategoryFormData extends ALAbstractFormData {
         Database.query(EipTWorkflowRequest.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTWorkflowRequest.EIP_TWORKFLOW_CATEGORY_PROPERTY
+          _EipTWorkflowRequest.EIP_TWORKFLOW_CATEGORY_PROPERTY
             + "."
-            + EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
+            + _EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
           category.getCategoryId());
       query.setQualifier(exp1);
       List<EipTWorkflowRequest> requests = query.fetchList();

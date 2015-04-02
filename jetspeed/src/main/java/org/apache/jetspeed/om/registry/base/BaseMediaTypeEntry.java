@@ -22,7 +22,7 @@ import org.apache.jetspeed.om.registry.*;
  * Default bean like implementation of MediaTypeEntry interface
  * suitable for serializing with Castor
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BaseMediaTypeEntry.java,v 1.6 2004/02/23 03:08:26 jford Exp $
  */
 public class BaseMediaTypeEntry extends BaseRegistryEntry
@@ -54,7 +54,8 @@ public class BaseMediaTypeEntry extends BaseRegistryEntry
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object==null)
         {
@@ -102,7 +103,8 @@ public class BaseMediaTypeEntry extends BaseRegistryEntry
     }
 
     /** @return the mime type associated with this MediaType */
-    public String getMimeType()
+    @Override
+	public String getMimeType()
     {
         return this.mimeType;
     }
@@ -110,24 +112,28 @@ public class BaseMediaTypeEntry extends BaseRegistryEntry
     /** Sets the MimeType associated with this MediaType
      *  @param mimeType the MIME type to associate
      */
-    public void setMimeType( String mimeType )
+    @Override
+	public void setMimeType( String mimeType )
     {
         this.mimeType = mimeType;
     }
 
     /** @return the character set associated with this MediaType */
-    public String getCharacterSet()
+    @Override
+	public String getCharacterSet()
     {
         return this.characterSet;
     }
 
     /** Sets the character set associated with this MediaType */
-    public void setCharacterSet( String charSet)
+    @Override
+	public void setCharacterSet( String charSet)
     {
         this.characterSet = charSet;
     }
 
-    public CapabilityMap getCapabilityMap()
+    @Override
+	public CapabilityMap getCapabilityMap()
     {
         return capabilities;
     }

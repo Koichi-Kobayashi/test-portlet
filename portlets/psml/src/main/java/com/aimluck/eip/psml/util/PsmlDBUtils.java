@@ -29,6 +29,7 @@ import org.apache.jetspeed.services.logging.JetspeedLogger;
 import org.apache.turbine.util.RunData;
 
 import com.aimluck.eip.cayenne.om.account.JetspeedUserProfile;
+import com.aimluck.eip.cayenne.om.account.auto._JetspeedUserProfile;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.Operations;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -43,9 +44,9 @@ public class PsmlDBUtils {
   public static String getMyHtmlPsml(RunData runData) {
 
     Map<String, String> map = new HashMap<String, String>();
-    map.put(JetspeedUserProfile.USER_NAME_PROPERTY, ALEipUtils
+    map.put(_JetspeedUserProfile.USER_NAME_PROPERTY, ALEipUtils
       .getLoginName(runData));
-    map.put(JetspeedUserProfile.MEDIA_TYPE_PROPERTY, "html");
+    map.put(_JetspeedUserProfile.MEDIA_TYPE_PROPERTY, "html");
 
     return getPsmlOne(map);
   }
@@ -101,7 +102,7 @@ public class PsmlDBUtils {
     SelectQuery<JetspeedUserProfile> query =
       Database.query(dataContext, JetspeedUserProfile.class);
 
-    if (map.containsKey(JetspeedUserProfile.USER_NAME_PROPERTY)) {
+    if (map.containsKey(_JetspeedUserProfile.USER_NAME_PROPERTY)) {
       setProfileOneCriteria(query, map);
     } else {
       setAllUserProfileCriteria(query, map);
@@ -112,18 +113,18 @@ public class PsmlDBUtils {
 
   public static void setProfileOneCriteria(
       SelectQuery<JetspeedUserProfile> query, Map<String, String> map) {
-    query.where(Operations.eq(JetspeedUserProfile.MEDIA_TYPE_PROPERTY, map
-      .get(JetspeedUserProfile.MEDIA_TYPE_PROPERTY)), Operations.and(Operations
-      .eq(JetspeedUserProfile.USER_NAME_PROPERTY, map
-        .get(JetspeedUserProfile.USER_NAME_PROPERTY))));
+    query.where(Operations.eq(_JetspeedUserProfile.MEDIA_TYPE_PROPERTY, map
+      .get(_JetspeedUserProfile.MEDIA_TYPE_PROPERTY)), Operations.and(Operations
+      .eq(_JetspeedUserProfile.USER_NAME_PROPERTY, map
+        .get(_JetspeedUserProfile.USER_NAME_PROPERTY))));
   }
 
   public static void setAllUserProfileCriteria(
       SelectQuery<JetspeedUserProfile> query, Map<String, String> map) {
-    query.where(Operations.eq(JetspeedUserProfile.MEDIA_TYPE_PROPERTY, map
-      .get(JetspeedUserProfile.MEDIA_TYPE_PROPERTY)), Operations.and(Operations
+    query.where(Operations.eq(_JetspeedUserProfile.MEDIA_TYPE_PROPERTY, map
+      .get(_JetspeedUserProfile.MEDIA_TYPE_PROPERTY)), Operations.and(Operations
       .notIn(
-        JetspeedUserProfile.USER_NAME_PROPERTY,
+        _JetspeedUserProfile.USER_NAME_PROPERTY,
         PsmlUtils.ADMIN_NAME,
         PsmlUtils.ANON_NAME,
         PsmlUtils.TEMPLATE_NAME)));
@@ -131,14 +132,14 @@ public class PsmlDBUtils {
 
   public static Map<String, String> getTemplateMap() {
     Map<String, String> map = new HashMap<String, String>();
-    map.put(JetspeedUserProfile.USER_NAME_PROPERTY, PsmlUtils.TEMPLATE_NAME);
-    map.put(JetspeedUserProfile.MEDIA_TYPE_PROPERTY, "html");
+    map.put(_JetspeedUserProfile.USER_NAME_PROPERTY, PsmlUtils.TEMPLATE_NAME);
+    map.put(_JetspeedUserProfile.MEDIA_TYPE_PROPERTY, "html");
     return map;
   }
 
   public static Map<String, String> getHtmlMap() {
     Map<String, String> map = new HashMap<String, String>();
-    map.put(JetspeedUserProfile.MEDIA_TYPE_PROPERTY, "html");
+    map.put(_JetspeedUserProfile.MEDIA_TYPE_PROPERTY, "html");
     return map;
   }
 
@@ -151,8 +152,8 @@ public class PsmlDBUtils {
     DataContext dataContext = DataContext.getThreadDataContext();
 
     Map<String, String> map = new HashMap<String, String>();
-    map.put(JetspeedUserProfile.USER_NAME_PROPERTY, userName);
-    map.put(JetspeedUserProfile.MEDIA_TYPE_PROPERTY, "html");
+    map.put(_JetspeedUserProfile.USER_NAME_PROPERTY, userName);
+    map.put(_JetspeedUserProfile.MEDIA_TYPE_PROPERTY, "html");
 
     List<JetspeedUserProfile> list = getProfile(map, dataContext);
 

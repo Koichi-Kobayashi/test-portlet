@@ -108,7 +108,7 @@ public abstract class AbstractSiteSession implements SiteSession {
       con.setDoInput(true);
       con.setDoOutput(true);
       con.setAllowUserInteraction(false);
-      con.setFollowRedirects(false);
+      HttpURLConnection.setFollowRedirects(false);
 
       if (data.getPosting()) {
         con.setRequestMethod("POST");
@@ -184,7 +184,7 @@ public abstract class AbstractSiteSession implements SiteSession {
           .toString());
       String location = con.getHeaderField("Location");
 
-      if ((rc == con.HTTP_MOVED_PERM || rc == con.HTTP_MOVED_TEMP)
+      if ((rc == HttpURLConnection.HTTP_MOVED_PERM || rc == HttpURLConnection.HTTP_MOVED_TEMP)
         && null != location) {
         log.debug("+++ REDIRECT = " + location);
         location = WebPageHelper.concatURLs(targetBase, location);
@@ -320,7 +320,8 @@ public abstract class AbstractSiteSession implements SiteSession {
    * @return true when a new cookie added, false when updated.
    * 
    */
-  public boolean addCookieToSession(Cookie cookie) {
+  @Override
+public boolean addCookieToSession(Cookie cookie) {
     boolean added = (null == cookies.get(cookie.getName()));
     cookies.put(cookie.getName(), cookie); // adds or updates
     return added;
@@ -331,7 +332,8 @@ public abstract class AbstractSiteSession implements SiteSession {
    * 
    * @return the hitcount for this session.
    */
-  public int getHitCount() {
+  @Override
+public int getHitCount() {
     return hitCount;
   }
 
@@ -339,7 +341,8 @@ public abstract class AbstractSiteSession implements SiteSession {
    * Increments the hitcount for this session.
    * 
    */
-  public void incHitCount() {
+  @Override
+public void incHitCount() {
     hitCount++;
   }
 
@@ -348,7 +351,8 @@ public abstract class AbstractSiteSession implements SiteSession {
    * 
    * @return the cache count for this session.
    */
-  public int getCacheCount() {
+  @Override
+public int getCacheCount() {
     return cacheCount;
   }
 
@@ -356,7 +360,8 @@ public abstract class AbstractSiteSession implements SiteSession {
    * Increments the hitcount for this session.
    * 
    */
-  public void incCacheCount() {
+  @Override
+public void incCacheCount() {
     cacheCount++;
   }
 

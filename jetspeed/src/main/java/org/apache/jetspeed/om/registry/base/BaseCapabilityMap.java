@@ -24,7 +24,7 @@ import java.util.Iterator;
  * Simple bean-like implementation of the CapabilityMap
  *
  * @author <a href="shesmer@raleigh.ibm.com">Stephan Hesmer</a>
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BaseCapabilityMap.java,v 1.3 2004/02/23 03:08:26 jford Exp $
  */
 public class BaseCapabilityMap implements CapabilityMap, java.io.Serializable
@@ -39,7 +39,8 @@ public class BaseCapabilityMap implements CapabilityMap, java.io.Serializable
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object==null)
         {
@@ -78,12 +79,14 @@ public class BaseCapabilityMap implements CapabilityMap, java.io.Serializable
         return true;
     }
 
-    public Iterator getCapabilities()
+    @Override
+	public Iterator getCapabilities()
     {
         return caps.iterator();
     }
 
-    public void addCapability(String name)
+    @Override
+	public void addCapability(String name)
     {
         if (!caps.contains(name))
         {
@@ -91,7 +94,8 @@ public class BaseCapabilityMap implements CapabilityMap, java.io.Serializable
         }
     }
 
-    public void removeCapability(String name)
+    @Override
+	public void removeCapability(String name)
     {
         caps.remove(name);
     }
@@ -102,7 +106,8 @@ public class BaseCapabilityMap implements CapabilityMap, java.io.Serializable
      * @param capabiltiy a capability descriptor
      * @return true if the capability is supported
      */
-    public boolean contains(String capability)
+    @Override
+	public boolean contains(String capability)
     {
         return caps.contains(capability);
     }
@@ -115,7 +120,8 @@ public class BaseCapabilityMap implements CapabilityMap, java.io.Serializable
      * @return true is all the elements the argument map are included in the
      * current map.
      */
-    public boolean containsAll(CapabilityMap map)
+    @Override
+	public boolean containsAll(CapabilityMap map)
     {
         Iterator i = map.getCapabilities();
 

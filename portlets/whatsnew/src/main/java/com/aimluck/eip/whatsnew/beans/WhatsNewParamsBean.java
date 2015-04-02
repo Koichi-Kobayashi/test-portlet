@@ -38,7 +38,8 @@ public class WhatsNewParamsBean implements ALData {
    * 
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     key = new ALStringField();
     value = new ALStringField();
   }

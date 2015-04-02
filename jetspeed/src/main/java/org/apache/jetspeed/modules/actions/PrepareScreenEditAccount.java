@@ -30,7 +30,8 @@ import org.apache.jetspeed.services.JetspeedSecurity;
 
 public class PrepareScreenEditAccount extends Action
 {
-    public void doPerform( RunData rundata ) throws Exception
+    @Override
+	public void doPerform( RunData rundata ) throws Exception
     {
         // check to make sure the user has logged in before accessing this screen
         if ( ! rundata.getUser().hasLoggedIn() )
@@ -50,9 +51,9 @@ public class PrepareScreenEditAccount extends Action
         try
         {
             JetspeedUser user = JetspeedSecurity.getUser(rundata.getUser().getUserName());
-            firstname = (String) user.getFirstName();
-            lastname  = (String) user.getLastName();
-            email     = (String) user.getEmail();
+            firstname = user.getFirstName();
+            lastname  = user.getLastName();
+            email     = user.getEmail();
         
             if ( firstname == null )
                 firstname = "";

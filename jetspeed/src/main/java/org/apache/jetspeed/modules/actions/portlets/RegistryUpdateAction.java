@@ -67,7 +67,8 @@ public abstract class RegistryUpdateAction extends SecureVelocityPortletAction
      */    
     private static final JetspeedLogger logger = JetspeedLogFactoryService.getLogger(RegistryUpdateAction.class.getName());    
     
-    protected void buildNormalContext(
+    @Override
+	protected void buildNormalContext(
         VelocityPortlet portlet,
         Context context,
         RunData rundata)

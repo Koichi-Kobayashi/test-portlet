@@ -49,7 +49,8 @@ public class BASICAuthIFramePortlet extends IFramePortlet
      * @param runData
      * @return 
      */
-    public ConcreteElement getContent(RunData runData)
+    @Override
+	public ConcreteElement getContent(RunData runData)
     {
         if (org.apache.jetspeed.util.PortletSessionState.getPortletConfigChanged(this, runData))
         {
@@ -113,7 +114,8 @@ public class BASICAuthIFramePortlet extends IFramePortlet
      * 
      * @exception PortletException
      */
-    public void init() throws PortletException 
+    @Override
+	public void init() throws PortletException 
     {
         super.init();
         origSource = getSource();

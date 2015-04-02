@@ -38,7 +38,8 @@ public class AccessControlPortletBean implements ALData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     portlet_type = new ALNumberField();
     portlet_name = new ALStringField();
   }

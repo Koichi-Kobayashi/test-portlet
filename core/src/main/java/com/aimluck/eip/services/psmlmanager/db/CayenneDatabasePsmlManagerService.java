@@ -70,6 +70,9 @@ import org.xml.sax.InputSource;
 import com.aimluck.eip.cayenne.om.account.JetspeedGroupProfile;
 import com.aimluck.eip.cayenne.om.account.JetspeedRoleProfile;
 import com.aimluck.eip.cayenne.om.account.JetspeedUserProfile;
+import com.aimluck.eip.cayenne.om.account.auto._JetspeedGroupProfile;
+import com.aimluck.eip.cayenne.om.account.auto._JetspeedRoleProfile;
+import com.aimluck.eip.cayenne.om.account.auto._JetspeedUserProfile;
 import com.aimluck.eip.common.ALEipManager;
 import com.aimluck.eip.orm.Database;
 
@@ -1348,11 +1351,11 @@ public class CayenneDatabasePsmlManagerService extends TurbineBaseService
     SelectQuery query = new SelectQuery(JetspeedGroupProfile.class);
     assignJetSpeedGroupProfileQuery(locator, query);
     if (order) {
-      query.addOrdering(JetspeedGroupProfile.GROUP_NAME_PROPERTY, true);
-      query.addOrdering(JetspeedGroupProfile.MEDIA_TYPE_PROPERTY, true);
-      query.addOrdering(JetspeedGroupProfile.LANGUAGE_PROPERTY, true);
-      query.addOrdering(JetspeedGroupProfile.COUNTRY_PROPERTY, true);
-      query.addOrdering(JetspeedGroupProfile.PAGE_PROPERTY, true);
+      query.addOrdering(_JetspeedGroupProfile.GROUP_NAME_PROPERTY, true);
+      query.addOrdering(_JetspeedGroupProfile.MEDIA_TYPE_PROPERTY, true);
+      query.addOrdering(_JetspeedGroupProfile.LANGUAGE_PROPERTY, true);
+      query.addOrdering(_JetspeedGroupProfile.COUNTRY_PROPERTY, true);
+      query.addOrdering(_JetspeedGroupProfile.PAGE_PROPERTY, true);
     }
 
     Database.beginTransaction(dataContext);
@@ -1367,11 +1370,11 @@ public class CayenneDatabasePsmlManagerService extends TurbineBaseService
     SelectQuery query = new SelectQuery(JetspeedRoleProfile.class);
     assignJetSpeedRoleProfileQuery(locator, query);
     if (order && (query instanceof SelectQuery)) {
-      query.addOrdering(JetspeedRoleProfile.ROLE_NAME_PROPERTY, true);
-      query.addOrdering(JetspeedRoleProfile.MEDIA_TYPE_PROPERTY, true);
-      query.addOrdering(JetspeedRoleProfile.LANGUAGE_PROPERTY, true);
-      query.addOrdering(JetspeedRoleProfile.COUNTRY_PROPERTY, true);
-      query.addOrdering(JetspeedRoleProfile.PAGE_PROPERTY, true);
+      query.addOrdering(_JetspeedRoleProfile.ROLE_NAME_PROPERTY, true);
+      query.addOrdering(_JetspeedRoleProfile.MEDIA_TYPE_PROPERTY, true);
+      query.addOrdering(_JetspeedRoleProfile.LANGUAGE_PROPERTY, true);
+      query.addOrdering(_JetspeedRoleProfile.COUNTRY_PROPERTY, true);
+      query.addOrdering(_JetspeedRoleProfile.PAGE_PROPERTY, true);
     }
 
     Database.beginTransaction(dataContext);
@@ -1393,11 +1396,11 @@ public class CayenneDatabasePsmlManagerService extends TurbineBaseService
       SelectQuery query = new SelectQuery(JetspeedUserProfile.class);
       assignJetSpeedUserProfileQuery(locator, query);
       if (order) {
-        query.addOrdering(JetspeedUserProfile.USER_NAME_PROPERTY, true);
-        query.addOrdering(JetspeedUserProfile.MEDIA_TYPE_PROPERTY, true);
-        query.addOrdering(JetspeedUserProfile.LANGUAGE_PROPERTY, true);
-        query.addOrdering(JetspeedUserProfile.COUNTRY_PROPERTY, true);
-        query.addOrdering(JetspeedUserProfile.PAGE_PROPERTY, true);
+        query.addOrdering(_JetspeedUserProfile.USER_NAME_PROPERTY, true);
+        query.addOrdering(_JetspeedUserProfile.MEDIA_TYPE_PROPERTY, true);
+        query.addOrdering(_JetspeedUserProfile.LANGUAGE_PROPERTY, true);
+        query.addOrdering(_JetspeedUserProfile.COUNTRY_PROPERTY, true);
+        query.addOrdering(_JetspeedUserProfile.PAGE_PROPERTY, true);
       }
 
       Database.beginTransaction(dataContext);
@@ -1411,7 +1414,7 @@ public class CayenneDatabasePsmlManagerService extends TurbineBaseService
       JetspeedUser user) throws CayenneRuntimeException {
     DeleteQuery deleteQuery = new DeleteQuery(JetspeedUserProfile.class);
     Expression exp =
-      ExpressionFactory.matchExp(JetspeedUserProfile.USER_NAME_PROPERTY, user
+      ExpressionFactory.matchExp(_JetspeedUserProfile.USER_NAME_PROPERTY, user
         .getUserName());
     deleteQuery.andQualifier(exp);
     dataContext.performQuery(deleteQuery);
@@ -1421,7 +1424,7 @@ public class CayenneDatabasePsmlManagerService extends TurbineBaseService
       throws CayenneRuntimeException {
     DeleteQuery deleteQuery = new DeleteQuery(JetspeedRoleProfile.class);
     Expression exp =
-      ExpressionFactory.matchExp(JetspeedRoleProfile.ROLE_NAME_PROPERTY, role
+      ExpressionFactory.matchExp(_JetspeedRoleProfile.ROLE_NAME_PROPERTY, role
         .getName());
     deleteQuery.andQualifier(exp);
     dataContext.performQuery(deleteQuery);
@@ -1432,7 +1435,7 @@ public class CayenneDatabasePsmlManagerService extends TurbineBaseService
     DeleteQuery deleteQuery = new DeleteQuery(JetspeedGroupProfile.class);
     Expression exp =
       ExpressionFactory.matchExp(
-        JetspeedGroupProfile.GROUP_NAME_PROPERTY,
+        _JetspeedGroupProfile.GROUP_NAME_PROPERTY,
         group.getName());
     deleteQuery.andQualifier(exp);
     dataContext.performQuery(deleteQuery);
@@ -1454,21 +1457,21 @@ public class CayenneDatabasePsmlManagerService extends TurbineBaseService
     if (userName != null && userName.length() > 0) {
       Expression exp =
         ExpressionFactory.matchExp(
-          JetspeedUserProfile.USER_NAME_PROPERTY,
+          _JetspeedUserProfile.USER_NAME_PROPERTY,
           userName);
       query.andQualifier(exp);
     }
 
     if (pageName != null && pageName.length() > 0) {
       Expression exp =
-        ExpressionFactory.matchExp(JetspeedUserProfile.PAGE_PROPERTY, pageName);
+        ExpressionFactory.matchExp(_JetspeedUserProfile.PAGE_PROPERTY, pageName);
       query.andQualifier(exp);
     }
 
     if (mediaType != null && mediaType.length() > 0) {
       Expression exp =
         ExpressionFactory.matchExp(
-          JetspeedUserProfile.MEDIA_TYPE_PROPERTY,
+          _JetspeedUserProfile.MEDIA_TYPE_PROPERTY,
           mediaType);
       query.andQualifier(exp);
     }
@@ -1476,24 +1479,24 @@ public class CayenneDatabasePsmlManagerService extends TurbineBaseService
     if (language != null && language.length() > 0 && (!language.equals("-1"))) {
       Expression exp =
         ExpressionFactory.matchExp(
-          JetspeedUserProfile.LANGUAGE_PROPERTY,
+          _JetspeedUserProfile.LANGUAGE_PROPERTY,
           language);
       query.andQualifier(exp);
     } else if (language != null && language.equals("-1")) {
       Expression exp =
-        ExpressionFactory.matchExp(JetspeedUserProfile.LANGUAGE_PROPERTY, null);
+        ExpressionFactory.matchExp(_JetspeedUserProfile.LANGUAGE_PROPERTY, null);
       query.andQualifier(exp);
     }
 
     if (country != null && country.length() > 0 && (!country.equals("-1"))) {
       Expression exp =
         ExpressionFactory.matchExp(
-          JetspeedUserProfile.COUNTRY_PROPERTY,
+          _JetspeedUserProfile.COUNTRY_PROPERTY,
           country);
       query.andQualifier(exp);
     } else if (country != null && country.equals("-1")) {
       Expression exp =
-        ExpressionFactory.matchExp(JetspeedUserProfile.COUNTRY_PROPERTY, null);
+        ExpressionFactory.matchExp(_JetspeedUserProfile.COUNTRY_PROPERTY, null);
       query.andQualifier(exp);
     }
 
@@ -1515,21 +1518,21 @@ public class CayenneDatabasePsmlManagerService extends TurbineBaseService
     if (roleName != null && roleName.length() > 0) {
       Expression exp =
         ExpressionFactory.matchExp(
-          JetspeedRoleProfile.ROLE_NAME_PROPERTY,
+          _JetspeedRoleProfile.ROLE_NAME_PROPERTY,
           roleName);
       query.andQualifier(exp);
     }
 
     if (pageName != null && pageName.length() > 0) {
       Expression exp =
-        ExpressionFactory.matchExp(JetspeedRoleProfile.PAGE_PROPERTY, pageName);
+        ExpressionFactory.matchExp(_JetspeedRoleProfile.PAGE_PROPERTY, pageName);
       query.andQualifier(exp);
     }
 
     if (mediaType != null && mediaType.length() > 0) {
       Expression exp =
         ExpressionFactory.matchExp(
-          JetspeedRoleProfile.MEDIA_TYPE_PROPERTY,
+          _JetspeedRoleProfile.MEDIA_TYPE_PROPERTY,
           mediaType);
       query.andQualifier(exp);
     }
@@ -1537,24 +1540,24 @@ public class CayenneDatabasePsmlManagerService extends TurbineBaseService
     if (language != null && language.length() > 0 && (!language.equals("-1"))) {
       Expression exp =
         ExpressionFactory.matchExp(
-          JetspeedRoleProfile.LANGUAGE_PROPERTY,
+          _JetspeedRoleProfile.LANGUAGE_PROPERTY,
           language);
       query.andQualifier(exp);
     } else if (language != null && language.equals("-1")) {
       Expression exp =
-        ExpressionFactory.matchExp(JetspeedRoleProfile.LANGUAGE_PROPERTY, null);
+        ExpressionFactory.matchExp(_JetspeedRoleProfile.LANGUAGE_PROPERTY, null);
       query.andQualifier(exp);
     }
 
     if (country != null && country.length() > 0 && (!country.equals("-1"))) {
       Expression exp =
         ExpressionFactory.matchExp(
-          JetspeedRoleProfile.COUNTRY_PROPERTY,
+          _JetspeedRoleProfile.COUNTRY_PROPERTY,
           country);
       query.andQualifier(exp);
     } else if (country != null && country.equals("-1")) {
       Expression exp =
-        ExpressionFactory.matchExp(JetspeedRoleProfile.COUNTRY_PROPERTY, null);
+        ExpressionFactory.matchExp(_JetspeedRoleProfile.COUNTRY_PROPERTY, null);
       query.andQualifier(exp);
     }
 
@@ -1576,7 +1579,7 @@ public class CayenneDatabasePsmlManagerService extends TurbineBaseService
     if (groupName != null && groupName.length() > 0) {
       Expression exp =
         ExpressionFactory.matchExp(
-          JetspeedGroupProfile.GROUP_NAME_PROPERTY,
+          _JetspeedGroupProfile.GROUP_NAME_PROPERTY,
           groupName);
       query.andQualifier(exp);
     }
@@ -1584,14 +1587,14 @@ public class CayenneDatabasePsmlManagerService extends TurbineBaseService
     if (pageName != null && pageName.length() > 0) {
       Expression exp =
         ExpressionFactory
-          .matchExp(JetspeedGroupProfile.PAGE_PROPERTY, pageName);
+          .matchExp(_JetspeedGroupProfile.PAGE_PROPERTY, pageName);
       query.andQualifier(exp);
     }
 
     if (mediaType != null && mediaType.length() > 0) {
       Expression exp =
         ExpressionFactory.matchExp(
-          JetspeedGroupProfile.MEDIA_TYPE_PROPERTY,
+          _JetspeedGroupProfile.MEDIA_TYPE_PROPERTY,
           mediaType);
       query.andQualifier(exp);
     }
@@ -1599,25 +1602,25 @@ public class CayenneDatabasePsmlManagerService extends TurbineBaseService
     if (language != null && language.length() > 0 && (!language.equals("-1"))) {
       Expression exp =
         ExpressionFactory.matchExp(
-          JetspeedGroupProfile.LANGUAGE_PROPERTY,
+          _JetspeedGroupProfile.LANGUAGE_PROPERTY,
           language);
       query.andQualifier(exp);
     } else if (language != null && language.equals("-1")) {
       Expression exp =
         ExpressionFactory
-          .matchExp(JetspeedGroupProfile.LANGUAGE_PROPERTY, null);
+          .matchExp(_JetspeedGroupProfile.LANGUAGE_PROPERTY, null);
       query.andQualifier(exp);
     }
 
     if (country != null && country.length() > 0 && (!country.equals("-1"))) {
       Expression exp =
         ExpressionFactory.matchExp(
-          JetspeedGroupProfile.COUNTRY_PROPERTY,
+          _JetspeedGroupProfile.COUNTRY_PROPERTY,
           country);
       query.andQualifier(exp);
     } else if (country != null && country.equals("-1")) {
       Expression exp =
-        ExpressionFactory.matchExp(JetspeedGroupProfile.COUNTRY_PROPERTY, null);
+        ExpressionFactory.matchExp(_JetspeedGroupProfile.COUNTRY_PROPERTY, null);
       query.andQualifier(exp);
     }
 

@@ -38,12 +38,14 @@ public class BaseRegistry implements LocalRegistry {
   protected Map entries = new TreeMap();
 
   /** @see Registry#getEntryCount */
-  public int getEntryCount() {
+  @Override
+public int getEntryCount() {
     return this.entries.size();
   }
 
   /** @see Registry#getEntry */
-  public RegistryEntry getEntry(String name) throws InvalidEntryException {
+  @Override
+public RegistryEntry getEntry(String name) throws InvalidEntryException {
 
     RegistryEntry entry = null;
 
@@ -62,7 +64,8 @@ public class BaseRegistry implements LocalRegistry {
   /**
    * @see Registry#setEntry
    */
-  public void setEntry(RegistryEntry entry) throws InvalidEntryException {
+  @Override
+public void setEntry(RegistryEntry entry) throws InvalidEntryException {
     synchronized (this) {
 
       if (this.hasEntry(entry.getName()) == false) {
@@ -77,7 +80,8 @@ public class BaseRegistry implements LocalRegistry {
   /**
    * @see Registry#addEntry
    */
-  public void addEntry(RegistryEntry entry) throws InvalidEntryException {
+  @Override
+public void addEntry(RegistryEntry entry) throws InvalidEntryException {
 
     synchronized (this) {
       if (this.hasEntry(entry.getName())) {
@@ -92,14 +96,16 @@ public class BaseRegistry implements LocalRegistry {
   /**
    * @see Registry#hasEntry
    */
-  public boolean hasEntry(String name) {
+  @Override
+public boolean hasEntry(String name) {
     return this.entries.containsKey(name);
   }
 
   /**
    * @see Registry#removeEntry
    */
-  public void removeEntry(String name) {
+  @Override
+public void removeEntry(String name) {
     synchronized (this) {
       this.entries.remove(name);
     }
@@ -109,7 +115,8 @@ public class BaseRegistry implements LocalRegistry {
    * @see Registry#removeEntry
    */
 
-  public void removeEntry(RegistryEntry entry) {
+  @Override
+public void removeEntry(RegistryEntry entry) {
     synchronized (this) {
       this.entries.remove(entry.getName());
     }
@@ -118,7 +125,8 @@ public class BaseRegistry implements LocalRegistry {
   /**
    * @see Registry#getEntries
    */
-  public Enumeration getEntries() {
+  @Override
+public Enumeration getEntries() {
     Vector v = null;
 
     synchronized (this) {
@@ -132,14 +140,16 @@ public class BaseRegistry implements LocalRegistry {
   /**
    * @see Registry#listEntryNames
    */
-  public Iterator listEntryNames() {
+  @Override
+public Iterator listEntryNames() {
     return entries.keySet().iterator();
   }
 
   /**
    * @see Registry#toArray
    */
-  public RegistryEntry[] toArray() {
+  @Override
+public RegistryEntry[] toArray() {
 
     Enumeration enu = getEntries();
     Vector v = new Vector();
@@ -160,7 +170,8 @@ public class BaseRegistry implements LocalRegistry {
    * 
    * @return the newly created RegistryEntry
    */
-  public RegistryEntry createEntry() {
+  @Override
+public RegistryEntry createEntry() {
     return new BaseRegistryEntry();
   }
 
@@ -173,7 +184,8 @@ public class BaseRegistry implements LocalRegistry {
    * @param entry
    *            the RegistryEntry to store
    */
-  public void setLocalEntry(RegistryEntry entry) throws InvalidEntryException {
+  @Override
+public void setLocalEntry(RegistryEntry entry) throws InvalidEntryException {
     synchronized (this) {
 
       if (this.hasEntry(entry.getName()) == false) {
@@ -192,7 +204,8 @@ public class BaseRegistry implements LocalRegistry {
    * @param entry
    *            the RegistryEntry to store
    */
-  public void addLocalEntry(RegistryEntry entry) throws InvalidEntryException {
+  @Override
+public void addLocalEntry(RegistryEntry entry) throws InvalidEntryException {
 
     synchronized (this) {
       if (this.hasEntry(entry.getName())) {
@@ -211,7 +224,8 @@ public class BaseRegistry implements LocalRegistry {
    * @param name
    *            the name of the RegistryEntry to remove
    */
-  public void removeLocalEntry(String name) {
+  @Override
+public void removeLocalEntry(String name) {
     synchronized (this) {
       this.entries.remove(name);
     }
@@ -224,7 +238,8 @@ public class BaseRegistry implements LocalRegistry {
    * @param entry
    *            the RegistryEntry to remove
    */
-  public void removeLocalEntry(RegistryEntry entry) {
+  @Override
+public void removeLocalEntry(RegistryEntry entry) {
     synchronized (this) {
       this.entries.remove(entry.getName());
     }

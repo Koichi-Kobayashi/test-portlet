@@ -34,7 +34,8 @@ public class AddressBookFilterData implements ALData {
 
   private ALStringField fullName;
 
-  public void initField() {
+  @Override
+public void initField() {
     groupId = new ALNumberField();
     addressId = new ALNumberField();
     fullName = new ALStringField();

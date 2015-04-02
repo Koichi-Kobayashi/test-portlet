@@ -86,7 +86,8 @@ public class WebMailAdminSettingsFormData extends ALAbstractFormData {
   /** メール送信時のメッセージ種別(ワークフロー) */
   private int msg_type_workflow = FLG_NOTIFY_NONCHECKED;
 
-  public void initField() {
+  @Override
+public void initField() {
     pc_flg_schedule = new ALNumberField();
     pc_flg_schedule.setValue(ALMailUtils.VALUE_MSGTYPE_DEST_NONE);
 

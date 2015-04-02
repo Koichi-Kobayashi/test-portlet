@@ -58,7 +58,8 @@ public class AddressBookCompanyResultData implements ALData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     company_id = new ALNumberField();
     company_name = new ALStringField();
     company_name_kana = new ALStringField();

@@ -28,6 +28,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.account.util.AccountUtils;
 import com.aimluck.eip.cayenne.om.account.EipMPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPosition;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALPageNotFoundException;
@@ -142,7 +143,7 @@ public class AccountPositionSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("position_name", EipMPosition.POSITION_NAME_PROPERTY);
+    map.putValue("position_name", _EipMPosition.POSITION_NAME_PROPERTY);
     return map;
   }
 

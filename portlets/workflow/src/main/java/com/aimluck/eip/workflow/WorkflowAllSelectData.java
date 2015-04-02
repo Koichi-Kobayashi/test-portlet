@@ -36,8 +36,13 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRequest;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRequestMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowRequest;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowRequestMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.cayenne.om.social.Activity;
+import com.aimluck.eip.cayenne.om.social.auto._Activity;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -267,13 +272,13 @@ public class WorkflowAllSelectData extends
     } else if (TAB_UNFINISHED.equals(currentTab)) {
       Expression exp1 =
         ExpressionFactory.noMatchExp(
-          EipTWorkflowRequest.PROGRESS_PROPERTY,
+          _EipTWorkflowRequest.PROGRESS_PROPERTY,
           WorkflowUtils.DB_PROGRESS_ACCEPT);
       query.setQualifier(exp1);
     } else if (TAB_FINISHED.equals(currentTab)) {
       Expression exp1 =
         ExpressionFactory.matchExp(
-          EipTWorkflowRequest.PROGRESS_PROPERTY,
+          _EipTWorkflowRequest.PROGRESS_PROPERTY,
           WorkflowUtils.DB_PROGRESS_ACCEPT);
       query.setQualifier(exp1);
     }
@@ -305,22 +310,22 @@ public class WorkflowAllSelectData extends
     if (search != null && !search.equals("")) {
       current_search = search;
       Expression ex1 =
-        ExpressionFactory.likeExp(EipTWorkflowRequest.NOTE_PROPERTY, "%"
+        ExpressionFactory.likeExp(_EipTWorkflowRequest.NOTE_PROPERTY, "%"
           + search
           + "%");
       Expression ex11 =
-        ExpressionFactory.likeExp(EipTWorkflowRequestMap.NOTE_PROPERTY, "%"
+        ExpressionFactory.likeExp(_EipTWorkflowRequestMap.NOTE_PROPERTY, "%"
           + search
           + "%");
       Expression ex2 =
         ExpressionFactory.likeExp(
-          EipTWorkflowRequest.REQUEST_NAME_PROPERTY,
+          _EipTWorkflowRequest.REQUEST_NAME_PROPERTY,
           "%" + search + "%");
       Expression ex3 =
         ExpressionFactory.likeExp(
-          EipTWorkflowRequest.EIP_TWORKFLOW_CATEGORY_PROPERTY
+          _EipTWorkflowRequest.EIP_TWORKFLOW_CATEGORY_PROPERTY
             + "."
-            + EipTWorkflowCategory.CATEGORY_NAME_PROPERTY,
+            + _EipTWorkflowCategory.CATEGORY_NAME_PROPERTY,
           "%" + search + "%");
 
       SelectQuery<EipTWorkflowRequest> q =
@@ -357,7 +362,7 @@ public class WorkflowAllSelectData extends
       }
       Expression ex =
         ExpressionFactory.inDbExp(
-          EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
+          _EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
           resultid);
       query.andQualifier(ex);
     }
@@ -397,10 +402,10 @@ public class WorkflowAllSelectData extends
       rd.setPrice(record.getPrice().longValue());
 
       Expression exp2 =
-        ExpressionFactory.matchExp(Activity.EXTERNAL_ID_PROPERTY, rd
+        ExpressionFactory.matchExp(_Activity.EXTERNAL_ID_PROPERTY, rd
           .getRequestId());
       Expression exp3 =
-        ExpressionFactory.matchExp(Activity.APP_ID_PROPERTY, "Workflow");
+        ExpressionFactory.matchExp(_Activity.APP_ID_PROPERTY, "Workflow");
       Expression exp4 = exp2.andExp(exp3);
       List<Activity> list = Database.query(Activity.class, exp4).fetchList();
 
@@ -462,7 +467,7 @@ public class WorkflowAllSelectData extends
   private int getUserId(RunData rundata, Context context, Integer entityId) {
     Expression exp =
       ExpressionFactory.matchDbExp(
-        EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
+        _EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
         entityId);
     SelectQuery<EipTWorkflowRequest> query =
       Database.query(EipTWorkflowRequest.class, exp);
@@ -534,15 +539,15 @@ public class WorkflowAllSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("request_name", EipTWorkflowRequest.REQUEST_NAME_PROPERTY);
-    map.putValue("priority", EipTWorkflowRequest.PRIORITY_PROPERTY);
-    map.putValue("price", EipTWorkflowRequest.PRICE_PROPERTY);
-    map.putValue("create_date", EipTWorkflowRequest.CREATE_DATE_PROPERTY);
-    map.putValue("progress", EipTWorkflowRequest.PROGRESS_PROPERTY);
-    map.putValue("category", EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN);
-    map.putValue("user_name", EipTWorkflowRequest.TURBINE_USER_PROPERTY
+    map.putValue("request_name", _EipTWorkflowRequest.REQUEST_NAME_PROPERTY);
+    map.putValue("priority", _EipTWorkflowRequest.PRIORITY_PROPERTY);
+    map.putValue("price", _EipTWorkflowRequest.PRICE_PROPERTY);
+    map.putValue("create_date", _EipTWorkflowRequest.CREATE_DATE_PROPERTY);
+    map.putValue("progress", _EipTWorkflowRequest.PROGRESS_PROPERTY);
+    map.putValue("category", _EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN);
+    map.putValue("user_name", _EipTWorkflowRequest.TURBINE_USER_PROPERTY
       + "."
-      + TurbineUser.LAST_NAME_KANA_PROPERTY);
+      + _TurbineUser.LAST_NAME_KANA_PROPERTY);
     return map;
   }
 

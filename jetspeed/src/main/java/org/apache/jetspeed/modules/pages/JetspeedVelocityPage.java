@@ -25,7 +25,7 @@ import org.apache.jetspeed.util.template.JetspeedTemplateNavigation;
 /**
  * Extends JetspeedTemplatePage to set the Velocity template Context.
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: JetspeedVelocityPage.java,v 1.9 2004/02/23 02:59:52 jford Exp $
  */
 public class JetspeedVelocityPage extends JetspeedTemplatePage
@@ -39,7 +39,8 @@ public class JetspeedVelocityPage extends JetspeedTemplatePage
      * @param data Turbine information.
      * @exception Exception, a generic exception.
      */
-    protected void doBuildBeforeAction(RunData data) throws Exception
+    @Override
+	protected void doBuildBeforeAction(RunData data) throws Exception
     {
         super.doBuildBeforeAction(data);
 
@@ -53,7 +54,8 @@ public class JetspeedVelocityPage extends JetspeedTemplatePage
      * Allows the VelocityService to peform post-request actions.
      * (releases the (non-global) tools in the context for reuse later)
      */
-    protected void doPostBuild(RunData data) throws Exception
+    @Override
+	protected void doPostBuild(RunData data) throws Exception
     {
         Context context = TurbineVelocity.getContext(data);
         TurbineVelocity.requestFinished(context);

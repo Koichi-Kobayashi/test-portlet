@@ -43,7 +43,8 @@ public class JavaRuntimePortlet extends AbstractPortlet {
   private static final JetspeedLogger logger = JetspeedLogFactoryService
       .getLogger(JavaRuntimePortlet.class.getName());
 
-  public ConcreteElement getContent(RunData rundata) {
+  @Override
+public ConcreteElement getContent(RunData rundata) {
 
     Table table = new Table().setWidth("100%");
 
@@ -85,18 +86,21 @@ public class JavaRuntimePortlet extends AbstractPortlet {
    * @author <a href="mailto:burton@apache.org">Kevin A. Burton</a>
    * @version $Id: JavaRuntimePortlet.java,v 1.18 2004/02/23 03:26:19 jford Exp $
    */
-  public void init() throws PortletException {
+  @Override
+public void init() throws PortletException {
 
     this.setTitle("Java Runtime");
     this.setDescription("Information about your Java Runtime");
 
   }
 
-  public boolean getAllowEdit(RunData rundata) {
+  @Override
+public boolean getAllowEdit(RunData rundata) {
     return false;
   }
 
-  public boolean getAllowMaximize(RunData rundata) {
+  @Override
+public boolean getAllowMaximize(RunData rundata) {
     return false;
   }
 

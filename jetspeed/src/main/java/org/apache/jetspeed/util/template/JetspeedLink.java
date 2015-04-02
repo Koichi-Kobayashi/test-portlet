@@ -268,7 +268,8 @@ public interface JetspeedLink {
      *
      * @deprecated Use getPortletById()     
      */
-    public DynamicURI getPortletByName(String portletName);
+    @Deprecated
+	public DynamicURI getPortletByName(String portletName);
     
     /**
      * Return a link to a default page for the role
@@ -319,7 +320,8 @@ public interface JetspeedLink {
      * @return DynamicURI that includes the desire action
      * @deprecated Use getAction()
      */
-    public DynamicURI setAction(String action);
+    @Deprecated
+	public DynamicURI setAction(String action);
     
     /**
      * Return a link that includes an action to a specific portlet, as defined
@@ -331,7 +333,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getAction()
      */
-    public DynamicURI setAction(String action, Entry entry);
+    @Deprecated
+	public DynamicURI setAction(String action, Entry entry);
     
     /**
      * Return a link that includes an action to a specific portlet, as defined
@@ -343,7 +346,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getAction()
      */
-    public DynamicURI setAction(String action, Portlet portlet);
+    @Deprecated
+	public DynamicURI setAction(String action, Portlet portlet);
     
     /**
      * Return a link that includes an action to a specific portlet, as defined
@@ -355,7 +359,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getAction()
      */
-    public DynamicURI setAction(String action, Portlets portlet);
+    @Deprecated
+	public DynamicURI setAction(String action, Portlets portlet);
     
     /**
      * Return a link to a default page for the group
@@ -365,7 +370,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getGroup()
      */
-    public DynamicURI setGroup(String group);
+    @Deprecated
+	public DynamicURI setGroup(String group);
     
     /**
      * Return a link to a desired page for the group
@@ -376,7 +382,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getGroup()
      */
-    public DynamicURI setGroup(String group, String page);
+    @Deprecated
+	public DynamicURI setGroup(String group, String page);
     
     /**
      * Return a link to a default page for the
@@ -386,7 +393,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getPage()
      */
-    public DynamicURI setPage();
+    @Deprecated
+	public DynamicURI setPage();
     
     /**
      * Return a link to a desired page for the
@@ -397,7 +405,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getPage()
      */
-    public DynamicURI setPage(String page);
+    @Deprecated
+	public DynamicURI setPage(String page);
     
     /**
      * Return a link to a desired page and pane for the
@@ -409,7 +418,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getPage()
      */
-    public DynamicURI setPage(String page, String paneName);
+    @Deprecated
+	public DynamicURI setPage(String page, String paneName);
     
     public DynamicURI setMediaType(String mediaType);
 
@@ -421,7 +431,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getPortletById()
      */
-    public DynamicURI setPortletById(String peid);
+    @Deprecated
+	public DynamicURI setPortletById(String peid);
     
     /**
      * Return an link to a specific portal element
@@ -431,7 +442,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getPortletById or getPaneById()
      */
-    public DynamicURI setPortalElement(String peid);
+    @Deprecated
+	public DynamicURI setPortalElement(String peid);
     
     /**
      * Add a portlet reference in the link.
@@ -444,7 +456,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getPortletByName()
      */
-    public DynamicURI setPortletByName(String portletName);
+    @Deprecated
+	public DynamicURI setPortletByName(String portletName);
     
     /**
      * Return a link to a default page for the role
@@ -454,7 +467,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getRole()
      */
-    public DynamicURI setRole(String role);
+    @Deprecated
+	public DynamicURI setRole(String role);
     
     /**
      * Return a link to a desired page for the role
@@ -465,7 +479,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getRole()
      */
-    public DynamicURI setRole(String role, String page);
+    @Deprecated
+	public DynamicURI setRole(String role, String page);
     
     /**
      * Return a link to the template.
@@ -475,7 +490,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getTemplate()
      */
-    public DynamicURI setTemplate(String template);
+    @Deprecated
+	public DynamicURI setTemplate(String template);
     
     /**
      * Return a link to a default page for the user
@@ -485,7 +501,8 @@ public interface JetspeedLink {
      *
      * @deprecated use getUser()
      */
-    public DynamicURI setUser(String user);
+    @Deprecated
+	public DynamicURI setUser(String user);
     
     /**
      * Return a link to a desired page for the user
@@ -496,14 +513,16 @@ public interface JetspeedLink {
      *
      * @deprecated use getUser()
      */
-    public DynamicURI setUser(String user, String page);
+    @Deprecated
+	public DynamicURI setUser(String user, String page);
     
     /**
      * Return a URL, as a string, the the root page or pane.
      *
      * @return a URL, as a string, the the root page or pane.
      */
-    public String toString();
+    @Override
+	public String toString();
     
     /**
      * Return a link to a specific pane using the pane's id
@@ -512,7 +531,8 @@ public interface JetspeedLink {
      * @return URI to specific portlet
      * @deprecated Use getPaneById()
      */
-    public DynamicURI setPaneById(String paneId);
+    @Deprecated
+	public DynamicURI setPaneById(String paneId);
             
     /**
      * Return a link to a specific pane using the pane's id
@@ -545,7 +565,8 @@ public interface JetspeedLink {
      * @param portlet the name of the active portlet
      * @deprecated Use getLink() or getAction() or getPortletById() or getPortletByName().
      */
-    public void setPortlet(Portlet portlet);
+    @Deprecated
+	public void setPortlet(Portlet portlet);
     
     /**
      * Return a link to a desired page.  This is allows the inclusion of a Group/Role/User,

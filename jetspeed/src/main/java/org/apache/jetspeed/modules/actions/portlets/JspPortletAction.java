@@ -50,7 +50,8 @@ public abstract class JspPortletAction extends GenericMVCAction
     /**
     * @see org.apache.jetspeed.portal.portlets.mvc.PortletAction#buildConfigureContext(Portlet, Context, RunData)     
     */
-    protected void buildConfigureContext(Portlet portlet, Context context, RunData rundata)
+    @Override
+	protected void buildConfigureContext(Portlet portlet, Context context, RunData rundata)
         throws Exception
     {
 
@@ -81,7 +82,8 @@ public abstract class JspPortletAction extends GenericMVCAction
     /**
      * @see org.apache.jetspeed.portal.portlets.mvc.PortletAction#buildMaximizedContext(Portlet, Context, RunData)
      */
-    protected void buildMaximizedContext(Portlet portlet, Context context, RunData rundata)
+    @Override
+	protected void buildMaximizedContext(Portlet portlet, Context context, RunData rundata)
         throws Exception
     {
         buildMaximizedContext(portlet, rundata);
@@ -110,7 +112,8 @@ public abstract class JspPortletAction extends GenericMVCAction
     /**
      * @see org.apache.jetspeed.portal.portlets.mvc.PortletAction#buildNormalContext(Portlet, Context, RunData)
      */
-    protected void buildNormalContext(Portlet portlet, Context context, RunData data)
+    @Override
+	protected void buildNormalContext(Portlet portlet, Context context, RunData data)
         throws Exception
     {
         buildNormalContext(portlet, data);
@@ -126,7 +129,8 @@ public abstract class JspPortletAction extends GenericMVCAction
 	 * You should use one of PortletAction.setTemplate() methods
 	 * @deprecated
 	 */
-    public void setTemplate(RunData data, Portlet portlet, String template)
+    @Deprecated
+	public void setTemplate(RunData data, Portlet portlet, String template)
     
     {
     	if(template != null)

@@ -79,7 +79,8 @@ public class DatabaseBrowserIterator implements BrowserIterator
      * This method returns the result set.
      *
      */
-    public List getResultSet()
+    @Override
+	public List getResultSet()
     {
         return rsList;
     }
@@ -88,7 +89,8 @@ public class DatabaseBrowserIterator implements BrowserIterator
      * This method returns the number of rows in the result set.
      *
      */
-    public int getResultSetSize()
+    @Override
+	public int getResultSetSize()
     {
         return rsListSize;
     }
@@ -97,7 +99,8 @@ public class DatabaseBrowserIterator implements BrowserIterator
      * This method returns the List containg the column labels of the result set.
      *
      */
-    public List getResultSetTitleList()
+    @Override
+	public List getResultSetTitleList()
     {
         return rsTitleList;
     }
@@ -106,7 +109,8 @@ public class DatabaseBrowserIterator implements BrowserIterator
      *
      *@see java.sql.Types
      */
-    public List getResultSetTypesList()
+    @Override
+	public List getResultSetTypesList()
     {
         return rsTypeList;
     }
@@ -115,7 +119,8 @@ public class DatabaseBrowserIterator implements BrowserIterator
      * This method returns the index of the row to which the cursor is pointing at.
      *
      */
-    public int getTop()
+    @Override
+	public int getTop()
     {
         return top;
     }
@@ -125,7 +130,8 @@ public class DatabaseBrowserIterator implements BrowserIterator
      *
      * @param start Index to which cursor should point to
      */
-    public void setTop(int start)
+    @Override
+	public void setTop(int start)
     {
         top = start;
         index = top;
@@ -136,7 +142,8 @@ public class DatabaseBrowserIterator implements BrowserIterator
      * This method returns the last index of the row in the window displayed.
      *
      */
-    public int getBottom()
+    @Override
+	public int getBottom()
     {
         return bottom;
     }
@@ -145,7 +152,8 @@ public class DatabaseBrowserIterator implements BrowserIterator
      * This method returns the window size.
      *
      */
-    public int getWindowSize()
+    @Override
+	public int getWindowSize()
     {
         return windowSize;
     }
@@ -167,7 +175,8 @@ public class DatabaseBrowserIterator implements BrowserIterator
     /**
      * Returns true if the iteration has more elements
      */
-    public boolean hasNext()
+    @Override
+	public boolean hasNext()
     {
         if(index <= rsListSize && index < bottom)
         {
@@ -179,7 +188,8 @@ public class DatabaseBrowserIterator implements BrowserIterator
     /**
      * Returns the next element in the iteration
      */
-    public Object next()
+    @Override
+	public Object next()
     {
         index = index + 1;
         return rsList.get(index - 1);
@@ -189,7 +199,8 @@ public class DatabaseBrowserIterator implements BrowserIterator
      * Logs as info - since remove operation is not supported
      * by this Iterator.
      */
-    public void remove()
+    @Override
+	public void remove()
     {
         logger.info("The remove operation is not supported.");
     }
@@ -201,7 +212,8 @@ public class DatabaseBrowserIterator implements BrowserIterator
      *
      *@param String sortColumnName
      */
-    public void sort(String columnName)
+    @Override
+	public void sort(String columnName)
     {
         //System.out.println("current columnName="+columnName);
         //System.out.println("old columnName="+sortColumnName);
@@ -224,7 +236,8 @@ public class DatabaseBrowserIterator implements BrowserIterator
      * Compares its two arguments for order.
      *
      */
-    public int compare(Object obj1, Object obj2)
+    @Override
+	public int compare(Object obj1, Object obj2)
     {
         int idx = rsTitleList.indexOf(sortColumnName);
         int order = 0;

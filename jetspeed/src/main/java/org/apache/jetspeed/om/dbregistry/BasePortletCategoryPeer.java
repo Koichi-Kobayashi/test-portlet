@@ -1,11 +1,8 @@
 package org.apache.jetspeed.om.dbregistry;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,9 +12,6 @@ import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
 import org.apache.torque.map.MapBuilder;
 import org.apache.torque.map.TableMap;
-import org.apache.torque.om.DateKey;
-import org.apache.torque.om.NumberKey;
-import org.apache.torque.om.StringKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
 import org.apache.torque.util.BasePeer;
@@ -253,7 +247,7 @@ public abstract class BasePortletCategoryPeer
         try
         {
             PortletCategory obj = (PortletCategory) cls.newInstance();
-            PortletCategoryPeer.populateObject(row, offset, obj);
+            BasePortletCategoryPeer.populateObject(row, offset, obj);
                   obj.setModified(false);
               obj.setNew(false);
 
@@ -393,8 +387,8 @@ public abstract class BasePortletCategoryPeer
         for (int i = 0; i < records.size(); i++)
         {
             Record row = (Record) records.get(i);
-              results.add(PortletCategoryPeer.row2Object(row, 1,
-                PortletCategoryPeer.getOMClass()));
+              results.add(BasePortletCategoryPeer.row2Object(row, 1,
+                BasePortletCategoryPeer.getOMClass()));
           }
         return results;
     }
@@ -802,13 +796,13 @@ public abstract class BasePortletCategoryPeer
             c.setDbName(DATABASE_NAME);
         }
 
-        PortletCategoryPeer.addSelectColumns(c);
+        BasePortletCategoryPeer.addSelectColumns(c);
         int offset = numColumns + 1;
-        PortletDbEntryPeer.addSelectColumns(c);
+        BasePortletDbEntryPeer.addSelectColumns(c);
 
 
-                        c.addJoin(PortletCategoryPeer.OWNER,
-            PortletDbEntryPeer.ID);
+                        c.addJoin(BasePortletCategoryPeer.OWNER,
+            BasePortletDbEntryPeer.ID);
         
 
                                                                                 
@@ -819,18 +813,18 @@ public abstract class BasePortletCategoryPeer
         {
             Record row = (Record) rows.get(i);
 
-                            Class omClass = PortletCategoryPeer.getOMClass();
-                    PortletCategory obj1 = (PortletCategory) PortletCategoryPeer
+                            Class omClass = BasePortletCategoryPeer.getOMClass();
+                    PortletCategory obj1 = BasePortletCategoryPeer
                 .row2Object(row, 1, omClass);
-                     omClass = PortletDbEntryPeer.getOMClass();
-                    PortletDbEntry obj2 = (PortletDbEntry)PortletDbEntryPeer
+                     omClass = BasePortletDbEntryPeer.getOMClass();
+                    PortletDbEntry obj2 = BasePortletDbEntryPeer
                 .row2Object(row, offset, omClass);
 
             boolean newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 PortletCategory temp_obj1 = (PortletCategory)results.get(j);
-                PortletDbEntry temp_obj2 = (PortletDbEntry)temp_obj1.getPortletDbEntry();
+                PortletDbEntry temp_obj2 = temp_obj1.getPortletDbEntry();
                 if (temp_obj2.getPrimaryKey().equals(obj2.getPrimaryKey()))
                 {
                     newObject = false;

@@ -86,7 +86,8 @@ public class UserBrowserAction extends VelocityPortletAction
      * @param context The velocity context for this request.
      * @param rundata The turbine rundata context for this request.
      */
-    protected void buildMaximizedContext( VelocityPortlet portlet,
+    @Override
+	protected void buildMaximizedContext( VelocityPortlet portlet,
                                           Context context,
                                           RunData rundata )
     {
@@ -101,7 +102,8 @@ public class UserBrowserAction extends VelocityPortletAction
      * @param context The velocity context for this request.
      * @param rundata The turbine rundata context for this request.
      */
-    protected void buildConfigureContext( VelocityPortlet portlet,
+    @Override
+	protected void buildConfigureContext( VelocityPortlet portlet,
                                           Context context,
                                           RunData rundata )
     {
@@ -116,7 +118,8 @@ public class UserBrowserAction extends VelocityPortletAction
      * @param context The velocity context for this request.
      * @param rundata The turbine rundata context for this request.
      */
-    protected void buildNormalContext( VelocityPortlet portlet,
+    @Override
+	protected void buildNormalContext( VelocityPortlet portlet,
                                        Context context,
                                        RunData rundata )
     {
@@ -200,7 +203,7 @@ public class UserBrowserAction extends VelocityPortletAction
 
             if (userList.size() > numberPerPage)
             {
-                int numberOfPages = (int) ((userList.size() - 1 + numberPerPage) / numberPerPage);
+                int numberOfPages = (userList.size() - 1 + numberPerPage) / numberPerPage;
                 int from = (currentPage - 1) * numberPerPage;
                 int to = Math.min(currentPage * numberPerPage,userList.size());
                 context.put(SecurityConstants.CONTEXT_USERS, userList.subList(from, to));

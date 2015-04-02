@@ -21,7 +21,7 @@ import org.apache.jetspeed.om.profile.*;
 /**
  * Bean like implementation of a meta-info repository
  * 
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: PsmlMetaInfo.java,v 1.4 2004/02/23 03:02:54 jford Exp $
  */
 public class PsmlMetaInfo implements MetaInfo
@@ -33,7 +33,8 @@ public class PsmlMetaInfo implements MetaInfo
     private String image = null;
 
     /** @return the title for this entry */         
-    public String getTitle()
+    @Override
+	public String getTitle()
     {
         return this.title;
     }
@@ -41,13 +42,15 @@ public class PsmlMetaInfo implements MetaInfo
     /** Sets the title for this entry
      * @param title the new title for this entry
      */                    
-    public void setTitle( String title )
+    @Override
+	public void setTitle( String title )
     {
         this.title = title;
     }
     
     /** @return the description for this entry */         
-    public String getDescription()
+    @Override
+	public String getDescription()
     {
         return this.description;
     }
@@ -55,13 +58,15 @@ public class PsmlMetaInfo implements MetaInfo
     /** Sets the description for this entry
      * @param description the new description for this entry
      */                    
-    public void setDescription( String description )
+    @Override
+	public void setDescription( String description )
     {
         this.description = description;
     }
     
     /** @return the image link for this entry */         
-    public String getImage()
+    @Override
+	public String getImage()
     {
         return this.image;
     }
@@ -69,7 +74,8 @@ public class PsmlMetaInfo implements MetaInfo
     /** Sets the image URL attached to this entry
      * @param image the image URL to link to this entry
      */                    
-    public void setImage( String image )
+    @Override
+	public void setImage( String image )
     {
         this.image = image;
     }
@@ -77,7 +83,8 @@ public class PsmlMetaInfo implements MetaInfo
     /**
      * Create a clone of this object
      */
-    public Object clone()
+    @Override
+	public Object clone()
         throws java.lang.CloneNotSupportedException
     {
         Object cloned = super.clone();

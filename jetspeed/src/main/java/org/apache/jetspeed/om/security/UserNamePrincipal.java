@@ -43,7 +43,8 @@ public class UserNamePrincipal implements java.security.Principal
      * encapsulated by this principal, and false otherwise.
 
      */
-    public boolean equals(Object another)
+    @Override
+	public boolean equals(Object another)
     {
         if (!(another instanceof UserNamePrincipal))
             return false;
@@ -56,7 +57,8 @@ public class UserNamePrincipal implements java.security.Principal
      *
      * @return a string representation of this principal.
      */
-    public String toString()
+    @Override
+	public String toString()
     {
         return this.userName;
     }
@@ -66,7 +68,8 @@ public class UserNamePrincipal implements java.security.Principal
      *
      * @return the name of this principal.
      */
-    public String getName()
+    @Override
+	public String getName()
     {
         return this.userName;
     }

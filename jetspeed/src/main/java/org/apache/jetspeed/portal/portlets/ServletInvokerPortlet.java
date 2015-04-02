@@ -47,13 +47,14 @@ public class ServletInvokerPortlet extends AbstractPortlet
    * The servlet/JSP will be invoked when the ECS tree is written 
    * to the servlet output stream and add its output to the stream.
    */
-  public ConcreteElement getContent(RunData rundata) {
+  @Override
+public ConcreteElement getContent(RunData rundata) {
 	// !!! Need to check this - is this the right rundata object ? !!!
 	PortletConfig pc = this.getPortletConfig();
 
 	String servletURL = null;
 	try {
-	  servletURL = (String) this.getPortletConfig().getInitParameter("url");
+	  servletURL = this.getPortletConfig().getInitParameter("url");
 	  return new EcsServletElement(rundata, servletURL);
 	} catch (Exception e) {
 	  String message = "ServletInvokerPortlet: Error invoking " 

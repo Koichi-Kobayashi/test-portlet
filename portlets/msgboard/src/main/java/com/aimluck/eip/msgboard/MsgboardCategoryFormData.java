@@ -35,7 +35,10 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardCategoryMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardTopic;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardCategoryMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -223,7 +226,7 @@ public class MsgboardCategoryFormData extends ALAbstractFormData {
         Database.query(EipTMsgboardCategoryMap.class);
       Expression mapexp =
         ExpressionFactory.matchDbExp(
-          EipTMsgboardCategory.CATEGORY_ID_PK_COLUMN,
+          _EipTMsgboardCategory.CATEGORY_ID_PK_COLUMN,
           category.getCategoryId());
       mapquery.setQualifier(mapexp);
 
@@ -241,9 +244,9 @@ public class MsgboardCategoryFormData extends ALAbstractFormData {
 
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
-        ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, users);
+        ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, users);
       Expression nonDisabledexp =
-        ExpressionFactory.noMatchExp(TurbineUser.DISABLED_PROPERTY, "T");
+        ExpressionFactory.noMatchExp(_TurbineUser.DISABLED_PROPERTY, "T");
       query.setQualifier(exp.andExp(nonDisabledexp));
       memberList.addAll(ALEipUtils.getUsersFromSelectQuery(query));
 
@@ -389,7 +392,7 @@ public class MsgboardCategoryFormData extends ALAbstractFormData {
         Database.query(EipTMsgboardCategoryMap.class);
       Expression mapexp =
         ExpressionFactory.matchExp(
-          EipTMsgboardCategoryMap.CATEGORY_ID_PROPERTY,
+          _EipTMsgboardCategoryMap.CATEGORY_ID_PROPERTY,
           category.getCategoryId());
       mapquery.setQualifier(mapexp);
 
@@ -521,7 +524,7 @@ public class MsgboardCategoryFormData extends ALAbstractFormData {
 
         SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
         Expression exp =
-          ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, str);
+          ExpressionFactory.inExp(_TurbineUser.LOGIN_NAME_PROPERTY, str);
         query.setQualifier(exp);
         memberList.addAll(ALEipUtils.getUsersFromSelectQuery(query));
       }

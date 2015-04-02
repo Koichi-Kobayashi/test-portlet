@@ -30,7 +30,9 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTTodo;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTodo;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.common.ALEipUser;
 import com.aimluck.eip.common.ALPermissionException;
@@ -78,10 +80,10 @@ public class ToDoMultiStateUpdate extends ALAbstractCheckList {
     }
 
     Expression exp1 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .valueOf(ALEipUtils.getUserId(rundata)));
     Expression exp2 =
-      ExpressionFactory.inDbExp(EipTTodo.TODO_ID_PK_COLUMN, values);
+      ExpressionFactory.inDbExp(_EipTTodo.TODO_ID_PK_COLUMN, values);
 
     if (Database.query(EipTTodo.class, exp1).andQualifier(exp2).getCount() > 0) {
       aclPortletFeature =
@@ -106,7 +108,7 @@ public class ToDoMultiStateUpdate extends ALAbstractCheckList {
     try {
 
       Expression exp1 =
-        ExpressionFactory.inDbExp(EipTTodo.TODO_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipTTodo.TODO_ID_PK_COLUMN, values);
 
       List<EipTTodo> todoList =
         Database.query(EipTTodo.class).andQualifier(exp1).fetchList();

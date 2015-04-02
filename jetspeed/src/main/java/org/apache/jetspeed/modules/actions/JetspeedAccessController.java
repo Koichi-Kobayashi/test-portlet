@@ -47,7 +47,8 @@ public class JetspeedAccessController extends Action
      */    
     private static final JetspeedLogger logger = JetspeedLogFactoryService.getLogger(JetspeedAccessController.class.getName());
     
-    public void doPerform( RunData data ) throws Exception
+    @Override
+	public void doPerform( RunData data ) throws Exception
     {
         JetspeedUser user = (JetspeedUser)data.getUser();
 

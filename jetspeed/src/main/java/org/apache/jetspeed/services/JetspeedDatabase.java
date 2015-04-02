@@ -49,7 +49,7 @@ abstract public class JetspeedDatabase
      */
     public static Object getPersistenceManager()  // TODO: this should eventually be a JDO PersistenceManager, not an Object
     {
-       return ((JetspeedDatabaseService)getService()).getPersistenceManager();
+       return getService().getPersistenceManager();
     }
 
 }

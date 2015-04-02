@@ -41,7 +41,8 @@ public class PsmlParameter implements Parameter, java.io.Serializable
     {}
     
     /** @return the name of the parameter */
-    public String getName()
+    @Override
+	public String getName()
     {
         return this.name;
     }
@@ -49,13 +50,15 @@ public class PsmlParameter implements Parameter, java.io.Serializable
     /** Sets the parameter name
      * @param name the parmeter name
      */
-    public void setName( String name )
+    @Override
+	public void setName( String name )
     {
         this.name = name;
     }
 
     /** @return the value of the parameter */
-    public String getValue()
+    @Override
+	public String getValue()
     {
         return this.value;
     }
@@ -63,7 +66,8 @@ public class PsmlParameter implements Parameter, java.io.Serializable
     /** 
      * @param value the parameter value
      */
-    public void setValue( String value )
+    @Override
+	public void setValue( String value )
     {
         this.value = value;
     }
@@ -71,7 +75,8 @@ public class PsmlParameter implements Parameter, java.io.Serializable
     /** Getter for property securityRef.
      * @return Value of property securityRef.
      */
-    public SecurityReference getSecurityRef()
+    @Override
+	public SecurityReference getSecurityRef()
     {
         return securityRef;
     }
@@ -79,7 +84,8 @@ public class PsmlParameter implements Parameter, java.io.Serializable
     /** Setter for property securityRef.
      * @param securityRef New value of property securityRef.
      */
-    public void setSecurityRef(SecurityReference securityRef)
+    @Override
+	public void setSecurityRef(SecurityReference securityRef)
     {
         this.securityRef = securityRef;
     }
@@ -87,7 +93,8 @@ public class PsmlParameter implements Parameter, java.io.Serializable
     /**
      * Create a clone of this object
      */
-    public Object clone()
+    @Override
+	public Object clone()
         throws java.lang.CloneNotSupportedException
     {
         Object cloned = super.clone();

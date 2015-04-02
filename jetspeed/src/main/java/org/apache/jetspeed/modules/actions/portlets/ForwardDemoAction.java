@@ -58,21 +58,22 @@ public class ForwardDemoAction extends VelocityPortletAction
      * Subclasses must override this method to provide default behavior 
      * for the portlet action
      */
-    protected void buildNormalContext( VelocityPortlet portlet, 
+    @Override
+	protected void buildNormalContext( VelocityPortlet portlet, 
                                        Context context,
                                        RunData rundata )
     {
         String next = (String)PortletSessionState.getAttribute(rundata, PARAM_NEXT);
         if (null == next)
         {
-            next = (String)PortletConfigState.getParameter(portlet, rundata, PARAM_NEXT, "NOT_SET");
+            next = PortletConfigState.getParameter(portlet, rundata, PARAM_NEXT, "NOT_SET");
 
             PortletSessionState.setAttribute(rundata, PARAM_NEXT, next);
         }
         String target = (String)PortletSessionState.getAttribute(rundata, PARAM_TARGET);
         if (null == target)
         {
-            target = (String)PortletConfigState.getParameter(portlet, rundata, PARAM_TARGET, "NOT_SET");
+            target = PortletConfigState.getParameter(portlet, rundata, PARAM_TARGET, "NOT_SET");
 
             PortletSessionState.setAttribute(rundata, PARAM_TARGET, target);
         }
@@ -101,7 +102,7 @@ public class ForwardDemoAction extends VelocityPortletAction
     public void doUpdate(RunData rundata, Context context)
     {
         // get posted new target
-        String next = (String)rundata.getParameters().getString(PARAM_NEXT);
+        String next = rundata.getParameters().getString(PARAM_NEXT);
         
         if (next!=null)
         {
@@ -153,7 +154,7 @@ public class ForwardDemoAction extends VelocityPortletAction
     public void doTarget(RunData rundata, Context context)
     {
         // get posted new target
-        String target = (String)rundata.getParameters().getString(PARAM_TARGET);
+        String target = rundata.getParameters().getString(PARAM_TARGET);
         if (target!=null)
         {
             PortletSessionState.setAttribute( rundata, PARAM_TARGET, target);

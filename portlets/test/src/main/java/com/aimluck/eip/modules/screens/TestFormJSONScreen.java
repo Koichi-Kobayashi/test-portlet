@@ -29,8 +29,6 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.test.TestFormData;
 import com.aimluck.eip.test.TestMultiDelete;
-import com.aimluck.eip.test.TestFormData;
-import com.aimluck.eip.test.TestMultiDelete;
 
 /**
  * TestをJSONデータとして出力するクラスです。 <br />

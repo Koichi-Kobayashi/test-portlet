@@ -17,7 +17,6 @@ package org.apache.jetspeed.portal.portlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -122,7 +121,8 @@ public class GenericMVCPortlet extends AbstractInstancePortlet
     public static final String PORTLET_ID = "__portletId";
     public static final String DOC_URL = "__docUrl";
   
-    public void init() throws PortletException
+    @Override
+	public void init() throws PortletException
     {
         
         //STW: check custimization attribute
@@ -162,7 +162,8 @@ public class GenericMVCPortlet extends AbstractInstancePortlet
      * 
      * @return 
      */
-    public boolean isCacheable()
+    @Override
+	public boolean isCacheable()
     {
         return getPortletConfig().getInitParameter(IS_CACHEABLE, "true").equalsIgnoreCase("true");
     }
@@ -173,12 +174,14 @@ public class GenericMVCPortlet extends AbstractInstancePortlet
  * boolean paramter "provides.customization"
  * Defaults to "false"
  */
-    public boolean providesCustomization()
+    @Override
+	public boolean providesCustomization()
     {
         return providesCustomization;
     }
 
-    public ConcreteElement getContent(RunData rundata)
+    @Override
+	public ConcreteElement getContent(RunData rundata)
     {
         if (useDelayedRendering(rundata))
         {

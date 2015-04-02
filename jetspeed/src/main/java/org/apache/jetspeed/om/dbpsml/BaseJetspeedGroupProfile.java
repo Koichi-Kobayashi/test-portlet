@@ -1,24 +1,17 @@
 package org.apache.jetspeed.om.dbpsml;
 
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.BaseObject;
-import org.apache.torque.om.ComboKey;
-import org.apache.torque.om.DateKey;
 import org.apache.torque.om.NumberKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
-import org.apache.torque.om.StringKey;
-import org.apache.torque.om.Persistent;
-import org.apache.torque.util.Criteria;
 import org.apache.torque.util.Transaction;
 
 
@@ -269,7 +262,8 @@ public abstract class BaseJetspeedGroupProfile extends BaseObject
      * Retrieves a field from the object by name passed in
      * as a String.
      */
-    public Object getByName(String name)
+    @Override
+	public Object getByName(String name)
     {
           if (name.equals("PsmlId"))
         {
@@ -307,33 +301,34 @@ public abstract class BaseJetspeedGroupProfile extends BaseObject
      * as a String.  The String must be one of the static
      * Strings defined in this Class' Peer.
      */
-    public Object getByPeerName(String name)
+    @Override
+	public Object getByPeerName(String name)
     {
-          if (name.equals(JetspeedGroupProfilePeer.PSML_ID ))
+          if (name.equals(BaseJetspeedGroupProfilePeer.PSML_ID ))
         {
                 return new Integer(getPsmlId());
             }
-          if (name.equals(JetspeedGroupProfilePeer.GROUP_NAME ))
+          if (name.equals(BaseJetspeedGroupProfilePeer.GROUP_NAME ))
         {
                 return getGroupName();
             }
-          if (name.equals(JetspeedGroupProfilePeer.MEDIA_TYPE ))
+          if (name.equals(BaseJetspeedGroupProfilePeer.MEDIA_TYPE ))
         {
                 return getMediaType();
             }
-          if (name.equals(JetspeedGroupProfilePeer.LANGUAGE ))
+          if (name.equals(BaseJetspeedGroupProfilePeer.LANGUAGE ))
         {
                 return getLanguage();
             }
-          if (name.equals(JetspeedGroupProfilePeer.COUNTRY ))
+          if (name.equals(BaseJetspeedGroupProfilePeer.COUNTRY ))
         {
                 return getCountry();
             }
-          if (name.equals(JetspeedGroupProfilePeer.PAGE ))
+          if (name.equals(BaseJetspeedGroupProfilePeer.PAGE ))
         {
                 return getPage();
             }
-          if (name.equals(JetspeedGroupProfilePeer.PROFILE ))
+          if (name.equals(BaseJetspeedGroupProfilePeer.PROFILE ))
         {
                 return getProfile();
             }
@@ -344,7 +339,8 @@ public abstract class BaseJetspeedGroupProfile extends BaseObject
      * Retrieves a field from the object by Position as specified
      * in the xml schema.  Zero-based.
      */
-    public Object getByPosition(int pos)
+    @Override
+	public Object getByPosition(int pos)
     {
             if ( pos == 0 )
         {
@@ -381,9 +377,10 @@ public abstract class BaseJetspeedGroupProfile extends BaseObject
      * Stores the object in the database.  If the object is new,
      * it inserts it; otherwise an update is performed.
      */
-    public void save() throws Exception
+    @Override
+	public void save() throws Exception
     {
-          save(JetspeedGroupProfilePeer.getMapBuilder()
+          save(BaseJetspeedGroupProfilePeer.getMapBuilder()
                 .getDatabaseMap().getName());
       }
 
@@ -394,7 +391,8 @@ public abstract class BaseJetspeedGroupProfile extends BaseObject
      * auto-generated conditionally and therefore needs to be
      * in this file instead of in the super class, BaseObject.
        */
-    public void save(String dbName) throws TorqueException
+    @Override
+	public void save(String dbName) throws TorqueException
     {
         Connection con = null;
           try
@@ -420,7 +418,8 @@ public abstract class BaseJetspeedGroupProfile extends BaseObject
      * the save() method and the connection details will be handled
      * internally
      */
-    public void save(Connection con) throws TorqueException
+    @Override
+	public void save(Connection con) throws TorqueException
     {
           if (!alreadyInSave)
         {
@@ -433,17 +432,17 @@ public abstract class BaseJetspeedGroupProfile extends BaseObject
             {
                 if (isNew())
                 {
-                    JetspeedGroupProfilePeer.doInsert((JetspeedGroupProfile)this, con);
+                    BaseJetspeedGroupProfilePeer.doInsert((JetspeedGroupProfile)this, con);
                     setNew(false);
                 }
                 else
                 {
-                    JetspeedGroupProfilePeer.doUpdate((JetspeedGroupProfile)this, con);
+                    BaseJetspeedGroupProfilePeer.doUpdate((JetspeedGroupProfile)this, con);
                 }
 
                       if (isCacheOnSave())
                 {
-                    JetspeedGroupProfileManager.putInstance(this);
+                    BaseJetspeedGroupProfileManager.putInstance(this);
                 }
               }
 
@@ -466,7 +465,8 @@ public abstract class BaseJetspeedGroupProfile extends BaseObject
      *
      * @param ObjectKey psmlId
      */
-    public void setPrimaryKey(ObjectKey psmlId)
+    @Override
+	public void setPrimaryKey(ObjectKey psmlId)
          {
             setPsmlId(((NumberKey)psmlId).intValue());
         }
@@ -474,7 +474,8 @@ public abstract class BaseJetspeedGroupProfile extends BaseObject
     /**
      * Set the PrimaryKey using a String.
      */
-    public void setPrimaryKey(String key) 
+    @Override
+	public void setPrimaryKey(String key) 
     {
             setPsmlId(Integer.parseInt(key));
         }
@@ -484,7 +485,8 @@ public abstract class BaseJetspeedGroupProfile extends BaseObject
      * returns an id that differentiates this object from others
      * of its class.
      */
-    public ObjectKey getPrimaryKey()
+    @Override
+	public ObjectKey getPrimaryKey()
     {
           return SimpleKey.keyFor(getPsmlId());
       }

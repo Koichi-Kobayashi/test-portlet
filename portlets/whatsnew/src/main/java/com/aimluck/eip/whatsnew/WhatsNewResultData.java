@@ -57,7 +57,8 @@ public class WhatsNewResultData implements ALData {
    * 
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
 
     /** Type */
     portlet_type = new ALNumberField();

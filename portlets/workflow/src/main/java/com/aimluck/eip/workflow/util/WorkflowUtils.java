@@ -54,7 +54,13 @@ import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRequest;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRequestMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRoute;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowRequest;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowRequestMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowRoute;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALActivity;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -186,22 +192,22 @@ public class WorkflowUtils {
         Database.query(EipTWorkflowRequest.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
+          _EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
           requestid);
       query.setQualifier(exp1);
 
       if (mode_update) {
         Expression exp3 =
           ExpressionFactory.matchExp(
-            EipTWorkflowRequest.EIP_TWORKFLOW_REQUEST_MAP_PROPERTY
+            _EipTWorkflowRequest.EIP_TWORKFLOW_REQUEST_MAP_PROPERTY
               + "."
-              + EipTWorkflowRequestMap.STATUS_PROPERTY,
+              + _EipTWorkflowRequestMap.STATUS_PROPERTY,
             DB_STATUS_CONFIRM);
         query.andQualifier(exp3);
 
         Expression exp4 =
           ExpressionFactory.matchExp(
-            EipTWorkflowRequest.PROGRESS_PROPERTY,
+            _EipTWorkflowRequest.PROGRESS_PROPERTY,
             DB_PROGRESS_WAIT);
         query.andQualifier(exp4);
       }
@@ -248,7 +254,7 @@ public class WorkflowUtils {
 
       Expression exp =
         ExpressionFactory.matchExp(
-          EipTWorkflowRequest.EIP_TWORKFLOW_ROUTE_PROPERTY,
+          _EipTWorkflowRequest.EIP_TWORKFLOW_ROUTE_PROPERTY,
           route);
 
       query.setQualifier(exp);
@@ -278,7 +284,7 @@ public class WorkflowUtils {
 
       Expression exp =
         ExpressionFactory.matchExp(
-          EipTWorkflowCategory.EIP_TWORKFLOW_ROUTE_PROPERTY,
+          _EipTWorkflowCategory.EIP_TWORKFLOW_ROUTE_PROPERTY,
           route);
 
       query.setQualifier(exp);
@@ -315,7 +321,7 @@ public class WorkflowUtils {
         Database.query(EipTWorkflowRequest.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
+          _EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
           requestid);
       query.setQualifier(exp1);
 
@@ -355,13 +361,13 @@ public class WorkflowUtils {
         Database.query(EipTWorkflowRequest.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
+          _EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
           requestid);
       query.setQualifier(exp1);
 
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipTWorkflowRequest.USER_ID_PROPERTY,
+          _EipTWorkflowRequest.USER_ID_PROPERTY,
           Integer.valueOf(ALEipUtils.getUserId(rundata)));
       query.andQualifier(exp2);
 
@@ -402,7 +408,7 @@ public class WorkflowUtils {
         Database.query(EipTWorkflowFile.class);
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTWorkflowFile.FILE_ID_PK_COLUMN,
+          _EipTWorkflowFile.FILE_ID_PK_COLUMN,
           Integer.valueOf(attachmentIndex));
       query.andQualifier(exp);
       List<EipTWorkflowFile> files = query.fetchList();
@@ -422,7 +428,7 @@ public class WorkflowUtils {
       List<String> fpaths) throws ALFileNotRemovedException {
     ALDeleteFileUtil.deleteFiles(
       timelineId,
-      EipTWorkflowFile.EIP_TWORKFLOW_REQUEST_PROPERTY,
+      _EipTWorkflowFile.EIP_TWORKFLOW_REQUEST_PROPERTY,
       getSaveDirPath(orgId, uid),
       fpaths,
       EipTWorkflowFile.class);
@@ -435,12 +441,12 @@ public class WorkflowUtils {
         Database.query(EipTWorkflowRequestMap.class);
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTWorkflowRequestMap.EIP_TWORKFLOW_REQUEST_PROPERTY
+          _EipTWorkflowRequestMap.EIP_TWORKFLOW_REQUEST_PROPERTY
             + "."
-            + EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
+            + _EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
           request.getRequestId());
       query.setQualifier(exp);
-      query.orderAscending(EipTWorkflowRequestMap.ORDER_INDEX_PROPERTY);
+      query.orderAscending(_EipTWorkflowRequestMap.ORDER_INDEX_PROPERTY);
 
       List<EipTWorkflowRequestMap> maps = query.fetchList();
 
@@ -479,7 +485,7 @@ public class WorkflowUtils {
         Database.query(EipTWorkflowCategory.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
+          _EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
           categoryid);
       query.setQualifier(exp1);
 
@@ -533,7 +539,7 @@ public class WorkflowUtils {
         Database.query(EipTWorkflowCategory.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
+          _EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
           1);
       query1.setQualifier(exp1);
       List<EipTWorkflowCategory> aList1 = query1.fetchList();
@@ -551,10 +557,10 @@ public class WorkflowUtils {
         Database.query(EipTWorkflowCategory.class);
       Expression exp2 =
         ExpressionFactory.noMatchDbExp(
-          EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
+          _EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
           1);
       query.setQualifier(exp2);
-      query.orderAscending(EipTWorkflowCategory.CATEGORY_NAME_PROPERTY);
+      query.orderAscending(_EipTWorkflowCategory.CATEGORY_NAME_PROPERTY);
       List<EipTWorkflowCategory> aList = query.fetchList();
 
       for (EipTWorkflowCategory record : aList) {
@@ -596,7 +602,7 @@ public class WorkflowUtils {
         Database.query(EipTWorkflowRoute.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTWorkflowRoute.ROUTE_ID_PK_COLUMN,
+          _EipTWorkflowRoute.ROUTE_ID_PK_COLUMN,
           routeid);
       query.setQualifier(exp1);
 
@@ -647,7 +653,7 @@ public class WorkflowUtils {
 
       SelectQuery<EipTWorkflowRoute> query =
         Database.query(EipTWorkflowRoute.class);
-      query.orderAscending(EipTWorkflowRoute.ROUTE_NAME_PROPERTY);
+      query.orderAscending(_EipTWorkflowRoute.ROUTE_NAME_PROPERTY);
       List<EipTWorkflowRoute> aList = query.fetchList();
 
       for (EipTWorkflowRoute record : aList) {
@@ -813,20 +819,20 @@ public class WorkflowUtils {
         Database.query(EipTWorkflowRequest.class);
       Expression exp11 =
         ExpressionFactory.matchDbExp(
-          EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
+          _EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
           request.getParentId());
       Expression exp12 =
         ExpressionFactory.matchExp(
-          EipTWorkflowRequest.PARENT_ID_PROPERTY,
+          _EipTWorkflowRequest.PARENT_ID_PROPERTY,
           request.getParentId());
       query.setQualifier(exp11.orExp(exp12));
       Expression exp2 =
         ExpressionFactory.noMatchDbExp(
-          EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
+          _EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
           request.getRequestId());
       query.andQualifier(exp2);
 
-      query.orderAscending(EipTWorkflowRequest.UPDATE_DATE_PROPERTY);
+      query.orderAscending(_EipTWorkflowRequest.UPDATE_DATE_PROPERTY);
 
       List<EipTWorkflowRequest> requests = query.fetchList();
 
@@ -1565,11 +1571,11 @@ public class WorkflowUtils {
     SelectQuery<EipTWorkflowFile> dbquery =
       Database.query(EipTWorkflowFile.class);
     dbquery.andQualifier(ExpressionFactory.matchDbExp(
-      EipTWorkflowFile.EIP_TWORKFLOW_REQUEST_PROPERTY,
+      _EipTWorkflowFile.EIP_TWORKFLOW_REQUEST_PROPERTY,
       request.getRequestId()));
     for (int i = 0; i < fileIDsize; i++) {
       dbquery.orQualifier(ExpressionFactory.matchDbExp(
-        EipTWorkflowFile.FILE_ID_PK_COLUMN,
+        _EipTWorkflowFile.FILE_ID_PK_COLUMN,
         fileids[i]));
     }
     List<EipTWorkflowFile> files = dbquery.fetchList();
@@ -1583,12 +1589,12 @@ public class WorkflowUtils {
     SelectQuery<EipTWorkflowFile> query =
       Database.query(EipTWorkflowFile.class);
     query.andQualifier(ExpressionFactory.matchDbExp(
-      EipTWorkflowFile.EIP_TWORKFLOW_REQUEST_PROPERTY,
+      _EipTWorkflowFile.EIP_TWORKFLOW_REQUEST_PROPERTY,
       request.getRequestId()));
     for (int i = 0; i < fileIDsize; i++) {
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTWorkflowFile.FILE_ID_PK_COLUMN,
+          _EipTWorkflowFile.FILE_ID_PK_COLUMN,
           Integer.parseInt(fileids[i]));
       query.andQualifier(exp.notExp());
     }
@@ -1745,7 +1751,7 @@ public class WorkflowUtils {
       Database.query(EipTWorkflowFile.class);
     Expression exp =
       ExpressionFactory.matchDbExp(
-        EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
+        _EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
         Integer.valueOf(requestid));
     query.setQualifier(exp);
     return query;
@@ -1769,7 +1775,7 @@ public class WorkflowUtils {
     try {
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
           .valueOf(userId));
       query.setQualifier(exp);
       List<TurbineUser> destUserList = query.fetchList();
@@ -1801,7 +1807,7 @@ public class WorkflowUtils {
     try {
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
           .valueOf(userId));
       query.setQualifier(exp);
       List<TurbineUser> destUserList = query.fetchList();
@@ -1828,7 +1834,7 @@ public class WorkflowUtils {
         Database.query(EipTWorkflowCategory.class);
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
+          _EipTWorkflowCategory.CATEGORY_ID_PK_COLUMN,
           Integer.valueOf(categoryId));
       query.setQualifier(exp);
       List<EipTWorkflowCategory> list = query.fetchList();
@@ -1855,7 +1861,7 @@ public class WorkflowUtils {
     try {
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
           .valueOf(userId));
       query.setQualifier(exp);
       List<TurbineUser> destUserList = query.fetchList();
@@ -1974,21 +1980,21 @@ public class WorkflowUtils {
       Database.query(EipTWorkflowRequestMap.class);
     Expression exp11 =
       ExpressionFactory.matchDbExp(
-        EipTWorkflowRequestMap.EIP_TWORKFLOW_REQUEST_PROPERTY
+        _EipTWorkflowRequestMap.EIP_TWORKFLOW_REQUEST_PROPERTY
           + "."
-          + EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
+          + _EipTWorkflowRequest.REQUEST_ID_PK_COLUMN,
         request.getParentId());
     Expression exp12 =
       ExpressionFactory.matchExp(
-        EipTWorkflowRequestMap.EIP_TWORKFLOW_REQUEST_PROPERTY
+        _EipTWorkflowRequestMap.EIP_TWORKFLOW_REQUEST_PROPERTY
           + "."
-          + EipTWorkflowRequest.PARENT_ID_PROPERTY,
+          + _EipTWorkflowRequest.PARENT_ID_PROPERTY,
         request.getParentId());
     Expression exp13 =
       ExpressionFactory.matchExp(
-        EipTWorkflowRequestMap.EIP_TWORKFLOW_REQUEST_PROPERTY
+        _EipTWorkflowRequestMap.EIP_TWORKFLOW_REQUEST_PROPERTY
           + "."
-          + EipTWorkflowRequest.PARENT_ID_PROPERTY,
+          + _EipTWorkflowRequest.PARENT_ID_PROPERTY,
         request.getRequestId());
     query.setQualifier(exp11.orExp(exp12).orExp(exp13));
     ResultList<EipTWorkflowRequestMap> mapList = query.getResultList();

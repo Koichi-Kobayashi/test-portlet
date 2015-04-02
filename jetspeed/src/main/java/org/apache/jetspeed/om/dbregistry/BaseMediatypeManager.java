@@ -2,8 +2,6 @@
 
 package org.apache.jetspeed.om.dbregistry;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.torque.Torque;
@@ -45,8 +43,8 @@ public abstract class BaseMediatypeManager
     public static MediatypeManager getManager()
     {
         return (MediatypeManager)
-            Torque.getManager(MediatypeManager.MANAGED_CLASS,
-                MediatypeManager.DEFAULT_MANAGER_CLASS);
+            Torque.getManager(BaseMediatypeManager.MANAGED_CLASS,
+                BaseMediatypeManager.DEFAULT_MANAGER_CLASS);
     }
 
     /**
@@ -255,16 +253,17 @@ public abstract class BaseMediatypeManager
     protected boolean existsImpl(Mediatype om)
         throws TorqueException
     {
-        Criteria crit = MediatypePeer
-            .buildCriteria((Mediatype)om);
-        return MediatypePeer.doSelect(crit).size() > 0;
+        Criteria crit = BaseMediatypePeer
+            .buildCriteria(om);
+        return BaseMediatypePeer.doSelect(crit).size() > 0;
     }
 
 
-    protected Persistent retrieveStoredOM(ObjectKey id)
+    @Override
+	protected Persistent retrieveStoredOM(ObjectKey id)
         throws TorqueException
     {
-        return MediatypePeer.retrieveByPK(id);
+        return BaseMediatypePeer.retrieveByPK(id);
     }
 
     /**
@@ -274,9 +273,10 @@ public abstract class BaseMediatypeManager
      * @return a <code>List</code> value
      * @exception TorqueException if an error occurs
      */
-    protected List retrieveStoredOMs(List ids)
+    @Override
+	protected List retrieveStoredOMs(List ids)
         throws TorqueException
     {
-        return MediatypePeer.retrieveByPKs(ids);
+        return BaseMediatypePeer.retrieveByPKs(ids);
     }
 }

@@ -36,6 +36,8 @@ import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
 import com.aimluck.eip.cayenne.om.portlet.EipTMail;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFilter;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFolder;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMailFilter;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMailFolder;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -225,16 +227,16 @@ public class WebMailFolderFormData extends ALAbstractFormData {
     try {
       SelectQuery<EipTMailFolder> query = Database.query(EipTMailFolder.class);
       Expression exp =
-        ExpressionFactory.matchExp(EipTMailFolder.FOLDER_NAME_PROPERTY, fname);
+        ExpressionFactory.matchExp(_EipTMailFolder.FOLDER_NAME_PROPERTY, fname);
       if (is_update) {
         exp =
           exp.andExp(ExpressionFactory.noMatchDbExp(
-            EipTMailFolder.FOLDER_ID_PK_COLUMN,
+            _EipTMailFolder.FOLDER_ID_PK_COLUMN,
             folderId));
       }
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipTMailFolder.EIP_MMAIL_ACCOUNT_PROPERTY,
+          _EipTMailFolder.EIP_MMAIL_ACCOUNT_PROPERTY,
           mailAccount);
 
       List<EipTMailFolder> list =
@@ -309,7 +311,7 @@ public class WebMailFolderFormData extends ALAbstractFormData {
 
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTMailFilter.EIP_TMAIL_FOLDER_PROPERTY,
+          _EipTMailFilter.EIP_TMAIL_FOLDER_PROPERTY,
           folder);
 
       List<EipTMailFilter> filters = query.setQualifier(exp).fetchList();

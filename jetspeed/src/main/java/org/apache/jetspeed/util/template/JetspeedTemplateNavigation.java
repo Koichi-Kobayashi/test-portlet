@@ -50,7 +50,8 @@ public class JetspeedTemplateNavigation extends TemplateNavigation {
     }
 
 
-    public TemplateNavigation setTemplate(String template) {
+    @Override
+	public TemplateNavigation setTemplate(String template) {
         return super.setTemplate(TemplateLocator.locateNavigationTemplate(data,template));
     }
 }

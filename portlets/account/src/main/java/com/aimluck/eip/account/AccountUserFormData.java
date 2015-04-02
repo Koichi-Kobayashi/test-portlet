@@ -48,6 +48,7 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.commons.utils.ALStringUtil;
 import com.aimluck.eip.account.util.AccountUtils;
 import com.aimluck.eip.cayenne.om.account.EipMUserPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMUserPosition;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlog;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogFootmarkMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystem;
@@ -56,6 +57,8 @@ import com.aimluck.eip.cayenne.om.portlet.EipTTodo;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodoCategory;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -486,7 +489,7 @@ public class AccountUserFormData extends ALAbstractFormData {
         try {
           Expression exp =
             ExpressionFactory.matchExp(
-              TurbineUser.LOGIN_NAME_PROPERTY,
+              _TurbineUser.LOGIN_NAME_PROPERTY,
               username.getValue());
           SelectQuery<TurbineUser> query =
             Database.query(TurbineUser.class, exp);
@@ -973,7 +976,7 @@ public class AccountUserFormData extends ALAbstractFormData {
           JetspeedSecurity.forcePassword(user, password.getValue());
         } else {
           Expression exp =
-            ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, user
+            ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, user
               .getUserId());
           SelectQuery<TurbineUser> query =
             Database.query(TurbineUser.class, exp);
@@ -1152,7 +1155,7 @@ public class AccountUserFormData extends ALAbstractFormData {
 
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
-        ExpressionFactory.matchExp(TurbineUser.LOGIN_NAME_PROPERTY, user_name);
+        ExpressionFactory.matchExp(_TurbineUser.LOGIN_NAME_PROPERTY, user_name);
       query.setQualifier(exp);
       List<TurbineUser> list = query.fetchList();
 
@@ -1235,7 +1238,7 @@ public class AccountUserFormData extends ALAbstractFormData {
 
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
-        ExpressionFactory.matchExp(TurbineUser.LOGIN_NAME_PROPERTY, user_name);
+        ExpressionFactory.matchExp(_TurbineUser.LOGIN_NAME_PROPERTY, user_name);
       query.setQualifier(exp);
       List<TurbineUser> list = query.fetchList();
 
@@ -1323,7 +1326,7 @@ public class AccountUserFormData extends ALAbstractFormData {
       // ユーザーIDを取得する
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp1 =
-        ExpressionFactory.matchExp(TurbineUser.LOGIN_NAME_PROPERTY, user_name);
+        ExpressionFactory.matchExp(_TurbineUser.LOGIN_NAME_PROPERTY, user_name);
       query.setQualifier(exp1);
       List<TurbineUser> list3 = query.fetchList();
 
@@ -1340,7 +1343,7 @@ public class AccountUserFormData extends ALAbstractFormData {
         Database.query(TurbineUserGroupRole.class);
       Expression exp2 =
         ExpressionFactory.matchExp(
-          TurbineUserGroupRole.TURBINE_USER_PROPERTY,
+          _TurbineUserGroupRole.TURBINE_USER_PROPERTY,
           userId);
       query2.setQualifier(exp2);
       List<TurbineUserGroupRole> list4 = query2.fetchList();
@@ -1379,7 +1382,7 @@ public class AccountUserFormData extends ALAbstractFormData {
       // 他のユーザの順番を変更する．
       SelectQuery<EipMUserPosition> p_query =
         Database.query(EipMUserPosition.class);
-      p_query.orderAscending(EipMUserPosition.POSITION_PROPERTY);
+      p_query.orderAscending(_EipMUserPosition.POSITION_PROPERTY);
       List<EipMUserPosition> userPositions = p_query.fetchList();
       if (userPositions != null && userPositions.size() > 0) {
         EipMUserPosition userPosition = null;

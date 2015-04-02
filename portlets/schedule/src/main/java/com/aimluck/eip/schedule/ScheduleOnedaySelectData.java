@@ -40,7 +40,10 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodo;
 import com.aimluck.eip.cayenne.om.portlet.VEipTScheduleList;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTodo;
+import com.aimluck.eip.cayenne.om.portlet.auto._VEipTScheduleList;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALPageNotFoundException;
 import com.aimluck.eip.modules.actions.common.ALAction;
@@ -416,19 +419,19 @@ public class ScheduleOnedaySelectData extends AjaxScheduleMonthlySelectData {
       Database.query(VEipTScheduleList.class);
 
     Expression exp1 =
-      ExpressionFactory.matchExp(VEipTScheduleList.USER_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_VEipTScheduleList.USER_ID_PROPERTY, Integer
         .valueOf(ALEipUtils.getUserId(rundata)));
     query.setQualifier(exp1);
     Expression exp2 =
       ExpressionFactory.matchExp(
-        VEipTScheduleList.TYPE_PROPERTY,
+        _VEipTScheduleList.TYPE_PROPERTY,
         ScheduleUtils.SCHEDULEMAP_TYPE_USER);
     query.andQualifier(exp2);
 
     // 終了日時
     Expression exp11 =
       ExpressionFactory.greaterOrEqualExp(
-        VEipTScheduleList.END_DATE_PROPERTY,
+        _VEipTScheduleList.END_DATE_PROPERTY,
         viewDate.getValue());
 
     // 日付を1日ずつずらす
@@ -440,23 +443,23 @@ public class ScheduleOnedaySelectData extends AjaxScheduleMonthlySelectData {
     // 開始日時
     // LESS_EQUALからLESS_THANへ修正、期間スケジュールFIXのため(Haruo Kaneko)
     Expression exp12 =
-      ExpressionFactory.lessExp(VEipTScheduleList.START_DATE_PROPERTY, field
+      ExpressionFactory.lessExp(_VEipTScheduleList.START_DATE_PROPERTY, field
         .getValue());
     // 通常スケジュール
     Expression exp13 =
       ExpressionFactory.noMatchExp(
-        VEipTScheduleList.REPEAT_PATTERN_PROPERTY,
+        _VEipTScheduleList.REPEAT_PATTERN_PROPERTY,
         "N");
     // 期間スケジュール
     Expression exp14 =
       ExpressionFactory.noMatchExp(
-        VEipTScheduleList.REPEAT_PATTERN_PROPERTY,
+        _VEipTScheduleList.REPEAT_PATTERN_PROPERTY,
         "S");
     query.andQualifier((exp11.andExp(exp12)).orExp(exp13.andExp(exp14)));
     // 開始日時でソート
     List<Ordering> orders = new ArrayList<Ordering>();
-    orders.add(new Ordering(VEipTScheduleList.START_DATE_PROPERTY, true));
-    orders.add(new Ordering(VEipTScheduleList.END_DATE_PROPERTY, true));
+    orders.add(new Ordering(_VEipTScheduleList.START_DATE_PROPERTY, true));
+    orders.add(new Ordering(_VEipTScheduleList.END_DATE_PROPERTY, true));
     query.getQuery().addOrderings(orders);
 
     return query;
@@ -747,39 +750,39 @@ public class ScheduleOnedaySelectData extends AjaxScheduleMonthlySelectData {
     SelectQuery<EipTTodo> query = Database.query(EipTTodo.class);
 
     Expression exp1 =
-      ExpressionFactory.noMatchExp(EipTTodo.STATE_PROPERTY, Short
+      ExpressionFactory.noMatchExp(_EipTTodo.STATE_PROPERTY, Short
         .valueOf((short) 100));
     query.setQualifier(exp1);
     Expression exp2 =
-      ExpressionFactory.matchExp(EipTTodo.ADDON_SCHEDULE_FLG_PROPERTY, "T");
+      ExpressionFactory.matchExp(_EipTTodo.ADDON_SCHEDULE_FLG_PROPERTY, "T");
     query.andQualifier(exp2);
     Expression exp3 =
-      ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, uid);
+      ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, uid);
     query.andQualifier(exp3);
 
     // 終了日時
     Expression exp11 =
-      ExpressionFactory.greaterOrEqualExp(EipTTodo.END_DATE_PROPERTY, viewDate
+      ExpressionFactory.greaterOrEqualExp(_EipTTodo.END_DATE_PROPERTY, viewDate
         .getValue());
     // 開始日時
     Expression exp12 =
-      ExpressionFactory.lessOrEqualExp(EipTTodo.START_DATE_PROPERTY, viewDate
+      ExpressionFactory.lessOrEqualExp(_EipTTodo.START_DATE_PROPERTY, viewDate
         .getValue());
 
     // 開始日時のみ指定されている ToDo を検索
     Expression exp21 =
-      ExpressionFactory.lessOrEqualExp(EipTTodo.START_DATE_PROPERTY, viewDate
+      ExpressionFactory.lessOrEqualExp(_EipTTodo.START_DATE_PROPERTY, viewDate
         .getValue());
     Expression exp22 =
-      ExpressionFactory.matchExp(EipTTodo.END_DATE_PROPERTY, ToDoUtils
+      ExpressionFactory.matchExp(_EipTTodo.END_DATE_PROPERTY, ToDoUtils
         .getEmptyDate());
 
     // 終了日時のみ指定されている ToDo を検索
     Expression exp31 =
-      ExpressionFactory.greaterOrEqualExp(EipTTodo.END_DATE_PROPERTY, viewDate
+      ExpressionFactory.greaterOrEqualExp(_EipTTodo.END_DATE_PROPERTY, viewDate
         .getValue());
     Expression exp32 =
-      ExpressionFactory.matchExp(EipTTodo.START_DATE_PROPERTY, ToDoUtils
+      ExpressionFactory.matchExp(_EipTTodo.START_DATE_PROPERTY, ToDoUtils
         .getEmptyDate());
 
     query.andQualifier((exp11.andExp(exp12)).orExp(exp21.andExp(exp22)).orExp(

@@ -25,8 +25,10 @@ import org.apache.jetspeed.portal.portlets.AbstractPortlet;
 import org.apache.jetspeed.portal.PortletException;
 import org.apache.jetspeed.services.resources.JetspeedResources;
 
+import org.apache.turbine.services.resources.TurbineResources;
 //turbine
 import org.apache.turbine.util.RunData;
+
 
 //standard java stuff
 import java.util.Iterator;
@@ -43,7 +45,8 @@ public class JetspeedPropertiesPortlet extends AbstractPortlet {
         
     /**
     */
-    public void init() throws PortletException {
+    @Override
+	public void init() throws PortletException {
 
         this.setTitle("Properties");
         this.setDescription("Jetspeed Properties");
@@ -52,7 +55,7 @@ public class JetspeedPropertiesPortlet extends AbstractPortlet {
         ElementContainer root = new ElementContainer();
         Table table = new Table().setWidth("100%");
 
-        Iterator i = JetspeedResources.getKeys();
+        Iterator i = TurbineResources.getKeys();
 
         root.addElement( new B( "Jetspeed properties: " ) );
         
@@ -89,13 +92,15 @@ public class JetspeedPropertiesPortlet extends AbstractPortlet {
 
     /**
     */
-    public boolean getAllowEdit( RunData rundata ) {
+    @Override
+	public boolean getAllowEdit( RunData rundata ) {
         return false;
     }
 
     /**
     */
-    public boolean getAllowMaximize( RunData rundata ) {
+    @Override
+	public boolean getAllowMaximize( RunData rundata ) {
         return false;
     }
     

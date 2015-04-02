@@ -46,7 +46,10 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.utils.ALDateUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodo;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodoCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTodo;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTodoCategory;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALActivity;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -123,10 +126,10 @@ public class ToDoUtils {
       }
 
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTTodo.TODO_ID_PK_COLUMN, todoid);
-      exp.andExp(ExpressionFactory.matchDbExp(EipTTodo.TURBINE_USER_PROPERTY
+        ExpressionFactory.matchDbExp(_EipTTodo.TODO_ID_PK_COLUMN, todoid);
+      exp.andExp(ExpressionFactory.matchDbExp(_EipTTodo.TURBINE_USER_PROPERTY
         + "."
-        + TurbineUser.USER_ID_PK_COLUMN, Integer.valueOf(ALEipUtils
+        + _TurbineUser.USER_ID_PK_COLUMN, Integer.valueOf(ALEipUtils
         .getUserId(rundata))));
 
       List<EipTTodo> todoList = Database.query(EipTTodo.class, exp).fetchList();
@@ -175,9 +178,9 @@ public class ToDoUtils {
       }
 
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTTodo.TODO_ID_PK_COLUMN, todoid);
+        ExpressionFactory.matchDbExp(_EipTTodo.TODO_ID_PK_COLUMN, todoid);
       exp
-        .andExp(ExpressionFactory.matchExp(EipTTodo.PUBLIC_FLAG_PROPERTY, "T"));
+        .andExp(ExpressionFactory.matchExp(_EipTTodo.PUBLIC_FLAG_PROPERTY, "T"));
 
       List<EipTTodo> todoList = Database.query(EipTTodo.class, exp).fetchList();
 
@@ -214,7 +217,7 @@ public class ToDoUtils {
     try {
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTTodoCategory.CATEGORY_ID_PK_COLUMN,
+          _EipTTodoCategory.CATEGORY_ID_PK_COLUMN,
           categoryid);
 
       List<EipTTodoCategory> categoryList =
@@ -579,7 +582,7 @@ public class ToDoUtils {
       // カテゴリ一覧
       List<EipTTodoCategory> categoryList2 =
         Database.query(EipTTodoCategory.class).orderAscending(
-          EipTTodoCategory.CATEGORY_NAME_PROPERTY).fetchList();
+          _EipTTodoCategory.CATEGORY_NAME_PROPERTY).fetchList();
 
       StringBuffer title;
       ALEipUser user;
@@ -605,7 +608,7 @@ public class ToDoUtils {
     // その他追加
     EipTTodoCategory unCategorized =
       Database.query(EipTTodoCategory.class).where(
-        Operations.eq(EipTTodoCategory.TURBINE_USER_PROPERTY, 0)).fetchSingle();
+        Operations.eq(_EipTTodoCategory.TURBINE_USER_PROPERTY, 0)).fetchSingle();
     rd = new ToDoCategoryResultData();
     rd.initField();
     rd.setCategoryId(unCategorized.getCategoryId());

@@ -39,7 +39,7 @@ import org.apache.turbine.services.cache.ObjectExpiredException;
  * the Turbine GlobalCacheService</p>
  *
  * @author <a href="mailto:burton@apache.org">Kevin A. Burton</a>
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:paulsp@apache.org">Paul Spencer</a>
  * @version $Id: JetspeedPortletCacheService.java,v 1.10 2004/02/23 03:34:54 jford Exp $
  */
@@ -61,7 +61,8 @@ implements PortletCacheService
      *
      * @param config A ServletConfig.
      */
-    public void init( ServletConfig config ) {
+    @Override
+	public void init( ServletConfig config ) {
         try {
             logger.info( "JetspeedPortletCacheService early init()....starting!");
             if (DefaultTimeToLiveMillis < 0) {
@@ -87,7 +88,8 @@ implements PortletCacheService
      *
      * @param item the object to store in the Cache
      */
-    public void addCacheable( Cacheable item ) {
+    @Override
+	public void addCacheable( Cacheable item ) {
         
         String handle = item.getHandle();
         
@@ -141,7 +143,8 @@ implements PortletCacheService
      * @see PortletCacheService#removeCacheable
      * @param handle the identifier of the object we wish to retrieve
      */
-    public void removeCacheable( String handle ) {
+    @Override
+	public void removeCacheable( String handle ) {
         
         CachedObject obj = null;
         
@@ -162,7 +165,8 @@ implements PortletCacheService
      * @param handle the identifier of the object we wish to retrieve
      * @return the cacehd object or null if not found
      */
-    public Cacheable getCacheable( String handle ) {
+    @Override
+	public Cacheable getCacheable( String handle ) {
         
         CachedObject obj = null;
         

@@ -63,7 +63,8 @@ public class RegistryAccessController extends TurbineBaseService implements Port
      * @param action the secured action to be performed on the resource by the user.
      * @return boolean true if the user has sufficient privilege.
      */
-    public boolean checkPermission(JetspeedUser user, Portlet portlet, String action)
+    @Override
+	public boolean checkPermission(JetspeedUser user, Portlet portlet, String action)
     {
         return checkPermission(user, portlet, action, null);
     }
@@ -80,7 +81,8 @@ public class RegistryAccessController extends TurbineBaseService implements Port
      * @param owner of the entry, i.e. the username
      * @return boolean true if the user has sufficient privilege.
      */
-    public boolean checkPermission(JetspeedUser user, Portlet portlet, String action, String owner)
+    @Override
+	public boolean checkPermission(JetspeedUser user, Portlet portlet, String action, String owner)
     {
         SecurityReference securityRef = portlet.getPortletConfig().getSecurityRef();
         if (securityRef != null)
@@ -93,7 +95,7 @@ public class RegistryAccessController extends TurbineBaseService implements Port
         // Don't query registry if portlet is a set
         if (!(portlet instanceof PortletSet))
         {
-            registryEntry = (RegistryEntry) Registry.getEntry(Registry.PORTLET, portletName);
+            registryEntry = Registry.getEntry(Registry.PORTLET, portletName);
         }            
         //portlet is not a portlet - probably a controller or control
         if (registryEntry==null) {
@@ -102,7 +104,7 @@ public class RegistryAccessController extends TurbineBaseService implements Port
                 PortletController pc = ps.getController();
                 if (pc != null) {
                     portletName = pc.getConfig().getName();
-                    registryEntry = (RegistryEntry)Registry.getEntry(Registry.PORTLET_CONTROLLER, portletName);
+                    registryEntry = Registry.getEntry(Registry.PORTLET_CONTROLLER, portletName);
                 }
             }
         }
@@ -124,7 +126,8 @@ public class RegistryAccessController extends TurbineBaseService implements Port
      * @param action the secured action to be performed on the resource by the user.
      * @return boolean true if the user has sufficient privilege.
      */
-    public boolean checkPermission(JetspeedUser user, Entry entry, String action)
+    @Override
+	public boolean checkPermission(JetspeedUser user, Entry entry, String action)
     {
         return checkPermission( user, entry, action, null);
     }
@@ -141,7 +144,8 @@ public class RegistryAccessController extends TurbineBaseService implements Port
      * @param owner of the entry, i.e. the username
      * @return boolean true if the user has sufficient privilege.
      */
-    public boolean checkPermission(JetspeedUser user, Entry entry, String action, String owner)
+    @Override
+	public boolean checkPermission(JetspeedUser user, Entry entry, String action, String owner)
     {
         SecurityReference securityRef = entry.getSecurityRef();
         if (securityRef == null)
@@ -163,7 +167,8 @@ public class RegistryAccessController extends TurbineBaseService implements Port
      * @param action the secured action to be performed on the resource by the user.
      * @return boolean true if the user has sufficient privilege.
      */
-    public boolean checkPermission(JetspeedUser user, PortalResource resource, String action)
+    @Override
+	public boolean checkPermission(JetspeedUser user, PortalResource resource, String action)
     {
         switch (resource.getResourceType())
         {
@@ -264,7 +269,8 @@ public class RegistryAccessController extends TurbineBaseService implements Port
      * @exception throws a <code>InitializationException</code> if the service
      * fails to initialize
      */
-    public synchronized void init(ServletConfig conf)
+    @Override
+	public synchronized void init(ServletConfig conf)
     throws InitializationException
     {
         if (getInit()) return;

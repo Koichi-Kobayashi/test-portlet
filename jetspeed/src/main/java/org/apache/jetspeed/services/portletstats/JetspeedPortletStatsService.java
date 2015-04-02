@@ -113,7 +113,8 @@ public class JetspeedPortletStatsService extends TurbineBaseService
      * This is the early initialization method called by the 
      * Turbine <code>Service</code> framework
      */
-    public void init( ServletConfig conf ) throws InitializationException
+    @Override
+	public void init( ServletConfig conf ) throws InitializationException
     {
 
         ResourceService serviceConf = ((TurbineServices)TurbineServices.getInstance())
@@ -131,7 +132,8 @@ public class JetspeedPortletStatsService extends TurbineBaseService
     /**
      * @see org.apache.jetspeed.services.portletstats.PortletStatsService#isEnabled
      */
-    public boolean isEnabled()
+    @Override
+	public boolean isEnabled()
     {
         return this.enabled;
     }
@@ -139,7 +141,8 @@ public class JetspeedPortletStatsService extends TurbineBaseService
     /**
      * @see org.apache.jetspeed.services.portletstats.PortletStatsService#setEnabled
      */
-    public boolean setEnabled(boolean state)
+    @Override
+	public boolean setEnabled(boolean state)
     {
         boolean oldState = this.enabled;
         this.enabled = state;
@@ -150,7 +153,8 @@ public class JetspeedPortletStatsService extends TurbineBaseService
     /**
      * @see org.apache.jetspeed.services.portletstats.PortletStatsService#logAccess
      */
-    public void logAccess(RunData data, Portlet portlet, String statusCode, long time)
+    @Override
+	public void logAccess(RunData data, Portlet portlet, String statusCode, long time)
     {
         
         if (!this.isEnabled())
@@ -207,7 +211,8 @@ public class JetspeedPortletStatsService extends TurbineBaseService
      * @param portlet
      * @param statusCode
      */
-    public void logAccess(RunData data, Portlet portlet, String statusCode) 
+    @Override
+	public void logAccess(RunData data, Portlet portlet, String statusCode) 
     {
         logAccess(data, portlet, statusCode, 0);
     }

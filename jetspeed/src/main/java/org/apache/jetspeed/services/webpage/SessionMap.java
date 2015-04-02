@@ -153,7 +153,8 @@ public class SessionMap extends HashMap implements HttpSessionBindingListener
      * It is called when the session is bound
      *
      */
-    public void valueBound(HttpSessionBindingEvent event)
+    @Override
+	public void valueBound(HttpSessionBindingEvent event)
     {
     }
 
@@ -165,7 +166,8 @@ public class SessionMap extends HashMap implements HttpSessionBindingListener
      * It session object is then removed from the agent's cache 
      *
      */    
-    public void valueUnbound(HttpSessionBindingEvent event)
+    @Override
+	public void valueUnbound(HttpSessionBindingEvent event)
     {
         log.info("~~~ SessionMap UNBOUND as " + event.getName() + " from " + event.getSession().getId() );
 

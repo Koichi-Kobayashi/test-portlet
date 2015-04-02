@@ -52,7 +52,8 @@ public class ExtTimecardSystemMapResultData implements ALData {
    * 
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     system_map_id = new ALNumberField();
     user_id = new ALNumberField();
     system_id = new ALNumberField();

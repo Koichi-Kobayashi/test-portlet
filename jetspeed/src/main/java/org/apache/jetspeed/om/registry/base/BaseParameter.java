@@ -23,7 +23,7 @@ import org.apache.jetspeed.om.registry.*;
  * Castor serialization.
  *
  * @see org.apache.jetspeed.om.registry.Parameter
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BaseParameter.java,v 1.4 2004/02/23 03:08:26 jford Exp $
  */
 public class BaseParameter extends BaseRegistryEntry
@@ -37,7 +37,8 @@ public class BaseParameter extends BaseRegistryEntry
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object==null)
         {
@@ -80,7 +81,8 @@ public class BaseParameter extends BaseRegistryEntry
     }
 
     /** @return the value for this parameter */
-    public String getValue()
+    @Override
+	public String getValue()
     {
         return this.value;
     }
@@ -89,13 +91,15 @@ public class BaseParameter extends BaseRegistryEntry
      *
      * @param value the new parameter value
      */
-    public void setValue(String value)
+    @Override
+	public void setValue(String value)
     {
         this.value = value;
     }
 
     /** @return the parameter's type */
-    public String getType()
+    @Override
+	public String getType()
     {
         return this.type;
     }
@@ -104,7 +108,8 @@ public class BaseParameter extends BaseRegistryEntry
      *
      * @param type the new parameter type
      */
-    public void setType(String type)
+    @Override
+	public void setType(String type)
     {
         this.type = type;
     }

@@ -39,7 +39,8 @@ public class MemoLiteResultData implements ALData {
    * 
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     memo_id = new ALNumberField();
     memo_name = new ALStringField();
   }

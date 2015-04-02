@@ -75,7 +75,7 @@ import javax.servlet.ServletConfig;
 /**
  * Simple implementation of the PortalFactoryService.
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:taylor@apache.org">David Sean Taylor</a>
  * @author <a href="mailto:morciuch@apache.org">Mark Orciuch</a> 
  *
@@ -115,7 +115,8 @@ public class JetspeedPortalToolkitService
      * This is the early initialization method called by the
      * Turbine <code>Service</code> framework
      */
-    public void init(ServletConfig conf) throws InitializationException
+    @Override
+	public void init(ServletConfig conf) throws InitializationException
     {
 
         ResourceService serviceConf =
@@ -140,7 +141,8 @@ public class JetspeedPortalToolkitService
      * @param name a PortletControl name available in the registry or a classname
      * @return the created PortletControl
      */
-    public PortletControl getControl(String name)
+    @Override
+	public PortletControl getControl(String name)
     {
         PortletControl pc = null;
         PortletControlEntry entry = null;
@@ -192,7 +194,8 @@ public class JetspeedPortalToolkitService
      * @param control the PSML control object
      * @return the created PortletControl
      */
-    public PortletControl getControl(Control control)
+    @Override
+	public PortletControl getControl(Control control)
     {
         PortletControl pc = null;
 
@@ -246,7 +249,8 @@ public class JetspeedPortalToolkitService
      * @param name a PortletController name available in the registry or a classname
      * @return the created PortletController
      */
-    public PortletController getController(String name)
+    @Override
+	public PortletController getController(String name)
     {
         PortletController pc = null;
         PortletControllerEntry entry = null;
@@ -299,7 +303,8 @@ public class JetspeedPortalToolkitService
      * @param controller the PSML controller object
      * @return the created PortletController
      */
-    public PortletController getController(Controller controller)
+    @Override
+	public PortletController getController(Controller controller)
     {
 
         PortletController pc = null;
@@ -328,7 +333,8 @@ public class JetspeedPortalToolkitService
      * @param name the registry SkinEntry name
      * @return the new PortletSkin object
      */
-    public PortletSkin getSkin(String name)
+    @Override
+	public PortletSkin getSkin(String name)
     {
         BasePortletSkin result = new BasePortletSkin();
 
@@ -371,7 +377,8 @@ public class JetspeedPortalToolkitService
      * @param skin the PSML Skin object
      * @return the new PortletSkin object
      */
-    public PortletSkin getSkin(Skin skin)
+    @Override
+	public PortletSkin getSkin(Skin skin)
     {
         PortletSkin result = null;
         String name = null;
@@ -397,7 +404,8 @@ public class JetspeedPortalToolkitService
      * @param portlets the PSML portlet set description
      * @return a new instance of PortletSet
      */
-    public PortletSet getSet(Portlets portlets)
+    @Override
+	public PortletSet getSet(Portlets portlets)
     {
         VariableInteger lastID = new VariableInteger(0);
         return getSet(portlets, new VariableInteger(0));
@@ -762,7 +770,8 @@ public class JetspeedPortalToolkitService
      * @param locatorPath ProfileLocator resource path identifier
      * @return a portlets collection from the PSML resource
      */
-    public Portlets getReference(String locatorPath)
+    @Override
+	public Portlets getReference(String locatorPath)
     {
         ProfileLocator locator = Profiler.createLocator();
         locator.createFromPath(locatorPath);
@@ -820,7 +829,8 @@ public class JetspeedPortalToolkitService
      * @param profile
      * @return default security reference
      */
-    public SecurityReference getDefaultSecurityRef(Profile profile)
+    @Override
+	public SecurityReference getDefaultSecurityRef(Profile profile)
     {
         String type = null;
         if (profile.getUserName() != null)
@@ -854,7 +864,8 @@ public class JetspeedPortalToolkitService
      * @param type of entity to return default security ref for
      * @return default security reference
      */
-    public SecurityReference getDefaultSecurityRef(String type)
+    @Override
+	public SecurityReference getDefaultSecurityRef(String type)
     {
         BaseSecurityReference result = null;
 

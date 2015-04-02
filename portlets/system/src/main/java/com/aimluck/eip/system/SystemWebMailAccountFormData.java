@@ -34,6 +34,7 @@ import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.commons.utils.ALStringUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMMailAccount;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -481,11 +482,11 @@ public class SystemWebMailAccountFormData extends ALAbstractFormData {
         try {
           Expression exp =
             ExpressionFactory
-              .matchExp(EipMMailAccount.USER_ID_PROPERTY, userId);
+              .matchExp(_EipMMailAccount.USER_ID_PROPERTY, userId);
           SelectQuery<EipMMailAccount> query =
             Database.query(EipMMailAccount.class, exp);
 
-          query.select(EipMMailAccount.ACCOUNT_ID_PK_COLUMN);
+          query.select(_EipMMailAccount.ACCOUNT_ID_PK_COLUMN);
           List<EipMMailAccount> accounts = query.fetchList();
           if (accounts != null && accounts.size() > 0) {
             EipMMailAccount account = accounts.get(0);
@@ -624,11 +625,11 @@ public class SystemWebMailAccountFormData extends ALAbstractFormData {
         try {
           Expression exp =
             ExpressionFactory
-              .matchExp(EipMMailAccount.USER_ID_PROPERTY, userId);
+              .matchExp(_EipMMailAccount.USER_ID_PROPERTY, userId);
           SelectQuery<EipMMailAccount> query =
             Database.query(EipMMailAccount.class, exp);
 
-          query.select(EipMMailAccount.ACCOUNT_ID_PK_COLUMN);
+          query.select(_EipMMailAccount.ACCOUNT_ID_PK_COLUMN);
           List<EipMMailAccount> accounts = query.fetchList();
           if (accounts != null && accounts.size() > 0) {
             EipMMailAccount account = accounts.get(0);
@@ -739,11 +740,11 @@ public class SystemWebMailAccountFormData extends ALAbstractFormData {
       if (accountId == 0) {
         try {
           Expression exp =
-            ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, uid);
+            ExpressionFactory.matchExp(_EipMMailAccount.USER_ID_PROPERTY, uid);
           SelectQuery<EipMMailAccount> query =
             Database.query(EipMMailAccount.class, exp);
 
-          query.select(EipMMailAccount.ACCOUNT_ID_PK_COLUMN);
+          query.select(_EipMMailAccount.ACCOUNT_ID_PK_COLUMN);
           List<EipMMailAccount> accounts = query.fetchList();
           if (accounts != null && accounts.size() > 0) {
             EipMMailAccount account = accounts.get(0);
@@ -764,11 +765,11 @@ public class SystemWebMailAccountFormData extends ALAbstractFormData {
         Database.query(EipMMailAccount.class);
 
       Expression exp1 =
-        ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMMailAccount.USER_ID_PROPERTY, Integer
           .valueOf(uid));
       Expression exp2 =
         ExpressionFactory.matchDbExp(
-          EipMMailAccount.ACCOUNT_ID_PK_COLUMN,
+          _EipMMailAccount.ACCOUNT_ID_PK_COLUMN,
           Integer.valueOf(accountId));
 
       EipMMailAccount account =
@@ -813,11 +814,11 @@ public class SystemWebMailAccountFormData extends ALAbstractFormData {
           Database.query(EipMMailAccount.class);
 
         Expression exp1 =
-          ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, Integer
+          ExpressionFactory.matchExp(_EipMMailAccount.USER_ID_PROPERTY, Integer
             .valueOf(ALEipUtils.getUserId(rundata)));
         Expression exp2 =
           ExpressionFactory.matchExp(
-            EipMMailAccount.ACCOUNT_TYPE_PROPERTY,
+            _EipMMailAccount.ACCOUNT_TYPE_PROPERTY,
             Integer.valueOf(ALMailUtils.ACCOUNT_TYPE_INIT));
         EipMMailAccount account =
           query.setQualifier(exp1.andExp(exp2)).fetchSingle();

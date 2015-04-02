@@ -263,12 +263,14 @@ public class BaseJetspeedSkinPeer extends BasePeer implements DBRegistry
         * @throws TorqueException Any exceptions caught during processing will be
         *         rethrown wrapped into a TorqueException.
         */
-    public List getXREGDataFromDb() throws TorqueException
+    @Override
+	public List getXREGDataFromDb() throws TorqueException
     {
         Criteria criteria = buildCriteria();
         return doSelect(criteria);
     }
-    public boolean isModified(String lastUpdateDate)
+    @Override
+	public boolean isModified(String lastUpdateDate)
     {
         return true;
     }

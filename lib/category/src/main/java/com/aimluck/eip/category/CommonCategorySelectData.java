@@ -31,6 +31,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.utils.ALDateUtil;
 import com.aimluck.eip.category.util.CommonCategoryUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTCommonCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCommonCategory;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -156,14 +157,14 @@ public class CommonCategorySelectData extends
 
     Expression exp =
       ExpressionFactory.noMatchDbExp(
-        EipTCommonCategory.COMMON_CATEGORY_ID_PK_COLUMN,
+        _EipTCommonCategory.COMMON_CATEGORY_ID_PK_COLUMN,
         Integer.valueOf(1));
     query.setQualifier(exp);
 
     if (!authority_list) {
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipTCommonCategory.CREATE_USER_ID_PROPERTY,
+          _EipTCommonCategory.CREATE_USER_ID_PROPERTY,
           Integer.valueOf(uid));
       query.andQualifier(exp2);
     }
@@ -228,7 +229,7 @@ public class CommonCategorySelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("name", EipTCommonCategory.NAME_PROPERTY);
+    map.putValue("name", _EipTCommonCategory.NAME_PROPERTY);
     return map;
   }
 

@@ -36,7 +36,8 @@ public class FileServerPortlet extends FileWatchPortlet {
 
     /**
     */
-    public void init() throws PortletException {
+    @Override
+	public void init() throws PortletException {
 
         // first make sure we propagate init
         super.init();

@@ -45,7 +45,7 @@ import org.apache.velocity.context.Context;
  *  for future portlet development.
  *  </p>
  * 
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:re_carrasco@bco011.sonda.cl">Roberto Carrasco</a>
  *
  * @version $Id: VelocityPortletAction.java,v 1.14 2004/02/23 02:56:58 jford Exp $
@@ -68,7 +68,8 @@ public abstract class VelocityPortletAction extends GenericMVCAction
      * STW: Backwards compatibility so the overriden method is called specifically using a cast to VelocityPortlet
      * @see org.apache.jetspeed.portal.portlets.mvc.PortletAction#buildNormalContext(Portlet, Context, RunData)
      */
-    protected void buildNormalContext(Portlet portlet, Context context, RunData data)
+    @Override
+	protected void buildNormalContext(Portlet portlet, Context context, RunData data)
         throws Exception
     {
         buildNormalContext((VelocityPortlet) portlet, context, data);
@@ -77,7 +78,8 @@ public abstract class VelocityPortletAction extends GenericMVCAction
     /**
      * @see org.apache.jetspeed.portal.portlets.mvc.PortletAction#buildConfigureContext(Portlet, Context, RunData)
      */
-    protected void buildConfigureContext(Portlet portlet, Context context, RunData data)
+    @Override
+	protected void buildConfigureContext(Portlet portlet, Context context, RunData data)
         throws Exception
     {
         // STW: Don't try this at home, kids.  It's about the worst reflection hack you
@@ -120,7 +122,8 @@ public abstract class VelocityPortletAction extends GenericMVCAction
     }
     
     
-    protected void buildMaximizedContext(Portlet portlet, Context context, RunData data)
+    @Override
+	protected void buildMaximizedContext(Portlet portlet, Context context, RunData data)
         throws Exception
     {
         // STW: Don't try this at home, kids.  It's about the worst reflection hack you

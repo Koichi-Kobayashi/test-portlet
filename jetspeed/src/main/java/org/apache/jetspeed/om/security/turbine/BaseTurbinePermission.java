@@ -1,23 +1,17 @@
 package org.apache.jetspeed.om.security.turbine;
 
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.BaseObject;
-import org.apache.torque.om.ComboKey;
-import org.apache.torque.om.DateKey;
 import org.apache.torque.om.NumberKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
-import org.apache.torque.om.StringKey;
-import org.apache.torque.om.Persistent;
 import org.apache.torque.util.Criteria;
 import org.apache.torque.util.Transaction;
 
@@ -207,8 +201,8 @@ public abstract class BaseTurbinePermission extends BaseObject
             }
             else
             {
-                      criteria.add(TurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
-                      collTurbineRolePermissions = TurbineRolePermissionPeer.doSelect(criteria);
+                      criteria.add(BaseTurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
+                      collTurbineRolePermissions = BaseTurbineRolePermissionPeer.doSelect(criteria);
             }
         }
         else
@@ -219,10 +213,10 @@ public abstract class BaseTurbinePermission extends BaseObject
                 // the following code is to determine if a new query is
                 // called for.  If the criteria is the same as the last
                 // one, just return the collection.
-                      criteria.add(TurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
+                      criteria.add(BaseTurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
                       if (!lastTurbineRolePermissionsCriteria.equals(criteria))
                 {
-                    collTurbineRolePermissions = TurbineRolePermissionPeer.doSelect(criteria);
+                    collTurbineRolePermissions = BaseTurbineRolePermissionPeer.doSelect(criteria);
                 }
             }
         }
@@ -270,8 +264,8 @@ public abstract class BaseTurbinePermission extends BaseObject
             }
             else
             {
-                       criteria.add(TurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
-                       collTurbineRolePermissions = TurbineRolePermissionPeer.doSelect(criteria,con);
+                       criteria.add(BaseTurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
+                       collTurbineRolePermissions = BaseTurbineRolePermissionPeer.doSelect(criteria,con);
              }
          }
          else
@@ -282,10 +276,10 @@ public abstract class BaseTurbinePermission extends BaseObject
                  // the following code is to determine if a new query is
                  // called for.  If the criteria is the same as the last
                  // one, just return the collection.
-                     criteria.add(TurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
+                     criteria.add(BaseTurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
                      if (!lastTurbineRolePermissionsCriteria.equals(criteria))
                  {
-                     collTurbineRolePermissions = TurbineRolePermissionPeer.doSelect(criteria,con);
+                     collTurbineRolePermissions = BaseTurbineRolePermissionPeer.doSelect(criteria,con);
                  }
              }
          }
@@ -327,8 +321,8 @@ public abstract class BaseTurbinePermission extends BaseObject
             }
             else
             {
-                            criteria.add(TurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
-                            collTurbineRolePermissions = TurbineRolePermissionPeer.doSelectJoinTurbineRole(criteria);
+                            criteria.add(BaseTurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
+                            collTurbineRolePermissions = BaseTurbineRolePermissionPeer.doSelectJoinTurbineRole(criteria);
             }
         }
         else
@@ -337,10 +331,10 @@ public abstract class BaseTurbinePermission extends BaseObject
             // called for.  If the criteria is the same as the last
             // one, just return the collection.
             boolean newCriteria = true;
-                            criteria.add(TurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
+                            criteria.add(BaseTurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
                         if (!lastTurbineRolePermissionsCriteria.equals(criteria))
             {
-                collTurbineRolePermissions = TurbineRolePermissionPeer.doSelectJoinTurbineRole(criteria);
+                collTurbineRolePermissions = BaseTurbineRolePermissionPeer.doSelectJoinTurbineRole(criteria);
             }
         }
         lastTurbineRolePermissionsCriteria = criteria;
@@ -378,8 +372,8 @@ public abstract class BaseTurbinePermission extends BaseObject
             }
             else
             {
-                            criteria.add(TurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
-                            collTurbineRolePermissions = TurbineRolePermissionPeer.doSelectJoinTurbinePermission(criteria);
+                            criteria.add(BaseTurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
+                            collTurbineRolePermissions = BaseTurbineRolePermissionPeer.doSelectJoinTurbinePermission(criteria);
             }
         }
         else
@@ -388,10 +382,10 @@ public abstract class BaseTurbinePermission extends BaseObject
             // called for.  If the criteria is the same as the last
             // one, just return the collection.
             boolean newCriteria = true;
-                            criteria.add(TurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
+                            criteria.add(BaseTurbineRolePermissionPeer.PERMISSION_ID, getPermissionId() );
                         if (!lastTurbineRolePermissionsCriteria.equals(criteria))
             {
-                collTurbineRolePermissions = TurbineRolePermissionPeer.doSelectJoinTurbinePermission(criteria);
+                collTurbineRolePermissions = BaseTurbineRolePermissionPeer.doSelectJoinTurbinePermission(criteria);
             }
         }
         lastTurbineRolePermissionsCriteria = criteria;
@@ -424,7 +418,8 @@ public abstract class BaseTurbinePermission extends BaseObject
      * Retrieves a field from the object by name passed in
      * as a String.
      */
-    public Object getByName(String name)
+    @Override
+	public Object getByName(String name)
     {
           if (name.equals("PermissionId"))
         {
@@ -446,17 +441,18 @@ public abstract class BaseTurbinePermission extends BaseObject
      * as a String.  The String must be one of the static
      * Strings defined in this Class' Peer.
      */
-    public Object getByPeerName(String name)
+    @Override
+	public Object getByPeerName(String name)
     {
-          if (name.equals(TurbinePermissionPeer.PERMISSION_ID ))
+          if (name.equals(BaseTurbinePermissionPeer.PERMISSION_ID ))
         {
                 return new Integer(getPermissionId());
             }
-          if (name.equals(TurbinePermissionPeer.PERMISSION_NAME ))
+          if (name.equals(BaseTurbinePermissionPeer.PERMISSION_NAME ))
         {
                 return getPermissionName();
             }
-          if (name.equals(TurbinePermissionPeer.OBJECTDATA ))
+          if (name.equals(BaseTurbinePermissionPeer.OBJECTDATA ))
         {
                 return getObjectdata();
             }
@@ -467,7 +463,8 @@ public abstract class BaseTurbinePermission extends BaseObject
      * Retrieves a field from the object by Position as specified
      * in the xml schema.  Zero-based.
      */
-    public Object getByPosition(int pos)
+    @Override
+	public Object getByPosition(int pos)
     {
             if ( pos == 0 )
         {
@@ -488,9 +485,10 @@ public abstract class BaseTurbinePermission extends BaseObject
      * Stores the object in the database.  If the object is new,
      * it inserts it; otherwise an update is performed.
      */
-    public void save() throws Exception
+    @Override
+	public void save() throws Exception
     {
-          save(TurbinePermissionPeer.getMapBuilder()
+          save(BaseTurbinePermissionPeer.getMapBuilder()
                 .getDatabaseMap().getName());
       }
 
@@ -501,7 +499,8 @@ public abstract class BaseTurbinePermission extends BaseObject
      * auto-generated conditionally and therefore needs to be
      * in this file instead of in the super class, BaseObject.
        */
-    public void save(String dbName) throws TorqueException
+    @Override
+	public void save(String dbName) throws TorqueException
     {
         Connection con = null;
           try
@@ -527,7 +526,8 @@ public abstract class BaseTurbinePermission extends BaseObject
      * the save() method and the connection details will be handled
      * internally
      */
-    public void save(Connection con) throws TorqueException
+    @Override
+	public void save(Connection con) throws TorqueException
     {
           if (!alreadyInSave)
         {
@@ -540,17 +540,17 @@ public abstract class BaseTurbinePermission extends BaseObject
             {
                 if (isNew())
                 {
-                    TurbinePermissionPeer.doInsert((TurbinePermission)this, con);
+                    BaseTurbinePermissionPeer.doInsert((TurbinePermission)this, con);
                     setNew(false);
                 }
                 else
                 {
-                    TurbinePermissionPeer.doUpdate((TurbinePermission)this, con);
+                    BaseTurbinePermissionPeer.doUpdate((TurbinePermission)this, con);
                 }
 
                       if (isCacheOnSave())
                 {
-                    TurbinePermissionManager.putInstance(this);
+                    BaseTurbinePermissionManager.putInstance(this);
                 }
               }
 
@@ -581,7 +581,8 @@ public abstract class BaseTurbinePermission extends BaseObject
      *
      * @param ObjectKey permissionId
      */
-    public void setPrimaryKey(ObjectKey permissionId)
+    @Override
+	public void setPrimaryKey(ObjectKey permissionId)
         throws TorqueException {
             setPermissionId(((NumberKey)permissionId).intValue());
         }
@@ -589,7 +590,8 @@ public abstract class BaseTurbinePermission extends BaseObject
     /**
      * Set the PrimaryKey using a String.
      */
-    public void setPrimaryKey(String key) throws TorqueException
+    @Override
+	public void setPrimaryKey(String key) throws TorqueException
     {
             setPermissionId(Integer.parseInt(key));
         }
@@ -599,7 +601,8 @@ public abstract class BaseTurbinePermission extends BaseObject
      * returns an id that differentiates this object from others
      * of its class.
      */
-    public ObjectKey getPrimaryKey()
+    @Override
+	public ObjectKey getPrimaryKey()
     {
           return SimpleKey.keyFor(getPermissionId());
       }

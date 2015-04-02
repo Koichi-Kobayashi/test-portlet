@@ -49,7 +49,8 @@ public interface DiskCacheEntry {
     @deprecated 
     @use We should use getInputStream (preferred) or getData instead
     */
-    public File getFile();
+    @Deprecated
+	public File getFile();
 
     /**
     Get the contents/data of this URL

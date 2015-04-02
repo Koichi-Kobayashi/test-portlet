@@ -35,6 +35,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.account.EipMCompany;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALEipUser;
 import com.aimluck.eip.orm.Database;
@@ -146,11 +147,11 @@ public class SystemNetworkSelectData extends
 
         SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
         Expression exp1 =
-          ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, sampleName);
+          ExpressionFactory.inExp(_TurbineUser.LOGIN_NAME_PROPERTY, sampleName);
         Expression exp2 =
-          ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+          ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
         Expression exp3 =
-          ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, sampleId);
+          ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, sampleId);
         query.setQualifier(exp1.andExp(exp2).andExp(exp3));
 
         List<ALEipUser> list = ALEipUtils.getUsersFromSelectQuery(query);

@@ -32,7 +32,11 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.account.EipMPosition;
 import com.aimluck.eip.cayenne.om.account.EipMPost;
 import com.aimluck.eip.cayenne.om.account.EipMUserPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPost;
+import com.aimluck.eip.cayenne.om.account.auto._EipMUserPosition;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
 import com.aimluck.eip.services.orgutils.ALOrgUtilsService;
@@ -110,15 +114,15 @@ public class FileIOAccountCsvFileScreen extends ALCSVScreen {
         LINE_SEPARATOR);
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp1 =
-        ExpressionFactory.matchExp(TurbineUser.COMPANY_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_TurbineUser.COMPANY_ID_PROPERTY, Integer
           .valueOf(1));
       query.setQualifier(exp1);
       Expression exp2 =
-        ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+        ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
       query.andQualifier(exp2);
-      query.orderAscending(TurbineUser.EIP_MUSER_POSITION_PROPERTY
+      query.orderAscending(_TurbineUser.EIP_MUSER_POSITION_PROPERTY
         + "."
-        + EipMUserPosition.POSITION_PROPERTY);
+        + _EipMUserPosition.POSITION_PROPERTY);
 
       List<TurbineUser> list = query.fetchList();
 
@@ -196,7 +200,7 @@ public class FileIOAccountCsvFileScreen extends ALCSVScreen {
   private EipMPost getEipMPost(int i) {
     SelectQuery<EipMPost> query = Database.query(EipMPost.class);
     Expression exp =
-      ExpressionFactory.matchDbExp(EipMPost.POST_ID_PK_COLUMN, i);
+      ExpressionFactory.matchDbExp(_EipMPost.POST_ID_PK_COLUMN, i);
     query.setQualifier(exp);
     List<EipMPost> list = query.fetchList();
     if (list == null || list.size() == 0) {
@@ -215,7 +219,7 @@ public class FileIOAccountCsvFileScreen extends ALCSVScreen {
   private EipMPosition getEipMPosition(int i) {
     SelectQuery<EipMPosition> query = Database.query(EipMPosition.class);
     Expression exp =
-      ExpressionFactory.matchDbExp(EipMPosition.POSITION_ID_PK_COLUMN, i);
+      ExpressionFactory.matchDbExp(_EipMPosition.POSITION_ID_PK_COLUMN, i);
     query.setQualifier(exp);
     List<EipMPosition> list = query.fetchList();
     if (list == null || list.size() == 0) {

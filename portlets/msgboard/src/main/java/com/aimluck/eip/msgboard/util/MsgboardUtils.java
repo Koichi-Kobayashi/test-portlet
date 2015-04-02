@@ -53,7 +53,12 @@ import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardCategoryMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardTopic;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardCategoryMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardTopic;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALActivity;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -169,12 +174,12 @@ public class MsgboardUtils {
         Database.query(EipTMsgboardTopic.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
+          _EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
           Integer.valueOf(topicid));
       query.setQualifier(exp1);
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipTMsgboardTopic.PARENT_ID_PROPERTY,
+          _EipTMsgboardTopic.PARENT_ID_PROPERTY,
           Integer.valueOf(0));
       query.andQualifier(exp2);
       query.distinct(true);
@@ -246,14 +251,14 @@ public class MsgboardUtils {
         Database.query(EipTMsgboardTopic.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
+          _EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
           Integer.valueOf(topicid));
       query.setQualifier(exp1);
 
       if (!isSuperUser) {
         Expression exp2 =
           ExpressionFactory.matchExp(
-            EipTMsgboardTopic.OWNER_ID_PROPERTY,
+            _EipTMsgboardTopic.OWNER_ID_PROPERTY,
             Integer.valueOf(ALEipUtils.getUserId(rundata)));
         query.andQualifier(exp2);
       }
@@ -295,7 +300,7 @@ public class MsgboardUtils {
         Database.query(EipTMsgboardFile.class);
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipTMsgboardFile.FILE_ID_PK_COLUMN,
+          _EipTMsgboardFile.FILE_ID_PK_COLUMN,
           Integer.valueOf(attachmentIndex));
       query.andQualifier(exp);
 
@@ -337,33 +342,33 @@ public class MsgboardUtils {
         Database.query(EipTMsgboardTopic.class);
       Expression exp001 =
         ExpressionFactory.matchExp(
-          EipTMsgboardTopic.PARENT_ID_PROPERTY,
+          _EipTMsgboardTopic.PARENT_ID_PROPERTY,
           Integer.valueOf(topicid));
 
       // アクセス制御
       Expression exp01 =
         ExpressionFactory.matchDbExp(
-          EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
+          _EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
           Integer.valueOf(topicid));
       Expression exp11 =
         ExpressionFactory.matchExp(
-          EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
+          _EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
             + "."
-            + EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
+            + _EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
           "T");
       Expression exp21 =
         ExpressionFactory.matchExp(
-          EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
+          _EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
             + "."
-            + EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
+            + _EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
           "F");
       Expression exp22 =
         ExpressionFactory.matchExp(
-          EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
+          _EipTMsgboardTopic.EIP_TMSGBOARD_CATEGORY_PROPERTY
             + "."
-            + EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
+            + _EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
             + "."
-            + EipTMsgboardCategoryMap.USER_ID_PROPERTY,
+            + _EipTMsgboardCategoryMap.USER_ID_PROPERTY,
           Integer.valueOf(ALEipUtils.getUserId(rundata)));
       query.setQualifier((exp01.andExp(exp11.orExp(exp21.andExp(exp22))))
         .orExp(exp001));
@@ -414,11 +419,11 @@ public class MsgboardUtils {
           .valueOf(userid));
       Expression exp02 =
         ExpressionFactory.matchDbExp(
-          EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
+          _EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
           Integer.valueOf(topicid));
       Expression exp03 =
         ExpressionFactory.matchExp(
-          EipTMsgboardTopic.PARENT_ID_PROPERTY,
+          _EipTMsgboardTopic.PARENT_ID_PROPERTY,
           Integer.valueOf(topicid));
 
       if (isSuperUser) {
@@ -481,14 +486,14 @@ public class MsgboardUtils {
 
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTMsgboardCategory.CATEGORY_ID_PK_COLUMN,
+          _EipTMsgboardCategory.CATEGORY_ID_PK_COLUMN,
           Integer.valueOf(categoryid));
       query.setQualifier(exp1);
       Expression exp2 =
         ExpressionFactory.noMatchDbExp(
-          EipTMsgboardCategory.TURBINE_USER_PROPERTY
+          _EipTMsgboardCategory.TURBINE_USER_PROPERTY
             + "."
-            + TurbineUser.USER_ID_PK_COLUMN,
+            + _TurbineUser.USER_ID_PK_COLUMN,
           Integer.valueOf(0));
       query.andQualifier(exp2);
       if (ownerOnly) {
@@ -517,29 +522,29 @@ public class MsgboardUtils {
 
       Expression exp01 =
         ExpressionFactory.matchExp(
-          EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
+          _EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
           "T");
       Expression exp02 =
         ExpressionFactory.matchExp(
-          EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
+          _EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
             + "."
-            + EipTMsgboardCategoryMap.STATUS_PROPERTY,
+            + _EipTMsgboardCategoryMap.STATUS_PROPERTY,
           "O");
       Expression exp03 =
         ExpressionFactory.matchExp(
-          EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
+          _EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
             + "."
-            + EipTMsgboardCategoryMap.STATUS_PROPERTY,
+            + _EipTMsgboardCategoryMap.STATUS_PROPERTY,
           "A");
       Expression exp11 =
         ExpressionFactory.matchExp(
-          EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
+          _EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
           "F");
       Expression exp12 =
         ExpressionFactory.matchExp(
-          EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
+          _EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
             + "."
-            + EipTMsgboardCategoryMap.USER_ID_PROPERTY,
+            + _EipTMsgboardCategoryMap.USER_ID_PROPERTY,
           Integer.valueOf(loginUserId));
 
       if (!hasAclviewOther) {
@@ -588,30 +593,30 @@ public class MsgboardUtils {
 
         Expression exp1 =
           ExpressionFactory.matchExp(
-            EipTMsgboardCategoryMap.CATEGORY_ID_PROPERTY,
+            _EipTMsgboardCategoryMap.CATEGORY_ID_PROPERTY,
             Integer.valueOf(categoryid));
         query.setQualifier(exp1);
 
         // アクセス制御
         Expression exp11 =
           ExpressionFactory.matchExp(
-            EipTMsgboardCategoryMap.EIP_TMSGBOARD_CATEGORY_PROPERTY
+            _EipTMsgboardCategoryMap.EIP_TMSGBOARD_CATEGORY_PROPERTY
               + "."
-              + EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
+              + _EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
             PUBLIC_FLG_VALUE_PUBLIC);
         Expression exp12 =
           ExpressionFactory.matchExp(
-            EipTMsgboardCategoryMap.EIP_TMSGBOARD_CATEGORY_PROPERTY
+            _EipTMsgboardCategoryMap.EIP_TMSGBOARD_CATEGORY_PROPERTY
               + "."
-              + EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
+              + _EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
             PUBLIC_FLG_VALUE_NONPUBLIC);
         Expression exp13 =
           ExpressionFactory.matchExp(
-            EipTMsgboardCategoryMap.STATUS_PROPERTY,
+            _EipTMsgboardCategoryMap.STATUS_PROPERTY,
             STAT_VALUE_SHARE);
         Expression exp14 =
           ExpressionFactory.matchExp(
-            EipTMsgboardCategoryMap.STATUS_PROPERTY,
+            _EipTMsgboardCategoryMap.STATUS_PROPERTY,
             STAT_VALUE_OWNER);
         query.andQualifier(exp11.orExp(exp12.andExp(exp13)).orExp(
           exp12.andExp(exp14)));
@@ -682,33 +687,33 @@ public class MsgboardUtils {
       // アクセス制御
       Expression exp01 =
         ExpressionFactory.matchExp(
-          EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
+          _EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
           MsgboardUtils.PUBLIC_FLG_VALUE_PUBLIC);
       Expression exp02 =
         ExpressionFactory.matchExp(
-          EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
+          _EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
             + "."
-            + EipTMsgboardCategoryMap.STATUS_PROPERTY,
+            + _EipTMsgboardCategoryMap.STATUS_PROPERTY,
           MsgboardUtils.STAT_VALUE_OWNER);
       Expression exp03 =
         ExpressionFactory.matchExp(
-          EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
+          _EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
             + "."
-            + EipTMsgboardCategoryMap.STATUS_PROPERTY,
+            + _EipTMsgboardCategoryMap.STATUS_PROPERTY,
           MsgboardUtils.STAT_VALUE_ALL);
       Expression exp11 =
         ExpressionFactory.matchExp(
-          EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
+          _EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
           MsgboardUtils.PUBLIC_FLG_VALUE_NONPUBLIC);
       Expression exp12 =
         ExpressionFactory.matchExp(
-          EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
+          _EipTMsgboardCategory.EIP_TMSGBOARD_CATEGORY_MAPS_PROPERTY
             + "."
-            + EipTMsgboardCategoryMap.USER_ID_PROPERTY,
+            + _EipTMsgboardCategoryMap.USER_ID_PROPERTY,
           Integer.valueOf(ALEipUtils.getUserId(rundata)));
       query.setQualifier((exp01.andExp(exp02.orExp(exp03))).orExp(exp11
         .andExp(exp12)));
-      query.orderAscending(EipTMsgboardCategory.CATEGORY_NAME_PROPERTY);
+      query.orderAscending(_EipTMsgboardCategory.CATEGORY_NAME_PROPERTY);
       query.distinct(true);
 
       MsgboardCategoryResultData otherRd = null;
@@ -742,7 +747,7 @@ public class MsgboardUtils {
       List<String> fpaths) throws ALFileNotRemovedException {
     ALDeleteFileUtil.deleteFiles(
       timelineId,
-      EipTMsgboardFile.EIP_TMSGBOARD_TOPIC_PROPERTY,
+      _EipTMsgboardFile.EIP_TMSGBOARD_TOPIC_PROPERTY,
       getSaveDirPath(orgId, uid),
       fpaths,
       EipTMsgboardFile.class);
@@ -856,7 +861,7 @@ public class MsgboardUtils {
           Database.query(EipTMsgboardFile.class);
         Expression reqexp1 =
           ExpressionFactory.inDbExp(
-            EipTMsgboardFile.FILE_ID_PK_COLUMN,
+            _EipTMsgboardFile.FILE_ID_PK_COLUMN,
             hadfileidsValue);
         reqquery.setQualifier(reqexp1);
         List<EipTMsgboardFile> requests = reqquery.fetchList();
@@ -896,7 +901,7 @@ public class MsgboardUtils {
     SelectQuery<EipTMsgboardFile> dbquery =
       Database.query(EipTMsgboardFile.class);
     dbquery.andQualifier(ExpressionFactory.matchDbExp(
-      EipTMsgboardFile.EIP_TMSGBOARD_TOPIC_PROPERTY,
+      _EipTMsgboardFile.EIP_TMSGBOARD_TOPIC_PROPERTY,
       topic.getTopicId()));
     List<EipTMsgboardFile> existsFiles = dbquery.fetchList();
     List<EipTMsgboardFile> delFiles = new ArrayList<EipTMsgboardFile>();
@@ -1021,9 +1026,9 @@ public class MsgboardUtils {
       Database.query(EipTMsgboardTopic.class);
     Expression exp =
       ExpressionFactory
-        .matchExp(EipTMsgboardTopic.PARENT_ID_PROPERTY, entityid);
+        .matchExp(_EipTMsgboardTopic.PARENT_ID_PROPERTY, entityid);
     query.setQualifier(exp);
-    query.select(EipTMsgboardTopic.TOPIC_ID_PK_COLUMN);
+    query.select(_EipTMsgboardTopic.TOPIC_ID_PK_COLUMN);
     query.distinct(true);
 
     List<EipTMsgboardTopic> topics = query.fetchList();
@@ -1031,7 +1036,7 @@ public class MsgboardUtils {
     query = Database.query(EipTMsgboardTopic.class);
     exp =
       ExpressionFactory.matchDbExp(
-        EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
+        _EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
         entityid);
     query.setQualifier(exp);
 

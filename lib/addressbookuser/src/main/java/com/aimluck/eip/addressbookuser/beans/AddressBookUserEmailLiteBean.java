@@ -35,7 +35,8 @@ public class AddressBookUserEmailLiteBean implements ALData {
 
   private ALStringField email;
 
-  public void initField() {
+  @Override
+public void initField() {
     address_id = new ALNumberField();
     full_name = new ALStringField();
     email = new ALStringField();

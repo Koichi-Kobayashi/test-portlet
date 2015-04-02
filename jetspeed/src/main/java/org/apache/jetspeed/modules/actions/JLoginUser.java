@@ -156,7 +156,8 @@ public class JLoginUser extends ActionEvent
     }
 
 
-    public void doPerform( RunData rundata ) throws Exception
+    @Override
+	public void doPerform( RunData rundata ) throws Exception
     {
         JetspeedRunData data = (JetspeedRunData)rundata;
         
@@ -164,7 +165,7 @@ public class JLoginUser extends ActionEvent
         String password = data.getParameters().getString("password", "");
 
         boolean newUserApproval = JetspeedResources.getBoolean("newuser.approval.enable", false);
-        String secretkey = (String) data.getParameters().getString("secretkey", null);
+        String secretkey = data.getParameters().getString("secretkey", null);
         if ( secretkey != null )
         {
 

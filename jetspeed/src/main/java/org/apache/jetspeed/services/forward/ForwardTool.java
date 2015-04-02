@@ -85,7 +85,8 @@ public class ForwardTool implements ApplicationTool
      * @param data assumed to be a RunData object
      */
 
-    public void init(Object data)
+    @Override
+	public void init(Object data)
     {
         // Keeping init small and fast
         if (data instanceof JetspeedRunData)
@@ -101,7 +102,8 @@ public class ForwardTool implements ApplicationTool
     /**
      * Refresh method - does nothing
      */
-    public void refresh()
+    @Override
+	public void refresh()
     {
         // empty
     }

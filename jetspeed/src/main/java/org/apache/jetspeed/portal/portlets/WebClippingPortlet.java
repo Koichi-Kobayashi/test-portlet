@@ -82,6 +82,7 @@ public class WebClippingPortlet extends AbstractInstancePortlet
 	 * Initialize this portlet
 	 * @throws PortletException Initialization failed
 	 */
+	@Override
 	public void init()
 	{
 		if (initDone)
@@ -220,6 +221,7 @@ public class WebClippingPortlet extends AbstractInstancePortlet
 	@param data the RunData object for the request
 	@return the content to be displayed to the user-agent
 	*/
+	@Override
 	public ConcreteElement getContent(RunData data)
 	{
 		PortletConfig config = this.getPortletConfig();
@@ -367,6 +369,7 @@ public class WebClippingPortlet extends AbstractInstancePortlet
 	 *
 	 * Any cached content that is expired need to be refreshed.
 	 */
+	@Override
 	public void refresh()
 	{
 		if (cacheContent == true)

@@ -110,7 +110,8 @@ public class JetspeedThreadPoolService extends TurbineBaseService implements
   /**
    * Late init. Don't return control until early init says we're done.
    */
-  public void init() {
+  @Override
+public void init() {
     while (!getInit()) {
       try {
         Thread.sleep(500);
@@ -126,7 +127,8 @@ public class JetspeedThreadPoolService extends TurbineBaseService implements
    * @param config
    *            A ServletConfig.
    */
-  public synchronized void init(ServletConfig config) {
+  @Override
+public synchronized void init(ServletConfig config) {
     if (getInit()) {
       // Already inited
       return;
@@ -151,7 +153,8 @@ public class JetspeedThreadPoolService extends TurbineBaseService implements
    * @param runnable
    *            the runnable code to process
    */
-  public void process(Runnable runnable) {
+  @Override
+public void process(Runnable runnable) {
 
     process(runnable, Thread.MIN_PRIORITY);
 
@@ -166,7 +169,8 @@ public class JetspeedThreadPoolService extends TurbineBaseService implements
    * @param priority
    *            the priority used be the thread that will run this runnable
    */
-  public void process(Runnable runnable, int priority) {
+  @Override
+public void process(Runnable runnable, int priority) {
 
     RunnableThread thread = this.getAvailableThread();
 

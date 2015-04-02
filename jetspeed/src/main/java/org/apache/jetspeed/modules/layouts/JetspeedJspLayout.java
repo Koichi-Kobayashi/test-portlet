@@ -51,7 +51,8 @@ public class JetspeedJspLayout extends Layout
      *
      * @param RunData
      */
-    public void doBuild(RunData data) throws Exception
+    @Override
+	public void doBuild(RunData data) throws Exception
     {
         String screenPath  = null;
         

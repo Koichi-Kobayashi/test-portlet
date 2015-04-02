@@ -71,7 +71,8 @@ public class DaemonAdminPortlet extends AbstractPortlet
     private static final String DAEMON = "daemon";
 
 
-    public ConcreteElement getContent( RunData rundata ) {
+    @Override
+	public ConcreteElement getContent( RunData rundata ) {
         
         try {
 
@@ -225,7 +226,7 @@ public class DaemonAdminPortlet extends AbstractPortlet
         Enumeration keys = params.keys();
         while( keys.hasMoreElements() ) {
             String key = (String)keys.nextElement();
-            String value = (String)params.getString(key, "");
+            String value = params.getString(key, "");
             form.addElement( new Input( ).setName( key )
                 .setType( "hidden" )
                 .setValue( value ) );
@@ -248,7 +249,8 @@ public class DaemonAdminPortlet extends AbstractPortlet
     /**
     @author <a href="mailto:burton@apache.org">Kevin A. Burton</a>
     */
-    public void init() throws PortletException {
+    @Override
+	public void init() throws PortletException {
 
         this.setTitle("Daemons");
 
@@ -256,11 +258,13 @@ public class DaemonAdminPortlet extends AbstractPortlet
 
     }
 
-    public boolean getAllowEdit( RunData rundata ) {
+    @Override
+	public boolean getAllowEdit( RunData rundata ) {
         return false;
     }
 
-    public boolean getAllowMaximize(RunData rundata ) {
+    @Override
+	public boolean getAllowMaximize(RunData rundata ) {
         return false;
     }
 

@@ -44,7 +44,8 @@ public class ControlUpdateAction extends RegistryUpdateAction
     /**
      * @see org.apache.jetspeed.modules.actions.portlets.VelocityPortletAction#buildNormalContext(org.apache.jetspeed.portal.portlets.VelocityPortlet, org.apache.velocity.context.Context, org.apache.turbine.util.RunData)
      */
-    protected void buildNormalContext(
+    @Override
+	protected void buildNormalContext(
         VelocityPortlet portlet,
         Context context,
         RunData rundata)
@@ -75,7 +76,8 @@ public class ControlUpdateAction extends RegistryUpdateAction
         }
     }
 
-    protected void updateRegistryEntry(
+    @Override
+	protected void updateRegistryEntry(
         RunData rundata,
         RegistryEntry registryEntry)
         throws Exception
@@ -94,7 +96,8 @@ public class ControlUpdateAction extends RegistryUpdateAction
     /**
      * @see org.apache.jetspeed.modules.actions.portlets.RegistryUpdateAction#resetForm(org.apache.turbine.util.RunData)
      */
-    protected void resetForm(RunData rundata)
+    @Override
+	protected void resetForm(RunData rundata)
     {
         super.resetForm(rundata);
     }
@@ -102,7 +105,8 @@ public class ControlUpdateAction extends RegistryUpdateAction
     /**
      * @see org.apache.jetspeed.modules.actions.portlets.RegistryUpdateAction#clearUserData(org.apache.turbine.util.RunData)
      */
-    protected void clearUserData(RunData rundata)
+    @Override
+	protected void clearUserData(RunData rundata)
     {
         super.clearUserData(rundata);
     }

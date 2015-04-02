@@ -61,7 +61,7 @@ import java.util.Iterator;
  * <p>Don't call it from the URL, the Portlet and the Action are automatically
  * associated through the registry PortletName
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  */
 public class CustomizeAction extends VelocityPortletAction
 {
@@ -89,7 +89,8 @@ public class CustomizeAction extends VelocityPortletAction
      * <tr><td>security_ref </td><td> Current securityRef for this portlet INSTANCE</td></tr>
      * </table>
      */
-    protected void buildNormalContext( VelocityPortlet portlet,
+    @Override
+	protected void buildNormalContext( VelocityPortlet portlet,
                                        Context context,
                                        RunData rundata )
     {
@@ -255,8 +256,8 @@ public class CustomizeAction extends VelocityPortletAction
         Portlet p = ((JetspeedRunData)rundata).getCustomized();
         Vector params = (Vector) customizationState.getAttribute("customize-parameters");
         String newSecurityParent = rundata.getParameters().getString("_security_ref");
-        String newSkinName = (String) rundata.getParameters().getString("_skin");
-        String newTitle = (String) rundata.getParameters().getString("current_title");
+        String newSkinName = rundata.getParameters().getString("_skin");
+        String newTitle = rundata.getParameters().getString("current_title");
 
         boolean changeRequested = ( (params != null) || (newSkinName != null) || (newSecurityParent != null) || (newTitle != null));
         boolean madePsChange = false;

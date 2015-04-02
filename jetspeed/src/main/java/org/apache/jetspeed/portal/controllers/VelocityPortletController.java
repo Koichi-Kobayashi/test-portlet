@@ -38,7 +38,7 @@ import org.apache.velocity.context.Context;
  * A Velocity based portlet controller implementation
  * 
  * @author <a href="mailto:re_carrasco@bco011.sonda.cl">Roberto Carrasco</a>
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  *
  * @version $Id: VelocityPortletController.java,v 1.12 2004/02/23 03:25:06 jford Exp $
  */
@@ -50,7 +50,8 @@ public class VelocityPortletController extends AbstractPortletController
      */    
     private static final JetspeedLogger logger = JetspeedLogFactoryService.getLogger(VelocityPortletController.class.getName());    
     
-    public ConcreteElement getContent( RunData rundata )
+    @Override
+	public ConcreteElement getContent( RunData rundata )
     {
         // create a blank context and with all the global application
         // Pull Tools inside

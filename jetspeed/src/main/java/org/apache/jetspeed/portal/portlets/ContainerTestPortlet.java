@@ -87,7 +87,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     Returns a name for this portlet.  This is used by PSML to identify a Portlet
     within the PortletRegistry
     */
-    public String getName()
+    @Override
+	public String getName()
     {
         return name;
     }
@@ -97,7 +98,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
 
     @see #getName()
     */
-    public void setName(String name)
+    @Override
+	public void setName(String name)
     {
         System.out.println("setting name = " + name);
         this.name = name;
@@ -118,7 +120,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     This should return null if not specified.
     </p>
     */
-    public String getTitle()
+    @Override
+	public String getTitle()
     {
         return this.title;
     }
@@ -135,7 +138,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
      *
      * @param instanceTitle Title from PSML
      */
-    public String getTitle(String instanceTitle)
+    @Override
+	public String getTitle(String instanceTitle)
     {
         if (instanceTitle != null)
             return instanceTitle;
@@ -146,7 +150,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     /**
     Set the title for this Portlet
     */
-    public void setTitle( String title )
+    @Override
+	public void setTitle( String title )
     {
         this.title = title;
     }
@@ -167,7 +172,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     This should return null if not specified.
     </p>
     */
-    public String getDescription()
+    @Override
+	public String getDescription()
     {
         return description;
     }
@@ -177,7 +183,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
      *
      * @return a null entry if the user hasn't defined anything
      */
-    public String getDescription(String instanceDescription)
+    @Override
+	public String getDescription(String instanceDescription)
     {
       if (instanceDescription != null)
           return instanceDescription;
@@ -187,7 +194,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     /**
     Set the description for this Portlet
     */
-    public void setDescription( String description )
+    @Override
+	public void setDescription( String description )
     {
         this.description = description;
     }
@@ -205,14 +213,16 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
      * Getter for property image.
      * @return Name of portlet image, icon.  The name is expected to be in the form of a URL.
      */
-    public String getImage(String instanceImage)
+    @Override
+	public String getImage(String instanceImage)
     {
       if (instanceImage != null)
           return instanceImage;
       return getImage();
     }
 
-    public void setImage( String image )
+    @Override
+	public void setImage( String image )
     {
         this.image = image;
     }
@@ -222,7 +232,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     initialized itself within init() and then when getContent is called it
     would return its presentation.
     */
-    public ConcreteElement getContent(RunData rundata)
+    @Override
+	public ConcreteElement getContent(RunData rundata)
     {
         String key = ((JetspeedRunData)rundata).getProfile().getId()
                     + "." + this.getID();
@@ -268,7 +279,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     first. Therefore if you have to calculate things like a title, a
     description, etc it should happen here.
     */
-    public void init() throws PortletException
+    @Override
+	public void init() throws PortletException
     {
         String path = this.pc.getInitParameter("path");
     }
@@ -277,7 +289,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     /**
     Set's the configuration of this servlet.
     */
-    public void setPortletConfig(PortletConfig pc)
+    @Override
+	public void setPortletConfig(PortletConfig pc)
     {
         this.pc = pc;
     }
@@ -286,7 +299,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     /**
     Get the config of this servlet.
     */
-    public PortletConfig getPortletConfig()
+    @Override
+	public PortletConfig getPortletConfig()
     {
         return pc;
     }
@@ -297,7 +311,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     <p>Note:  PortletControl implementations should pay attention to this so
     that they don't allow this option if it returns false.</p>
     */
-    public boolean getAllowEdit( RunData rundata )
+    @Override
+	public boolean getAllowEdit( RunData rundata )
     {
         return false;
     }
@@ -308,7 +323,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     <p>Note:  PortletControl implementations should pay attention to this so
     that they don't allow this option if it returns false.</p>
     */
-    public boolean getAllowMaximize( RunData rundata )
+    @Override
+	public boolean getAllowMaximize( RunData rundata )
     {
         return true;
     }
@@ -316,7 +332,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     /**
     Get the creation time for this Portlet
     */
-    public long getCreationTime()
+    @Override
+	public long getCreationTime()
     {
 
         return this.creationTime;
@@ -325,7 +342,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     /**
     Set the creation time for this Portlet
     */
-    public void setCreationTime( long creationTime )
+    @Override
+	public void setCreationTime( long creationTime )
     {
         System.out.println("setting creating time");
         this.creationTime = creationTime;
@@ -334,7 +352,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     /**
     Returns true portlet is able to output content for given mimetype
     */
-    public boolean supportsType( MimeType mimeType )
+    @Override
+	public boolean supportsType( MimeType mimeType )
     {
         return true;
     }
@@ -347,7 +366,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
      * @param rundata The RunData object for the current request
      * @return The attribute value
      */
-    public String getAttribute( String attrName, String attrDefValue, RunData rundata )
+    @Override
+	public String getAttribute( String attrName, String attrDefValue, RunData rundata )
     {
         String attrValue = null ;
 
@@ -364,7 +384,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
      * @paarm attrValue The value to store
      * @param rundata The RunData object for the current request
      */
-    public void setAttribute( String attrName, String attrValue, RunData rundata )
+    @Override
+	public void setAttribute( String attrName, String attrValue, RunData rundata )
     {
         try
         {
@@ -383,7 +404,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
      *
      * @return PortletInstance
      */
-    public PortletInstance getInstance(RunData rundata)
+    @Override
+	public PortletInstance getInstance(RunData rundata)
     {
        return PersistenceManager.getInstance(this, rundata);
     }
@@ -394,12 +416,14 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     /**
     Retrieve a unique portlet id
     */
-    public String getID()
+    @Override
+	public String getID()
     {
         return "9";
     }
 
-    public void setID(String id)
+    @Override
+	public void setID(String id)
     {
         this.id = id;
     }
@@ -407,7 +431,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
     /**
     * @return true if the portlet does its own customization
     */
-    public boolean providesCustomization()
+    @Override
+	public boolean providesCustomization()
     {
         return false;
     }
@@ -417,7 +442,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
      *
      * @param rundata The RunData object for the current request
      */
-    public boolean isShowTitleBar(RunData rundata)
+    @Override
+	public boolean isShowTitleBar(RunData rundata)
     {
         return true;
     }
@@ -430,7 +456,8 @@ public class ContainerTestPortlet implements Portlet /* , PortletState, Cacheabl
      * 
      * Override this method to control your own View behavior
      */
-    public boolean getAllowView( RunData rundata )
+    @Override
+	public boolean getAllowView( RunData rundata )
     {
         return true;
     }

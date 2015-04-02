@@ -1,23 +1,17 @@
 package org.apache.jetspeed.om.dbregistry;
 
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.BaseObject;
-import org.apache.torque.om.ComboKey;
-import org.apache.torque.om.DateKey;
 import org.apache.torque.om.NumberKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
-import org.apache.torque.om.StringKey;
-import org.apache.torque.om.Persistent;
 import org.apache.torque.util.Criteria;
 import org.apache.torque.util.Transaction;
 
@@ -546,8 +540,8 @@ public abstract class BasePortletDbEntry extends BaseObject
             }
             else
             {
-                      criteria.add(PortletCategoryPeer.OWNER, getId() );
-                      collPortletCategorys = PortletCategoryPeer.doSelect(criteria);
+                      criteria.add(BasePortletCategoryPeer.OWNER, getId() );
+                      collPortletCategorys = BasePortletCategoryPeer.doSelect(criteria);
             }
         }
         else
@@ -558,10 +552,10 @@ public abstract class BasePortletDbEntry extends BaseObject
                 // the following code is to determine if a new query is
                 // called for.  If the criteria is the same as the last
                 // one, just return the collection.
-                      criteria.add(PortletCategoryPeer.OWNER, getId() );
+                      criteria.add(BasePortletCategoryPeer.OWNER, getId() );
                       if (!lastPortletCategorysCriteria.equals(criteria))
                 {
-                    collPortletCategorys = PortletCategoryPeer.doSelect(criteria);
+                    collPortletCategorys = BasePortletCategoryPeer.doSelect(criteria);
                 }
             }
         }
@@ -609,8 +603,8 @@ public abstract class BasePortletDbEntry extends BaseObject
             }
             else
             {
-                       criteria.add(PortletCategoryPeer.OWNER, getId() );
-                       collPortletCategorys = PortletCategoryPeer.doSelect(criteria,con);
+                       criteria.add(BasePortletCategoryPeer.OWNER, getId() );
+                       collPortletCategorys = BasePortletCategoryPeer.doSelect(criteria,con);
              }
          }
          else
@@ -621,10 +615,10 @@ public abstract class BasePortletDbEntry extends BaseObject
                  // the following code is to determine if a new query is
                  // called for.  If the criteria is the same as the last
                  // one, just return the collection.
-                     criteria.add(PortletCategoryPeer.OWNER, getId() );
+                     criteria.add(BasePortletCategoryPeer.OWNER, getId() );
                      if (!lastPortletCategorysCriteria.equals(criteria))
                  {
-                     collPortletCategorys = PortletCategoryPeer.doSelect(criteria,con);
+                     collPortletCategorys = BasePortletCategoryPeer.doSelect(criteria,con);
                  }
              }
          }
@@ -666,8 +660,8 @@ public abstract class BasePortletDbEntry extends BaseObject
             }
             else
             {
-                            criteria.add(PortletCategoryPeer.OWNER, getId() );
-                            collPortletCategorys = PortletCategoryPeer.doSelectJoinPortletDbEntry(criteria);
+                            criteria.add(BasePortletCategoryPeer.OWNER, getId() );
+                            collPortletCategorys = BasePortletCategoryPeer.doSelectJoinPortletDbEntry(criteria);
             }
         }
         else
@@ -676,10 +670,10 @@ public abstract class BasePortletDbEntry extends BaseObject
             // called for.  If the criteria is the same as the last
             // one, just return the collection.
             boolean newCriteria = true;
-                            criteria.add(PortletCategoryPeer.OWNER, getId() );
+                            criteria.add(BasePortletCategoryPeer.OWNER, getId() );
                         if (!lastPortletCategorysCriteria.equals(criteria))
             {
-                collPortletCategorys = PortletCategoryPeer.doSelectJoinPortletDbEntry(criteria);
+                collPortletCategorys = BasePortletCategoryPeer.doSelectJoinPortletDbEntry(criteria);
             }
         }
         lastPortletCategorysCriteria = criteria;
@@ -760,8 +754,8 @@ public abstract class BasePortletDbEntry extends BaseObject
             }
             else
             {
-                      criteria.add(PortletParameterPeer.PORTLET_ID, getId() );
-                      collPortletParameters = PortletParameterPeer.doSelect(criteria);
+                      criteria.add(BasePortletParameterPeer.PORTLET_ID, getId() );
+                      collPortletParameters = BasePortletParameterPeer.doSelect(criteria);
             }
         }
         else
@@ -772,10 +766,10 @@ public abstract class BasePortletDbEntry extends BaseObject
                 // the following code is to determine if a new query is
                 // called for.  If the criteria is the same as the last
                 // one, just return the collection.
-                      criteria.add(PortletParameterPeer.PORTLET_ID, getId() );
+                      criteria.add(BasePortletParameterPeer.PORTLET_ID, getId() );
                       if (!lastPortletParametersCriteria.equals(criteria))
                 {
-                    collPortletParameters = PortletParameterPeer.doSelect(criteria);
+                    collPortletParameters = BasePortletParameterPeer.doSelect(criteria);
                 }
             }
         }
@@ -823,8 +817,8 @@ public abstract class BasePortletDbEntry extends BaseObject
             }
             else
             {
-                       criteria.add(PortletParameterPeer.PORTLET_ID, getId() );
-                       collPortletParameters = PortletParameterPeer.doSelect(criteria,con);
+                       criteria.add(BasePortletParameterPeer.PORTLET_ID, getId() );
+                       collPortletParameters = BasePortletParameterPeer.doSelect(criteria,con);
              }
          }
          else
@@ -835,10 +829,10 @@ public abstract class BasePortletDbEntry extends BaseObject
                  // the following code is to determine if a new query is
                  // called for.  If the criteria is the same as the last
                  // one, just return the collection.
-                     criteria.add(PortletParameterPeer.PORTLET_ID, getId() );
+                     criteria.add(BasePortletParameterPeer.PORTLET_ID, getId() );
                      if (!lastPortletParametersCriteria.equals(criteria))
                  {
-                     collPortletParameters = PortletParameterPeer.doSelect(criteria,con);
+                     collPortletParameters = BasePortletParameterPeer.doSelect(criteria,con);
                  }
              }
          }
@@ -880,8 +874,8 @@ public abstract class BasePortletDbEntry extends BaseObject
             }
             else
             {
-                            criteria.add(PortletParameterPeer.PORTLET_ID, getId() );
-                            collPortletParameters = PortletParameterPeer.doSelectJoinPortletDbEntry(criteria);
+                            criteria.add(BasePortletParameterPeer.PORTLET_ID, getId() );
+                            collPortletParameters = BasePortletParameterPeer.doSelectJoinPortletDbEntry(criteria);
             }
         }
         else
@@ -890,10 +884,10 @@ public abstract class BasePortletDbEntry extends BaseObject
             // called for.  If the criteria is the same as the last
             // one, just return the collection.
             boolean newCriteria = true;
-                            criteria.add(PortletParameterPeer.PORTLET_ID, getId() );
+                            criteria.add(BasePortletParameterPeer.PORTLET_ID, getId() );
                         if (!lastPortletParametersCriteria.equals(criteria))
             {
-                collPortletParameters = PortletParameterPeer.doSelectJoinPortletDbEntry(criteria);
+                collPortletParameters = BasePortletParameterPeer.doSelectJoinPortletDbEntry(criteria);
             }
         }
         lastPortletParametersCriteria = criteria;
@@ -974,8 +968,8 @@ public abstract class BasePortletDbEntry extends BaseObject
             }
             else
             {
-                      criteria.add(PortletMediatypePeer.ID, getId() );
-                      collPortletMediatypes = PortletMediatypePeer.doSelect(criteria);
+                      criteria.add(BasePortletMediatypePeer.ID, getId() );
+                      collPortletMediatypes = BasePortletMediatypePeer.doSelect(criteria);
             }
         }
         else
@@ -986,10 +980,10 @@ public abstract class BasePortletDbEntry extends BaseObject
                 // the following code is to determine if a new query is
                 // called for.  If the criteria is the same as the last
                 // one, just return the collection.
-                      criteria.add(PortletMediatypePeer.ID, getId() );
+                      criteria.add(BasePortletMediatypePeer.ID, getId() );
                       if (!lastPortletMediatypesCriteria.equals(criteria))
                 {
-                    collPortletMediatypes = PortletMediatypePeer.doSelect(criteria);
+                    collPortletMediatypes = BasePortletMediatypePeer.doSelect(criteria);
                 }
             }
         }
@@ -1037,8 +1031,8 @@ public abstract class BasePortletDbEntry extends BaseObject
             }
             else
             {
-                       criteria.add(PortletMediatypePeer.ID, getId() );
-                       collPortletMediatypes = PortletMediatypePeer.doSelect(criteria,con);
+                       criteria.add(BasePortletMediatypePeer.ID, getId() );
+                       collPortletMediatypes = BasePortletMediatypePeer.doSelect(criteria,con);
              }
          }
          else
@@ -1049,10 +1043,10 @@ public abstract class BasePortletDbEntry extends BaseObject
                  // the following code is to determine if a new query is
                  // called for.  If the criteria is the same as the last
                  // one, just return the collection.
-                     criteria.add(PortletMediatypePeer.ID, getId() );
+                     criteria.add(BasePortletMediatypePeer.ID, getId() );
                      if (!lastPortletMediatypesCriteria.equals(criteria))
                  {
-                     collPortletMediatypes = PortletMediatypePeer.doSelect(criteria,con);
+                     collPortletMediatypes = BasePortletMediatypePeer.doSelect(criteria,con);
                  }
              }
          }
@@ -1094,8 +1088,8 @@ public abstract class BasePortletDbEntry extends BaseObject
             }
             else
             {
-                            criteria.add(PortletMediatypePeer.ID, getId() );
-                            collPortletMediatypes = PortletMediatypePeer.doSelectJoinPortletDbEntry(criteria);
+                            criteria.add(BasePortletMediatypePeer.ID, getId() );
+                            collPortletMediatypes = BasePortletMediatypePeer.doSelectJoinPortletDbEntry(criteria);
             }
         }
         else
@@ -1104,10 +1098,10 @@ public abstract class BasePortletDbEntry extends BaseObject
             // called for.  If the criteria is the same as the last
             // one, just return the collection.
             boolean newCriteria = true;
-                            criteria.add(PortletMediatypePeer.ID, getId() );
+                            criteria.add(BasePortletMediatypePeer.ID, getId() );
                         if (!lastPortletMediatypesCriteria.equals(criteria))
             {
-                collPortletMediatypes = PortletMediatypePeer.doSelectJoinPortletDbEntry(criteria);
+                collPortletMediatypes = BasePortletMediatypePeer.doSelectJoinPortletDbEntry(criteria);
             }
         }
         lastPortletMediatypesCriteria = criteria;
@@ -1145,8 +1139,8 @@ public abstract class BasePortletDbEntry extends BaseObject
             }
             else
             {
-                            criteria.add(PortletMediatypePeer.ID, getId() );
-                            collPortletMediatypes = PortletMediatypePeer.doSelectJoinMediatype(criteria);
+                            criteria.add(BasePortletMediatypePeer.ID, getId() );
+                            collPortletMediatypes = BasePortletMediatypePeer.doSelectJoinMediatype(criteria);
             }
         }
         else
@@ -1155,10 +1149,10 @@ public abstract class BasePortletDbEntry extends BaseObject
             // called for.  If the criteria is the same as the last
             // one, just return the collection.
             boolean newCriteria = true;
-                            criteria.add(PortletMediatypePeer.ID, getId() );
+                            criteria.add(BasePortletMediatypePeer.ID, getId() );
                         if (!lastPortletMediatypesCriteria.equals(criteria))
             {
-                collPortletMediatypes = PortletMediatypePeer.doSelectJoinMediatype(criteria);
+                collPortletMediatypes = BasePortletMediatypePeer.doSelectJoinMediatype(criteria);
             }
         }
         lastPortletMediatypesCriteria = criteria;
@@ -1202,7 +1196,8 @@ public abstract class BasePortletDbEntry extends BaseObject
      * Retrieves a field from the object by name passed in
      * as a String.
      */
-    public Object getByName(String name)
+    @Override
+	public Object getByName(String name)
     {
           if (name.equals("Id"))
         {
@@ -1268,61 +1263,62 @@ public abstract class BasePortletDbEntry extends BaseObject
      * as a String.  The String must be one of the static
      * Strings defined in this Class' Peer.
      */
-    public Object getByPeerName(String name)
+    @Override
+	public Object getByPeerName(String name)
     {
-          if (name.equals(PortletDbEntryPeer.ID ))
+          if (name.equals(BasePortletDbEntryPeer.ID ))
         {
                 return new Long(getId());
             }
-          if (name.equals(PortletDbEntryPeer.NAME ))
+          if (name.equals(BasePortletDbEntryPeer.NAME ))
         {
                 return getName();
             }
-          if (name.equals(PortletDbEntryPeer.HIDDEN ))
+          if (name.equals(BasePortletDbEntryPeer.HIDDEN ))
         {
                 return new Boolean(getHidden());
             }
-          if (name.equals(PortletDbEntryPeer.CLASSNAME ))
+          if (name.equals(BasePortletDbEntryPeer.CLASSNAME ))
         {
                 return getClassname();
             }
-          if (name.equals(PortletDbEntryPeer.TYPE ))
+          if (name.equals(BasePortletDbEntryPeer.TYPE ))
         {
                 return getType();
             }
-          if (name.equals(PortletDbEntryPeer.APPLICATION ))
+          if (name.equals(BasePortletDbEntryPeer.APPLICATION ))
         {
                 return new Boolean(getApplication());
             }
-          if (name.equals(PortletDbEntryPeer.PARENT ))
+          if (name.equals(BasePortletDbEntryPeer.PARENT ))
         {
                 return new Long(getParentRef());
             }
-          if (name.equals(PortletDbEntryPeer.URL ))
+          if (name.equals(BasePortletDbEntryPeer.URL ))
         {
                 return getURL();
             }
-          if (name.equals(PortletDbEntryPeer.CACHEDONURL ))
+          if (name.equals(BasePortletDbEntryPeer.CACHEDONURL ))
         {
                 return new Boolean(getCachedonurl());
             }
-          if (name.equals(PortletDbEntryPeer.ROLE ))
+          if (name.equals(BasePortletDbEntryPeer.ROLE ))
         {
                 return getRole();
             }
-          if (name.equals(PortletDbEntryPeer.TITLE ))
+          if (name.equals(BasePortletDbEntryPeer.TITLE ))
         {
                 return getTitle();
             }
-          if (name.equals(PortletDbEntryPeer.DESCRIPTION ))
+          if (name.equals(BasePortletDbEntryPeer.DESCRIPTION ))
         {
                 return getDescription();
             }
-          if (name.equals(PortletDbEntryPeer.IMAGE ))
+          if (name.equals(BasePortletDbEntryPeer.IMAGE ))
         {
                 return getImage();
             }
-          if (name.equals(PortletDbEntryPeer.SECURITY ))
+          if (name.equals(BasePortletDbEntryPeer.SECURITY ))
         {
                 return getSecurityRef();
             }
@@ -1333,7 +1329,8 @@ public abstract class BasePortletDbEntry extends BaseObject
      * Retrieves a field from the object by Position as specified
      * in the xml schema.  Zero-based.
      */
-    public Object getByPosition(int pos)
+    @Override
+	public Object getByPosition(int pos)
     {
             if ( pos == 0 )
         {
@@ -1398,9 +1395,10 @@ public abstract class BasePortletDbEntry extends BaseObject
      * Stores the object in the database.  If the object is new,
      * it inserts it; otherwise an update is performed.
      */
-    public void save() throws Exception
+    @Override
+	public void save() throws Exception
     {
-          save(PortletDbEntryPeer.getMapBuilder()
+          save(BasePortletDbEntryPeer.getMapBuilder()
                 .getDatabaseMap().getName());
       }
 
@@ -1411,7 +1409,8 @@ public abstract class BasePortletDbEntry extends BaseObject
      * auto-generated conditionally and therefore needs to be
      * in this file instead of in the super class, BaseObject.
        */
-    public void save(String dbName) throws TorqueException
+    @Override
+	public void save(String dbName) throws TorqueException
     {
         Connection con = null;
           try
@@ -1437,7 +1436,8 @@ public abstract class BasePortletDbEntry extends BaseObject
      * the save() method and the connection details will be handled
      * internally
      */
-    public void save(Connection con) throws TorqueException
+    @Override
+	public void save(Connection con) throws TorqueException
     {
           if (!alreadyInSave)
         {
@@ -1450,17 +1450,17 @@ public abstract class BasePortletDbEntry extends BaseObject
             {
                 if (isNew())
                 {
-                    PortletDbEntryPeer.doInsert((PortletDbEntry)this, con);
+                    BasePortletDbEntryPeer.doInsert((PortletDbEntry)this, con);
                     setNew(false);
                 }
                 else
                 {
-                    PortletDbEntryPeer.doUpdate((PortletDbEntry)this, con);
+                    BasePortletDbEntryPeer.doUpdate((PortletDbEntry)this, con);
                 }
 
                       if (isCacheOnSave())
                 {
-                    PortletDbEntryManager.putInstance(this);
+                    BasePortletDbEntryManager.putInstance(this);
                 }
               }
 
@@ -1507,7 +1507,8 @@ public abstract class BasePortletDbEntry extends BaseObject
      *
      * @param ObjectKey id
      */
-    public void setPrimaryKey(ObjectKey id)
+    @Override
+	public void setPrimaryKey(ObjectKey id)
         throws TorqueException {
             setId(((NumberKey)id).longValue());
         }
@@ -1515,7 +1516,8 @@ public abstract class BasePortletDbEntry extends BaseObject
     /**
      * Set the PrimaryKey using a String.
      */
-    public void setPrimaryKey(String key) throws TorqueException
+    @Override
+	public void setPrimaryKey(String key) throws TorqueException
     {
             setId(Long.parseLong(key));
         }
@@ -1525,7 +1527,8 @@ public abstract class BasePortletDbEntry extends BaseObject
      * returns an id that differentiates this object from others
      * of its class.
      */
-    public ObjectKey getPrimaryKey()
+    @Override
+	public ObjectKey getPrimaryKey()
     {
           return SimpleKey.keyFor(getId());
       }

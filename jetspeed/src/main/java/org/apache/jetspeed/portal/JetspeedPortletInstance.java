@@ -117,7 +117,8 @@ public class JetspeedPortletInstance implements PortletInstance
     /**
      * @see PortletInstance#getAttribute()
      */
-    public String getAttribute(String name, String dftValue)
+    @Override
+	public String getAttribute(String name, String dftValue)
     {
         Entry entry = getEntry();
 
@@ -139,7 +140,8 @@ public class JetspeedPortletInstance implements PortletInstance
     /**
      * @see PortletInstance#getAttribute()
      */
-    public String getAttribute(String name)
+    @Override
+	public String getAttribute(String name)
     {
         Entry entry = getEntry();
 
@@ -161,7 +163,8 @@ public class JetspeedPortletInstance implements PortletInstance
     /**
      * @see PortletInstance#setAttribute(String, String)
      */
-    public void setAttribute(String name, String value)
+    @Override
+	public void setAttribute(String name, String value)
     {
         // make sure we are updating and using the clone now
         setupForUpdate();
@@ -192,7 +195,8 @@ public class JetspeedPortletInstance implements PortletInstance
     /**
      * @see PortletInstance#removeAttribute(String)
      */
-    public void removeAttribute(String name)
+    @Override
+	public void removeAttribute(String name)
     {
         // make sure we are updating and using the clone now
         setupForUpdate();
@@ -225,7 +229,8 @@ public class JetspeedPortletInstance implements PortletInstance
     /**
      * @see PortletInstance#removeAllAttributes()
      */
-    public void removeAllAttributes()
+    @Override
+	public void removeAllAttributes()
     {
         // make sure we are updating and using the clone now
         setupForUpdate();
@@ -238,7 +243,8 @@ public class JetspeedPortletInstance implements PortletInstance
     /**
      * @see PortletInstance#getAttributes()
      */
-    public Iterator getAttributes()
+    @Override
+	public Iterator getAttributes()
     {
         Entry entry = getEntry();
 
@@ -248,7 +254,8 @@ public class JetspeedPortletInstance implements PortletInstance
     /**
      * @see PortletInstance#getAttributeNames()
      */
-    public Iterator getAttributeNames()
+    @Override
+	public Iterator getAttributeNames()
     {
         Iterator itr = getAttributes();
         ArrayList list = new ArrayList();
@@ -264,7 +271,8 @@ public class JetspeedPortletInstance implements PortletInstance
     /**
      * @see PortletInstance#getDocument()
      */
-    public PSMLDocument getDocument()
+    @Override
+	public PSMLDocument getDocument()
     {
         return getProfile().getDocument();
     }
@@ -272,7 +280,8 @@ public class JetspeedPortletInstance implements PortletInstance
     /**
      * @see PortletInstance#getProfile()
      */
-    public Profile getProfile()
+    @Override
+	public Profile getProfile()
     {
         // use the clone if we have made it
         if (m_clonedProfile != null) return m_clonedProfile;
@@ -283,7 +292,8 @@ public class JetspeedPortletInstance implements PortletInstance
     /**
      * @see PortletInstance#getPortlet()
      */
-    public Entry getEntry()
+    @Override
+	public Entry getEntry()
     {
         return getDocument().getEntryById(m_portlet.getID());
     }
@@ -291,7 +301,8 @@ public class JetspeedPortletInstance implements PortletInstance
     /**
      * @see PortletInstance#getDescription()
      */
-    public String getDescription()
+    @Override
+	public String getDescription()
     {
         Entry entry = getEntry();
 
@@ -310,7 +321,8 @@ public class JetspeedPortletInstance implements PortletInstance
     /**
      * @see PortletInstance#getName()
      */
-    public String getName()
+    @Override
+	public String getName()
     {
         return getEntry().getParent();
     }
@@ -318,7 +330,8 @@ public class JetspeedPortletInstance implements PortletInstance
     /**
      * @see PortletInstance#getTitle()
      */
-    public String getTitle()
+    @Override
+	public String getTitle()
     {
         Entry entry = getEntry();
 
@@ -356,7 +369,8 @@ public class JetspeedPortletInstance implements PortletInstance
     /**
      * @see PortletInstance#getPortlet()
      */
-    public Portlet getPortlet()
+    @Override
+	public Portlet getPortlet()
     {
         return m_portlet;
     }

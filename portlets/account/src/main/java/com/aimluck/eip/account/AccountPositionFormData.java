@@ -32,6 +32,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.account.util.AccountUtils;
 import com.aimluck.eip.cayenne.om.account.EipMPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPosition;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -141,18 +142,18 @@ public class AccountPositionFormData extends ALAbstractFormData {
       if (ALEipConstants.MODE_INSERT.equals(getMode())) {
         Expression exp =
           ExpressionFactory.matchExp(
-            EipMPosition.POSITION_NAME_PROPERTY,
+            _EipMPosition.POSITION_NAME_PROPERTY,
             position_name.getValue());
         query.setQualifier(exp);
       } else if (ALEipConstants.MODE_UPDATE.equals(getMode())) {
         Expression exp1 =
           ExpressionFactory.matchExp(
-            EipMPosition.POSITION_NAME_PROPERTY,
+            _EipMPosition.POSITION_NAME_PROPERTY,
             position_name.getValue());
         query.setQualifier(exp1);
         Expression exp2 =
           ExpressionFactory.noMatchDbExp(
-            EipMPosition.POSITION_ID_PK_COLUMN,
+            _EipMPosition.POSITION_ID_PK_COLUMN,
             Integer.valueOf(position_id));
         query.andQualifier(exp2);
       }

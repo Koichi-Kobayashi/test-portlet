@@ -30,6 +30,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardTopic;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardCategory;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.msgboard.util.MsgboardUtils;
@@ -117,7 +118,7 @@ public class MsgboardCategoryMultiDelete extends ALAbstractCheckList {
       Database.query(EipTMsgboardCategory.class);
     Expression exp =
       ExpressionFactory.inDbExp(
-        EipTMsgboardCategory.CATEGORY_ID_PK_COLUMN,
+        _EipTMsgboardCategory.CATEGORY_ID_PK_COLUMN,
         values);
     query.setQualifier(exp);
     return query;

@@ -46,7 +46,8 @@ public class PortletBrowseAction extends RegistryBrowseAction
     * @param context The velocity context for this request.
     * @param rundata The turbine rundata context for this request.
     */
-    protected void buildNormalContext(
+    @Override
+	protected void buildNormalContext(
         Portlet portlet,
         Context context,
         RunData rundata)
@@ -79,7 +80,8 @@ public class PortletBrowseAction extends RegistryBrowseAction
      * 
      * @see org.apache.jetspeed.modules.actions.portlets.RegistryBrowseAction#filter(java.util.List, java.lang.String[], java.lang.String[])
      */
-    protected List filter(List entries, String[] fields, String[] values)
+    @Override
+	protected List filter(List entries, String[] fields, String[] values)
     {
         return PortletFilter.filterPortlets(entries, fields, values);
     }

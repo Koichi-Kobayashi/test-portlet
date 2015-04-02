@@ -71,7 +71,8 @@ public class TemplateLinkTag extends TagSupport
         this.action = action;
     }
 
-    public int doStartTag() throws JspException 
+    @Override
+	public int doStartTag() throws JspException 
     {
         RunData data = (RunData)pageContext.getAttribute(JspService.RUNDATA, PageContext.REQUEST_SCOPE);    
         

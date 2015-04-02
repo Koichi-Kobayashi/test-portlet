@@ -36,6 +36,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTMemo;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMemo;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.common.ALPageNotFoundException;
 import com.aimluck.eip.orm.Database;
@@ -250,8 +251,8 @@ public class MemoUtils {
 
       SelectQuery<EipTMemo> query = Database.query(EipTMemo.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTMemo.MEMO_ID_PK_COLUMN, memoid);
-      exp.andExp(ExpressionFactory.matchExp(EipTMemo.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchDbExp(_EipTMemo.MEMO_ID_PK_COLUMN, memoid);
+      exp.andExp(ExpressionFactory.matchExp(_EipTMemo.OWNER_ID_PROPERTY, Integer
         .valueOf(ALEipUtils.getUserId(rundata))));
       query.setQualifier(exp);
       List<EipTMemo> memos = query.fetchList();
@@ -292,7 +293,7 @@ public class MemoUtils {
 
       SelectQuery<EipTMemo> query = Database.query(EipTMemo.class);
       Expression exp =
-        ExpressionFactory.matchExp(EipTMemo.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipTMemo.OWNER_ID_PROPERTY, Integer
           .valueOf(ALEipUtils.getUserId(rundata)));
       query.setQualifier(exp);
       List<EipTMemo> memos = query.fetchList();

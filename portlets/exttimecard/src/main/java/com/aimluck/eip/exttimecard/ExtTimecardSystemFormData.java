@@ -32,6 +32,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystem;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTExtTimecardSystem;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -321,7 +322,7 @@ public class ExtTimecardSystemFormData extends ALAbstractFormData {
             Database.query(EipTExtTimecardSystem.class);
           Expression exp1 =
             ExpressionFactory.matchDbExp(
-              EipTExtTimecardSystem.SYSTEM_ID_PK_COLUMN,
+              _EipTExtTimecardSystem.SYSTEM_ID_PK_COLUMN,
               1);
           query.setQualifier(exp1);
 
@@ -386,14 +387,14 @@ public class ExtTimecardSystemFormData extends ALAbstractFormData {
         Database.query(EipTExtTimecardSystem.class);
       Expression exp1 =
         ExpressionFactory.matchExp(
-          EipTExtTimecardSystem.SYSTEM_NAME_PROPERTY,
+          _EipTExtTimecardSystem.SYSTEM_NAME_PROPERTY,
           system_name.getValue());
       query.setQualifier(exp1);
       if (ALEipConstants.MODE_UPDATE.equals(getMode())) {
 
         Expression exp2 =
           ExpressionFactory.noMatchDbExp(
-            EipTExtTimecardSystem.SYSTEM_ID_PK_COLUMN,
+            _EipTExtTimecardSystem.SYSTEM_ID_PK_COLUMN,
             system_id.getValue());
         query.andQualifier(exp2);
       }

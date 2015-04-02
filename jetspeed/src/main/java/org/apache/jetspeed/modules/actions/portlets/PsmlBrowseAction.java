@@ -87,7 +87,8 @@ public class PsmlBrowseAction extends VelocityPortletAction
      * provide their own customization behavior.
      * Default is to use Portal base customizer action
      */
-    protected void buildConfigureContext(VelocityPortlet portlet,
+    @Override
+	protected void buildConfigureContext(VelocityPortlet portlet,
                                          Context context,
                                          RunData rundata)
     {
@@ -106,7 +107,8 @@ public class PsmlBrowseAction extends VelocityPortletAction
      * Subclasses must override this method to provide default behavior
      * for the portlet action
      */
-    protected void buildNormalContext(VelocityPortlet portlet,
+    @Override
+	protected void buildNormalContext(VelocityPortlet portlet,
                                       Context context,
                                       RunData rundata)
     {

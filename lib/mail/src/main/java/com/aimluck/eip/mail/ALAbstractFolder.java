@@ -53,6 +53,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
 import com.aimluck.eip.cayenne.om.portlet.EipTMail;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFilter;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMail;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.mail.util.ALAttachmentsExtractor;
 import com.aimluck.eip.mail.util.ALMailUtils;
@@ -378,7 +379,7 @@ public abstract class ALAbstractFolder implements ALFolder {
     }
 
     SelectQuery<EipTMail> query = Database.query(EipTMail.class);
-    query.select(EipTMail.MAIL_ID_PK_COLUMN);
+    query.select(_EipTMail.MAIL_ID_PK_COLUMN);
     query.select(EipTMail.READ_FLG_COLUMN);
     query.select(EipTMail.SUBJECT_COLUMN);
     query.select(EipTMail.PERSON_COLUMN);
@@ -386,20 +387,20 @@ public abstract class ALAbstractFolder implements ALFolder {
     query.select(EipTMail.FILE_VOLUME_COLUMN);
     query.select(EipTMail.HAS_FILES_COLUMN);
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTMail.USER_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTMail.USER_ID_PROPERTY, Integer
         .valueOf(user_id));
     query.setQualifier(exp1);
     Expression exp2 =
-      ExpressionFactory.matchExp(EipTMail.ACCOUNT_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTMail.ACCOUNT_ID_PROPERTY, Integer
         .valueOf(account_id));
     query.andQualifier(exp2);
-    Expression exp3 = ExpressionFactory.matchExp(EipTMail.TYPE_PROPERTY, type);
+    Expression exp3 = ExpressionFactory.matchExp(_EipTMail.TYPE_PROPERTY, type);
     query.andQualifier(exp3);
 
     // folder_id が空でなければ、フォルダIDで絞り込む
     if (!("".equals(folder_id))) {
       Expression exp4 =
-        ExpressionFactory.matchExp(EipTMail.FOLDER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipTMail.FOLDER_ID_PROPERTY, Integer
           .valueOf(folder_id));
 
       if (ALEipUtils.getTemp(rundata, context, "WebMail_Normal") != null

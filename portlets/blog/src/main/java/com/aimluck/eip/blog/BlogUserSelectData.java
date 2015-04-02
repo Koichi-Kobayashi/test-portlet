@@ -35,6 +35,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.eip.blog.util.BlogUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogEntry;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogEntry;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -156,7 +157,7 @@ public class BlogUserSelectData extends
       SelectQuery<EipTBlogEntry> query = Database.query(EipTBlogEntry.class);
       Expression exp =
         ExpressionFactory.greaterOrEqualExp(
-          EipTBlogEntry.CREATE_DATE_PROPERTY,
+          _EipTBlogEntry.CREATE_DATE_PROPERTY,
           field.getValue());
       query.setQualifier(exp);
       List<EipTBlogEntry> list = query.fetchList();

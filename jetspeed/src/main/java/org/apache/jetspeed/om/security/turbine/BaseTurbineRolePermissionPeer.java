@@ -1,10 +1,8 @@
 package org.apache.jetspeed.om.security.turbine;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,9 +13,6 @@ import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
 import org.apache.torque.map.MapBuilder;
 import org.apache.torque.map.TableMap;
-import org.apache.torque.om.DateKey;
-import org.apache.torque.om.NumberKey;
-import org.apache.torque.om.StringKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
 import org.apache.torque.util.BasePeer;
@@ -246,7 +241,7 @@ public abstract class BaseTurbineRolePermissionPeer
         try
         {
             TurbineRolePermission obj = (TurbineRolePermission) cls.newInstance();
-            TurbineRolePermissionPeer.populateObject(row, offset, obj);
+            BaseTurbineRolePermissionPeer.populateObject(row, offset, obj);
                   obj.setModified(false);
               obj.setNew(false);
 
@@ -384,8 +379,8 @@ public abstract class BaseTurbineRolePermissionPeer
         for (int i = 0; i < records.size(); i++)
         {
             Record row = (Record) records.get(i);
-              results.add(TurbineRolePermissionPeer.row2Object(row, 1,
-                TurbineRolePermissionPeer.getOMClass()));
+              results.add(BaseTurbineRolePermissionPeer.row2Object(row, 1,
+                BaseTurbineRolePermissionPeer.getOMClass()));
           }
         return results;
     }
@@ -844,13 +839,13 @@ public abstract class BaseTurbineRolePermissionPeer
             c.setDbName(DATABASE_NAME);
         }
 
-        TurbineRolePermissionPeer.addSelectColumns(c);
+        BaseTurbineRolePermissionPeer.addSelectColumns(c);
         int offset = numColumns + 1;
-        TurbineRolePeer.addSelectColumns(c);
+        BaseTurbineRolePeer.addSelectColumns(c);
 
 
-                        c.addJoin(TurbineRolePermissionPeer.ROLE_ID,
-            TurbineRolePeer.ROLE_ID);
+                        c.addJoin(BaseTurbineRolePermissionPeer.ROLE_ID,
+            BaseTurbineRolePeer.ROLE_ID);
         
 
                                             
@@ -861,18 +856,18 @@ public abstract class BaseTurbineRolePermissionPeer
         {
             Record row = (Record) rows.get(i);
 
-                            Class omClass = TurbineRolePermissionPeer.getOMClass();
-                    TurbineRolePermission obj1 = (TurbineRolePermission) TurbineRolePermissionPeer
+                            Class omClass = BaseTurbineRolePermissionPeer.getOMClass();
+                    TurbineRolePermission obj1 = BaseTurbineRolePermissionPeer
                 .row2Object(row, 1, omClass);
-                     omClass = TurbineRolePeer.getOMClass();
-                    TurbineRole obj2 = (TurbineRole)TurbineRolePeer
+                     omClass = BaseTurbineRolePeer.getOMClass();
+                    TurbineRole obj2 = BaseTurbineRolePeer
                 .row2Object(row, offset, omClass);
 
             boolean newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 TurbineRolePermission temp_obj1 = (TurbineRolePermission)results.get(j);
-                TurbineRole temp_obj2 = (TurbineRole)temp_obj1.getTurbineRole();
+                TurbineRole temp_obj2 = temp_obj1.getTurbineRole();
                 if (temp_obj2.getPrimaryKey().equals(obj2.getPrimaryKey()))
                 {
                     newObject = false;
@@ -915,13 +910,13 @@ public abstract class BaseTurbineRolePermissionPeer
             c.setDbName(DATABASE_NAME);
         }
 
-        TurbineRolePermissionPeer.addSelectColumns(c);
+        BaseTurbineRolePermissionPeer.addSelectColumns(c);
         int offset = numColumns + 1;
-        TurbinePermissionPeer.addSelectColumns(c);
+        BaseTurbinePermissionPeer.addSelectColumns(c);
 
 
-                        c.addJoin(TurbineRolePermissionPeer.PERMISSION_ID,
-            TurbinePermissionPeer.PERMISSION_ID);
+                        c.addJoin(BaseTurbineRolePermissionPeer.PERMISSION_ID,
+            BaseTurbinePermissionPeer.PERMISSION_ID);
         
 
                                             
@@ -932,18 +927,18 @@ public abstract class BaseTurbineRolePermissionPeer
         {
             Record row = (Record) rows.get(i);
 
-                            Class omClass = TurbineRolePermissionPeer.getOMClass();
-                    TurbineRolePermission obj1 = (TurbineRolePermission) TurbineRolePermissionPeer
+                            Class omClass = BaseTurbineRolePermissionPeer.getOMClass();
+                    TurbineRolePermission obj1 = BaseTurbineRolePermissionPeer
                 .row2Object(row, 1, omClass);
-                     omClass = TurbinePermissionPeer.getOMClass();
-                    TurbinePermission obj2 = (TurbinePermission)TurbinePermissionPeer
+                     omClass = BaseTurbinePermissionPeer.getOMClass();
+                    TurbinePermission obj2 = BaseTurbinePermissionPeer
                 .row2Object(row, offset, omClass);
 
             boolean newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 TurbineRolePermission temp_obj1 = (TurbineRolePermission)results.get(j);
-                TurbinePermission temp_obj2 = (TurbinePermission)temp_obj1.getTurbinePermission();
+                TurbinePermission temp_obj2 = temp_obj1.getTurbinePermission();
                 if (temp_obj2.getPrimaryKey().equals(obj2.getPrimaryKey()))
                 {
                     newObject = false;

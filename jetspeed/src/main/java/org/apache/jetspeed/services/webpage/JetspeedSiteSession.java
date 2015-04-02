@@ -78,7 +78,8 @@ public class JetspeedSiteSession extends AbstractSiteSession
      *
      * @exception IOException a servlet exception.
      */    
-    public boolean logon(ProxyRunData data)
+    @Override
+	public boolean logon(ProxyRunData data)
                        throws IOException
     {
         return true;
@@ -96,7 +97,8 @@ public class JetspeedSiteSession extends AbstractSiteSession
      * @exception IOException a servlet exception.
      */    
 
-    public void rewriteContent(ProxyRunData data,
+    @Override
+	public void rewriteContent(ProxyRunData data,
                                URLConnection con,
                                int contentType,
                                String url) throws IOException
@@ -122,7 +124,8 @@ public class JetspeedSiteSession extends AbstractSiteSession
      *
      * @exception IOException a servlet exception.
      */
-    public void drainContent(URLConnection con,
+    @Override
+	public void drainContent(URLConnection con,
                              HttpServletResponse response) throws IOException
     {
         // TODO: rewrite this, and deprecate all String based rewriting
@@ -138,7 +141,8 @@ public class JetspeedSiteSession extends AbstractSiteSession
      * @deprecate
      * @exception IOException a servlet exception.
      */
-    public String getContentAsString(URLConnection con,
+    @Override
+	public String getContentAsString(URLConnection con,
                                      ProxyRunData data,
                                      String url) 
                     throws IOException
@@ -178,13 +182,15 @@ public class JetspeedSiteSession extends AbstractSiteSession
      *
      * @exception IOException a servlet exception.
      */    
-    public boolean logout(ProxyRunData data)
+    @Override
+	public boolean logout(ProxyRunData data)
                        throws IOException
     {
         return true; // LOGOUT
     }
 
-    public void proxy(String site, ProxyRunData data)
+    @Override
+	public void proxy(String site, ProxyRunData data)
                     throws IOException
     {
     }

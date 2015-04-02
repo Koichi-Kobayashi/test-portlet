@@ -41,8 +41,10 @@ public class FakeJetspeedUser
         setLastName(id);
     }
 
-    public void valueUnbound(HttpSessionBindingEvent hsbe) {}
-    public void save() {}
+    @Override
+	public void valueUnbound(HttpSessionBindingEvent hsbe) {}
+    @Override
+	public void save() {}
 
 }   // class FakeJetspeedUser
 

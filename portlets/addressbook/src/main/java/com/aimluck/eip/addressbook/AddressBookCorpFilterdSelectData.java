@@ -36,6 +36,8 @@ import com.aimluck.eip.addressbook.util.AddressBookUtils;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -218,12 +220,12 @@ public class AddressBookCorpFilterdSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("corp_group", TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
+    map.putValue("corp_group", _TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
       + "."
-      + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+      + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
       + "."
       + TurbineGroup.GROUP_NAME_COLUMN);
-    map.putValue("name_kana", TurbineUser.LAST_NAME_KANA_PROPERTY);
+    map.putValue("name_kana", _TurbineUser.LAST_NAME_KANA_PROPERTY);
     return map;
   }
 
@@ -239,16 +241,16 @@ public class AddressBookCorpFilterdSelectData extends
     SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
 
     Expression exp11 =
-      ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+      ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
     query.setQualifier(exp11);
     Expression exp21 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .valueOf(1));
     Expression exp22 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .valueOf(2));
     Expression exp23 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .valueOf(3));
     query.andQualifier(exp21.andExp(exp22).andExp(exp23));
 
@@ -262,7 +264,7 @@ public class AddressBookCorpFilterdSelectData extends
    */
   @Override
   protected String getColumnForIndex() {
-    return TurbineUser.LAST_NAME_KANA_PROPERTY;
+    return _TurbineUser.LAST_NAME_KANA_PROPERTY;
   }
 
   /**

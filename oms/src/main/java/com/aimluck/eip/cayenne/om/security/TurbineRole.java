@@ -26,7 +26,8 @@ import com.aimluck.eip.cayenne.om.security.auto._TurbineRole;
 
 public class TurbineRole extends _TurbineRole implements Role {
 
-  public String getId() {
+  @Override
+public String getId() {
     if (getObjectId() != null && !getObjectId().isTemporary()) {
       Object obj = getObjectId().getIdSnapshot().get(ROLE_ID_PK_COLUMN);
       if (obj instanceof Long) {
@@ -40,16 +41,19 @@ public class TurbineRole extends _TurbineRole implements Role {
     }
   }
 
-  public void setId(String id) {
+  @Override
+public void setId(String id) {
     setObjectId(new ObjectId("TurbineRole", ROLE_ID_PK_COLUMN, Integer
         .valueOf(id)));
   }
 
-  public String getName() {
+  @Override
+public String getName() {
     return getRoleName();
   }
 
-  public void setName(String name) {
+  @Override
+public void setName(String name) {
     setRoleName(name);
   }
 

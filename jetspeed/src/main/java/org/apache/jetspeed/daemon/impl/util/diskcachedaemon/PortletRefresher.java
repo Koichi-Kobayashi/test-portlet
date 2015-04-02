@@ -54,7 +54,8 @@ public class PortletRefresher implements Runnable {
    
     /**
     */
-    public void run() {
+    @Override
+	public void run() {
        
         /* Code to avoid putting it in cache if it not required... */
         try {

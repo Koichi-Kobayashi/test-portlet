@@ -71,7 +71,8 @@ public class CreateNewUserAndConfirm extends Action
      */    
     private static final JetspeedLogger logger = JetspeedLogFactoryService.getLogger(CreateNewUserAndConfirm.class.getName());    
     
-    public void doPerform( RunData data ) throws Exception
+    @Override
+	public void doPerform( RunData data ) throws Exception
     {
         try
         {

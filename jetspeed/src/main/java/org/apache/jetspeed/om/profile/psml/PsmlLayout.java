@@ -33,22 +33,26 @@ public class PsmlLayout extends PsmlConfigElement implements Layout
     {
     }
 
-    public long getPosition()
+    @Override
+	public long getPosition()
     {
         return this.position;
     }
                               
-    public void setPosition(long position)
+    @Override
+	public void setPosition(long position)
     {
         this.position = position;
     }
     
-    public long getSize()
+    @Override
+	public long getSize()
     {
         return this.size;
     }
                                 
-    public void setSize( long size )
+    @Override
+	public void setSize( long size )
     {
         this.size = size;
     }

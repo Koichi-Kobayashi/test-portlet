@@ -56,7 +56,7 @@ import org.apache.ecs.StringElement;
  * inner object and can thus be transparently cascaded or substituted to
  * a simple portlet wherever in a PSML object tree.
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:sgala@apache.org">Santiago Gala</a>
  * @version $Id: AbstractPortletControl.java,v 1.22 2004/03/29 21:16:27 taylor Exp $
  */
@@ -77,7 +77,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
     /**
      * @return the PortletControl specific configuration
      */
-    public PortletControlConfig getConfig()
+    @Override
+	public PortletControlConfig getConfig()
     {
         return this.conf;
     }
@@ -86,7 +87,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * Sets the PortletControl specific configuration
      * @param conf the new PortletControl configuration
      */
-    public void setConfig(PortletControlConfig conf)
+    @Override
+	public void setConfig(PortletControlConfig conf)
     {
         this.conf=conf;
     }
@@ -96,7 +98,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * 
      * @param portlet the new portlet to be managed by the control
      */
-    public void setPortlet(Portlet portlet)
+    @Override
+	public void setPortlet(Portlet portlet)
     {
         this.portlet=portlet;
     }
@@ -105,7 +108,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * Retrieves the portlet managed by this control
      * @return the portlet object managed or null
      */
-    public Portlet getPortlet()
+    @Override
+	public Portlet getPortlet()
     {
         return this.portlet;
     }
@@ -115,7 +119,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @param portlet the portlet to be managed by this control
      */
-    public void init( Portlet portlet )
+    @Override
+	public void init( Portlet portlet )
     {
         this.setPortlet( portlet );
     }
@@ -128,7 +133,9 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @deprecated
      * @return the text color value in HTML format (#RRGGBB)
      */
-    public String getColor()
+    @Deprecated
+	@Override
+	public String getColor()
     {
         return getPortlet().getPortletConfig().getPortletSkin().getTextColor();
     }
@@ -141,7 +148,9 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @deprecated
      * @param color the text color value in HTML format (#RRGGBB)
      */
-    public void setColor(String color)
+    @Deprecated
+	@Override
+	public void setColor(String color)
     {
         getPortlet().getPortletConfig().getPortletSkin().setTextColor( color );
     }
@@ -154,7 +163,9 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @deprecated
      * @return the text color value in HTML format (#RRGGBB)
      */
-    public String getBackgroundColor()
+    @Deprecated
+	@Override
+	public String getBackgroundColor()
     {
         return getPortlet().getPortletConfig().getPortletSkin().getBackgroundColor();
     }
@@ -167,7 +178,9 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @deprecated
      * @param backgroundColor the background color value in HTML format (#RRGGBB)
      */
-    public void setBackgroundColor(String backgroundColor)
+    @Deprecated
+	@Override
+	public void setBackgroundColor(String backgroundColor)
     {
         getPortlet().getPortletConfig().getPortletSkin().setBackgroundColor( backgroundColor );
     }
@@ -180,7 +193,9 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @deprecated
      * @return the text color value in HTML format (#RRGGBB)
      */
-    public String getTitleColor()
+    @Deprecated
+	@Override
+	public String getTitleColor()
     {
         return getPortlet().getPortletConfig().getPortletSkin().getTitleBackgroundColor();
     }
@@ -193,7 +208,9 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @deprecated
      * @param titleColor the title color value in HTML format (#RRGGBB)
      */
-    public void setTitleColor(String titleColor)
+    @Deprecated
+	@Override
+	public void setTitleColor(String titleColor)
     {
         getPortlet().getPortletConfig().getPortletSkin().setTitleBackgroundColor( titleColor );
     }
@@ -206,7 +223,9 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @deprecated
      * @return the size value. May be expressed in percentages (eg, "80%")
      */
-    public String getWidth() {
+    @Deprecated
+	@Override
+	public String getWidth() {
         return getPortlet().getPortletConfig().getSkin( "width", WIDTH );
     }
 
@@ -219,7 +238,9 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @deprecated
      * @param width the width of portlet. Must be a positive, non nul integer
      */
-    public void setWidth(int width)
+    @Deprecated
+	@Override
+	public void setWidth(int width)
     {
         getPortlet().getPortletConfig().setSkin( "width", String.valueOf(width) );
     }
@@ -234,7 +255,9 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @param width the width of portlet. Must be parseable as a positive, non 
      * nul integer or a percentage
      */
-    public void setWidth(String width)
+    @Deprecated
+	@Override
+	public void setWidth(String width)
     {
         getPortlet().getPortletConfig().setSkin( "width", width );
     }
@@ -246,7 +269,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
     /**
      * @return the inner portlet config object
      */
-    public PortletConfig getPortletConfig()
+    @Override
+	public PortletConfig getPortletConfig()
     {
         if (getPortlet()==null) return null;
         return getPortlet().getPortletConfig();
@@ -257,7 +281,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @param portletConfig the new portet config object
      */
-    public void setPortletConfig(PortletConfig portletConfig)
+    @Override
+	public void setPortletConfig(PortletConfig portletConfig)
     {
         if (getPortlet()==null) return;
         getPortlet().setPortletConfig(portletConfig);
@@ -266,7 +291,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
     /**
      * @return the inner portlet name
      */
-    public String getName()
+    @Override
+	public String getName()
     {   
         if (getPortlet()==null) return null;
         return getPortlet().getName();
@@ -277,7 +303,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @param name the new portet name
      */
-    public void setName(String name)
+    @Override
+	public void setName(String name)
     {   
         if (getPortlet()!=null) getPortlet().setName(name);
     }
@@ -285,7 +312,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
     /**
      * @return the inner portlet title
      */
-    public String getTitle()
+    @Override
+	public String getTitle()
     {
         if (getPortlet()==null) return null;
         return getPortlet().getTitle();
@@ -296,7 +324,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @param title the new portlet title
      */
-    public void setTitle( String title )
+    @Override
+	public void setTitle( String title )
     {   
         if (getPortlet()!=null) getPortlet().setTitle(title);
     }
@@ -304,7 +333,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
     /**
      * @return the inner portlet description
      */
-    public String getDescription()
+    @Override
+	public String getDescription()
     {
         if (getPortlet()==null) return null;
         return getPortlet().getDescription();
@@ -315,7 +345,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @param description the new portlet description
      */
-    public void setDescription( String description )
+    @Override
+	public void setDescription( String description )
     {   
         if (getPortlet()!=null) getPortlet().setDescription(description);
     }
@@ -323,7 +354,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
     /**
      * Inits the inner portlet
      */
-    public void init() throws PortletException
+    @Override
+	public void init() throws PortletException
     {
         if (getPortlet()!=null) getPortlet().init();
     }
@@ -333,7 +365,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @param rundata the RunData for the request
      */
-    public ConcreteElement getContent(RunData rundata)
+    @Override
+	public ConcreteElement getContent(RunData rundata)
     {
         Portlet portlet = getPortlet(); 
         if (portlet == null)
@@ -362,7 +395,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
     /**
     @see Portlet#supportsType
     */
-    public boolean supportsType( MimeType mimeType )
+    @Override
+	public boolean supportsType( MimeType mimeType )
     {
         boolean allowed = true;
 
@@ -411,7 +445,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @return the size of the inner portletSet, 1 if the inner portlet
      * is not a set, or 0 if there's no inner portlet
      */
-    public int size()
+    @Override
+	public int size()
     {
         if (getPortlet() instanceof PortletSet)
             return ((PortletSet)getPortlet()).size();
@@ -423,7 +458,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @return an array of portlet contained within the inner PortletSet
      * or the inner portlet
      */
-    public Portlet[] toArray()
+    @Override
+	public Portlet[] toArray()
     {
         if (getPortlet() instanceof PortletSet)
             return ((PortletSet)getPortlet()).toArray();
@@ -442,7 +478,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * value of size()
      * @return the portlet object stored at this position
      */
-    public Portlet getPortletAt(int pos)
+    @Override
+	public Portlet getPortletAt(int pos)
     {
         if (getPortlet() instanceof PortletSet)
             return ((PortletSet)getPortlet()).getPortletAt(pos);
@@ -459,7 +496,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @return an enumeration of portlets
      */
-    public Enumeration getPortlets()
+    @Override
+	public Enumeration getPortlets()
     {
         if (getPortlet() instanceof PortletSet)
             return ((PortletSet)getPortlet()).getPortlets();
@@ -475,7 +513,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @param portlet the portlet to add
      */
-    public synchronized void addPortlet(Portlet portlet)
+    @Override
+	public synchronized void addPortlet(Portlet portlet)
     {
         if (getPortlet() instanceof PortletSet)
             ((PortletSet)getPortlet()).addPortlet(portlet);
@@ -487,7 +526,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @param portlet the portlet to add
      * @param position the position of the new portlet
      */
-    public synchronized void addPortlet(Portlet portlet, int position)
+    @Override
+	public synchronized void addPortlet(Portlet portlet, int position)
     {
         if (getPortlet() instanceof PortletSet)
             ((PortletSet)getPortlet()).addPortlet(portlet,position);
@@ -499,7 +539,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @param portlet the portlet to add
      * @param constraints the portlet layout constraints
      */
-    public synchronized void addPortlet(Portlet portlet, PortletSet.Constraints constraints)
+    @Override
+	public synchronized void addPortlet(Portlet portlet, PortletSet.Constraints constraints)
     {
         if (getPortlet() instanceof PortletSet)
             ((PortletSet)getPortlet()).addPortlet(portlet,constraints);
@@ -513,7 +554,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @param constraint the portlet layout constraints
      * @param position the portlet required position
      */
-    public synchronized void addPortlet(Portlet portlet, PortletSet.Constraints constraint, int position)
+    @Override
+	public synchronized void addPortlet(Portlet portlet, PortletSet.Constraints constraint, int position)
     {
         if (getPortlet() instanceof PortletSet)
             ((PortletSet)getPortlet()).addPortlet(portlet,constraint,position);
@@ -522,7 +564,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
     /**
      * @return the controller for the inner portletSet or null
      */
-    public PortletController getController()
+    @Override
+	public PortletController getController()
     {
         if (getPortlet() instanceof PortletSet)
             return ((PortletSet)getPortlet()).getController();
@@ -536,7 +579,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @parama controller the new controller for the inner portletSet
      */
-    public synchronized void setController(PortletController controller)
+    @Override
+	public synchronized void setController(PortletController controller)
     {
         if (getPortlet() instanceof PortletSet)
             ((PortletSet)getPortlet()).setController(controller);
@@ -550,7 +594,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowClose( RunData rundata )
+    @Override
+	public boolean allowClose( RunData rundata )
     {
         Portlet p = getPortlet();
 
@@ -573,7 +618,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
     /**
      * Returns true if this portlet is currently closed
      */
-    public boolean isClosed(RunData rundata)
+    @Override
+	public boolean isClosed(RunData rundata)
     {
         Portlet p = getPortlet();
         
@@ -591,7 +637,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      * @param minimized the new portlet state
      * @param data the RunData for this request
      */
-    public void setClosed(boolean close, RunData rundata)
+    @Override
+	public void setClosed(boolean close, RunData rundata)
     {
         Portlet p = getPortlet();
         
@@ -607,7 +654,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowInfo( RunData rundata )
+    @Override
+	public boolean allowInfo( RunData rundata )
     {
         Portlet p = getPortlet();
         
@@ -633,7 +681,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowCustomize( RunData rundata )
+    @Override
+	public boolean allowCustomize( RunData rundata )
     {
         Portlet p = getPortlet();
 
@@ -659,7 +708,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowMaximize( RunData rundata )
+    @Override
+	public boolean allowMaximize( RunData rundata )
     {
         Portlet p = getPortlet();
 
@@ -685,7 +735,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowMinimize( RunData rundata )
+    @Override
+	public boolean allowMinimize( RunData rundata )
     {
         Portlet p = getPortlet();
 
@@ -711,7 +762,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
      *
      * @param rundata the RunData object for the current request
      */
-    public boolean allowPrintFriendly( RunData rundata )
+    @Override
+	public boolean allowPrintFriendly( RunData rundata )
     {
         Portlet p = getPortlet();
 
@@ -734,7 +786,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
     /**
      * Returns true if this portlet is currently minimized
      */
-    public boolean isMinimized(RunData rundata)
+    @Override
+	public boolean isMinimized(RunData rundata)
     {
         Portlet p = getPortlet();
         
@@ -752,7 +805,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
     @param minimize True if the portlet change to minimized
     @param rundata A RunData object
     */
-    public void setMinimized( boolean minimize, RunData rundata )
+    @Override
+	public void setMinimized( boolean minimize, RunData rundata )
     {
         Portlet p = getPortlet();
         
@@ -762,12 +816,14 @@ public abstract class AbstractPortletControl extends AbstractPortlet
         }
     }
 
-    public String getID()
+    @Override
+	public String getID()
     {
         return this.portlet.getID();
     }
 
-    public void setID(String id)
+    @Override
+	public void setID(String id)
     {
         this.portlet.setID(id);
     }
@@ -775,7 +831,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
     /**
     Returns the Portlet with the given id
     */
-    public Portlet getPortletByID(String id)
+    @Override
+	public Portlet getPortletByID(String id)
     {
         Portlet p = getPortlet();
          if (null == p) 
@@ -799,7 +856,8 @@ public abstract class AbstractPortletControl extends AbstractPortlet
     /**
     Returns the Portlet with the given name
     */
-    public Portlet getPortletByName(String name)
+    @Override
+	public Portlet getPortletByName(String name)
     {
         Portlet p = getPortlet();
          if (null == p) 

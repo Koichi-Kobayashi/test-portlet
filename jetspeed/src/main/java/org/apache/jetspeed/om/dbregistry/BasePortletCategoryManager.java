@@ -2,8 +2,6 @@
 
 package org.apache.jetspeed.om.dbregistry;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.torque.Torque;
@@ -45,8 +43,8 @@ public abstract class BasePortletCategoryManager
     public static PortletCategoryManager getManager()
     {
         return (PortletCategoryManager)
-            Torque.getManager(PortletCategoryManager.MANAGED_CLASS,
-                PortletCategoryManager.DEFAULT_MANAGER_CLASS);
+            Torque.getManager(BasePortletCategoryManager.MANAGED_CLASS,
+                BasePortletCategoryManager.DEFAULT_MANAGER_CLASS);
     }
 
     /**
@@ -255,16 +253,17 @@ public abstract class BasePortletCategoryManager
     protected boolean existsImpl(PortletCategory om)
         throws TorqueException
     {
-        Criteria crit = PortletCategoryPeer
-            .buildCriteria((PortletCategory)om);
-        return PortletCategoryPeer.doSelect(crit).size() > 0;
+        Criteria crit = BasePortletCategoryPeer
+            .buildCriteria(om);
+        return BasePortletCategoryPeer.doSelect(crit).size() > 0;
     }
 
 
-    protected Persistent retrieveStoredOM(ObjectKey id)
+    @Override
+	protected Persistent retrieveStoredOM(ObjectKey id)
         throws TorqueException
     {
-        return PortletCategoryPeer.retrieveByPK(id);
+        return BasePortletCategoryPeer.retrieveByPK(id);
     }
 
     /**
@@ -274,9 +273,10 @@ public abstract class BasePortletCategoryManager
      * @return a <code>List</code> value
      * @exception TorqueException if an error occurs
      */
-    protected List retrieveStoredOMs(List ids)
+    @Override
+	protected List retrieveStoredOMs(List ids)
         throws TorqueException
     {
-        return PortletCategoryPeer.retrieveByPKs(ids);
+        return BasePortletCategoryPeer.retrieveByPKs(ids);
     }
 }

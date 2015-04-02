@@ -42,7 +42,8 @@ import org.apache.turbine.util.GenerateUniqueId;
  */
 public class UpdateAccount extends Action
 {
-    public void doPerform( RunData rundata ) throws Exception
+    @Override
+	public void doPerform( RunData rundata ) throws Exception
     {
         JetspeedRunData data = (JetspeedRunData)rundata;
 
@@ -225,7 +226,7 @@ public class UpdateAccount extends Action
 
         boolean enableMail = JetspeedResources.getBoolean("newuser.confirm.enable", false);
 
-        String currentEmail = (String) data.getUser().getEmail();
+        String currentEmail = data.getUser().getEmail();
         if ( enableMail && ( currentEmail == null || ! currentEmail.equalsIgnoreCase(email) ) )
             {
                 //Send confirmation email if different than current

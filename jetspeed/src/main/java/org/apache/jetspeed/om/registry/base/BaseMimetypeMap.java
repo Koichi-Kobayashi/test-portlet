@@ -25,7 +25,7 @@ import java.util.Iterator;
  * Simple bean-like implementation of the CapabilityMap
  *
  * @author <a href="shesmer@raleigh.ibm.com">Stephan Hesmer</a>
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BaseMimetypeMap.java,v 1.3 2004/02/23 03:08:26 jford Exp $
  */
 public class BaseMimetypeMap implements MimetypeMap, java.io.Serializable
@@ -42,7 +42,8 @@ public class BaseMimetypeMap implements MimetypeMap, java.io.Serializable
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object==null)
         {
@@ -81,7 +82,8 @@ public class BaseMimetypeMap implements MimetypeMap, java.io.Serializable
         return true;
     }
 
-    public Iterator getMimetypes()
+    @Override
+	public Iterator getMimetypes()
     {
         if (mimes == null)
         {
@@ -91,7 +93,8 @@ public class BaseMimetypeMap implements MimetypeMap, java.io.Serializable
         return mimes.iterator();
     }
 
-    public MimeType getPreferredMimetype()
+    @Override
+	public MimeType getPreferredMimetype()
     {
         if (mimes == null)
         {
@@ -101,7 +104,8 @@ public class BaseMimetypeMap implements MimetypeMap, java.io.Serializable
         return (MimeType)mimes.get(0);
     }
 
-    public void addMimetype(String name)
+    @Override
+	public void addMimetype(String name)
     {
         if (!mimetypesVector.contains(name))
         {
@@ -110,7 +114,8 @@ public class BaseMimetypeMap implements MimetypeMap, java.io.Serializable
         }
     }
 
-    public void removeMimetype(String name)
+    @Override
+	public void removeMimetype(String name)
     {
         mimetypesVector.remove(name);
         buildMimetable();

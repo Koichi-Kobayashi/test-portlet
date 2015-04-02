@@ -19,6 +19,8 @@
 
 package com.aimluck.eip.cayenne.om.security;
 
+import com.aimluck.eip.cayenne.om.security.auto._TurbinePermission;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineRole;
 import com.aimluck.eip.cayenne.om.security.auto._TurbineRolePermission;
 
 public class TurbineRolePermission extends _TurbineRolePermission {
@@ -28,7 +30,7 @@ public class TurbineRolePermission extends _TurbineRolePermission {
 
     if (role != null) {
       Object obj = getObjectId().getIdSnapshot().get(
-          TurbineRole.ROLE_ID_PK_COLUMN);
+          _TurbineRole.ROLE_ID_PK_COLUMN);
       if (obj instanceof Long) {
         Long value = (Long) obj;
         return Integer.valueOf(value.intValue());
@@ -50,7 +52,7 @@ public class TurbineRolePermission extends _TurbineRolePermission {
 
     if (permission != null) {
       Object obj = getObjectId().getIdSnapshot().get(
-          TurbinePermission.PERMISSION_ID_PK_COLUMN);
+          _TurbinePermission.PERMISSION_ID_PK_COLUMN);
       if (obj instanceof Long) {
         Long value = (Long) obj;
         return Integer.valueOf(value.intValue());

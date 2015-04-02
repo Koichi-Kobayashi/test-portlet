@@ -31,6 +31,9 @@ import org.apache.jetspeed.om.security.GroupRole;
 import org.apache.jetspeed.om.security.JetspeedUser;
 import org.apache.jetspeed.om.security.Role;
 import org.apache.jetspeed.om.security.UserNamePrincipal;
+import org.apache.jetspeed.om.security.turbine.BaseTurbineRolePeer;
+import org.apache.jetspeed.om.security.turbine.BaseTurbineRolePermissionPeer;
+import org.apache.jetspeed.om.security.turbine.BaseTurbineUserGroupRolePeer;
 import org.apache.jetspeed.om.security.turbine.TurbineRole;
 import org.apache.jetspeed.om.security.turbine.TurbineRolePeer;
 import org.apache.jetspeed.om.security.turbine.TurbineRolePermissionPeer;
@@ -93,7 +96,8 @@ public class TurbineRoleManagement extends TurbineBaseService
      * @exception RoleException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Iterator getRoles(String username)
+    @Override
+	public Iterator getRoles(String username)
         throws JetspeedSecurityException
     {
         JetspeedUser user = null;
@@ -114,13 +118,13 @@ public class TurbineRoleManagement extends TurbineBaseService
             throw new RoleException("Failed to Retrieve User: ", e);
         }
         Criteria criteria = new Criteria();
-        criteria.add(TurbineUserGroupRolePeer.USER_ID, user.getUserId());
+        criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, user.getUserId());
         List rels;
         HashMap roles;
 
         try
         {
-            rels = TurbineUserGroupRolePeer.doSelect(criteria);
+            rels = BaseTurbineUserGroupRolePeer.doSelect(criteria);
             if (rels.size() > 0)
             {
                 roles = new HashMap(rels.size());
@@ -158,14 +162,15 @@ public class TurbineRoleManagement extends TurbineBaseService
      * @exception RoleException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Iterator getRoles()
+    @Override
+	public Iterator getRoles()
         throws JetspeedSecurityException
     {
         Criteria criteria = new Criteria();
         List roles;
         try
         {
-            roles = TurbineRolePeer.doSelect(criteria);
+            roles = BaseTurbineRolePeer.doSelect(criteria);
         }
         catch(Exception e)
         {
@@ -183,7 +188,8 @@ public class TurbineRoleManagement extends TurbineBaseService
      * @exception RoleException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void addRole(Role role)
+    @Override
+	public void addRole(Role role)
         throws JetspeedSecurityException
     {
         if(roleExists(role.getName()))
@@ -196,8 +202,8 @@ public class TurbineRoleManagement extends TurbineBaseService
         {
             TurbineRole trole = new TurbineRole();
             trole.setRoleName(role.getName());
-            Criteria criteria = TurbineRolePeer.buildCriteria(trole);
-            NumberKey key = (NumberKey)TurbineRolePeer.doInsert(criteria);
+            Criteria criteria = BaseTurbineRolePeer.buildCriteria(trole);
+            NumberKey key = (NumberKey)BaseTurbineRolePeer.doInsert(criteria);
             role.setId(key.toString());
         }
         catch(Exception e)
@@ -267,7 +273,8 @@ public class TurbineRoleManagement extends TurbineBaseService
      * @exception RoleException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void saveRole(Role role)
+    @Override
+	public void saveRole(Role role)
         throws JetspeedSecurityException
     {
         if(!roleExists(role.getName()))
@@ -280,7 +287,7 @@ public class TurbineRoleManagement extends TurbineBaseService
         {
             if (role instanceof TurbineRole)
             {
-                TurbineRolePeer.doUpdate((TurbineRole)role);
+                BaseTurbineRolePeer.doUpdate((TurbineRole)role);
             }
             else
             {
@@ -306,7 +313,8 @@ public class TurbineRoleManagement extends TurbineBaseService
      * @exception RoleException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public void removeRole(String rolename)
+    @Override
+	public void removeRole(String rolename)
         throws JetspeedSecurityException
     {
         Connection conn = null;
@@ -316,21 +324,21 @@ public class TurbineRoleManagement extends TurbineBaseService
             Role role = this.getRole(rolename);
 
             Criteria criteria = new Criteria();
-            criteria.add(TurbineRolePeer.ROLE_NAME, rolename);
+            criteria.add(BaseTurbineRolePeer.ROLE_NAME, rolename);
 
             if(cascadeDelete)
             {
                 // CASCADE TURBINE_USER_GROUP_ROLE, TURBINE_ROLE_PERMISSION
                 Criteria criteria1 = new Criteria();
-                criteria1.add(TurbineUserGroupRolePeer.ROLE_ID, role.getId());
-                TurbineUserGroupRolePeer.doDelete(criteria1, conn);
+                criteria1.add(BaseTurbineUserGroupRolePeer.ROLE_ID, role.getId());
+                BaseTurbineUserGroupRolePeer.doDelete(criteria1, conn);
 
                 Criteria criteria2 = new Criteria();
-                criteria2.add(TurbineRolePermissionPeer.ROLE_ID, role.getId());
-                TurbineRolePermissionPeer.doDelete(criteria2, conn);
+                criteria2.add(BaseTurbineRolePermissionPeer.ROLE_ID, role.getId());
+                BaseTurbineRolePermissionPeer.doDelete(criteria2, conn);
             }
 
-            TurbineRolePeer.doDelete(criteria, conn);
+            BaseTurbineRolePeer.doDelete(criteria, conn);
             PsmlManager.removeRoleDocuments(role);
 
             conn.commit();
@@ -373,12 +381,14 @@ public class TurbineRoleManagement extends TurbineBaseService
      * @exception RoleException when the security provider has a general failure retrieving users.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
+	@Override
 	public void grantRole(String username, String rolename)
 		throws JetspeedSecurityException
 	{
 		grantRole(username, rolename, GroupManagement.DEFAULT_GROUP_NAME);
 	}
-    public void grantRole(String username, String rolename, String groupname)
+    @Override
+	public void grantRole(String username, String rolename, String groupname)
         throws JetspeedSecurityException
     {
         try
@@ -388,10 +398,10 @@ public class TurbineRoleManagement extends TurbineBaseService
             Group group = JetspeedSecurity.getGroup(groupname);
 
             Criteria criteria = new Criteria();
-            criteria.add(TurbineUserGroupRolePeer.USER_ID, user.getUserId());
-            criteria.add(TurbineUserGroupRolePeer.GROUP_ID, group.getId());
-            criteria.add(TurbineUserGroupRolePeer.ROLE_ID, role.getId());
-            TurbineUserGroupRolePeer.doInsert(criteria);
+            criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, user.getUserId());
+            criteria.add(BaseTurbineUserGroupRolePeer.GROUP_ID, group.getId());
+            criteria.add(BaseTurbineUserGroupRolePeer.ROLE_ID, role.getId());
+            BaseTurbineUserGroupRolePeer.doInsert(criteria);
 
             if (cachingEnable)
             {
@@ -413,13 +423,15 @@ public class TurbineRoleManagement extends TurbineBaseService
      * @exception RoleException when the security provider has a general failure retrieving users.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
+	@Override
 	public void revokeRole(String username, String rolename)
 		throws JetspeedSecurityException
 	{
 		revokeRole(username, rolename, GroupManagement.DEFAULT_GROUP_NAME);
 	}
 
-    public void revokeRole(String username, String rolename, String groupname)
+    @Override
+	public void revokeRole(String username, String rolename, String groupname)
         throws JetspeedSecurityException
     {
         try
@@ -429,10 +441,10 @@ public class TurbineRoleManagement extends TurbineBaseService
             Group group = JetspeedSecurity.getGroup(groupname);
 
             Criteria criteria = new Criteria();
-            criteria.add(TurbineUserGroupRolePeer.USER_ID, user.getUserId());
-            criteria.add(TurbineUserGroupRolePeer.GROUP_ID, group.getId());
-            criteria.add(TurbineUserGroupRolePeer.ROLE_ID, role.getId());
-            TurbineUserGroupRolePeer.doDelete(criteria);
+            criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, user.getUserId());
+            criteria.add(BaseTurbineUserGroupRolePeer.GROUP_ID, group.getId());
+            criteria.add(BaseTurbineUserGroupRolePeer.ROLE_ID, role.getId());
+            BaseTurbineUserGroupRolePeer.doDelete(criteria);
 
             if (cachingEnable)
             {
@@ -456,13 +468,15 @@ public class TurbineRoleManagement extends TurbineBaseService
      * @exception RoleException when the security provider has a general failure retrieving users.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
+	@Override
 	public boolean hasRole(String username, String rolename)
 		throws JetspeedSecurityException
 	{
 		return hasRole(username, rolename, GroupManagement.DEFAULT_GROUP_NAME);
 	}
 	
-    public boolean hasRole(String username, String rolename, String groupname)
+    @Override
+	public boolean hasRole(String username, String rolename, String groupname)
         throws JetspeedSecurityException
     {
         List roles;
@@ -482,10 +496,10 @@ public class TurbineRoleManagement extends TurbineBaseService
             Group group = JetspeedSecurity.getGroup(groupname);
 
             Criteria criteria = new Criteria();
-            criteria.add(TurbineUserGroupRolePeer.USER_ID, user.getUserId());
-            criteria.add(TurbineUserGroupRolePeer.GROUP_ID, group.getId());
-            criteria.add(TurbineUserGroupRolePeer.ROLE_ID, role.getId());
-            roles = TurbineUserGroupRolePeer.doSelect(criteria);
+            criteria.add(BaseTurbineUserGroupRolePeer.USER_ID, user.getUserId());
+            criteria.add(BaseTurbineUserGroupRolePeer.GROUP_ID, group.getId());
+            criteria.add(BaseTurbineUserGroupRolePeer.ROLE_ID, role.getId());
+            roles = BaseTurbineUserGroupRolePeer.doSelect(criteria);
 
         }
         catch(Exception e)
@@ -508,15 +522,16 @@ public class TurbineRoleManagement extends TurbineBaseService
      * @exception RoleException when the security provider has a general failure.
      * @exception InsufficientPrivilegeException when the requestor is denied due to insufficient privilege
      */
-    public Role getRole(String rolename)
+    @Override
+	public Role getRole(String rolename)
         throws JetspeedSecurityException
     {
         List roles;
         try
         {
             Criteria criteria = new Criteria();
-            criteria.add(TurbineRolePeer.ROLE_NAME, rolename);
-            roles = TurbineRolePeer.doSelect(criteria);
+            criteria.add(BaseTurbineRolePeer.ROLE_NAME, rolename);
+            roles = BaseTurbineRolePeer.doSelect(criteria);
         }
         catch(Exception e)
         {
@@ -566,11 +581,11 @@ public class TurbineRoleManagement extends TurbineBaseService
         throws RoleException
     {
         Criteria criteria = new Criteria();
-        criteria.add(TurbineRolePeer.ROLE_NAME, roleName);
+        criteria.add(BaseTurbineRolePeer.ROLE_NAME, roleName);
         List roles;
         try
         {
-            roles = TurbineRolePeer.doSelect(criteria);
+            roles = BaseTurbineRolePeer.doSelect(criteria);
         }
         catch(Exception e)
         {
@@ -596,7 +611,8 @@ public class TurbineRoleManagement extends TurbineBaseService
      * @exception throws a <code>InitializationException</code> if the service
      * fails to initialize
      */
-    public synchronized void init(ServletConfig conf)
+    @Override
+	public synchronized void init(ServletConfig conf)
         throws InitializationException
     {
         if (getInit()) return;

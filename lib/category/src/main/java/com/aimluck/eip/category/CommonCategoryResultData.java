@@ -50,7 +50,8 @@ public class CommonCategoryResultData implements ALData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     category_id = new ALNumberField();
     name = new ALStringField();
     note = new ALStringField();

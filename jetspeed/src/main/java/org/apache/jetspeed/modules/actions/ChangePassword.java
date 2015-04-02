@@ -46,7 +46,8 @@ public class ChangePassword extends Action
      */    
     private static final JetspeedLogger logger = JetspeedLogFactoryService.getLogger(ChangePassword.class.getName());
     
-    public void doPerform(RunData rundata) throws Exception
+    @Override
+	public void doPerform(RunData rundata) throws Exception
     {
 
         String cancelBtn = rundata.getParameters().getString(Localization.getString(rundata, "PASSWORDFORM_CANCEL"));

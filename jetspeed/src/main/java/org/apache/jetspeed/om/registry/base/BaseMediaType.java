@@ -19,7 +19,7 @@ package org.apache.jetspeed.om.registry.base;
 /**
  * Utility object for serializing with Castor a MediaTypeEntry reference
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BaseMediaType.java,v 1.3 2004/02/23 03:08:26 jford Exp $
  */
 public class BaseMediaType implements java.io.Serializable
@@ -31,7 +31,8 @@ public class BaseMediaType implements java.io.Serializable
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object==null)
         {

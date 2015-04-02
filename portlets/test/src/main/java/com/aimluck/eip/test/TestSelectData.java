@@ -40,9 +40,13 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.commons.utils.ALDateUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipTTest;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTest;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALAbstractMultiFilterSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -124,7 +128,7 @@ public class TestSelectData extends
         rundata,
         context,
         LIST_SORT_STR,
-        EipTTest.UPDATE_DATE_PROPERTY);
+        _EipTTest.UPDATE_DATE_PROPERTY);
       ALEipUtils.setTemp(
         rundata,
         context,
@@ -227,7 +231,7 @@ public class TestSelectData extends
       && (!target_user_id.equals(""))
       && (!target_user_id.equals("all"))) {
       exp1 =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
           .valueOf(target_user_id));
       // exp0.andExp(exp1);
       query.andQualifier(exp1);
@@ -238,13 +242,13 @@ public class TestSelectData extends
       && (!target_group_name.equals("all"))) {
       // 選択したグループを指定する．
       Expression exp =
-        ExpressionFactory.matchExp(EipTTest.TURBINE_USER_PROPERTY
+        ExpressionFactory.matchExp(_EipTTest.TURBINE_USER_PROPERTY
           + "."
-          + TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
+          + _TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
           + "."
-          + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+          + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
           + "."
-          + TurbineGroup.GROUP_NAME_PROPERTY, target_group_name);
+          + _TurbineGroup.GROUP_NAME_PROPERTY, target_group_name);
       query.andQualifier(exp);
     }
 
@@ -252,9 +256,9 @@ public class TestSelectData extends
       // 選択したキーワードを指定する．
       String keyword = "%" + target_keyword.getValue() + "%";
       Expression exp =
-        ExpressionFactory.likeExp(EipTTest.TEST_NAME_PROPERTY, keyword);
+        ExpressionFactory.likeExp(_EipTTest.TEST_NAME_PROPERTY, keyword);
       Expression exp2 =
-        ExpressionFactory.likeExp(EipTTest.NOTE_PROPERTY, keyword);
+        ExpressionFactory.likeExp(_EipTTest.NOTE_PROPERTY, keyword);
 
       /* フルネーム対応 */
       String first_name = keyword;
@@ -271,21 +275,21 @@ public class TestSelectData extends
       }
 
       Expression exp3 =
-        ExpressionFactory.likeExp(EipTTest.TURBINE_USER_PROPERTY
+        ExpressionFactory.likeExp(_EipTTest.TURBINE_USER_PROPERTY
           + "."
-          + TurbineUser.FIRST_NAME_PROPERTY, first_name);
+          + _TurbineUser.FIRST_NAME_PROPERTY, first_name);
       Expression exp4 =
-        ExpressionFactory.likeExp(EipTTest.TURBINE_USER_PROPERTY
+        ExpressionFactory.likeExp(_EipTTest.TURBINE_USER_PROPERTY
           + "."
-          + TurbineUser.FIRST_NAME_KANA_PROPERTY, first_name);
+          + _TurbineUser.FIRST_NAME_KANA_PROPERTY, first_name);
       Expression exp5 =
-        ExpressionFactory.likeExp(EipTTest.TURBINE_USER_PROPERTY
+        ExpressionFactory.likeExp(_EipTTest.TURBINE_USER_PROPERTY
           + "."
-          + TurbineUser.LAST_NAME_PROPERTY, last_name);
+          + _TurbineUser.LAST_NAME_PROPERTY, last_name);
       Expression exp6 =
-        ExpressionFactory.likeExp(EipTTest.TURBINE_USER_PROPERTY
+        ExpressionFactory.likeExp(_EipTTest.TURBINE_USER_PROPERTY
           + "."
-          + TurbineUser.LAST_NAME_KANA_PROPERTY, last_name);
+          + _TurbineUser.LAST_NAME_KANA_PROPERTY, last_name);
 
       query.andQualifier(exp
         .orExp(exp2)
@@ -342,7 +346,7 @@ public class TestSelectData extends
         userIds.add(-1);
       }
       Expression exp =
-        ExpressionFactory.inExp(EipTTest.USER_ID_PROPERTY, userIds);
+        ExpressionFactory.inExp(_EipTTest.USER_ID_PROPERTY, userIds);
       query.andQualifier(exp);
     }
 
@@ -465,8 +469,8 @@ public class TestSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("test_name", EipTTest.TEST_NAME_PROPERTY);
-    map.putValue(EipTTest.UPDATE_DATE_PROPERTY, EipTTest.UPDATE_DATE_PROPERTY);
+    map.putValue("test_name", _EipTTest.TEST_NAME_PROPERTY);
+    map.putValue(_EipTTest.UPDATE_DATE_PROPERTY, _EipTTest.UPDATE_DATE_PROPERTY);
     return map;
   }
 

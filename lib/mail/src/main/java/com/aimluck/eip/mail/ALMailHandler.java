@@ -33,6 +33,7 @@ import com.aimluck.commons.utils.ALStringUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
 import com.aimluck.eip.cayenne.om.portlet.EipTMail;
 import com.aimluck.eip.cayenne.om.portlet.EipTMailFolder;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMail;
 import com.aimluck.eip.mail.util.ALMailUtils;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -153,21 +154,21 @@ public abstract class ALMailHandler {
         if (Integer.valueOf(rcontext.getAccountId()) != null
           || Integer.valueOf(rcontext.getUserId()) != null) {
           Expression exp1 =
-            ExpressionFactory.matchExp(EipTMail.USER_ID_PROPERTY, Integer
+            ExpressionFactory.matchExp(_EipTMail.USER_ID_PROPERTY, Integer
               .valueOf(rcontext.getUserId()));
           Expression exp2 =
-            ExpressionFactory.matchExp(EipTMail.ACCOUNT_ID_PROPERTY, Integer
+            ExpressionFactory.matchExp(_EipTMail.ACCOUNT_ID_PROPERTY, Integer
               .valueOf(rcontext.getAccountId()));
           Expression exp3 =
-            ExpressionFactory.matchExp(EipTMail.TYPE_PROPERTY, "R");
+            ExpressionFactory.matchExp(_EipTMail.TYPE_PROPERTY, "R");
           Expression exp4 =
-            ExpressionFactory.matchExp(EipTMail.READ_FLG_PROPERTY, "F");
+            ExpressionFactory.matchExp(_EipTMail.READ_FLG_PROPERTY, "F");
 
           query.setQualifier(exp1.andExp(exp2).andExp(exp3).andExp(exp4));
 
           if (foler_ids != null && foler_ids.size() > 0) {
             Expression exp5 =
-              ExpressionFactory.inExp(EipTMail.FOLDER_ID_PROPERTY, foler_ids);
+              ExpressionFactory.inExp(_EipTMail.FOLDER_ID_PROPERTY, foler_ids);
             query.andQualifier(exp5);
           }
 
@@ -196,7 +197,7 @@ public abstract class ALMailHandler {
     try {
       SelectQuery<EipTMail> query = getUnReadMailQuery(rcontext, null);
       if (query != null) {
-        query.select(EipTMail.MAIL_ID_PK_COLUMN);
+        query.select(_EipTMail.MAIL_ID_PK_COLUMN);
 
         return query.getCount();
       } else {
@@ -245,7 +246,7 @@ public abstract class ALMailHandler {
           count = 0;
         } else {
           count =
-            countquery.orderAscending(EipTMail.FOLDER_ID_PROPERTY).getCount();
+            countquery.orderAscending(_EipTMail.FOLDER_ID_PROPERTY).getCount();
         }
         mailSumMap.put(_foler_id, count);
       }

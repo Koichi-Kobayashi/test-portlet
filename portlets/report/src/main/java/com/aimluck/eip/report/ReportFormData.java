@@ -42,7 +42,9 @@ import com.aimluck.eip.cayenne.om.portlet.EipTReport;
 import com.aimluck.eip.cayenne.om.portlet.EipTReportFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTReportMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTReportMemberMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTReportFile;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipManager;
@@ -244,7 +246,7 @@ public class ReportFormData extends ALAbstractFormData {
           SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
           Expression exp =
             ExpressionFactory.inExp(
-              TurbineUser.LOGIN_NAME_PROPERTY,
+              _TurbineUser.LOGIN_NAME_PROPERTY,
               memberNames);
           query.setQualifier(exp);
           memberList.addAll(ALEipUtils.getUsersFromSelectQuery(query));
@@ -256,7 +258,7 @@ public class ReportFormData extends ALAbstractFormData {
         if (userNames != null && userNames.length > 0) {
           SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
           Expression exp =
-            ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, userNames);
+            ExpressionFactory.inExp(_TurbineUser.LOGIN_NAME_PROPERTY, userNames);
           query.setQualifier(exp);
           mapList.addAll(ALEipUtils.getUsersFromSelectQuery(query));
         }
@@ -424,7 +426,7 @@ public class ReportFormData extends ALAbstractFormData {
       List<String> fpaths = new ArrayList<String>();
       SelectQuery<EipTReportFile> query = Database.query(EipTReportFile.class);
       query.andQualifier(ExpressionFactory.matchDbExp(
-        EipTReportFile.EIP_TREPORT_PROPERTY,
+        _EipTReportFile.EIP_TREPORT_PROPERTY,
         report.getReportId()));
       List<EipTReportFile> files = query.fetchList();
       if (files != null && files.size() > 0) {

@@ -70,7 +70,8 @@ public class EcsServletElement extends ConcreteElement
      *
      * @param out the OutputStream to use for generating content
      */
-    public void output(OutputStream out)
+    @Override
+	public void output(OutputStream out)
     {
         output(new PrintWriter(out));
     }
@@ -80,7 +81,8 @@ public class EcsServletElement extends ConcreteElement
      *
      * @param out the PrintWriter to use for generating content
      */
-    public void output(PrintWriter out) {
+    @Override
+	public void output(PrintWriter out) {
         ServletContext ctx = rundata.getServletContext();
         RequestDispatcher dispatcher = ctx.getRequestDispatcher(url);
         try

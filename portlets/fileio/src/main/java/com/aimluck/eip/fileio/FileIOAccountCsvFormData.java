@@ -44,11 +44,15 @@ import com.aimluck.commons.utils.ALStringUtil;
 import com.aimluck.eip.account.util.AccountUtils;
 import com.aimluck.eip.cayenne.om.account.EipMPosition;
 import com.aimluck.eip.cayenne.om.account.EipMPost;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPost;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystem;
 import com.aimluck.eip.cayenne.om.portlet.EipTExtTimecardSystemMap;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALDBErrorException;
@@ -597,15 +601,15 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
           Database.query(TurbineUserGroupRole.class);
         Expression exp2 =
           ExpressionFactory.matchExp(
-            TurbineUserGroupRole.TURBINE_USER_PROPERTY,
+            _TurbineUserGroupRole.TURBINE_USER_PROPERTY,
             user.getUserId());
         Expression exp3 =
           ExpressionFactory.noMatchExp(
-            TurbineUserGroupRole.TURBINE_GROUP_PROPERTY,
+            _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY,
             Integer.valueOf(1));
         Expression exp4 =
           ExpressionFactory.noMatchExp(
-            TurbineUserGroupRole.TURBINE_GROUP_PROPERTY,
+            _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY,
             Integer.valueOf(2));
         query2.setQualifier(exp2);
         query2.andQualifier(exp3.andExp(exp4));
@@ -626,7 +630,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
               Database.query(TurbineGroup.class);
             Expression exp =
               ExpressionFactory.matchExp(
-                TurbineGroup.GROUP_ALIAS_NAME_PROPERTY,
+                _TurbineGroup.GROUP_ALIAS_NAME_PROPERTY,
                 postnames[i]);
             query.setQualifier(exp);
             List<TurbineGroup> alist = query.fetchList();
@@ -668,7 +672,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
               Database.query(TurbineGroup.class);
             Expression exp =
               ExpressionFactory.matchExp(
-                TurbineGroup.GROUP_ALIAS_NAME_PROPERTY,
+                _TurbineGroup.GROUP_ALIAS_NAME_PROPERTY,
                 postnames[i]);
             query.setQualifier(exp);
             List<TurbineGroup> alist = query.fetchList();
@@ -1053,7 +1057,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
   private EipMPost getEipMPost(ALStringField post_name) {
     SelectQuery<EipMPost> query = Database.query(EipMPost.class);
     Expression exp =
-      ExpressionFactory.matchExp(EipMPost.POST_NAME_PROPERTY, post_name);
+      ExpressionFactory.matchExp(_EipMPost.POST_NAME_PROPERTY, post_name);
     query.setQualifier(exp);
     List<EipMPost> list = query.fetchList();
     if (list == null || list.size() == 0) {
@@ -1073,7 +1077,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
     ALStringField group_name_field = new ALStringField(group_name);
     Expression exp =
       ExpressionFactory
-        .matchExp(EipMPost.GROUP_NAME_PROPERTY, group_name_field);
+        .matchExp(_EipMPost.GROUP_NAME_PROPERTY, group_name_field);
     query.setQualifier(exp);
     if (query.getCount() == 0) {
       return false;
@@ -1091,7 +1095,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
     SelectQuery<EipMPosition> query = Database.query(EipMPosition.class);
     Expression exp =
       ExpressionFactory.matchExp(
-        EipMPosition.POSITION_NAME_PROPERTY,
+        _EipMPosition.POSITION_NAME_PROPERTY,
         position_name);
     query.setQualifier(exp);
     List<EipMPosition> list = query.fetchList();

@@ -31,6 +31,8 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.account.EipMCompany;
 import com.aimluck.eip.cayenne.om.account.EipMPost;
+import com.aimluck.eip.cayenne.om.account.auto._EipMCompany;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPost;
 import com.aimluck.eip.common.ALCsvTokenizer;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.orm.Database;
@@ -161,7 +163,7 @@ public class FileIOAccountCsvUtils {
       }
 
       Expression exp =
-        ExpressionFactory.matchDbExp(EipMCompany.COMPANY_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipMCompany.COMPANY_ID_PK_COLUMN, Integer
           .valueOf(id));
       SelectQuery<EipMCompany> query = Database.query(EipMCompany.class, exp);
       List<EipMCompany> list = query.fetchList();
@@ -193,7 +195,7 @@ public class FileIOAccountCsvUtils {
       }
 
       Expression exp =
-        ExpressionFactory.matchDbExp(EipMPost.POST_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipMPost.POST_ID_PK_COLUMN, Integer
           .valueOf(id));
       SelectQuery<EipMPost> query = Database.query(EipMPost.class, exp);
       List<EipMPost> list = query.fetchList();

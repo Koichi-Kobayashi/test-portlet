@@ -31,6 +31,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALPageNotFoundException;
@@ -103,7 +104,7 @@ public class FacilityChangeTurnFormData extends ALAbstractFormData {
       if (res) {
         if (positions.getValue() == null || positions.getValue().equals("")) {// 初期
           SelectQuery<EipMFacility> query = Database.query(EipMFacility.class);
-          query.orderAscending(EipMFacility.SORT_PROPERTY);
+          query.orderAscending(_EipMFacility.SORT_PROPERTY);
           facilityList =
             FacilitiesUtils.getFacilityResultList(query.fetchList());
         } else {// データ送信時

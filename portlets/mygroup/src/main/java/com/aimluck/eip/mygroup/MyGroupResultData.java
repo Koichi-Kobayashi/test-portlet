@@ -37,7 +37,8 @@ public class MyGroupResultData implements ALData {
    * 
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     group_name = new ALStringField();
     group_alias_name = new ALStringField();
   }

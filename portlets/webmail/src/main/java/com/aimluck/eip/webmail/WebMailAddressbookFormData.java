@@ -36,9 +36,13 @@ import com.aimluck.eip.addressbookuser.beans.AddressBookUserEmailLiteBean;
 import com.aimluck.eip.addressbookuser.beans.AddressBookUserGroupLiteBean;
 import com.aimluck.eip.addressbookuser.util.AddressBookUserUtils;
 import com.aimluck.eip.cayenne.om.account.EipMUserPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMUserPosition;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipGroup;
@@ -263,7 +267,8 @@ public class WebMailAddressbookFormData extends ALAbstractFormData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     // 社内／社外
     type_company = new ALStringField();
     type_company.setFieldName("社内／社外");
@@ -321,17 +326,17 @@ public class WebMailAddressbookFormData extends ALAbstractFormData {
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
 
       Expression exp1 =
-        ExpressionFactory.matchExp(TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
+        ExpressionFactory.matchExp(_TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
           + "."
-          + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+          + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
           + "."
-          + TurbineGroup.GROUP_NAME_PROPERTY, groupName);
+          + _TurbineGroup.GROUP_NAME_PROPERTY, groupName);
       Expression exp2 =
-        ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+        ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
       query.setQualifier(exp1.andExp(exp2));
-      query.orderAscending(TurbineUser.EIP_MUSER_POSITION_PROPERTY
+      query.orderAscending(_TurbineUser.EIP_MUSER_POSITION_PROPERTY
         + "."
-        + EipMUserPosition.POSITION_PROPERTY);
+        + _EipMUserPosition.POSITION_PROPERTY);
 
       return query.fetchList();
     } catch (Exception ex) {

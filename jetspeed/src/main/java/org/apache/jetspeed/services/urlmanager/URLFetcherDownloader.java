@@ -41,7 +41,8 @@ public class URLFetcherDownloader implements Runnable
         
     }
     
-    public void run() {
+    @Override
+	public void run() {
 
         URLFetcher.addRealtimeURL( url );
         try {

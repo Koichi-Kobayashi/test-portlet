@@ -67,6 +67,7 @@ public class ClientUpdateAction extends RegistryUpdateAction
 	 * @param context The velocity context for this request.
 	 * @param rundata The turbine rundata context for this request.
 	 */
+	@Override
 	protected void buildNormalContext(
 		VelocityPortlet portlet,
 		Context context,
@@ -189,7 +190,8 @@ public class ClientUpdateAction extends RegistryUpdateAction
 	/**
      * @see org.apache.jetspeed.modules.actions.portlets.RegistryUpdateAction#updateRegistryEntry(org.apache.turbine.util.RunData, org.apache.jetspeed.om.registry.RegistryEntry)
      */
-    protected void updateRegistryEntry(RunData rundata, RegistryEntry registryEntry) throws Exception
+    @Override
+	protected void updateRegistryEntry(RunData rundata, RegistryEntry registryEntry) throws Exception
 	{
         super.updateRegistryEntry(rundata, registryEntry);
         
@@ -244,7 +246,8 @@ public class ClientUpdateAction extends RegistryUpdateAction
 	 * Populates the user's temp storage with form data
 	 * @param rundata The turbine rundata context for this request.
 	 */
-    protected void resetForm(RunData rundata)
+    @Override
+	protected void resetForm(RunData rundata)
 	{
         super.resetForm(rundata);
         
@@ -270,7 +273,8 @@ public class ClientUpdateAction extends RegistryUpdateAction
 	 * Clears the temporary storage of any data that was used
 	 * @param rundata The turbine rundata context for this request.
 	 */
-    protected void clearUserData(RunData rundata)
+    @Override
+	protected void clearUserData(RunData rundata)
     {
 	try
 	{

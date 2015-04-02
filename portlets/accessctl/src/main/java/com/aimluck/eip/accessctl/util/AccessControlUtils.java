@@ -34,7 +34,11 @@ import com.aimluck.eip.accessctl.bean.AccessControlFeatureBean;
 import com.aimluck.eip.cayenne.om.account.EipTAclPortletFeature;
 import com.aimluck.eip.cayenne.om.account.EipTAclRole;
 import com.aimluck.eip.cayenne.om.account.EipTAclUserRoleMap;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclPortletFeature;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclRole;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclUserRoleMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
@@ -70,7 +74,7 @@ public class AccessControlUtils {
       }
 
       Expression exp =
-        ExpressionFactory.matchDbExp(EipTAclRole.ROLE_ID_PK_COLUMN, aclroleid);
+        ExpressionFactory.matchDbExp(_EipTAclRole.ROLE_ID_PK_COLUMN, aclroleid);
       SelectQuery<EipTAclRole> query = Database.query(EipTAclRole.class, exp);
       List<EipTAclRole> aclroles = query.fetchList();
       if (aclroles == null || aclroles.size() == 0) {
@@ -91,15 +95,15 @@ public class AccessControlUtils {
         Database.query(EipTAclUserRoleMap.class);
 
       Expression exp1 =
-        ExpressionFactory.matchDbExp(EipTAclUserRoleMap.EIP_TACL_ROLE_PROPERTY
+        ExpressionFactory.matchDbExp(_EipTAclUserRoleMap.EIP_TACL_ROLE_PROPERTY
           + "."
-          + EipTAclRole.ROLE_ID_PK_COLUMN, aclroleid);
+          + _EipTAclRole.ROLE_ID_PK_COLUMN, aclroleid);
       query.setQualifier(exp1);
 
       Expression exp2 =
-        ExpressionFactory.noMatchExp(EipTAclUserRoleMap.TURBINE_USER_PROPERTY
+        ExpressionFactory.noMatchExp(_EipTAclUserRoleMap.TURBINE_USER_PROPERTY
           + "."
-          + TurbineUser.DISABLED_PROPERTY, "T");
+          + _TurbineUser.DISABLED_PROPERTY, "T");
       query.andQualifier(exp2);
 
       List<EipTAclUserRoleMap> aclroles = query.fetchList();
@@ -118,7 +122,7 @@ public class AccessControlUtils {
   public static List<AccessControlFeatureBean> getPortletFeatureList() {
     SelectQuery<EipTAclPortletFeature> query =
       Database.query(EipTAclPortletFeature.class);
-    query.orderAscending(EipTAclPortletFeature.FEATURE_ALIAS_NAME_PROPERTY);
+    query.orderAscending(_EipTAclPortletFeature.FEATURE_ALIAS_NAME_PROPERTY);
 
     List<EipTAclPortletFeature> features = query.fetchList();
     if (features == null || features.size() == 0) {

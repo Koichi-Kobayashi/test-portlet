@@ -21,7 +21,7 @@ import org.apache.jetspeed.om.registry.ToolDescriptor;
 /**
  * Bean-like implementation of the ToolDescriptor interface
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BaseToolDescriptor.java,v 1.2 2004/02/23 03:08:26 jford Exp $
  */
 public class BaseToolDescriptor implements ToolDescriptor, java.io.Serializable
@@ -34,7 +34,8 @@ public class BaseToolDescriptor implements ToolDescriptor, java.io.Serializable
     * Implements the equals operation so that 2 elements are equal if
     * all their member values are equal.
     */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object==null)
         {
@@ -92,7 +93,8 @@ public class BaseToolDescriptor implements ToolDescriptor, java.io.Serializable
     }
 
     /** @return the name of the tool */
-    public String getName()
+    @Override
+	public String getName()
     {
         return this.name;
     }
@@ -100,13 +102,15 @@ public class BaseToolDescriptor implements ToolDescriptor, java.io.Serializable
     /** Sets the name for this tool
      * @param title the new name of the tool
      */
-    public void setName( String name )
+    @Override
+	public void setName( String name )
     {
         this.name = name;
     }
 
     /** @return the scope of this tool */
-    public String getScope()
+    @Override
+	public String getScope()
     {
         return this.scope;
     }
@@ -115,13 +119,15 @@ public class BaseToolDescriptor implements ToolDescriptor, java.io.Serializable
      * The currently recognized scope are "request", "session", "persistent", "global"
      * @param scope the new scope of this tool
      */
-    public void setScope( String scope )
+    @Override
+	public void setScope( String scope )
     {
         this.scope = scope;
     }
 
     /** @return the clasname of this tool */
-    public String getClassname()
+    @Override
+	public String getClassname()
     {
         return this.classname;
     }
@@ -129,7 +135,8 @@ public class BaseToolDescriptor implements ToolDescriptor, java.io.Serializable
     /** Sets the classname of this tool
      * @param classname the new classname of this tool
      */
-    public void setClassname( String classname )
+    @Override
+	public void setClassname( String classname )
     {
         this.classname = classname;
     }

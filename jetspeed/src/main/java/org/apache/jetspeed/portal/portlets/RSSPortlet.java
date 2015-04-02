@@ -70,7 +70,8 @@ public class RSSPortlet extends FileWatchPortlet
     @author <A HREF="mailto:burton@apache.org">Kevin A. Burton</A>
     @version $Id: RSSPortlet.java,v 1.52 2004/02/23 04:03:33 jford Exp $
     */
-    public void init( ) throws PortletException {
+    @Override
+	public void init( ) throws PortletException {
 
         DocumentBuilder parser = null;
         Document document = null;
@@ -254,7 +255,8 @@ public class RSSPortlet extends FileWatchPortlet
     @author <A HREF="mailto:burton@apache.org">Kevin A. Burton</A>
     @version $Id: RSSPortlet.java,v 1.52 2004/02/23 04:03:33 jford Exp $
     */
-    public boolean isCacheable() {
+    @Override
+	public boolean isCacheable() {
         return true;
     }
 

@@ -70,7 +70,8 @@ public class TitleControl extends AbstractPortletControl {
        @return ConcreteElement object, including the complete ECS code for rendering
        the page.
     */              
-    public ConcreteElement getContent( RunData rundata ) {
+    @Override
+	public ConcreteElement getContent( RunData rundata ) {
         CapabilityMap cm = CapabilityMapFactory.getCapabilityMap( rundata );
         if ( cm.getPreferredType().equals( MimeType.HTML ) ) {
             return getHTMLContent( rundata );
@@ -170,7 +171,8 @@ public class TitleControl extends AbstractPortletControl {
        Method returns the title of the portlet, which is placed within this control.
        @return String object, representing the portlet's title.
     */      
-    public String getTitle(){
+    @Override
+	public String getTitle(){
         return getPortlet().getTitle();
     }
 
@@ -182,7 +184,8 @@ public class TitleControl extends AbstractPortletControl {
        @param mimeType   MimeType object describing the requested MimeTyp.
        @return Boolean true if MimeTyp is supported, false if not.
     */
-    public boolean supportsType( MimeType mimeType ) {
+    @Override
+	public boolean supportsType( MimeType mimeType ) {
         if ( (!MimeType.HTML.equals( mimeType )) &&
              (!MimeType.WML.equals( mimeType )) ){
             return false;

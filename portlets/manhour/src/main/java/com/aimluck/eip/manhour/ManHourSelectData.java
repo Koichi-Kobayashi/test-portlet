@@ -41,9 +41,14 @@ import com.aimluck.eip.category.util.CommonCategoryUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTCommonCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTSchedule;
 import com.aimluck.eip.cayenne.om.portlet.EipTScheduleMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTSchedule;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTScheduleMap;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -424,9 +429,9 @@ public class ManHourSelectData extends
     // 終了日時
     Expression exp11 =
       ExpressionFactory.greaterOrEqualExp(
-        EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
+        _EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
           + "."
-          + EipTSchedule.END_DATE_PROPERTY,
+          + _EipTSchedule.END_DATE_PROPERTY,
         view_date.getValue());
 
     Calendar cal = Calendar.getInstance();
@@ -438,26 +443,26 @@ public class ManHourSelectData extends
 
     // 開始日時
     Expression exp12 =
-      ExpressionFactory.lessOrEqualExp(EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
+      ExpressionFactory.lessOrEqualExp(_EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
         + "."
-        + EipTSchedule.START_DATE_PROPERTY, view_date_add_month.getValue());
+        + _EipTSchedule.START_DATE_PROPERTY, view_date_add_month.getValue());
 
     // 通常スケジュール
     Expression exp13 =
-      ExpressionFactory.noMatchExp(EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
+      ExpressionFactory.noMatchExp(_EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
         + "."
-        + EipTSchedule.REPEAT_PATTERN_PROPERTY, "N");
+        + _EipTSchedule.REPEAT_PATTERN_PROPERTY, "N");
     // 期間スケジュール
     Expression exp14 =
-      ExpressionFactory.noMatchExp(EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
+      ExpressionFactory.noMatchExp(_EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
         + "."
-        + EipTSchedule.REPEAT_PATTERN_PROPERTY, "S");
+        + _EipTSchedule.REPEAT_PATTERN_PROPERTY, "S");
 
     query.setQualifier((exp11.andExp(exp12).andExp(exp14)).orExp(exp13
       .andExp(exp14)));
 
     Expression exp15 =
-      ExpressionFactory.matchExp(EipTScheduleMap.STATUS_PROPERTY, "D");
+      ExpressionFactory.matchExp(_EipTScheduleMap.STATUS_PROPERTY, "D");
 
     // 共有カテゴリ
     if ((category_id != null)
@@ -465,7 +470,7 @@ public class ManHourSelectData extends
       && (!category_id.equals("all"))) {
       Expression exp =
         ExpressionFactory.matchExp(
-          EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY,
+          _EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY,
           Integer.valueOf(category_id));
 
       query.andQualifier(exp15.orExp(exp));
@@ -473,7 +478,7 @@ public class ManHourSelectData extends
     } else {
       Expression exp =
         ExpressionFactory.noMatchExp(
-          EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY,
+          _EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY,
           Integer.valueOf(1));
 
       query.andQualifier(exp15.orExp(exp));
@@ -482,14 +487,14 @@ public class ManHourSelectData extends
     // ユーザー
     if (is_normal) {
       Expression exp1 =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
           .valueOf(userid));
       query.andQualifier(exp1);
     } else if ((target_user_id != null)
       && (!target_user_id.equals(""))
       && (!target_user_id.equals("all"))) {
       Expression exp1 =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
           .valueOf(target_user_id));
       query.andQualifier(exp1);
     }
@@ -502,11 +507,11 @@ public class ManHourSelectData extends
       // 選択したグループを指定する．
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipTScheduleMap.TURBINE_USER_GROUP_ROLE_PROPERTY
+          _EipTScheduleMap.TURBINE_USER_GROUP_ROLE_PROPERTY
             + "."
-            + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+            + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
             + "."
-            + TurbineGroup.GROUP_NAME_PROPERTY,
+            + _TurbineGroup.GROUP_NAME_PROPERTY,
           target_group_name);
       query.andQualifier(exp2);
 
@@ -570,11 +575,11 @@ public class ManHourSelectData extends
         Database.query(EipTScheduleMap.class);
       Expression mapexp1 =
         ExpressionFactory.matchExp(
-          EipTScheduleMap.SCHEDULE_ID_PROPERTY,
+          _EipTScheduleMap.SCHEDULE_ID_PROPERTY,
           schedule.getScheduleId());
       mapquery.setQualifier(mapexp1);
       Expression mapexp2 =
-        ExpressionFactory.matchExp(EipTScheduleMap.USER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipTScheduleMap.USER_ID_PROPERTY, Integer
           .valueOf(userid));
       mapquery.andQualifier(mapexp2);
 
@@ -904,11 +909,11 @@ public class ManHourSelectData extends
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
 
-    map.putValue("user_name", EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY);
-    map.putValue("category", EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY);
-    map.putValue("schedule", EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY);
-    map.putValue("time", EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY);
-    map.putValue("manhour", EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY);
+    map.putValue("user_name", _EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY);
+    map.putValue("category", _EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY);
+    map.putValue("schedule", _EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY);
+    map.putValue("time", _EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY);
+    map.putValue("manhour", _EipTScheduleMap.COMMON_CATEGORY_ID_PROPERTY);
     return map;
   }
 

@@ -34,6 +34,9 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroup;
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroupMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroup;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroupMap;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.facilities.FacilityGroupResultData;
 import com.aimluck.eip.facilities.FacilityResultData;
@@ -99,7 +102,7 @@ public class FacilitiesUtils {
       }
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipMFacilityGroup.GROUP_ID_PK_COLUMN,
+          _EipMFacilityGroup.GROUP_ID_PK_COLUMN,
           faclitygroupid);
       List<EipMFacilityGroup> facilities =
         Database.query(EipMFacilityGroup.class, exp).fetchList();
@@ -127,7 +130,7 @@ public class FacilitiesUtils {
     try {
       List<EipMFacility> aList =
         Database.query(EipMFacility.class).orderAscending(
-          EipMFacility.SORT_PROPERTY).fetchList();
+          _EipMFacility.SORT_PROPERTY).fetchList();
 
       for (EipMFacility record : aList) {
         FacilityResultData rd = new FacilityResultData();
@@ -379,7 +382,7 @@ public class FacilitiesUtils {
 
       Database.query(EipMFacilityGroupMap.class);
       query.where(Operations.eq(
-        EipMFacilityGroupMap.FACILITY_ID_PROPERTY,
+        _EipMFacilityGroupMap.FACILITY_ID_PROPERTY,
         Integer.valueOf(facilityid)));
       List<EipMFacilityGroupMap> maps = query.fetchList();
       List<Integer> faclityGroupIdList = new ArrayList<Integer>();
@@ -391,7 +394,7 @@ public class FacilitiesUtils {
           Database.query(EipMFacilityGroup.class);
         Expression exp =
           ExpressionFactory.inDbExp(
-            EipMFacilityGroup.GROUP_ID_PK_COLUMN,
+            _EipMFacilityGroup.GROUP_ID_PK_COLUMN,
             faclityGroupIdList);
         fquery.setQualifier(exp);
         return fquery.fetchList();
@@ -412,7 +415,7 @@ public class FacilitiesUtils {
     try {
       List<EipMFacilityGroup> result =
         Database.query(EipMFacilityGroup.class).orderAscending(
-          EipMFacilityGroup.GROUP_NAME_PROPERTY).fetchList();
+          _EipMFacilityGroup.GROUP_NAME_PROPERTY).fetchList();
 
       for (EipMFacilityGroup group : result) {
         FacilityGroupResultData data = new FacilityGroupResultData();
@@ -433,7 +436,7 @@ public class FacilitiesUtils {
       SelectQuery<EipMFacilityGroupMap> query =
 
       Database.query(EipMFacilityGroupMap.class);
-      query.where(Operations.eq(EipMFacilityGroupMap.GROUP_ID_PROPERTY, Integer
+      query.where(Operations.eq(_EipMFacilityGroupMap.GROUP_ID_PROPERTY, Integer
         .valueOf(groupid)));
       List<EipMFacilityGroupMap> maps = query.fetchList();
       List<Integer> faclityIdList = new ArrayList<Integer>();
@@ -444,10 +447,10 @@ public class FacilitiesUtils {
         SelectQuery<EipMFacility> fquery = Database.query(EipMFacility.class);
         Expression exp =
           ExpressionFactory.inDbExp(
-            EipMFacility.FACILITY_ID_PK_COLUMN,
+            _EipMFacility.FACILITY_ID_PK_COLUMN,
             faclityIdList);
         fquery.setQualifier(exp);
-        fquery.orderAscending(EipMFacility.SORT_PROPERTY);
+        fquery.orderAscending(_EipMFacility.SORT_PROPERTY);
         return fquery.fetchList();
       } else {
         List<EipMFacility> list = new ArrayList<EipMFacility>();

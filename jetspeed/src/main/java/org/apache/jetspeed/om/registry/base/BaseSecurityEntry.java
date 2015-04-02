@@ -74,7 +74,8 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object == null)
         {
@@ -116,7 +117,8 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
     /** Getter for property accesses.
      * @return Value of property accesses.
      */
-    public Vector getAccesses()
+    @Override
+	public Vector getAccesses()
     {
         return accesses;
     }
@@ -124,7 +126,8 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
     /** Setter for property accesses.
      * @param accesses New value of property accesses.
      */
-    public void setAccesses(Vector accesses)
+    @Override
+	public void setAccesses(Vector accesses)
     {
         this.accesses = accesses;
         buildAccessMap();
@@ -143,7 +146,8 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
      * @param action being requested
      * @return <CODE>true</CODE> if action is allowed for role
      */
-    public boolean allowsRole(String role, String action)
+    @Override
+	public boolean allowsRole(String role, String action)
     {
         Map allowMap = null;
         boolean allow = false;
@@ -182,6 +186,7 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
 	 * @param action being requested
 	 * @return <CODE>true</CODE> if action is allowed for group
 	 */
+	@Override
 	public boolean allowsGroup(String group, String action)
 	{
 		Map allowMap = null;
@@ -222,6 +227,7 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
 	 * @param action being requested
 	 * @return <CODE>true</CODE> if action is allowed for group role
 	 */
+	@Override
 	public boolean allowsGroupRole(String group, String role, String action)
 	{
 		Map allowMap = null;
@@ -255,7 +261,8 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
      * @param action being requested
      * @return <CODE>true</CODE> if action is allowed for named user
      */
-    public boolean allowsUser(String userName, String action)
+    @Override
+	public boolean allowsUser(String userName, String action)
     {
         return allowsUser(userName, action, null);
     }
@@ -267,7 +274,8 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
      * @param owner User
      * @return <CODE>true</CODE> if action is allowed for named user
      */
-    public boolean allowsUser(String userName, String action, String owner)
+    @Override
+	public boolean allowsUser(String userName, String action, String owner)
     {
         Map allowMap = null;
         boolean allow = false;
@@ -316,9 +324,10 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
      * Checks whether a role is specifically allowed to access the request action
      * This method ignores the "*" action and is here to play a maintenance role.
      */
-    public boolean allowsSpecificRole( String action, String role)
+    @Override
+	public boolean allowsSpecificRole( String action, String role)
     {
-        SecurityAccess access = (SecurityAccess) getAccess(action);
+        SecurityAccess access = getAccess(action);
         if (access.getAllAllows() != null)
         {
             Iterator allAllows = access.getAllows().iterator();
@@ -338,9 +347,10 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
 	 * Checks whether a group is specifically allowed to access the request action
 	 * This method ignores the "*" action and is here to play a maintenance role.
 	 */
+	@Override
 	public boolean allowsSpecificGroup(String action, String group)
 	{
-		SecurityAccess access = (SecurityAccess) getAccess(action);
+		SecurityAccess access = getAccess(action);
 		if (access.getAllAllows() != null)
 		{
 			Iterator allAllows = access.getAllows().iterator();
@@ -360,9 +370,10 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
 	 * Checks whether a group role is specifically allowed to access the request action
 	 * This method ignores the "*" action and is here to play a maintenance role.
 	 */
+	@Override
 	public boolean allowsSpecificGroupRole(String action, String group, String role)
 	{
-		SecurityAccess access = (SecurityAccess) getAccess(action);
+		SecurityAccess access = getAccess(action);
 		if (access.getAllAllows() != null)
 		{
 			Iterator allAllows = access.getAllows().iterator();
@@ -389,7 +400,8 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
         * @return boolean whether or not the <code>role</code> has access
         * to this specific action.
         */
-    public boolean allowsSpecificUser(String action, String user)
+    @Override
+	public boolean allowsSpecificUser(String action, String user)
     {
         BaseSecurityAccess access = (BaseSecurityAccess) getAccess(action);
         if (access.getAllAllows() != null)
@@ -420,7 +432,8 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
      * @return SecurityAccess that is defined for this action or
      * <code>null</code> if one is not <strong>specifically defined</strong>
      */
-    public SecurityAccess getAccess(String action)
+    @Override
+	public SecurityAccess getAccess(String action)
     {
         Iterator itr = getAccesses().iterator();
         while (itr.hasNext())
@@ -444,7 +457,8 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
      * @return boolean Whether or not the access was granted. Basically,
      *  a <code>false</code> means that this role already has specific access.
      */
-    public boolean grantRoleAccess(String action, String role)
+    @Override
+	public boolean grantRoleAccess(String action, String role)
     {
         if (!allowsSpecificRole(action, role))
         {
@@ -476,6 +490,7 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
 	 * @return boolean Whether or not the access was granted. Basically,
 	 *  a <code>false</code> means that this group already has specific access.
 	 */
+	@Override
 	public boolean grantGroupAccess(String action, String group)
 	{
 		if (!allowsSpecificGroup(action, role))
@@ -509,6 +524,7 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
 	 * @return boolean Whether or not the access was granted. Basically,
 	 *  a <code>false</code> means that this group role already has specific access.
 	 */
+	@Override
 	public boolean grantGroupRoleAccess(String action, String group, String role)
 	{
 		if (!allowsSpecificGroupRole(action, group, role))
@@ -542,7 +558,8 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
      * @return boolean Whether or not the access was granted. Basically,
      *  a <code>false</code> means that this role already has specific access.
      */
-    public boolean grantUserAccess(String action, String user)
+    @Override
+	public boolean grantUserAccess(String action, String user)
     {
         if (!allowsSpecificUser(action, user))
         {
@@ -573,7 +590,8 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
      * @return boolean Whehter or not the access existed and
      * was removed.
      */
-    public boolean revokeRoleAccess(String action, String role)
+    @Override
+	public boolean revokeRoleAccess(String action, String role)
     {
         if (allowsSpecificRole(action, role))
         {
@@ -610,6 +628,7 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
 	 * @return boolean Whehter or not the access existed and
 	 * was removed.
 	 */
+	@Override
 	public boolean revokeGroupAccess(String action, String group)
 	{
 		if (allowsSpecificGroup(action, group))
@@ -648,6 +667,7 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
 	 * @return boolean Whether or not the access existed and
 	 * was removed.
 	 */
+	@Override
 	public boolean revokeGroupRoleAccess(String action, String group, String role)
 	{
 		if (allowsSpecificGroupRole(action, group, role))
@@ -688,7 +708,8 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
     * @return boolean Whehter or not the access existed and
     * was removed.
     */
-    public boolean revokeUserAccess(String action, String user)
+    @Override
+	public boolean revokeUserAccess(String action, String user)
     {
         if (allowsSpecificUser(action, user))
         {
@@ -724,7 +745,8 @@ public class BaseSecurityEntry extends BaseRegistryEntry implements SecurityEntr
      * the "*" is not the named action.
      * @param String access name of access to remove in its entirety
      */
-    public void revokeAccess(String action)
+    @Override
+	public void revokeAccess(String action)
     {
         List list = getAccesses();
         for (int i = 0; i < list.size(); i++)

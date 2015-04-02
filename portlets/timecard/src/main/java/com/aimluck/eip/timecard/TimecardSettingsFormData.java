@@ -74,7 +74,8 @@ public class TimecardSettingsFormData extends ALAbstractFormData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
 
     start_time_hour = new ALNumberField();
     start_time_minute = new ALNumberField();

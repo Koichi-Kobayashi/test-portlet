@@ -31,6 +31,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTTimelineLike;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimelineLike;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -114,9 +115,9 @@ public class TimelineLikeSelectData extends
       Database.query(EipTTimelineLike.class);
 
     String timelineId =
-      rundata.getParameters().getString(EipTTimelineLike.TIMELINE_ID_PROPERTY);
+      rundata.getParameters().getString(_EipTTimelineLike.TIMELINE_ID_PROPERTY);
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTTimelineLike.TIMELINE_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTTimelineLike.TIMELINE_ID_PROPERTY, Integer
         .valueOf(timelineId));
     query.setQualifier(exp1);
     query.distinct(true);
@@ -176,7 +177,7 @@ public class TimelineLikeSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("create_date", EipTTimelineLike.CREATE_DATE_PROPERTY);
+    map.putValue("create_date", _EipTTimelineLike.CREATE_DATE_PROPERTY);
     return map;
   }
 
@@ -209,10 +210,10 @@ public class TimelineLikeSelectData extends
     SelectQuery<EipTTimelineLike> query =
       Database.query(EipTTimelineLike.class);
     Expression exp =
-      ExpressionFactory.matchExp(EipTTimelineLike.TIMELINE_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTTimelineLike.TIMELINE_ID_PROPERTY, Integer
         .valueOf(topicid));
     query.setQualifier(exp);
-    query.orderDesending(EipTTimelineLike.CREATE_DATE_PROPERTY);
+    query.orderDesending(_EipTTimelineLike.CREATE_DATE_PROPERTY);
     return query;
   }
 

@@ -17,22 +17,26 @@ public  class TurbineGroup
     extends org.apache.jetspeed.om.security.turbine.BaseTurbineGroup
     implements Persistent, org.apache.jetspeed.om.security.Group
 {
-    public String getName()
+    @Override
+	public String getName()
     {
         return getGroupName();
     }
 
-    public void setName(String name)
+    @Override
+	public void setName(String name)
     {
         setGroupName(name);
     }
 
-    public String getId()
+    @Override
+	public String getId()
     {
         return String.valueOf(this.getGroupId());
     }
 
-    public void setId(String id)
+    @Override
+	public void setId(String id)
     {
     }
 }

@@ -40,6 +40,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.utils.ALDateUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimecard;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTimecard;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -199,14 +200,14 @@ public class TimecardSelectData extends
     SelectQuery<EipTTimecard> query = Database.query(EipTTimecard.class);
 
     Expression exp1 =
-      ExpressionFactory.matchExp(EipTTimecard.USER_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTTimecard.USER_ID_PROPERTY, Integer
         .valueOf(target_user_id));
     query.setQualifier(exp1);
 
     Calendar cal = Calendar.getInstance();
     Expression exp11 =
       ExpressionFactory.greaterOrEqualExp(
-        EipTTimecard.WORK_DATE_PROPERTY,
+        _EipTTimecard.WORK_DATE_PROPERTY,
         view_date.getValue());
 
     cal.setTime(view_date.getValue());
@@ -217,7 +218,7 @@ public class TimecardSelectData extends
 
     Expression exp12 =
       ExpressionFactory.lessOrEqualExp(
-        EipTTimecard.WORK_DATE_PROPERTY,
+        _EipTTimecard.WORK_DATE_PROPERTY,
         view_date_add_month.getValue());
     query.andQualifier(exp11.andExp(exp12));
 
@@ -239,7 +240,7 @@ public class TimecardSelectData extends
 
         SelectQuery<EipTTimecard> query = getSelectQuery(rundata, context);
         buildSelectQueryForListView(query);
-        query.orderAscending(EipTTimecard.WORK_DATE_PROPERTY);
+        query.orderAscending(_EipTTimecard.WORK_DATE_PROPERTY);
 
         return query.getResultList();
       } else {
@@ -334,7 +335,7 @@ public class TimecardSelectData extends
       Context context) {
     SelectQuery<EipTTimecard> query = Database.query(EipTTimecard.class);
     Expression exp =
-      ExpressionFactory.matchExp(EipTTimecard.USER_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTTimecard.USER_ID_PROPERTY, Integer
         .valueOf(ALEipUtils.getUserId(rundata)));
     query.setQualifier(exp);
 
@@ -356,7 +357,7 @@ public class TimecardSelectData extends
         cal.get(Calendar.HOUR_OF_DAY) + "時" + cal.get(Calendar.MINUTE) + "分";
 
       SelectQuery<EipTTimecard> query = getSelectQueryDetail(rundata, context);
-      query.orderDesending(EipTTimecard.WORK_DATE_PROPERTY);
+      query.orderDesending(_EipTTimecard.WORK_DATE_PROPERTY);
 
       List<EipTTimecard> list = query.fetchList();
       if (list != null && list.size() > 0) {

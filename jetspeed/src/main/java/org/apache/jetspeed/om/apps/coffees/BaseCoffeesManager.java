@@ -2,8 +2,6 @@
 
 package org.apache.jetspeed.om.apps.coffees;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.torque.Torque;
@@ -45,8 +43,8 @@ public abstract class BaseCoffeesManager
     public static CoffeesManager getManager()
     {
         return (CoffeesManager)
-            Torque.getManager(CoffeesManager.MANAGED_CLASS,
-                CoffeesManager.DEFAULT_MANAGER_CLASS);
+            Torque.getManager(BaseCoffeesManager.MANAGED_CLASS,
+                BaseCoffeesManager.DEFAULT_MANAGER_CLASS);
     }
 
     /**
@@ -255,16 +253,17 @@ public abstract class BaseCoffeesManager
     protected boolean existsImpl(Coffees om)
         throws TorqueException
     {
-        Criteria crit = CoffeesPeer
-            .buildCriteria((Coffees)om);
-        return CoffeesPeer.doSelect(crit).size() > 0;
+        Criteria crit = BaseCoffeesPeer
+            .buildCriteria(om);
+        return BaseCoffeesPeer.doSelect(crit).size() > 0;
     }
 
 
-    protected Persistent retrieveStoredOM(ObjectKey id)
+    @Override
+	protected Persistent retrieveStoredOM(ObjectKey id)
         throws TorqueException
     {
-        return CoffeesPeer.retrieveByPK(id);
+        return BaseCoffeesPeer.retrieveByPK(id);
     }
 
     /**
@@ -274,9 +273,10 @@ public abstract class BaseCoffeesManager
      * @return a <code>List</code> value
      * @exception TorqueException if an error occurs
      */
-    protected List retrieveStoredOMs(List ids)
+    @Override
+	protected List retrieveStoredOMs(List ids)
         throws TorqueException
     {
-        return CoffeesPeer.retrieveByPKs(ids);
+        return BaseCoffeesPeer.retrieveByPKs(ids);
     }
 }

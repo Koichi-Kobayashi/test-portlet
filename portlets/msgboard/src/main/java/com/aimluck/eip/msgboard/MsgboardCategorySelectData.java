@@ -34,7 +34,10 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.utils.ALDateUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardCategoryMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMsgboardCategoryMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -167,11 +170,11 @@ public class MsgboardCategorySelectData extends
 
     Expression exp1 =
       ExpressionFactory.noMatchDbExp(
-        EipTMsgboardCategoryMap.EIP_TMSGBOARD_CATEGORY_PROPERTY
+        _EipTMsgboardCategoryMap.EIP_TMSGBOARD_CATEGORY_PROPERTY
           + "."
-          + EipTMsgboardCategory.TURBINE_USER_PROPERTY
+          + _EipTMsgboardCategory.TURBINE_USER_PROPERTY
           + "."
-          + TurbineUser.USER_ID_PK_COLUMN,
+          + _TurbineUser.USER_ID_PK_COLUMN,
         Integer.valueOf(0));
     query.setQualifier(exp1);
 
@@ -191,27 +194,27 @@ public class MsgboardCategorySelectData extends
 
     Expression exp01 =
       ExpressionFactory.matchExp(
-        EipTMsgboardCategoryMap.EIP_TMSGBOARD_CATEGORY_PROPERTY
+        _EipTMsgboardCategoryMap.EIP_TMSGBOARD_CATEGORY_PROPERTY
           + "."
-          + EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
+          + _EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
         MsgboardUtils.PUBLIC_FLG_VALUE_PUBLIC);
     Expression exp02 =
       ExpressionFactory.matchExp(
-        EipTMsgboardCategoryMap.STATUS_PROPERTY,
+        _EipTMsgboardCategoryMap.STATUS_PROPERTY,
         MsgboardUtils.STAT_VALUE_OWNER);
     Expression exp03 =
       ExpressionFactory.matchExp(
-        EipTMsgboardCategoryMap.STATUS_PROPERTY,
+        _EipTMsgboardCategoryMap.STATUS_PROPERTY,
         MsgboardUtils.STAT_VALUE_ALL);
     Expression exp11 =
       ExpressionFactory.matchExp(
-        EipTMsgboardCategoryMap.EIP_TMSGBOARD_CATEGORY_PROPERTY
+        _EipTMsgboardCategoryMap.EIP_TMSGBOARD_CATEGORY_PROPERTY
           + "."
-          + EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
+          + _EipTMsgboardCategory.PUBLIC_FLAG_PROPERTY,
         MsgboardUtils.PUBLIC_FLG_VALUE_NONPUBLIC);
     Expression exp12 =
       ExpressionFactory.matchExp(
-        EipTMsgboardCategoryMap.USER_ID_PROPERTY,
+        _EipTMsgboardCategoryMap.USER_ID_PROPERTY,
         Integer.valueOf(ALEipUtils.getUserId(rundata)));
 
     if (!hasAclviewOther) {
@@ -296,7 +299,7 @@ public class MsgboardCategorySelectData extends
         Database.query(EipTMsgboardCategoryMap.class);
       Expression mapexp =
         ExpressionFactory.matchDbExp(
-          EipTMsgboardCategory.CATEGORY_ID_PK_COLUMN,
+          _EipTMsgboardCategory.CATEGORY_ID_PK_COLUMN,
           record.getCategoryId());
       mapquery.setQualifier(mapexp);
 
@@ -320,9 +323,9 @@ public class MsgboardCategorySelectData extends
 
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
-        ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, users);
+        ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, users);
       Expression nonDisabledexp =
-        ExpressionFactory.noMatchExp(TurbineUser.DISABLED_PROPERTY, "T");
+        ExpressionFactory.noMatchExp(_TurbineUser.DISABLED_PROPERTY, "T");
       query.setQualifier(exp.andExp(nonDisabledexp));
 
       members = ALEipUtils.getUsersFromSelectQuery(query);
@@ -377,16 +380,16 @@ public class MsgboardCategorySelectData extends
     Attributes map = new Attributes();
     map.putValue(
       "category_name",
-      EipTMsgboardCategoryMap.EIP_TMSGBOARD_CATEGORY_PROPERTY
+      _EipTMsgboardCategoryMap.EIP_TMSGBOARD_CATEGORY_PROPERTY
         + "."
-        + EipTMsgboardCategory.CATEGORY_NAME_PROPERTY);
+        + _EipTMsgboardCategory.CATEGORY_NAME_PROPERTY);
     map.putValue(
       "create_user",
-      EipTMsgboardCategoryMap.EIP_TMSGBOARD_CATEGORY_PROPERTY
+      _EipTMsgboardCategoryMap.EIP_TMSGBOARD_CATEGORY_PROPERTY
         + "."
-        + EipTMsgboardCategory.TURBINE_USER_PROPERTY
+        + _EipTMsgboardCategory.TURBINE_USER_PROPERTY
         + "."
-        + TurbineUser.LAST_NAME_KANA_PROPERTY);
+        + _TurbineUser.LAST_NAME_KANA_PROPERTY);
     return map;
   }
 

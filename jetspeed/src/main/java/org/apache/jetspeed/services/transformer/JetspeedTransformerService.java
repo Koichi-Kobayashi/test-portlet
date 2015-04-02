@@ -42,6 +42,7 @@ public class JetspeedTransformerService
 	 * Turbine <code>Service</code> framework
 	 * @param conf The <code>ServletConfig</code>
 	 */
+	@Override
 	public void init(ServletConfig conf)
 	{
 		// controls if already initialized
@@ -57,6 +58,7 @@ public class JetspeedTransformerService
 	/**
 	 * Late init. Don't return control until early init says we're done.
 	 */
+	@Override
 	public void init()
 	{
 		while (!getInit())
@@ -80,6 +82,7 @@ public class JetspeedTransformerService
 	 * @param url        page address
 	 * @param element    a part of the element to search
 	 */
+	@Override
 	public String findElement(Reader htmlReader, String url, String element)
 	{
 		// If not indicated, assume to find the first element
@@ -94,6 +97,7 @@ public class JetspeedTransformerService
 	 * @param startElement  the first element to clip
 	 * @param lastElement   the last element to clip
 	 */
+	@Override
 	public String clipElements(
 		Reader htmlReader,
 		String url,
@@ -122,6 +126,7 @@ public class JetspeedTransformerService
 	 * @param element    the element to search
 	 * @param tagNumber  the number of the element to search
 	 */
+	@Override
 	public String findElementNumber(
 		Reader htmlReader,
 		String url,
@@ -146,6 +151,7 @@ public class JetspeedTransformerService
 	 * @param stopElement   the last element to clip
 	 * @param tagNumber     the number of the first element to clip
 	 */
+	@Override
 	public String clipElementsNumber(
 		Reader htmlReader,
 		String url,

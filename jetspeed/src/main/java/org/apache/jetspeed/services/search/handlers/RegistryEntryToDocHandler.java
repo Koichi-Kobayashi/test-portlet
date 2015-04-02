@@ -41,7 +41,8 @@ public class RegistryEntryToDocHandler extends AbstractObjectHandler
      * @param o
      * @return 
      */
-    public ParsedObject parseObject(Object o)
+    @Override
+	public ParsedObject parseObject(Object o)
     {
         ParsedObject result = new BaseParsedObject();
 

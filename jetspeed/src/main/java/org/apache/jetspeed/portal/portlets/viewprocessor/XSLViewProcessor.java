@@ -86,7 +86,8 @@ public class XSLViewProcessor implements ViewProcessor
      * @param portlet
      * @exception PortletException
      */
-    public void init(Portlet portlet)
+    @Override
+	public void init(Portlet portlet)
     throws PortletException
     {
 
@@ -161,7 +162,8 @@ public class XSLViewProcessor implements ViewProcessor
      * @param context
      * @return the content to be displayed to the user-agent
      */
-    public Object processView(GenericMVCContext context)
+    @Override
+	public Object processView(GenericMVCContext context)
     {
 
         try

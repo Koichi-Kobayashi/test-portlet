@@ -21,19 +21,21 @@ import org.apache.jetspeed.om.profile.Skin;
 /**
  * Default bean like implementation of the skin entry in psml
  * 
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: PsmlSkin.java,v 1.4 2004/02/23 03:02:54 jford Exp $
  */
 public class PsmlSkin extends PsmlConfigElement implements Skin
 {   
     private String state = null;                                       
     
-    public String getState()
+    @Override
+	public String getState()
     {
         return this.state;
     }
                                 
-    public void setState( String state )
+    @Override
+	public void setState( String state )
     {
         this.state = state;
     }

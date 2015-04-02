@@ -55,7 +55,8 @@ public class DiskCacheDaemon implements Daemon {
     /**
     Go over all the documents on the system and if refresh them if necessary.
     */
-    public void run() {
+    @Override
+	public void run() {
         
         logger.info("parsing out document store");
         this.setResult( Daemon.RESULT_PROCESSING );
@@ -80,20 +81,23 @@ public class DiskCacheDaemon implements Daemon {
     Init this Daemon from the DaemonFactory
     @see Daemon#init
     */
-    public void init(DaemonConfig config, DaemonEntry entry) {
+    @Override
+	public void init(DaemonConfig config, DaemonEntry entry) {
         this.config = config;
         this.entry = entry;
     }
     
     /**
     */
-    public DaemonConfig getDaemonConfig() {
+    @Override
+	public DaemonConfig getDaemonConfig() {
         return this.config;
     }
 
     /**
     */
-    public DaemonEntry getDaemonEntry() {
+    @Override
+	public DaemonEntry getDaemonEntry() {
         return this.entry;
     }
     
@@ -104,7 +108,8 @@ public class DiskCacheDaemon implements Daemon {
     @see Daemon#STATUS_PROCESSED
     @see Daemon#STATUS_PROCESSING
     */
-    public int getStatus() {
+    @Override
+	public int getStatus() {
         return this.status;
     }
     
@@ -115,28 +120,32 @@ public class DiskCacheDaemon implements Daemon {
     @see #STATUS_PROCESSED
     @see #STATUS_PROCESSING
     */
-    public void setStatus(int status) {
+    @Override
+	public void setStatus(int status) {
         this.status = status;
     }
 
     /**
     @see Daemon#getResult()
     */
-    public int getResult() {
+    @Override
+	public int getResult() {
         return this.result;
     }
 
     /**
     @see Daemon#setResult(int result)
     */
-    public void setResult( int result ) {
+    @Override
+	public void setResult( int result ) {
         this.result = result;
     }
     
     /**
     @see Daemon#getMessage()
     */
-    public String getMessage() {
+    @Override
+	public String getMessage() {
         return null;
     }
 

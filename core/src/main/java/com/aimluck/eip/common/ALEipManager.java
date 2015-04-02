@@ -41,8 +41,12 @@ import com.aimluck.eip.cayenne.om.account.EipMPost;
 import com.aimluck.eip.cayenne.om.account.EipTAclPortletFeature;
 import com.aimluck.eip.cayenne.om.account.EipTAclRole;
 import com.aimluck.eip.cayenne.om.account.EipTAclUserRoleMap;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPost;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclRole;
+import com.aimluck.eip.cayenne.om.account.auto._EipTAclUserRoleMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.VTurbineUserLite;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.http.HttpServletRequestLocator;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SQLTemplate;
@@ -279,7 +283,7 @@ public class ALEipManager {
     Map<Integer, ALEipPost> postMap = new LinkedHashMap<Integer, ALEipPost>();
     try {
       SelectQuery<EipMPost> query = Database.query(EipMPost.class);
-      query.orderAscending(EipMPost.POST_NAME_PROPERTY);
+      query.orderAscending(_EipMPost.POST_NAME_PROPERTY);
       List<EipMPost> list = query.fetchList();
       for (EipMPost record : list) {
         ALEipPost post = new ALEipPost();
@@ -352,11 +356,11 @@ public class ALEipManager {
     Map<String, EipTAclRole> roleMap = new HashMap<String, EipTAclRole>();
 
     Expression exp =
-      ExpressionFactory.matchDbExp(EipTAclRole.EIP_TACL_USER_ROLE_MAPS_PROPERTY
+      ExpressionFactory.matchDbExp(_EipTAclRole.EIP_TACL_USER_ROLE_MAPS_PROPERTY
         + "."
-        + EipTAclUserRoleMap.TURBINE_USER_PROPERTY
+        + _EipTAclUserRoleMap.TURBINE_USER_PROPERTY
         + "."
-        + TurbineUser.USER_ID_PK_COLUMN, userId);
+        + _TurbineUser.USER_ID_PK_COLUMN, userId);
 
     List<EipTAclRole> roleList =
       Database.query(EipTAclRole.class, exp).fetchList();

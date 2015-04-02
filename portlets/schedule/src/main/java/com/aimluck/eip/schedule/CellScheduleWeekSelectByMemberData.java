@@ -36,6 +36,8 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALCellStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTSchedule;
 import com.aimluck.eip.cayenne.om.portlet.EipTScheduleMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTSchedule;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTScheduleMap;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipUser;
 import com.aimluck.eip.common.ALPageNotFoundException;
@@ -107,15 +109,15 @@ public class CellScheduleWeekSelectByMemberData extends
     int userid = (int) targerUser.getUserId().getValue();
 
     Expression expm1 =
-      ExpressionFactory.matchExp(EipTScheduleMap.USER_ID_PROPERTY, Integer
+      ExpressionFactory.matchExp(_EipTScheduleMap.USER_ID_PROPERTY, Integer
         .valueOf(userid));
     Expression expm2 =
-      ExpressionFactory.noMatchExp(EipTScheduleMap.STATUS_PROPERTY, "D");
+      ExpressionFactory.noMatchExp(_EipTScheduleMap.STATUS_PROPERTY, "D");
     Expression expm3 =
-      ExpressionFactory.noMatchExp(EipTScheduleMap.STATUS_PROPERTY, "R");
+      ExpressionFactory.noMatchExp(_EipTScheduleMap.STATUS_PROPERTY, "R");
     Expression expm4 =
       ExpressionFactory.matchExp(
-        EipTScheduleMap.TYPE_PROPERTY,
+        _EipTScheduleMap.TYPE_PROPERTY,
         ScheduleUtils.SCHEDULEMAP_TYPE_USER);
 
     Expression mapExpression = expm1.andExp(expm2).andExp(expm3).andExp(expm4);
@@ -127,44 +129,44 @@ public class CellScheduleWeekSelectByMemberData extends
 
       Expression exp11 =
         ExpressionFactory.greaterOrEqualExp(
-          EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
+          _EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
             + "."
-            + EipTSchedule.END_DATE_PROPERTY,
+            + _EipTSchedule.END_DATE_PROPERTY,
           cal.getTime());
       cal.add(Calendar.DAY_OF_MONTH, 1);
       Expression exp12 =
-        ExpressionFactory.lessExp(EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
+        ExpressionFactory.lessExp(_EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
           + "."
-          + EipTSchedule.START_DATE_PROPERTY, cal.getTime());
+          + _EipTSchedule.START_DATE_PROPERTY, cal.getTime());
       Expression exp13 =
-        ExpressionFactory.matchExp(EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
+        ExpressionFactory.matchExp(_EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
           + "."
-          + EipTSchedule.REPEAT_PATTERN_PROPERTY, "N");
+          + _EipTSchedule.REPEAT_PATTERN_PROPERTY, "N");
       Expression exp14 =
-        ExpressionFactory.matchExp(EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
+        ExpressionFactory.matchExp(_EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
           + "."
-          + EipTSchedule.REPEAT_PATTERN_PROPERTY, "S");
+          + _EipTSchedule.REPEAT_PATTERN_PROPERTY, "S");
       Expression exp10 = exp11.andExp(exp12.andExp(exp13.orExp(exp14)));
 
       Expression exp21 =
-        ExpressionFactory.matchExp(EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
+        ExpressionFactory.matchExp(_EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
           + "."
-          + EipTSchedule.REPEAT_PATTERN_PROPERTY, "DN");
+          + _EipTSchedule.REPEAT_PATTERN_PROPERTY, "DN");
       Expression exp22 =
-        ExpressionFactory.matchExp(EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
+        ExpressionFactory.matchExp(_EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
           + "."
-          + EipTSchedule.REPEAT_PATTERN_PROPERTY, "DL");
+          + _EipTSchedule.REPEAT_PATTERN_PROPERTY, "DL");
       Expression exp20 = exp21.orExp(exp22.andExp(exp11).andExp(exp12));
 
       query.setQualifier((exp10.orExp(exp20)).andExp(mapExpression));
 
       List<Ordering> orders = new ArrayList<Ordering>();
-      orders.add(new Ordering(EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
+      orders.add(new Ordering(_EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
         + "."
-        + EipTSchedule.START_DATE_PROPERTY, true));
-      orders.add(new Ordering(EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
+        + _EipTSchedule.START_DATE_PROPERTY, true));
+      orders.add(new Ordering(_EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
         + "."
-        + EipTSchedule.END_DATE_PROPERTY, true));
+        + _EipTSchedule.END_DATE_PROPERTY, true));
       query.getQuery().addOrderings(orders);
 
       List<EipTScheduleMap> list = query.fetchList();
@@ -175,13 +177,13 @@ public class CellScheduleWeekSelectByMemberData extends
     SelectQuery<EipTScheduleMap> query = Database.query(EipTScheduleMap.class);
 
     Expression exp2 =
-      ExpressionFactory.noMatchExp(EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
+      ExpressionFactory.noMatchExp(_EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
         + "."
-        + EipTSchedule.REPEAT_PATTERN_PROPERTY, "N");
+        + _EipTSchedule.REPEAT_PATTERN_PROPERTY, "N");
     Expression exp3 =
-      ExpressionFactory.noMatchExp(EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
+      ExpressionFactory.noMatchExp(_EipTScheduleMap.EIP_TSCHEDULE_PROPERTY
         + "."
-        + EipTSchedule.REPEAT_PATTERN_PROPERTY, "S");
+        + _EipTSchedule.REPEAT_PATTERN_PROPERTY, "S");
 
     query.setQualifier(mapExpression.andExp(exp2).andExp(exp3));
     List<EipTScheduleMap> list = query.fetchList();
@@ -254,7 +256,7 @@ public class CellScheduleWeekSelectByMemberData extends
     SelectQuery<EipTScheduleMap> queryD = Database.query(EipTScheduleMap.class);
 
     Expression expD2 =
-      ExpressionFactory.matchExp(EipTScheduleMap.STATUS_PROPERTY, "D");
+      ExpressionFactory.matchExp(_EipTScheduleMap.STATUS_PROPERTY, "D");
 
     queryD.setQualifier(expm1.andExp(expm4).andExp(expD2));
 
@@ -361,17 +363,17 @@ public class CellScheduleWeekSelectByMemberData extends
       SelectQuery<EipTScheduleMap> mapquery =
         Database.query(EipTScheduleMap.class);
       Expression expm1 =
-        ExpressionFactory.matchExp(EipTScheduleMap.SCHEDULE_ID_PROPERTY, map
+        ExpressionFactory.matchExp(_EipTScheduleMap.SCHEDULE_ID_PROPERTY, map
           .getScheduleId());
       Expression expm2 =
-        ExpressionFactory.matchExp(EipTScheduleMap.USER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipTScheduleMap.USER_ID_PROPERTY, Integer
           .valueOf(currentUserId));
       Expression expm3 =
         ExpressionFactory.matchExp(
-          EipTScheduleMap.TYPE_PROPERTY,
+          _EipTScheduleMap.TYPE_PROPERTY,
           ScheduleUtils.SCHEDULEMAP_TYPE_USER);
       Expression expm4 =
-        ExpressionFactory.noMatchExp(EipTScheduleMap.STATUS_PROPERTY, "R");
+        ExpressionFactory.noMatchExp(_EipTScheduleMap.STATUS_PROPERTY, "R");
 
       mapquery.setQualifier(expm1.andExp(expm2).andExp(expm3).andExp(expm4));
 

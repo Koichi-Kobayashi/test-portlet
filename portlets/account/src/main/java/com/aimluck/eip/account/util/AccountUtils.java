@@ -39,10 +39,17 @@ import com.aimluck.commons.utils.ALStringUtil;
 import com.aimluck.eip.cayenne.om.account.EipMCompany;
 import com.aimluck.eip.cayenne.om.account.EipMPosition;
 import com.aimluck.eip.cayenne.om.account.EipMPost;
+import com.aimluck.eip.cayenne.om.account.auto._EipMCompany;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMPost;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRequestMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowRequestMap;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.orm.Database;
@@ -133,7 +140,7 @@ public class AccountUtils {
       }
 
       Expression exp =
-        ExpressionFactory.matchDbExp(EipMCompany.COMPANY_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipMCompany.COMPANY_ID_PK_COLUMN, Integer
           .valueOf(id));
       List<EipMCompany> list =
         Database.query(EipMCompany.class, exp).fetchList();
@@ -171,7 +178,7 @@ public class AccountUtils {
       }
 
       Expression exp =
-        ExpressionFactory.matchDbExp(EipMPost.POST_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_EipMPost.POST_ID_PK_COLUMN, Integer
           .valueOf(id));
       List<EipMPost> list = Database.query(EipMPost.class, exp).fetchList();
       if (list == null || list.size() == 0) {
@@ -202,7 +209,7 @@ public class AccountUtils {
 
       Expression exp =
         ExpressionFactory.matchDbExp(
-          EipMPosition.POSITION_ID_PK_COLUMN,
+          _EipMPosition.POSITION_ID_PK_COLUMN,
           Integer.valueOf(id));
       List<EipMPosition> list =
         Database.query(EipMPosition.class, exp).fetchList();
@@ -270,16 +277,16 @@ public class AccountUtils {
       Database.query(TurbineUserGroupRole.class);
     Expression exp1 =
       ExpressionFactory.matchExp(
-        TurbineUserGroupRole.TURBINE_USER_PROPERTY,
+        _TurbineUserGroupRole.TURBINE_USER_PROPERTY,
         Integer.valueOf(uid));
     Expression exp2 =
       ExpressionFactory.greaterExp(
-        TurbineUserGroupRole.TURBINE_GROUP_PROPERTY,
+        _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY,
         Integer.valueOf(3));
     Expression exp3 =
-      ExpressionFactory.matchExp(TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+      ExpressionFactory.matchExp(_TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
         + "."
-        + TurbineGroup.OWNER_ID_PROPERTY, Integer.valueOf(1));
+        + _TurbineGroup.OWNER_ID_PROPERTY, Integer.valueOf(1));
     query.setQualifier(exp1);
     query.andQualifier(exp2);
     query.andQualifier(exp3);
@@ -319,7 +326,7 @@ public class AccountUtils {
     try {
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
           .valueOf(userId));
       query.setQualifier(exp);
       List<TurbineUser> destUserList = query.fetchList();
@@ -348,10 +355,10 @@ public class AccountUtils {
         Database.query(EipTWorkflowRequestMap.class);
       Expression workflow_exp =
         ExpressionFactory.matchExp(
-          EipTWorkflowRequestMap.USER_ID_PROPERTY,
+          _EipTWorkflowRequestMap.USER_ID_PROPERTY,
           userId);
       Expression workflow_exp2 =
-        ExpressionFactory.matchExp(EipTWorkflowRequestMap.STATUS_PROPERTY, "C");
+        ExpressionFactory.matchExp(_EipTWorkflowRequestMap.STATUS_PROPERTY, "C");
       workflow_request_map_query.setQualifier(workflow_exp
         .andExp(workflow_exp2));
       List<EipTWorkflowRequestMap> workflow_request_map_list =
@@ -371,11 +378,11 @@ public class AccountUtils {
             Database.query(EipTWorkflowRequestMap.class);
           Expression workflow_exp3 =
             ExpressionFactory.matchExp(
-              EipTWorkflowRequestMap.EIP_TWORKFLOW_REQUEST_PROPERTY,
+              _EipTWorkflowRequestMap.EIP_TWORKFLOW_REQUEST_PROPERTY,
               workflow_request_map.getEipTWorkflowRequest());
           Expression workflow_exp4 =
             ExpressionFactory.matchExp(
-              EipTWorkflowRequestMap.ORDER_INDEX_PROPERTY,
+              _EipTWorkflowRequestMap.ORDER_INDEX_PROPERTY,
               Integer.valueOf(request_number + 1));
           workflow_request_map_query2.setQualifier(workflow_exp3
             .andExp(workflow_exp4));
@@ -441,14 +448,14 @@ public class AccountUtils {
       Role adminrole = JetspeedSecurity.getRole("admin");
       int current_admin_count =
         Database.query(TurbineUserGroupRole.class).where(
-          Operations.eq(TurbineUserGroupRole.TURBINE_ROLE_PROPERTY, adminrole
+          Operations.eq(_TurbineUserGroupRole.TURBINE_ROLE_PROPERTY, adminrole
             .getId()),
-          Operations.eq(TurbineUserGroupRole.TURBINE_GROUP_PROPERTY, group
+          Operations.eq(_TurbineUserGroupRole.TURBINE_GROUP_PROPERTY, group
             .getId()),
-          Operations.ne(TurbineUserGroupRole.TURBINE_USER_PROPERTY, 1),
-          Operations.eq(TurbineUserGroupRole.TURBINE_USER_PROPERTY
+          Operations.ne(_TurbineUserGroupRole.TURBINE_USER_PROPERTY, 1),
+          Operations.eq(_TurbineUserGroupRole.TURBINE_USER_PROPERTY
             + "."
-            + TurbineUser.DISABLED_PROPERTY, "F")).distinct(true).getCount();
+            + _TurbineUser.DISABLED_PROPERTY, "F")).distinct(true).getCount();
       int admin_count_will = current_admin_count - admin_count;
       if (admin_count_will < 0) {
         admin_count_will = 0;

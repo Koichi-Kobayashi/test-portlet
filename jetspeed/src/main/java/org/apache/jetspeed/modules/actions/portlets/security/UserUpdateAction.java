@@ -68,7 +68,8 @@ public class UserUpdateAction extends SecureVelocityPortletAction
      * @param context The velocity context for this request.
      * @param rundata The turbine rundata context for this request.
      */
-    protected void buildMaximizedContext( VelocityPortlet portlet,
+    @Override
+	protected void buildMaximizedContext( VelocityPortlet portlet,
                                           Context context,
                                           RunData rundata )
     {
@@ -83,7 +84,8 @@ public class UserUpdateAction extends SecureVelocityPortletAction
      * @param context The velocity context for this request.
      * @param rundata The turbine rundata context for this request.
      */
-    protected void buildConfigureContext( VelocityPortlet portlet,
+    @Override
+	protected void buildConfigureContext( VelocityPortlet portlet,
                                           Context context,
                                           RunData rundata )
     {
@@ -99,7 +101,8 @@ public class UserUpdateAction extends SecureVelocityPortletAction
      * @param context The velocity context for this request.
      * @param rundata The turbine rundata context for this request.
      */
-    protected void buildNormalContext( VelocityPortlet portlet,
+    @Override
+	protected void buildNormalContext( VelocityPortlet portlet,
                                        Context context,
                                        RunData rundata )
     {
@@ -238,7 +241,7 @@ public class UserUpdateAction extends SecureVelocityPortletAction
             //
             // get the user object from the selected entry in the browser
             //
-            user = (JetspeedUser)JetspeedSecurity.getUser(
+            user = JetspeedSecurity.getUser(
                                            rundata.getParameters().getString(SecurityConstants.PARAM_ENTITY_ID));
 
             user.setConfirmed(JetspeedResources.CONFIRM_VALUE);
@@ -325,7 +328,7 @@ public class UserUpdateAction extends SecureVelocityPortletAction
             //
             // get the user object from the selected entry in the browser
             //
-            user = (JetspeedUser)JetspeedSecurity.getUser(
+            user = JetspeedSecurity.getUser(
                                            rundata.getParameters().getString(SecurityConstants.PARAM_ENTITY_ID));
 
             user.setConfirmed(JetspeedResources.CONFIRM_VALUE_REJECTED);
@@ -412,7 +415,7 @@ public class UserUpdateAction extends SecureVelocityPortletAction
             //
             // get the user object from the selected entry in the browser
             //
-            user = (JetspeedUser)JetspeedSecurity.getUser(
+            user = JetspeedSecurity.getUser(
                             rundata.getParameters().getString(SecurityConstants.PARAM_ENTITY_ID));
 
             String name = rundata.getParameters().getString("username");
@@ -502,7 +505,7 @@ public class UserUpdateAction extends SecureVelocityPortletAction
             //
             // get the user object from the selected entry in the browser
             //
-            user = (JetspeedUser)JetspeedSecurity.getUser(
+            user = JetspeedSecurity.getUser(
                        rundata.getParameters().getString(SecurityConstants.PARAM_ENTITY_ID));
 
             if (rundata.getUser().getUserName().equals(user.getUserName()))

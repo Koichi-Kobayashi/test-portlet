@@ -30,7 +30,8 @@ public class QueryParamImpl implements QueryParam, java.io.Serializable
     private String name;
     private String value;
 
-    public String getName()
+    @Override
+	public String getName()
     {
         return this.name;
     }
@@ -40,7 +41,8 @@ public class QueryParamImpl implements QueryParam, java.io.Serializable
         this.name = name;
     }
 
-    public String getValue()
+    @Override
+	public String getValue()
     {
         return this.value;
     }

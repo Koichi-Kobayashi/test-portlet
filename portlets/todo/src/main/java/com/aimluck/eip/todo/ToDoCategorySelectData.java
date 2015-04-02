@@ -32,7 +32,9 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.utils.ALDateUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipTTodoCategory;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTodoCategory;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -171,10 +173,10 @@ public class ToDoCategorySelectData extends
       Context context) {
     if (hasAclShowCategoryOther) {
       return Database.query(EipTTodoCategory.class).where(
-        Operations.ne(EipTTodoCategory.USER_ID_PROPERTY, 0));
+        Operations.ne(_EipTTodoCategory.USER_ID_PROPERTY, 0));
     } else {
       return Database.query(EipTTodoCategory.class).where(
-        Operations.eq(EipTTodoCategory.USER_ID_PROPERTY, ALEipUtils
+        Operations.eq(_EipTTodoCategory.USER_ID_PROPERTY, ALEipUtils
           .getUserId(rundata)));
     }
   }
@@ -263,10 +265,10 @@ public class ToDoCategorySelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("category_name", EipTTodoCategory.CATEGORY_NAME_PROPERTY);
-    map.putValue("user_name", EipTTodoCategory.TURBINE_USER_PROPERTY
+    map.putValue("category_name", _EipTTodoCategory.CATEGORY_NAME_PROPERTY);
+    map.putValue("user_name", _EipTTodoCategory.TURBINE_USER_PROPERTY
       + "."
-      + TurbineUser.LAST_NAME_KANA_PROPERTY);
+      + _TurbineUser.LAST_NAME_KANA_PROPERTY);
     return map;
   }
 

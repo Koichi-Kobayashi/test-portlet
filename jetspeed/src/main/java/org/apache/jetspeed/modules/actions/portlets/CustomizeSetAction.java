@@ -92,7 +92,7 @@ import java.text.MessageFormat;
  * <p>Don't call it from the URL, the Portlet and the Action are automatically
  * associated through the registry PortletName
  * 
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: CustomizeSetAction.java,v 1.51 2004/02/23 02:56:58 jford Exp $
  */
 public class CustomizeSetAction extends VelocityPortletAction
@@ -117,7 +117,8 @@ public class CustomizeSetAction extends VelocityPortletAction
      * Subclasses must override this method to provide default behavior 
      * for the portlet action
      */
-    protected void buildNormalContext(VelocityPortlet portlet, 
+    @Override
+	protected void buildNormalContext(VelocityPortlet portlet, 
                                       Context context,
                                       RunData rundata) throws Exception
     {
@@ -924,7 +925,7 @@ public class CustomizeSetAction extends VelocityPortletAction
                 
                 if (defaultSkin != null)
                 {
-                  set.getPortletConfig().setPortletSkin((PortletSkin) defaultSkin);
+                  set.getPortletConfig().setPortletSkin(defaultSkin);
                   Skin psmlSkin = portlets.getSkin();
                   
                   if (psmlSkin == null)
@@ -1022,7 +1023,8 @@ public class CustomizeSetAction extends VelocityPortletAction
         
         Collections.sort(list,
                 new Comparator() {
-                    public int compare(Object o1, Object o2)
+                    @Override
+					public int compare(Object o1, Object o2)
                     {
                         String t1 = (((PortletEntry) o1).getTitle() != null)
                             ? ((PortletEntry) o1).getTitle().toLowerCase()
@@ -1097,7 +1099,8 @@ public class CustomizeSetAction extends VelocityPortletAction
         
         Collections.sort(list,
                 new Comparator() {
-                    public int compare(Object o1, Object o2)
+                    @Override
+					public int compare(Object o1, Object o2)
                     {
                         String t1 = (((RegistryEntry) o1).getTitle() != null)
                             ? ((RegistryEntry) o1).getTitle()
@@ -1133,7 +1136,8 @@ public class CustomizeSetAction extends VelocityPortletAction
         
         Collections.sort(list,
                 new Comparator() {
-                    public int compare(Object o1, Object o2)
+                    @Override
+					public int compare(Object o1, Object o2)
                     {
                         String t1 = (((RegistryEntry) o1).getTitle() != null)
                             ? ((RegistryEntry) o1).getTitle()

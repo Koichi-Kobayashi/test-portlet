@@ -41,7 +41,8 @@ public class AccessControlFeatureBean implements ALData {
   /**
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     feature_id = new ALNumberField();
     feature_name = new ALStringField();
     feature_alias_name = new ALStringField();

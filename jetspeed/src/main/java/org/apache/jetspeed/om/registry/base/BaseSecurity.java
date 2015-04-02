@@ -23,7 +23,7 @@ import org.apache.jetspeed.om.registry.*;
  * Castor serialization.
  *
  * @see org.apache.jetspeed.om.registry.Security
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BaseSecurity.java,v 1.4 2004/02/23 03:08:26 jford Exp $
  */
 public class BaseSecurity implements Security,java.io.Serializable
@@ -43,7 +43,8 @@ public class BaseSecurity implements Security,java.io.Serializable
      * Implements the equals operation so that 2 elements are equal if
      * all their member values are equal.
      */
-    public boolean equals(Object object)
+    @Override
+	public boolean equals(Object object)
     {
         if (object==null)
         {
@@ -68,7 +69,8 @@ public class BaseSecurity implements Security,java.io.Serializable
     }
 
     /** @return the role name that is required for accessing this entry */
-    public String getRole()
+    @Override
+	public String getRole()
     {
         return this.role;
     }
@@ -76,7 +78,8 @@ public class BaseSecurity implements Security,java.io.Serializable
     /** Sets the role name required for accessing this entry
      * @param role the required role name
      */
-    public void setRole( String role )
+    @Override
+	public void setRole( String role )
     {
         this.role = role;
     }

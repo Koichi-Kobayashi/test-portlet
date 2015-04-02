@@ -17,22 +17,26 @@ public  class TurbinePermission
     extends org.apache.jetspeed.om.security.turbine.BaseTurbinePermission
     implements Persistent, org.apache.jetspeed.om.security.Permission
 {
-    public String getName()
+    @Override
+	public String getName()
     {
         return getPermissionName();
     }
 
-    public void setName(String name)
+    @Override
+	public void setName(String name)
     {
         setPermissionName(name);
     }
 
-    public String getId()
+    @Override
+	public String getId()
     {
         return String.valueOf(this.getPermissionId());
     }
 
-    public void setId(String id)
+    @Override
+	public void setId(String id)
     {
     }
 

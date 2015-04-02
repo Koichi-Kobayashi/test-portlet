@@ -27,6 +27,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipMFacilityGroup;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacilityGroup;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -196,7 +197,7 @@ public class FacilityGroupSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("group_name", EipMFacilityGroup.GROUP_NAME_PROPERTY);
+    map.putValue("group_name", _EipMFacilityGroup.GROUP_NAME_PROPERTY);
     return map;
   }
 

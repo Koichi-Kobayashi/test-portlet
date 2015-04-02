@@ -29,7 +29,8 @@ import org.apache.turbine.util.RunData;
  * @author <A HREF="shesmer@raleigh.ibm.com">Stephan Hesmer</A>
  */
 public class MarkRefPage extends Action {
-  public void doPerform(RunData data) throws Exception {
+  @Override
+public void doPerform(RunData data) throws Exception {
     Enumeration enu = data.getRequest().getHeaderNames();
     while (enu.hasMoreElements()) {
       String name = (String) enu.nextElement();

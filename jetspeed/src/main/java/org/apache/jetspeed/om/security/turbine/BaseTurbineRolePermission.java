@@ -1,24 +1,17 @@
 package org.apache.jetspeed.om.security.turbine;
 
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.BaseObject;
 import org.apache.torque.om.ComboKey;
-import org.apache.torque.om.DateKey;
 import org.apache.torque.om.NumberKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
-import org.apache.torque.om.StringKey;
-import org.apache.torque.om.Persistent;
-import org.apache.torque.util.Criteria;
 import org.apache.torque.util.Transaction;
 
   
@@ -136,7 +129,7 @@ public abstract class BaseTurbineRolePermission extends BaseObject
     {
         if ( getRoleId()>0 )
         {
-                return TurbineRoleManager.getInstance(SimpleKey.keyFor(getRoleId()));
+                return BaseTurbineRoleManager.getInstance(SimpleKey.keyFor(getRoleId()));
             }
         return aTurbineRole;
     }
@@ -181,7 +174,7 @@ public abstract class BaseTurbineRolePermission extends BaseObject
     {
         if ( getPermissionId()>0 )
         {
-                return TurbinePermissionManager.getInstance(SimpleKey.keyFor(getPermissionId()));
+                return BaseTurbinePermissionManager.getInstance(SimpleKey.keyFor(getPermissionId()));
             }
         return aTurbinePermission;
     }
@@ -221,7 +214,8 @@ public abstract class BaseTurbineRolePermission extends BaseObject
      * Retrieves a field from the object by name passed in
      * as a String.
      */
-    public Object getByName(String name)
+    @Override
+	public Object getByName(String name)
     {
           if (name.equals("RoleId"))
         {
@@ -239,13 +233,14 @@ public abstract class BaseTurbineRolePermission extends BaseObject
      * as a String.  The String must be one of the static
      * Strings defined in this Class' Peer.
      */
-    public Object getByPeerName(String name)
+    @Override
+	public Object getByPeerName(String name)
     {
-          if (name.equals(TurbineRolePermissionPeer.ROLE_ID ))
+          if (name.equals(BaseTurbineRolePermissionPeer.ROLE_ID ))
         {
                 return new Integer(getRoleId());
             }
-          if (name.equals(TurbineRolePermissionPeer.PERMISSION_ID ))
+          if (name.equals(BaseTurbineRolePermissionPeer.PERMISSION_ID ))
         {
                 return new Integer(getPermissionId());
             }
@@ -256,7 +251,8 @@ public abstract class BaseTurbineRolePermission extends BaseObject
      * Retrieves a field from the object by Position as specified
      * in the xml schema.  Zero-based.
      */
-    public Object getByPosition(int pos)
+    @Override
+	public Object getByPosition(int pos)
     {
             if ( pos == 0 )
         {
@@ -273,9 +269,10 @@ public abstract class BaseTurbineRolePermission extends BaseObject
      * Stores the object in the database.  If the object is new,
      * it inserts it; otherwise an update is performed.
      */
-    public void save() throws Exception
+    @Override
+	public void save() throws Exception
     {
-          save(TurbineRolePermissionPeer.getMapBuilder()
+          save(BaseTurbineRolePermissionPeer.getMapBuilder()
                 .getDatabaseMap().getName());
       }
 
@@ -286,7 +283,8 @@ public abstract class BaseTurbineRolePermission extends BaseObject
      * auto-generated conditionally and therefore needs to be
      * in this file instead of in the super class, BaseObject.
        */
-    public void save(String dbName) throws TorqueException
+    @Override
+	public void save(String dbName) throws TorqueException
     {
         Connection con = null;
           try
@@ -312,7 +310,8 @@ public abstract class BaseTurbineRolePermission extends BaseObject
      * the save() method and the connection details will be handled
      * internally
      */
-    public void save(Connection con) throws TorqueException
+    @Override
+	public void save(Connection con) throws TorqueException
     {
           if (!alreadyInSave)
         {
@@ -325,17 +324,17 @@ public abstract class BaseTurbineRolePermission extends BaseObject
             {
                 if (isNew())
                 {
-                    TurbineRolePermissionPeer.doInsert((TurbineRolePermission)this, con);
+                    BaseTurbineRolePermissionPeer.doInsert((TurbineRolePermission)this, con);
                     setNew(false);
                 }
                 else
                 {
-                    TurbineRolePermissionPeer.doUpdate((TurbineRolePermission)this, con);
+                    BaseTurbineRolePermissionPeer.doUpdate((TurbineRolePermission)this, con);
                 }
 
                       if (isCacheOnSave())
                 {
-                    TurbineRolePermissionManager.putInstance(this);
+                    BaseTurbineRolePermissionManager.putInstance(this);
                 }
               }
 
@@ -359,7 +358,8 @@ public abstract class BaseTurbineRolePermission extends BaseObject
     /**
      * Set the PrimaryKey with an ObjectKey
      */
-    public void setPrimaryKey(ObjectKey key) throws TorqueException
+    @Override
+	public void setPrimaryKey(ObjectKey key) throws TorqueException
     {
         SimpleKey[] keys = (SimpleKey[]) key.getValue();
         SimpleKey tmpKey = null;
@@ -383,7 +383,8 @@ public abstract class BaseTurbineRolePermission extends BaseObject
     /**
      * Set the PrimaryKey using a String.
      */
-    public void setPrimaryKey(String key) throws TorqueException
+    @Override
+	public void setPrimaryKey(String key) throws TorqueException
     {
         setPrimaryKey(new ComboKey(key));
     }
@@ -392,7 +393,8 @@ public abstract class BaseTurbineRolePermission extends BaseObject
      * returns an id that differentiates this object from others
      * of its class.
      */
-    public ObjectKey getPrimaryKey()
+    @Override
+	public ObjectKey getPrimaryKey()
     {
               pks[0] = SimpleKey.keyFor(getRoleId());
                   pks[1] = SimpleKey.keyFor(getPermissionId());

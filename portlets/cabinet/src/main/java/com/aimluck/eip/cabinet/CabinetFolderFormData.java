@@ -36,7 +36,10 @@ import com.aimluck.eip.cabinet.util.CabinetUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTCabinetFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTCabinetFolder;
 import com.aimluck.eip.cayenne.om.portlet.EipTCabinetFolderMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCabinetFolder;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTCabinetFolderMap;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -204,7 +207,7 @@ public class CabinetFolderFormData extends ALAbstractFormData {
         String member[] = rundata.getParameters().getStrings("member_to");
         SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
         Expression exp =
-          ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, member);
+          ExpressionFactory.inExp(_TurbineUser.LOGIN_NAME_PROPERTY, member);
         query.setQualifier(exp);
         memberList.addAll(ALEipUtils.getUsersFromSelectQuery(query));
         /** ログインユーザが含まれていなかった場合は追加 */
@@ -322,18 +325,18 @@ public class CabinetFolderFormData extends ALAbstractFormData {
       if (ALEipConstants.MODE_INSERT.equals(getMode())) {
         Expression exp =
           ExpressionFactory.matchExp(
-            EipTCabinetFolder.PARENT_ID_PROPERTY,
+            _EipTCabinetFolder.PARENT_ID_PROPERTY,
             Integer.valueOf((int) parent_id.getValue()));
         query.setQualifier(exp);
       } else if (ALEipConstants.MODE_UPDATE.equals(getMode())) {
         Expression exp1 =
           ExpressionFactory.matchExp(
-            EipTCabinetFolder.PARENT_ID_PROPERTY,
+            _EipTCabinetFolder.PARENT_ID_PROPERTY,
             Integer.valueOf((int) parent_id.getValue()));
         query.setQualifier(exp1);
         Expression exp2 =
           ExpressionFactory.noMatchDbExp(
-            EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
+            _EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
             Integer.valueOf(folderid));
         query.andQualifier(exp2);
       }
@@ -391,7 +394,7 @@ public class CabinetFolderFormData extends ALAbstractFormData {
           Database.query(EipTCabinetFolderMap.class);
         Expression mapexp =
           ExpressionFactory.matchDbExp(
-            EipTCabinetFolderMap.EIP_TCABINET_FOLDER_PROPERTY,
+            _EipTCabinetFolderMap.EIP_TCABINET_FOLDER_PROPERTY,
             folder.getFolderId());
         mapquery.setQualifier(mapexp);
         List<EipTCabinetFolderMap> list = mapquery.fetchList();
@@ -404,9 +407,9 @@ public class CabinetFolderFormData extends ALAbstractFormData {
         }
         SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
         Expression exp =
-          ExpressionFactory.inDbExp(TurbineUser.USER_ID_PK_COLUMN, users);
+          ExpressionFactory.inDbExp(_TurbineUser.USER_ID_PK_COLUMN, users);
         Expression nonDisabledexp =
-          ExpressionFactory.noMatchExp(TurbineUser.DISABLED_PROPERTY, "T");
+          ExpressionFactory.noMatchExp(_TurbineUser.DISABLED_PROPERTY, "T");
 
         query.setQualifier(exp.andExp(nonDisabledexp));
 
@@ -499,11 +502,11 @@ public class CabinetFolderFormData extends ALAbstractFormData {
         Database.query(EipTCabinetFolder.class);
       Expression exp1 =
         ExpressionFactory.matchDbExp(
-          EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
+          _EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
           Integer.valueOf(folderid));
       Expression exp2 =
         ExpressionFactory.matchExp(
-          EipTCabinetFolder.PARENT_ID_PROPERTY,
+          _EipTCabinetFolder.PARENT_ID_PROPERTY,
           Integer.valueOf(folderid));
       query.setQualifier(exp1.orExp(exp2));
       List<EipTCabinetFolder> list = query.fetchList();
@@ -527,7 +530,7 @@ public class CabinetFolderFormData extends ALAbstractFormData {
         Database.query(EipTCabinetFolder.class);
       Expression delfolderexp =
         ExpressionFactory.inDbExp(
-          EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
+          _EipTCabinetFolder.FOLDER_ID_PK_COLUMN,
           folderids);
       delfolderquery.setQualifier(delfolderexp);
       List<EipTCabinetFolder> delFolderList = delfolderquery.fetchList();
@@ -705,7 +708,7 @@ public class CabinetFolderFormData extends ALAbstractFormData {
         Database.query(EipTCabinetFolderMap.class);
       Expression mapexp =
         ExpressionFactory.matchExp(
-          EipTCabinetFolderMap.EIP_TCABINET_FOLDER_PROPERTY,
+          _EipTCabinetFolderMap.EIP_TCABINET_FOLDER_PROPERTY,
           folder.getFolderId());
       mapquery.setQualifier(mapexp);
       List<EipTCabinetFolderMap> maplist = mapquery.fetchList();

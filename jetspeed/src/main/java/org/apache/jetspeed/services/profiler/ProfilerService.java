@@ -68,7 +68,8 @@ public interface ProfilerService extends Service
      * @param rundata the rundata object for the current request
      * @return a new Profile object
      */
-    public Profile getProfile(RunData data, MimeType mt)
+    @Deprecated
+	public Profile getProfile(RunData data, MimeType mt)
         throws ProfileException;
 
     /**

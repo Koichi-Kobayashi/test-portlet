@@ -27,7 +27,8 @@ import org.apache.jetspeed.portal.PortletInstance;
 public class BogusPortlet extends AbstractInstancePortlet 
 {
     
-    public org.apache.ecs.ConcreteElement getContent(org.apache.turbine.util.RunData data) 
+    @Override
+	public org.apache.ecs.ConcreteElement getContent(org.apache.turbine.util.RunData data) 
     {
         String s1 = "Config ID: " + getPortletConfig().getPortletId();
         String s2 = ", Portlet ID: " + getID();

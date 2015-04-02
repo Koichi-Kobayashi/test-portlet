@@ -23,16 +23,19 @@ import org.apache.jetspeed.services.logging.JetspeedLogFactoryService;
 import org.apache.jetspeed.services.logging.JetspeedLogger;
 import org.apache.jetspeed.services.resources.JetspeedResources;
 
+
 // Java Core Classes
 import java.util.Vector;
 import java.util.Map;
 import java.util.Hashtable;
 import java.util.Iterator;
 
+
 // Turbine Utility Classes
 import org.apache.turbine.modules.GenericLoader;
 import org.apache.turbine.services.TurbineServices;
 import org.apache.turbine.services.assemblerbroker.AssemblerBrokerService;
+import org.apache.turbine.services.resources.TurbineResources;
 import org.apache.turbine.util.RunData;
 
 /**
@@ -82,7 +85,7 @@ public class ParameterLoader extends GenericLoader
     private void addInstance(String name, ParameterPresentationStyle param) {
 
         if (cache()) {
-            this.put(name, (ParameterPresentationStyle)param );
+            this.put(name, param );
         }
     }
 
@@ -125,7 +128,8 @@ public class ParameterLoader extends GenericLoader
      * @param name Name of object that will execute the screen.
      * @exception Exception a generic exception.
      */
-    public void exec(RunData data, String name) throws Exception {
+    @Override
+	public void exec(RunData data, String name) throws Exception {
 
         //this.eval(data, name);
     }
@@ -179,7 +183,7 @@ public class ParameterLoader extends GenericLoader
                 // If we did not find a screen we should try and give
                 // the user a reason for that...
                 // FIX ME: The AssemblerFactories should each add it's own string here...
-                Vector packages = JetspeedResources.getVector("module.packages");
+                Vector packages = TurbineResources.getVector("module.packages");
 
                 throw new ClassNotFoundException( "\n\n\tRequested Parameter not found: " +
                                                   provider + "\n" +

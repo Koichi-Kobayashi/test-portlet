@@ -1,23 +1,14 @@
 package org.apache.jetspeed.om.dbregistry;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.torque.NoRowsException;
-import org.apache.torque.TooManyRowsException;
 import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
 import org.apache.torque.map.MapBuilder;
 import org.apache.torque.map.TableMap;
-import org.apache.torque.om.DateKey;
-import org.apache.torque.om.NumberKey;
-import org.apache.torque.om.StringKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
 import org.apache.torque.util.BasePeer;
@@ -246,7 +237,7 @@ public abstract class BasePortletMediatypePeer
         try
         {
             PortletMediatype obj = (PortletMediatype) cls.newInstance();
-            PortletMediatypePeer.populateObject(row, offset, obj);
+            BasePortletMediatypePeer.populateObject(row, offset, obj);
                   obj.setModified(false);
               obj.setNew(false);
 
@@ -384,8 +375,8 @@ public abstract class BasePortletMediatypePeer
         for (int i = 0; i < records.size(); i++)
         {
             Record row = (Record) records.get(i);
-              results.add(PortletMediatypePeer.row2Object(row, 1,
-                PortletMediatypePeer.getOMClass()));
+              results.add(BasePortletMediatypePeer.row2Object(row, 1,
+                BasePortletMediatypePeer.getOMClass()));
           }
         return results;
     }
@@ -669,13 +660,13 @@ public abstract class BasePortletMediatypePeer
             c.setDbName(DATABASE_NAME);
         }
 
-        PortletMediatypePeer.addSelectColumns(c);
+        BasePortletMediatypePeer.addSelectColumns(c);
         int offset = numColumns + 1;
-        PortletDbEntryPeer.addSelectColumns(c);
+        BasePortletDbEntryPeer.addSelectColumns(c);
 
 
-                        c.addJoin(PortletMediatypePeer.ID,
-            PortletDbEntryPeer.ID);
+                        c.addJoin(BasePortletMediatypePeer.ID,
+            BasePortletDbEntryPeer.ID);
         
 
                                             
@@ -686,18 +677,18 @@ public abstract class BasePortletMediatypePeer
         {
             Record row = (Record) rows.get(i);
 
-                            Class omClass = PortletMediatypePeer.getOMClass();
-                    PortletMediatype obj1 = (PortletMediatype) PortletMediatypePeer
+                            Class omClass = BasePortletMediatypePeer.getOMClass();
+                    PortletMediatype obj1 = BasePortletMediatypePeer
                 .row2Object(row, 1, omClass);
-                     omClass = PortletDbEntryPeer.getOMClass();
-                    PortletDbEntry obj2 = (PortletDbEntry)PortletDbEntryPeer
+                     omClass = BasePortletDbEntryPeer.getOMClass();
+                    PortletDbEntry obj2 = BasePortletDbEntryPeer
                 .row2Object(row, offset, omClass);
 
             boolean newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 PortletMediatype temp_obj1 = (PortletMediatype)results.get(j);
-                PortletDbEntry temp_obj2 = (PortletDbEntry)temp_obj1.getPortletDbEntry();
+                PortletDbEntry temp_obj2 = temp_obj1.getPortletDbEntry();
                 if (temp_obj2.getPrimaryKey().equals(obj2.getPrimaryKey()))
                 {
                     newObject = false;
@@ -740,13 +731,13 @@ public abstract class BasePortletMediatypePeer
             c.setDbName(DATABASE_NAME);
         }
 
-        PortletMediatypePeer.addSelectColumns(c);
+        BasePortletMediatypePeer.addSelectColumns(c);
         int offset = numColumns + 1;
-        MediatypePeer.addSelectColumns(c);
+        BaseMediatypePeer.addSelectColumns(c);
 
 
-                        c.addJoin(PortletMediatypePeer.MEDIA_ID,
-            MediatypePeer.ID);
+                        c.addJoin(BasePortletMediatypePeer.MEDIA_ID,
+            BaseMediatypePeer.ID);
         
 
                                             
@@ -757,18 +748,18 @@ public abstract class BasePortletMediatypePeer
         {
             Record row = (Record) rows.get(i);
 
-                            Class omClass = PortletMediatypePeer.getOMClass();
-                    PortletMediatype obj1 = (PortletMediatype) PortletMediatypePeer
+                            Class omClass = BasePortletMediatypePeer.getOMClass();
+                    PortletMediatype obj1 = BasePortletMediatypePeer
                 .row2Object(row, 1, omClass);
-                     omClass = MediatypePeer.getOMClass();
-                    Mediatype obj2 = (Mediatype)MediatypePeer
+                     omClass = BaseMediatypePeer.getOMClass();
+                    Mediatype obj2 = BaseMediatypePeer
                 .row2Object(row, offset, omClass);
 
             boolean newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 PortletMediatype temp_obj1 = (PortletMediatype)results.get(j);
-                Mediatype temp_obj2 = (Mediatype)temp_obj1.getMediatype();
+                Mediatype temp_obj2 = temp_obj1.getMediatype();
                 if (temp_obj2.getPrimaryKey().equals(obj2.getPrimaryKey()))
                 {
                     newObject = false;

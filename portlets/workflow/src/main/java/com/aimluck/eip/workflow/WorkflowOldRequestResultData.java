@@ -45,7 +45,8 @@ public class WorkflowOldRequestResultData implements ALData {
    * 
    * 
    */
-  public void initField() {
+  @Override
+public void initField() {
     request_id = new ALNumberField();
     request_name = new ALStringField();
     category_name = new ALStringField();

@@ -36,7 +36,7 @@ import org.apache.velocity.context.Context;
  * <p>Don't call it from the URL, the Portlet and the Action are automatically
  * associated through the registry PortletName
  * 
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:re_carrasco@bco011.sonda.cl">Roberto Carrasco</a>
  */
 public abstract class VelocityControllerAction extends VelocityAction
@@ -50,7 +50,8 @@ public abstract class VelocityControllerAction extends VelocityAction
      * @param data A Turbine RunData object.
      * @exception Exception, a generic exception.
      */
-    protected void perform( RunData rundata )
+    @Override
+	protected void perform( RunData rundata )
         throws Exception
     {
         // first try to see if there are some events registered for this
@@ -85,7 +86,8 @@ public abstract class VelocityControllerAction extends VelocityAction
      * @param data Turbine information.
      * @param template The template that will be executed next.
      */
-    public void setTemplate(RunData data,
+    @Override
+	public void setTemplate(RunData data,
                             String template)
     {
         getContext(data).put( "template" , template );
@@ -97,13 +99,15 @@ public abstract class VelocityControllerAction extends VelocityAction
      * @param RunData data
      * @return Context, a context for web pages.
      */
-    protected Context getContext(RunData data)
+    @Override
+	protected Context getContext(RunData data)
     {
         return (Context)data.getTemplateInfo()
                             .getTemplateContext( "VelocityControllerContext" );
     }
 
-    public void doPerform( RunData rundata, Context context )
+    @Override
+	public void doPerform( RunData rundata, Context context )
     {
         PortletController controller = (PortletController)context.get( "controller" );
 

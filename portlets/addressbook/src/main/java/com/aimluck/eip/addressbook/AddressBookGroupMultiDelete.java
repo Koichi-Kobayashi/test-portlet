@@ -30,6 +30,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipMAddressGroup;
 import com.aimluck.eip.cayenne.om.portlet.EipTAddressbookGroupMap;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMAddressGroup;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.orm.Database;
@@ -65,11 +66,11 @@ public class AddressBookGroupMultiDelete extends ALAbstractCheckList {
       SelectQuery<EipMAddressGroup> query =
         Database.query(EipMAddressGroup.class);
       Expression exp1 =
-        ExpressionFactory.matchExp(EipMAddressGroup.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipMAddressGroup.OWNER_ID_PROPERTY, Integer
           .valueOf(ALEipUtils.getUserId(rundata)));
       query.setQualifier(exp1);
       Expression exp2 =
-        ExpressionFactory.inDbExp(EipMAddressGroup.GROUP_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipMAddressGroup.GROUP_ID_PK_COLUMN, values);
       query.andQualifier(exp2);
 
       List<EipMAddressGroup> groups = query.fetchList();
@@ -101,7 +102,7 @@ public class AddressBookGroupMultiDelete extends ALAbstractCheckList {
         Database.query(EipTAddressbookGroupMap.class);
       Expression mapexp =
         ExpressionFactory.matchDbExp(
-          EipMAddressGroup.GROUP_ID_PK_COLUMN,
+          _EipMAddressGroup.GROUP_ID_PK_COLUMN,
           Integer.valueOf(ALEipUtils.getUserId(rundata)));
       mapquery.setQualifier(mapexp);
 

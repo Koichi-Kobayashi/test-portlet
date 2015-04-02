@@ -52,7 +52,8 @@ public class ControllerUpdateAction extends RegistryUpdateAction
     /**
      * @see org.apache.jetspeed.modules.actions.portlets.VelocityPortletAction#buildNormalContext(org.apache.jetspeed.portal.portlets.VelocityPortlet, org.apache.velocity.context.Context, org.apache.turbine.util.RunData)
      */
-    protected void buildNormalContext(
+    @Override
+	protected void buildNormalContext(
         VelocityPortlet portlet,
         Context context,
         RunData rundata)
@@ -85,7 +86,8 @@ public class ControllerUpdateAction extends RegistryUpdateAction
         }
     }
 
-    protected void updateRegistryEntry(
+    @Override
+	protected void updateRegistryEntry(
         RunData rundata,
         RegistryEntry registryEntry)
         throws Exception
@@ -104,7 +106,8 @@ public class ControllerUpdateAction extends RegistryUpdateAction
     /**
      * @param rundata
      */
-    protected void clearUserData(RunData rundata)
+    @Override
+	protected void clearUserData(RunData rundata)
     {
         try
         {
@@ -125,7 +128,8 @@ public class ControllerUpdateAction extends RegistryUpdateAction
     /**
      * @param rundata
      */
-    protected void resetForm(RunData rundata)
+    @Override
+	protected void resetForm(RunData rundata)
     {
         super.resetForm(rundata);
         String mediaTypeRef =

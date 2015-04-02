@@ -23,10 +23,11 @@ package org.apache.jetspeed.portal;
  * This marker is detected by the customization system when rendering
  * the customizer for a given portlet
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @deprecated provide providesCustomization() from Portlet.java insted
  * to indicate that a portlet can do its own customization.
  */
+@Deprecated
 public interface PortletCustomizer
 {
     // empty interface

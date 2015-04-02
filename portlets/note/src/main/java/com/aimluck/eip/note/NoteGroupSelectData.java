@@ -33,10 +33,14 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.account.EipMUserPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMUserPosition;
 import com.aimluck.eip.cayenne.om.portlet.EipTNoteMap;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALData;
@@ -212,15 +216,15 @@ public class NoteGroupSelectData extends
   @Override
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
-    map.putValue("src_user", TurbineUser.LAST_NAME_KANA_PROPERTY);
-    map.putValue("group", TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
+    map.putValue("src_user", _TurbineUser.LAST_NAME_KANA_PROPERTY);
+    map.putValue("group", _TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
       + "."
-      + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+      + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
       + "."
-      + TurbineGroup.GROUP_NAME_PROPERTY);
-    map.putValue("userposition", TurbineUser.EIP_MUSER_POSITION_PROPERTY
+      + _TurbineGroup.GROUP_NAME_PROPERTY);
+    map.putValue("userposition", _TurbineUser.EIP_MUSER_POSITION_PROPERTY
       + "."
-      + EipMUserPosition.POSITION_PROPERTY); // ユーザの順番
+      + _EipMUserPosition.POSITION_PROPERTY); // ユーザの順番
     return map;
   }
 
@@ -236,21 +240,21 @@ public class NoteGroupSelectData extends
     SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
 
     Expression exp11 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .valueOf(1));
     Expression exp12 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .valueOf(2));
     Expression exp13 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .valueOf(3));
     query.setQualifier(exp11.andExp(exp12).andExp(exp13));
 
     Expression exp2 =
-      ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+      ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
     query.andQualifier(exp2);
     Expression exp3 =
-      ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+      ExpressionFactory.noMatchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
         .valueOf(userId));
     query.andQualifier(exp3);
 

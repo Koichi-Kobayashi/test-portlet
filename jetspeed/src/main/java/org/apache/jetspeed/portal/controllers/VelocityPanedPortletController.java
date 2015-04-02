@@ -36,7 +36,7 @@ import org.apache.jetspeed.services.resources.JetspeedResources;
  * to manage paned content (ie, where a only a subset of all portlets
  * is visible at any given time)
  * 
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @author <a href="mailto:taylor@apache.org">David Sean Taylor</a>
  *
  * @version $Id: VelocityPanedPortletController.java,v 1.13 2004/02/23 03:25:06 jford Exp $
@@ -57,7 +57,8 @@ public class VelocityPanedPortletController extends VelocityPortletController
      * @return the pane parameter name
      *
      */
-    public String getPaneParameter()    
+    @Override
+	public String getPaneParameter()    
     {
         return JetspeedResources.PATH_PANEID_KEY;
     }
@@ -71,7 +72,8 @@ public class VelocityPanedPortletController extends VelocityPortletController
      * @param rundata the RunData for the request
      * @return true if the portlet is selected, false otherwise
      */
-    public boolean isSelected( Portlet p, RunData rundata )
+    @Override
+	public boolean isSelected( Portlet p, RunData rundata )
     {
         String peid = rundata.getParameters().getString( getPaneParameter() );
         String pname = rundata.getParameters().getString(JetspeedResources.PATH_PANENAME_KEY);
@@ -178,7 +180,8 @@ public class VelocityPanedPortletController extends VelocityPortletController
      *  @param portlet The portlet to build the link for by id.
      *  @return DynamicURI A new Dynamic URI with the query parameter
      */
-    public DynamicURI getPortletURI( Portlet portlet, RunData rundata )
+    @Override
+	public DynamicURI getPortletURI( Portlet portlet, RunData rundata )
     {
         JetspeedLink jsLink = null;
         try
@@ -203,7 +206,8 @@ public class VelocityPanedPortletController extends VelocityPortletController
      *  @return String The pane id for the selected pane.
      *
      */
-    public String retrievePaneID(RunData rundata, boolean byParameter)
+    @Override
+	public String retrievePaneID(RunData rundata, boolean byParameter)
     {
         if (false == byParameter)
             return retrievePaneIDFromSession(rundata);
@@ -264,7 +268,8 @@ public class VelocityPanedPortletController extends VelocityPortletController
      *  @param rundata The request data.
      *  @param id  The tab id to save for this controller
      */
-    public void savePaneID( RunData data, String id )
+    @Override
+	public void savePaneID( RunData data, String id )
     {
         // get the state for this portlet (portlet set) in this page in this session
         SessionState state = ((JetspeedRunData)data).getPortletSessionState(getPortlets().getID());
@@ -281,7 +286,9 @@ public class VelocityPanedPortletController extends VelocityPortletController
      *
      * @param name the selection parameter name
      */
-    public void setParameterName( String name )
+    @Deprecated
+	@Override
+	public void setParameterName( String name )
     {
         getConfig().setInitParameter( "parameter", name );          
     }
@@ -291,7 +298,9 @@ public class VelocityPanedPortletController extends VelocityPortletController
      *
      * @deprecated
      */
-    public String getParameterName()
+    @Deprecated
+	@Override
+	public String getParameterName()
     {
         return getConfig().getInitParameter( "parameter", DEFAULT_PARAMETER )
                + getPortlets().getName();
@@ -303,7 +312,9 @@ public class VelocityPanedPortletController extends VelocityPortletController
      * @deprecated
      *
      */
-    public String retrievePaneName(RunData rundata)
+    @Deprecated
+	@Override
+	public String retrievePaneName(RunData rundata)
     {
         String pane = rundata.getParameters().getString( getParameterName() );
         
@@ -330,7 +341,9 @@ public class VelocityPanedPortletController extends VelocityPortletController
      *
      * @param name the selection parameter name
      */
-    public void savePaneName( RunData data, String name )
+    @Deprecated
+	@Override
+	public void savePaneName( RunData data, String name )
     {
         data.getUser().setTemp( "pane-"+getParameterName(), name );
     }

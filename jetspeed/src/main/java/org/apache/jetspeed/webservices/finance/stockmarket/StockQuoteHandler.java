@@ -34,7 +34,8 @@ public class StockQuoteHandler extends XMLFilterImpl
     StockQuote result = null;
     XMLFilterImpl handler = null;
 
-    public void startElement(String uri, String localName, String qName, Attributes attributes) 
+    @Override
+	public void startElement(String uri, String localName, String qName, Attributes attributes) 
         throws SAXException 
     {
         if (attributes.getValue("href") != null) 
@@ -74,7 +75,8 @@ public class StockQuoteHandler extends XMLFilterImpl
         }
     }
 
-    public void endElement(String uri, String localName, String qName) throws SAXException {
+    @Override
+	public void endElement(String uri, String localName, String qName) throws SAXException {
         if (localName.equals("Price")) {
             result.setPrice(resultBuffer.toString());
         } else if (localName.equals("Name")) {
@@ -102,11 +104,13 @@ public class StockQuoteHandler extends XMLFilterImpl
         }
     }
 
-    public void characters(char[] ch, int start, int length) throws SAXException {
+    @Override
+	public void characters(char[] ch, int start, int length) throws SAXException {
         if (resultBuffer != null) resultBuffer.append(new String(ch,start,length));
     }
-    public void setContentHandler(ContentHandler handler) {
-        ((XMLReader)getParent()).setContentHandler(handler);
+    @Override
+	public void setContentHandler(ContentHandler handler) {
+        getParent().setContentHandler(handler);
     }
     public StockQuote getResult() {
         return result;

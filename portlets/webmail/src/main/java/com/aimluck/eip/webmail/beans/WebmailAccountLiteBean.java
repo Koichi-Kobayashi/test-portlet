@@ -38,7 +38,8 @@ public class WebmailAccountLiteBean implements ALData, Cloneable {
    *
    *
    */
-  public void initField() {
+  @Override
+public void initField() {
     accountId = new ALNumberField();
     accountName = new ALStringField();
   }

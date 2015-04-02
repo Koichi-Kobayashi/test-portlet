@@ -33,7 +33,8 @@ public interface Profile extends ProfileLocator
      *  @deprecated Will be removed with refactoring of profiler service.
      *  @return The root portlet set for this profile.
      */
-    public PortletSet getRootSet();
+    @Deprecated
+	public PortletSet getRootSet();
 
     /**
      * Gets the psml document attached to this profile

@@ -31,7 +31,9 @@ import org.apache.turbine.util.RunData;
 
 import com.aimluck.eip.cayenne.om.portlet.EipMFacility;
 import com.aimluck.eip.cayenne.om.portlet.EipTSchedule;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipMFacility;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALEipUser;
 import com.aimluck.eip.facilities.FacilityResultData;
 import com.aimluck.eip.facilities.util.FacilitiesUtils;
@@ -104,7 +106,7 @@ public class CellScheduleUtils {
     if (str != null && str.length > 0) {
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
-        ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, str);
+        ExpressionFactory.inExp(_TurbineUser.LOGIN_NAME_PROPERTY, str);
       query.setQualifier(exp);
       List<ALEipUser> sharuserlist = ALEipUtils.getUsersFromSelectQuery(query);
       int sharuserSize = sharuserlist.size();
@@ -132,7 +134,7 @@ public class CellScheduleUtils {
 
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
-        ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, str);
+        ExpressionFactory.inExp(_TurbineUser.LOGIN_NAME_PROPERTY, str);
       query.setQualifier(exp);
       List<ALEipUser> sharuserslist = ALEipUtils.getUsersFromSelectQuery(query);
       int sharusersSize = sharuserslist.size();
@@ -159,7 +161,7 @@ public class CellScheduleUtils {
     if (facstr != null && facstr.length > 0) {
       SelectQuery<EipMFacility> fquery = Database.query(EipMFacility.class);
       Expression fexp =
-        ExpressionFactory.inDbExp(EipMFacility.FACILITY_ID_PK_COLUMN, facstr);
+        ExpressionFactory.inDbExp(_EipMFacility.FACILITY_ID_PK_COLUMN, facstr);
       fquery.setQualifier(fexp);
       List<FacilityResultData> f_list =
         FacilitiesUtils.getFacilitiesFromSelectQuery(fquery);
@@ -188,7 +190,7 @@ public class CellScheduleUtils {
 
       SelectQuery<EipMFacility> fquery = Database.query(EipMFacility.class);
       Expression fexp =
-        ExpressionFactory.inDbExp(EipMFacility.FACILITY_ID_PK_COLUMN, str);
+        ExpressionFactory.inDbExp(_EipMFacility.FACILITY_ID_PK_COLUMN, str);
       fquery.setQualifier(fexp);
       List<FacilityResultData> f_list =
         FacilitiesUtils.getFacilitiesFromSelectQuery(fquery);

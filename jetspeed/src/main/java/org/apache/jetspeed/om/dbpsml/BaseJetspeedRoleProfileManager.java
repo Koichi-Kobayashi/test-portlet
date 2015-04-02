@@ -2,8 +2,6 @@
 
 package org.apache.jetspeed.om.dbpsml;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.torque.Torque;
@@ -45,8 +43,8 @@ public abstract class BaseJetspeedRoleProfileManager
     public static JetspeedRoleProfileManager getManager()
     {
         return (JetspeedRoleProfileManager)
-            Torque.getManager(JetspeedRoleProfileManager.MANAGED_CLASS,
-                JetspeedRoleProfileManager.DEFAULT_MANAGER_CLASS);
+            Torque.getManager(BaseJetspeedRoleProfileManager.MANAGED_CLASS,
+                BaseJetspeedRoleProfileManager.DEFAULT_MANAGER_CLASS);
     }
 
     /**
@@ -255,16 +253,17 @@ public abstract class BaseJetspeedRoleProfileManager
     protected boolean existsImpl(JetspeedRoleProfile om)
         throws TorqueException
     {
-        Criteria crit = JetspeedRoleProfilePeer
-            .buildCriteria((JetspeedRoleProfile)om);
-        return JetspeedRoleProfilePeer.doSelect(crit).size() > 0;
+        Criteria crit = BaseJetspeedRoleProfilePeer
+            .buildCriteria(om);
+        return BaseJetspeedRoleProfilePeer.doSelect(crit).size() > 0;
     }
 
 
-    protected Persistent retrieveStoredOM(ObjectKey id)
+    @Override
+	protected Persistent retrieveStoredOM(ObjectKey id)
         throws TorqueException
     {
-        return JetspeedRoleProfilePeer.retrieveByPK(id);
+        return BaseJetspeedRoleProfilePeer.retrieveByPK(id);
     }
 
     /**
@@ -274,9 +273,10 @@ public abstract class BaseJetspeedRoleProfileManager
      * @return a <code>List</code> value
      * @exception TorqueException if an error occurs
      */
-    protected List retrieveStoredOMs(List ids)
+    @Override
+	protected List retrieveStoredOMs(List ids)
         throws TorqueException
     {
-        return JetspeedRoleProfilePeer.retrieveByPKs(ids);
+        return BaseJetspeedRoleProfilePeer.retrieveByPKs(ids);
     }
 }

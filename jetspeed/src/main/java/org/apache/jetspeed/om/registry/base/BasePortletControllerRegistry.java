@@ -32,7 +32,7 @@ import org.apache.jetspeed.services.logging.JetspeedLogger;
  * nees to call the addLocalEntry/removeLocalEntry methods to modify
  * the in memory state of this Registry</p>
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: BasePortletControllerRegistry.java,v 1.4 2004/02/23 03:08:26 jford Exp $
  */
 public class BasePortletControllerRegistry extends BaseRegistry
@@ -46,7 +46,8 @@ public class BasePortletControllerRegistry extends BaseRegistry
     /**
     @see Registry#setEntry
     */
-    public void setEntry( RegistryEntry entry ) throws InvalidEntryException
+    @Override
+	public void setEntry( RegistryEntry entry ) throws InvalidEntryException
     {
 		// Delegate to the RegistryService to ensure correct handling of
 		// persistence if using file fragments
@@ -64,7 +65,8 @@ public class BasePortletControllerRegistry extends BaseRegistry
     /**
     @see Registry#addEntry
     */
-    public void addEntry( RegistryEntry entry ) throws InvalidEntryException
+    @Override
+	public void addEntry( RegistryEntry entry ) throws InvalidEntryException
     {
 		// Delegate to the RegistryService to ensure correct handling of
 		// persistence if using file fragments
@@ -82,7 +84,8 @@ public class BasePortletControllerRegistry extends BaseRegistry
     /**
     @see Registry#removeEntry
     */
-    public void removeEntry( String name )
+    @Override
+	public void removeEntry( String name )
     {
 		// Delegate to the RegistryService to ensure correct handling of
 		// persistence if using file fragments
@@ -93,7 +96,8 @@ public class BasePortletControllerRegistry extends BaseRegistry
     /**
     @see Registry#removeEntry
     */
-    public void removeEntry( RegistryEntry entry )
+    @Override
+	public void removeEntry( RegistryEntry entry )
     {
 		// Delegate to the RegistryService to ensure correct handling of
 		// persistence if using file fragments
@@ -110,7 +114,8 @@ public class BasePortletControllerRegistry extends BaseRegistry
      *
      * @return the newly created RegistryEntry
      */
-    public RegistryEntry createEntry()
+    @Override
+	public RegistryEntry createEntry()
     {
 		return new BasePortletControllerEntry();
 	}

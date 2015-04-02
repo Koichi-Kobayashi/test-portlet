@@ -67,7 +67,8 @@ public abstract class AbstractPortletController implements PortletController
     /**
     Allows the user to override the default set of portlets...
     */
-    public final void setConfig(PortletControllerConfig conf)
+    @Override
+	public final void setConfig(PortletControllerConfig conf)
     {
         this.conf = conf;
     }
@@ -75,7 +76,8 @@ public abstract class AbstractPortletController implements PortletController
 
     /**
     */
-    public final PortletControllerConfig getConfig()
+    @Override
+	public final PortletControllerConfig getConfig()
     {
         return this.conf;
     }
@@ -83,7 +85,8 @@ public abstract class AbstractPortletController implements PortletController
     /**
     Allows the user to override the default set of portlets...
     */
-    public final void setPortlets(PortletSet portlets)
+    @Override
+	public final void setPortlets(PortletSet portlets)
     {
       this.portlets = portlets;
     }
@@ -91,7 +94,8 @@ public abstract class AbstractPortletController implements PortletController
 
     /**
     */
-    public final PortletSet getPortlets()
+    @Override
+	public final PortletSet getPortlets()
     {
         return this.portlets;
     }
@@ -154,7 +158,8 @@ public abstract class AbstractPortletController implements PortletController
 
     /**
     */
-    public void init()
+    @Override
+	public void init()
     {
         // no specific init
     }
@@ -163,7 +168,8 @@ public abstract class AbstractPortletController implements PortletController
     /**
     @see Portlet#supportsType
     */
-    public boolean supportsType( MimeType mimeType )
+    @Override
+	public boolean supportsType( MimeType mimeType )
     {
         // we now need to check that the control also supports the type...
         PortletControllerEntry entry =
@@ -195,7 +201,8 @@ public abstract class AbstractPortletController implements PortletController
 
     /**
     */
-    public ConcreteElement getContent( RunData rundata )
+    @Override
+	public ConcreteElement getContent( RunData rundata )
     {
 
         CapabilityMap map = ((JetspeedRunData)rundata).getCapability();
@@ -245,7 +252,8 @@ public abstract class AbstractPortletController implements PortletController
      * @param original the source for this constraint object
      * @return a new Constraints object appropriate for this controller
      */
-    public PortletSet.Constraints getConstraints( Map original )
+    @Override
+	public PortletSet.Constraints getConstraints( Map original )
     {
         PortletSet.Constraints constraints = new BasePortletSetConstraints();
         if (original != null) constraints.putAll(original);

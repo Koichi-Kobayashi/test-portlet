@@ -1,24 +1,17 @@
 package org.apache.jetspeed.om.dbregistry;
 
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.BaseObject;
-import org.apache.torque.om.ComboKey;
-import org.apache.torque.om.DateKey;
 import org.apache.torque.om.NumberKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
-import org.apache.torque.om.StringKey;
-import org.apache.torque.om.Persistent;
-import org.apache.torque.util.Criteria;
 import org.apache.torque.util.Transaction;
 
   
@@ -188,7 +181,7 @@ public abstract class BasePortletCategory extends BaseObject
     {
         if ( getOwner()>0 )
         {
-                return PortletDbEntryManager.getInstance(SimpleKey.keyFor(getOwner()));
+                return BasePortletDbEntryManager.getInstance(SimpleKey.keyFor(getOwner()));
             }
         return aPortletDbEntry;
     }
@@ -230,7 +223,8 @@ public abstract class BasePortletCategory extends BaseObject
      * Retrieves a field from the object by name passed in
      * as a String.
      */
-    public Object getByName(String name)
+    @Override
+	public Object getByName(String name)
     {
           if (name.equals("Id"))
         {
@@ -256,21 +250,22 @@ public abstract class BasePortletCategory extends BaseObject
      * as a String.  The String must be one of the static
      * Strings defined in this Class' Peer.
      */
-    public Object getByPeerName(String name)
+    @Override
+	public Object getByPeerName(String name)
     {
-          if (name.equals(PortletCategoryPeer.ID ))
+          if (name.equals(BasePortletCategoryPeer.ID ))
         {
                 return new Long(getId());
             }
-          if (name.equals(PortletCategoryPeer.NAME ))
+          if (name.equals(BasePortletCategoryPeer.NAME ))
         {
                 return getName();
             }
-          if (name.equals(PortletCategoryPeer.GROUPE ))
+          if (name.equals(BasePortletCategoryPeer.GROUPE ))
         {
                 return getGroup();
             }
-          if (name.equals(PortletCategoryPeer.OWNER ))
+          if (name.equals(BasePortletCategoryPeer.OWNER ))
         {
                 return new Long(getOwner());
             }
@@ -281,7 +276,8 @@ public abstract class BasePortletCategory extends BaseObject
      * Retrieves a field from the object by Position as specified
      * in the xml schema.  Zero-based.
      */
-    public Object getByPosition(int pos)
+    @Override
+	public Object getByPosition(int pos)
     {
             if ( pos == 0 )
         {
@@ -306,9 +302,10 @@ public abstract class BasePortletCategory extends BaseObject
      * Stores the object in the database.  If the object is new,
      * it inserts it; otherwise an update is performed.
      */
-    public void save() throws Exception
+    @Override
+	public void save() throws Exception
     {
-          save(PortletCategoryPeer.getMapBuilder()
+          save(BasePortletCategoryPeer.getMapBuilder()
                 .getDatabaseMap().getName());
       }
 
@@ -319,7 +316,8 @@ public abstract class BasePortletCategory extends BaseObject
      * auto-generated conditionally and therefore needs to be
      * in this file instead of in the super class, BaseObject.
        */
-    public void save(String dbName) throws TorqueException
+    @Override
+	public void save(String dbName) throws TorqueException
     {
         Connection con = null;
           try
@@ -345,7 +343,8 @@ public abstract class BasePortletCategory extends BaseObject
      * the save() method and the connection details will be handled
      * internally
      */
-    public void save(Connection con) throws TorqueException
+    @Override
+	public void save(Connection con) throws TorqueException
     {
           if (!alreadyInSave)
         {
@@ -358,17 +357,17 @@ public abstract class BasePortletCategory extends BaseObject
             {
                 if (isNew())
                 {
-                    PortletCategoryPeer.doInsert((PortletCategory)this, con);
+                    BasePortletCategoryPeer.doInsert((PortletCategory)this, con);
                     setNew(false);
                 }
                 else
                 {
-                    PortletCategoryPeer.doUpdate((PortletCategory)this, con);
+                    BasePortletCategoryPeer.doUpdate((PortletCategory)this, con);
                 }
 
                       if (isCacheOnSave())
                 {
-                    PortletCategoryManager.putInstance(this);
+                    BasePortletCategoryManager.putInstance(this);
                 }
               }
 
@@ -391,7 +390,8 @@ public abstract class BasePortletCategory extends BaseObject
      *
      * @param ObjectKey id
      */
-    public void setPrimaryKey(ObjectKey id)
+    @Override
+	public void setPrimaryKey(ObjectKey id)
          {
             setId(((NumberKey)id).longValue());
         }
@@ -399,7 +399,8 @@ public abstract class BasePortletCategory extends BaseObject
     /**
      * Set the PrimaryKey using a String.
      */
-    public void setPrimaryKey(String key) 
+    @Override
+	public void setPrimaryKey(String key) 
     {
             setId(Long.parseLong(key));
         }
@@ -409,7 +410,8 @@ public abstract class BasePortletCategory extends BaseObject
      * returns an id that differentiates this object from others
      * of its class.
      */
-    public ObjectKey getPrimaryKey()
+    @Override
+	public ObjectKey getPrimaryKey()
     {
           return SimpleKey.keyFor(getId());
       }

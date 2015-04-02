@@ -1,10 +1,8 @@
 package org.apache.jetspeed.om.security.turbine;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,9 +13,6 @@ import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
 import org.apache.torque.map.MapBuilder;
 import org.apache.torque.map.TableMap;
-import org.apache.torque.om.DateKey;
-import org.apache.torque.om.NumberKey;
-import org.apache.torque.om.StringKey;
 import org.apache.torque.om.ObjectKey;
 import org.apache.torque.om.SimpleKey;
 import org.apache.torque.util.BasePeer;
@@ -251,7 +246,7 @@ public abstract class BaseTurbineUserGroupRolePeer
         try
         {
             TurbineUserGroupRole obj = (TurbineUserGroupRole) cls.newInstance();
-            TurbineUserGroupRolePeer.populateObject(row, offset, obj);
+            BaseTurbineUserGroupRolePeer.populateObject(row, offset, obj);
                   obj.setModified(false);
               obj.setNew(false);
 
@@ -390,8 +385,8 @@ public abstract class BaseTurbineUserGroupRolePeer
         for (int i = 0; i < records.size(); i++)
         {
             Record row = (Record) records.get(i);
-              results.add(TurbineUserGroupRolePeer.row2Object(row, 1,
-                TurbineUserGroupRolePeer.getOMClass()));
+              results.add(BaseTurbineUserGroupRolePeer.row2Object(row, 1,
+                BaseTurbineUserGroupRolePeer.getOMClass()));
           }
         return results;
     }
@@ -862,13 +857,13 @@ public abstract class BaseTurbineUserGroupRolePeer
             c.setDbName(DATABASE_NAME);
         }
 
-        TurbineUserGroupRolePeer.addSelectColumns(c);
+        BaseTurbineUserGroupRolePeer.addSelectColumns(c);
         int offset = numColumns + 1;
-        TurbineUserPeer.addSelectColumns(c);
+        BaseTurbineUserPeer.addSelectColumns(c);
 
 
-                        c.addJoin(TurbineUserGroupRolePeer.USER_ID,
-            TurbineUserPeer.USER_ID);
+                        c.addJoin(BaseTurbineUserGroupRolePeer.USER_ID,
+            BaseTurbineUserPeer.USER_ID);
         
 
                                                               
@@ -879,18 +874,18 @@ public abstract class BaseTurbineUserGroupRolePeer
         {
             Record row = (Record) rows.get(i);
 
-                            Class omClass = TurbineUserGroupRolePeer.getOMClass();
-                    TurbineUserGroupRole obj1 = (TurbineUserGroupRole) TurbineUserGroupRolePeer
+                            Class omClass = BaseTurbineUserGroupRolePeer.getOMClass();
+                    TurbineUserGroupRole obj1 = BaseTurbineUserGroupRolePeer
                 .row2Object(row, 1, omClass);
-                     omClass = TurbineUserPeer.getOMClass();
-                    TurbineUser obj2 = (TurbineUser)TurbineUserPeer
+                     omClass = BaseTurbineUserPeer.getOMClass();
+                    TurbineUser obj2 = BaseTurbineUserPeer
                 .row2Object(row, offset, omClass);
 
             boolean newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 TurbineUserGroupRole temp_obj1 = (TurbineUserGroupRole)results.get(j);
-                TurbineUser temp_obj2 = (TurbineUser)temp_obj1.getTurbineUser();
+                TurbineUser temp_obj2 = temp_obj1.getTurbineUser();
                 if (temp_obj2.getPrimaryKey().equals(obj2.getPrimaryKey()))
                 {
                     newObject = false;
@@ -933,13 +928,13 @@ public abstract class BaseTurbineUserGroupRolePeer
             c.setDbName(DATABASE_NAME);
         }
 
-        TurbineUserGroupRolePeer.addSelectColumns(c);
+        BaseTurbineUserGroupRolePeer.addSelectColumns(c);
         int offset = numColumns + 1;
-        TurbineGroupPeer.addSelectColumns(c);
+        BaseTurbineGroupPeer.addSelectColumns(c);
 
 
-                        c.addJoin(TurbineUserGroupRolePeer.GROUP_ID,
-            TurbineGroupPeer.GROUP_ID);
+                        c.addJoin(BaseTurbineUserGroupRolePeer.GROUP_ID,
+            BaseTurbineGroupPeer.GROUP_ID);
         
 
                                                               
@@ -950,18 +945,18 @@ public abstract class BaseTurbineUserGroupRolePeer
         {
             Record row = (Record) rows.get(i);
 
-                            Class omClass = TurbineUserGroupRolePeer.getOMClass();
-                    TurbineUserGroupRole obj1 = (TurbineUserGroupRole) TurbineUserGroupRolePeer
+                            Class omClass = BaseTurbineUserGroupRolePeer.getOMClass();
+                    TurbineUserGroupRole obj1 = BaseTurbineUserGroupRolePeer
                 .row2Object(row, 1, omClass);
-                     omClass = TurbineGroupPeer.getOMClass();
-                    TurbineGroup obj2 = (TurbineGroup)TurbineGroupPeer
+                     omClass = BaseTurbineGroupPeer.getOMClass();
+                    TurbineGroup obj2 = BaseTurbineGroupPeer
                 .row2Object(row, offset, omClass);
 
             boolean newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 TurbineUserGroupRole temp_obj1 = (TurbineUserGroupRole)results.get(j);
-                TurbineGroup temp_obj2 = (TurbineGroup)temp_obj1.getTurbineGroup();
+                TurbineGroup temp_obj2 = temp_obj1.getTurbineGroup();
                 if (temp_obj2.getPrimaryKey().equals(obj2.getPrimaryKey()))
                 {
                     newObject = false;
@@ -1004,13 +999,13 @@ public abstract class BaseTurbineUserGroupRolePeer
             c.setDbName(DATABASE_NAME);
         }
 
-        TurbineUserGroupRolePeer.addSelectColumns(c);
+        BaseTurbineUserGroupRolePeer.addSelectColumns(c);
         int offset = numColumns + 1;
-        TurbineRolePeer.addSelectColumns(c);
+        BaseTurbineRolePeer.addSelectColumns(c);
 
 
-                        c.addJoin(TurbineUserGroupRolePeer.ROLE_ID,
-            TurbineRolePeer.ROLE_ID);
+                        c.addJoin(BaseTurbineUserGroupRolePeer.ROLE_ID,
+            BaseTurbineRolePeer.ROLE_ID);
         
 
                                                               
@@ -1021,18 +1016,18 @@ public abstract class BaseTurbineUserGroupRolePeer
         {
             Record row = (Record) rows.get(i);
 
-                            Class omClass = TurbineUserGroupRolePeer.getOMClass();
-                    TurbineUserGroupRole obj1 = (TurbineUserGroupRole) TurbineUserGroupRolePeer
+                            Class omClass = BaseTurbineUserGroupRolePeer.getOMClass();
+                    TurbineUserGroupRole obj1 = BaseTurbineUserGroupRolePeer
                 .row2Object(row, 1, omClass);
-                     omClass = TurbineRolePeer.getOMClass();
-                    TurbineRole obj2 = (TurbineRole)TurbineRolePeer
+                     omClass = BaseTurbineRolePeer.getOMClass();
+                    TurbineRole obj2 = BaseTurbineRolePeer
                 .row2Object(row, offset, omClass);
 
             boolean newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 TurbineUserGroupRole temp_obj1 = (TurbineUserGroupRole)results.get(j);
-                TurbineRole temp_obj2 = (TurbineRole)temp_obj1.getTurbineRole();
+                TurbineRole temp_obj2 = temp_obj1.getTurbineRole();
                 if (temp_obj2.getPrimaryKey().equals(obj2.getPrimaryKey()))
                 {
                     newObject = false;
@@ -1083,11 +1078,11 @@ public abstract class BaseTurbineUserGroupRolePeer
         int offset2 = numColumns + 1;
                                     
                                                   
-                    TurbineGroupPeer.addSelectColumns(c);
-        int offset3 = offset2 + TurbineGroupPeer.numColumns;
+                    BaseTurbineGroupPeer.addSelectColumns(c);
+        int offset3 = offset2 + BaseTurbineGroupPeer.numColumns;
                                                                 
-                    TurbineRolePeer.addSelectColumns(c);
-        int offset4 = offset3 + TurbineRolePeer.numColumns;
+                    BaseTurbineRolePeer.addSelectColumns(c);
+        int offset4 = offset3 + BaseTurbineRolePeer.numColumns;
                                                                                                           
         List rows = BasePeer.doSelect(c);
         List results = new ArrayList();
@@ -1096,23 +1091,23 @@ public abstract class BaseTurbineUserGroupRolePeer
         {
             Record row = (Record)rows.get(i);
 
-                            Class omClass = TurbineUserGroupRolePeer.getOMClass();
-                    TurbineUserGroupRole obj1 = (TurbineUserGroupRole)TurbineUserGroupRolePeer
+                            Class omClass = BaseTurbineUserGroupRolePeer.getOMClass();
+                    TurbineUserGroupRole obj1 = BaseTurbineUserGroupRolePeer
                 .row2Object(row, 1, omClass);
                                                 
                                                                   
                                                         
                             
               
-                           omClass = TurbineGroupPeer.getOMClass();
-                          TurbineGroup obj2 = (TurbineGroup)TurbineGroupPeer
+                           omClass = BaseTurbineGroupPeer.getOMClass();
+                          TurbineGroup obj2 = BaseTurbineGroupPeer
                 .row2Object( row, offset2, omClass);
 
                boolean  newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 TurbineUserGroupRole temp_obj1 = (TurbineUserGroupRole)results.get(j);
-                TurbineGroup temp_obj2 = (TurbineGroup)temp_obj1.getTurbineGroup();
+                TurbineGroup temp_obj2 = temp_obj1.getTurbineGroup();
                 if (temp_obj2.getPrimaryKey().equals(obj2.getPrimaryKey()))
                 {
                     newObject = false;
@@ -1129,15 +1124,15 @@ public abstract class BaseTurbineUserGroupRolePeer
                                                         
                             
               
-                           omClass = TurbineRolePeer.getOMClass();
-                          TurbineRole obj3 = (TurbineRole)TurbineRolePeer
+                           omClass = BaseTurbineRolePeer.getOMClass();
+                          TurbineRole obj3 = BaseTurbineRolePeer
                 .row2Object( row, offset3, omClass);
 
                newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 TurbineUserGroupRole temp_obj1 = (TurbineUserGroupRole)results.get(j);
-                TurbineRole temp_obj3 = (TurbineRole)temp_obj1.getTurbineRole();
+                TurbineRole temp_obj3 = temp_obj1.getTurbineRole();
                 if (temp_obj3.getPrimaryKey().equals(obj3.getPrimaryKey()))
                 {
                     newObject = false;
@@ -1184,12 +1179,12 @@ public abstract class BaseTurbineUserGroupRolePeer
         addSelectColumns(c);
         int offset2 = numColumns + 1;
                                     
-                    TurbineUserPeer.addSelectColumns(c);
-        int offset3 = offset2 + TurbineUserPeer.numColumns;
+                    BaseTurbineUserPeer.addSelectColumns(c);
+        int offset3 = offset2 + BaseTurbineUserPeer.numColumns;
                                                                 
                                                   
-                    TurbineRolePeer.addSelectColumns(c);
-        int offset4 = offset3 + TurbineRolePeer.numColumns;
+                    BaseTurbineRolePeer.addSelectColumns(c);
+        int offset4 = offset3 + BaseTurbineRolePeer.numColumns;
                                                                                                           
         List rows = BasePeer.doSelect(c);
         List results = new ArrayList();
@@ -1198,22 +1193,22 @@ public abstract class BaseTurbineUserGroupRolePeer
         {
             Record row = (Record)rows.get(i);
 
-                            Class omClass = TurbineUserGroupRolePeer.getOMClass();
-                    TurbineUserGroupRole obj1 = (TurbineUserGroupRole)TurbineUserGroupRolePeer
+                            Class omClass = BaseTurbineUserGroupRolePeer.getOMClass();
+                    TurbineUserGroupRole obj1 = BaseTurbineUserGroupRolePeer
                 .row2Object(row, 1, omClass);
                                                 
                                                         
                             
               
-                           omClass = TurbineUserPeer.getOMClass();
-                          TurbineUser obj2 = (TurbineUser)TurbineUserPeer
+                           omClass = BaseTurbineUserPeer.getOMClass();
+                          TurbineUser obj2 = BaseTurbineUserPeer
                 .row2Object( row, offset2, omClass);
 
                boolean  newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 TurbineUserGroupRole temp_obj1 = (TurbineUserGroupRole)results.get(j);
-                TurbineUser temp_obj2 = (TurbineUser)temp_obj1.getTurbineUser();
+                TurbineUser temp_obj2 = temp_obj1.getTurbineUser();
                 if (temp_obj2.getPrimaryKey().equals(obj2.getPrimaryKey()))
                 {
                     newObject = false;
@@ -1231,15 +1226,15 @@ public abstract class BaseTurbineUserGroupRolePeer
                                                         
                             
               
-                           omClass = TurbineRolePeer.getOMClass();
-                          TurbineRole obj3 = (TurbineRole)TurbineRolePeer
+                           omClass = BaseTurbineRolePeer.getOMClass();
+                          TurbineRole obj3 = BaseTurbineRolePeer
                 .row2Object( row, offset3, omClass);
 
                newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 TurbineUserGroupRole temp_obj1 = (TurbineUserGroupRole)results.get(j);
-                TurbineRole temp_obj3 = (TurbineRole)temp_obj1.getTurbineRole();
+                TurbineRole temp_obj3 = temp_obj1.getTurbineRole();
                 if (temp_obj3.getPrimaryKey().equals(obj3.getPrimaryKey()))
                 {
                     newObject = false;
@@ -1286,11 +1281,11 @@ public abstract class BaseTurbineUserGroupRolePeer
         addSelectColumns(c);
         int offset2 = numColumns + 1;
                                     
-                    TurbineUserPeer.addSelectColumns(c);
-        int offset3 = offset2 + TurbineUserPeer.numColumns;
+                    BaseTurbineUserPeer.addSelectColumns(c);
+        int offset3 = offset2 + BaseTurbineUserPeer.numColumns;
                                                                 
-                    TurbineGroupPeer.addSelectColumns(c);
-        int offset4 = offset3 + TurbineGroupPeer.numColumns;
+                    BaseTurbineGroupPeer.addSelectColumns(c);
+        int offset4 = offset3 + BaseTurbineGroupPeer.numColumns;
                                                                 
                                                                                             
         List rows = BasePeer.doSelect(c);
@@ -1300,22 +1295,22 @@ public abstract class BaseTurbineUserGroupRolePeer
         {
             Record row = (Record)rows.get(i);
 
-                            Class omClass = TurbineUserGroupRolePeer.getOMClass();
-                    TurbineUserGroupRole obj1 = (TurbineUserGroupRole)TurbineUserGroupRolePeer
+                            Class omClass = BaseTurbineUserGroupRolePeer.getOMClass();
+                    TurbineUserGroupRole obj1 = BaseTurbineUserGroupRolePeer
                 .row2Object(row, 1, omClass);
                                                 
                                                         
                             
               
-                           omClass = TurbineUserPeer.getOMClass();
-                          TurbineUser obj2 = (TurbineUser)TurbineUserPeer
+                           omClass = BaseTurbineUserPeer.getOMClass();
+                          TurbineUser obj2 = BaseTurbineUserPeer
                 .row2Object( row, offset2, omClass);
 
                boolean  newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 TurbineUserGroupRole temp_obj1 = (TurbineUserGroupRole)results.get(j);
-                TurbineUser temp_obj2 = (TurbineUser)temp_obj1.getTurbineUser();
+                TurbineUser temp_obj2 = temp_obj1.getTurbineUser();
                 if (temp_obj2.getPrimaryKey().equals(obj2.getPrimaryKey()))
                 {
                     newObject = false;
@@ -1332,15 +1327,15 @@ public abstract class BaseTurbineUserGroupRolePeer
                                                         
                             
               
-                           omClass = TurbineGroupPeer.getOMClass();
-                          TurbineGroup obj3 = (TurbineGroup)TurbineGroupPeer
+                           omClass = BaseTurbineGroupPeer.getOMClass();
+                          TurbineGroup obj3 = BaseTurbineGroupPeer
                 .row2Object( row, offset3, omClass);
 
                newObject = true;
             for (int j = 0; j < results.size(); j++)
             {
                 TurbineUserGroupRole temp_obj1 = (TurbineUserGroupRole)results.get(j);
-                TurbineGroup temp_obj3 = (TurbineGroup)temp_obj1.getTurbineGroup();
+                TurbineGroup temp_obj3 = temp_obj1.getTurbineGroup();
                 if (temp_obj3.getPrimaryKey().equals(obj3.getPrimaryKey()))
                 {
                     newObject = false;

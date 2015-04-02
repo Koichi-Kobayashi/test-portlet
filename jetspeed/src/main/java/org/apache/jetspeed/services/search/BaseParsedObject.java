@@ -48,7 +48,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @return 
      */
-    public String getKey()
+    @Override
+	public String getKey()
     {
         return this.key;
     }
@@ -58,7 +59,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @param content
      */
-    public void setKey(String key)
+    @Override
+	public void setKey(String key)
     {
         this.key = key;
     }
@@ -68,7 +70,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @return 
      */
-    public String getType()
+    @Override
+	public String getType()
     {
         return this.type;
     }
@@ -78,7 +81,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @param type
      */
-    public void setType(String type)
+    @Override
+	public void setType(String type)
     {
         this.type = type;
     }
@@ -88,7 +92,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @return 
      */
-    public String getContent()
+    @Override
+	public String getContent()
     {
         return this.content;
     }
@@ -98,7 +103,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @param content
      */
-    public void setContent(String content)
+    @Override
+	public void setContent(String content)
     {
         this.content = content;
     }
@@ -108,7 +114,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @return 
      */
-    public String getDescription()
+    @Override
+	public String getDescription()
     {
         return this.description;
     }
@@ -118,7 +125,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @param description
      */
-    public void setDescription(String description)
+    @Override
+	public void setDescription(String description)
     {
         this.description = description;
     }
@@ -128,7 +136,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @return 
      */
-    public String[] getKeywords()
+    @Override
+	public String[] getKeywords()
     {
         return this.keywords;
     }
@@ -138,7 +147,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @param keywords
      */
-    public void setKeywords(String[] keywords)
+    @Override
+	public void setKeywords(String[] keywords)
     {
         this.keywords = keywords;
     }
@@ -148,7 +158,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @return 
      */
-    public String getTitle() 
+    @Override
+	public String getTitle() 
     {
         return this.title;
     }
@@ -158,7 +169,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @param title
      */
-    public void setTitle(String title)
+    @Override
+	public void setTitle(String title)
     {
         this.title = title;
     }
@@ -168,7 +180,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @return 
      */
-    public String getLanguage()
+    @Override
+	public String getLanguage()
     {
         return this.language;
     }
@@ -178,7 +191,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @param language
      */
-    public void setLanguage(String language)
+    @Override
+	public void setLanguage(String language)
     {
         this.language = language;
     }
@@ -188,7 +202,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @return 
      */
-    public Map getFields()
+    @Override
+	public Map getFields()
     {
         return this.fields;
     }
@@ -198,7 +213,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @param fields
      */
-    public void setFields(Map fields)
+    @Override
+	public void setFields(Map fields)
     {
         this.fields = fields;
     }
@@ -208,7 +224,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @return 
      */
-    public URL getURL()
+    @Override
+	public URL getURL()
     {
         return this.url;
     }
@@ -218,7 +235,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @param fields
      */
-    public void setURL(URL url)
+    @Override
+	public void setURL(URL url)
     {
         this.url = url;
     }
@@ -228,7 +246,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @return Value of property score.
      */
-    public float getScore()
+    @Override
+	public float getScore()
     {
         return this.score;
     }
@@ -238,7 +257,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @param score  New value of property score.
      */
-    public void setScore(float score)
+    @Override
+	public void setScore(float score)
     {
         this.score = score;
     }
@@ -248,7 +268,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @return Value of property className.
      */
-    public String getClassName()
+    @Override
+	public String getClassName()
     {
         return className;
     }
@@ -258,7 +279,8 @@ public class BaseParsedObject implements ParsedObject
      * 
      * @param score  New value of property className.
      */
-    public void setClassName(String className)
+    @Override
+	public void setClassName(String className)
     {
        this.className = className;        
     }
@@ -266,7 +288,8 @@ public class BaseParsedObject implements ParsedObject
     /** 
      * @see org.apache.jetspeed.services.search.ParsedObject#getMultiFields()
      */
-    public MultiMap getMultiFields()
+    @Override
+	public MultiMap getMultiFields()
     {
         return multiFields;
     }
@@ -274,7 +297,8 @@ public class BaseParsedObject implements ParsedObject
     /** 
      * @see org.apache.jetspeed.services.search.ParsedObject#setMultiFields(org.apache.commons.collections.MultiMap)
      */
-    public void setMultiFields(MultiMap multiFields)
+    @Override
+	public void setMultiFields(MultiMap multiFields)
     {
        this.multiFields = multiFields;
         
@@ -283,7 +307,8 @@ public class BaseParsedObject implements ParsedObject
     /** 
      * @see org.apache.jetspeed.services.search.ParsedObject#getMultiKeywords()
      */
-    public MultiMap getMultiKeywords()
+    @Override
+	public MultiMap getMultiKeywords()
     {
         return multiKeywords;
     }
@@ -291,7 +316,8 @@ public class BaseParsedObject implements ParsedObject
     /**
      * @see org.apache.jetspeed.services.search.ParsedObject#setMultiKeywords(org.apache.commons.collections.MultiMap)
      */
-    public void setMultiKeywords(MultiMap multiKeywords)
+    @Override
+	public void setMultiKeywords(MultiMap multiKeywords)
     {
         this.multiKeywords = multiKeywords;        
     }

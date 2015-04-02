@@ -33,6 +33,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.eip.cayenne.om.portlet.EipTWhatsNew;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.util.ALEipUtils;
@@ -125,7 +126,7 @@ public class WhatsNewScreen extends ALVelocityScreen {
     try {
 
       Expression exp1 =
-        ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+        ExpressionFactory.matchDbExp(_TurbineUser.USER_ID_PK_COLUMN, Integer
           .valueOf(ALEipUtils.getUserId(rundata)));
       List<EipTWhatsNew> list =
         Database.query(EipTWhatsNew.class, exp1).fetchList();

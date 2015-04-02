@@ -175,7 +175,7 @@ public class ALPop3MailReceiveThread implements Runnable {
       mailAccountId,
       KEY_RECEIVE_STAT,
       PROCESS_STAT_PROCESSING);
-    int result = ALPop3MailReceiver.RECEIVE_MSG_FAIL;
+    int result = ALMailReceiver.RECEIVE_MSG_FAIL;
     if (account == null) {
       return result;
     }
@@ -188,7 +188,7 @@ public class ALPop3MailReceiveThread implements Runnable {
 
       result = handler.receive(rcontext, orgId);
 
-      if (result <= ALPop3MailReceiver.RECEIVE_MSG_FAIL
+      if (result <= ALMailReceiver.RECEIVE_MSG_FAIL
         && result != ALPop3MailReceiver.RECEIVE_MSG_FAIL_OVER_MAIL_MAX_SIZE) {
         // 受信に失敗した場合の処理
         return result;
@@ -201,7 +201,7 @@ public class ALPop3MailReceiveThread implements Runnable {
     } catch (Exception ex) {
       Database.rollback();
       logger.error("ALFilePop3MailReceiveThread.receiveMail", ex);
-      result = ALPop3MailReceiver.RECEIVE_MSG_FAIL;
+      result = ALMailReceiver.RECEIVE_MSG_FAIL;
       return result;
     }
     return result;
@@ -339,7 +339,7 @@ public class ALPop3MailReceiveThread implements Runnable {
     if (res == PROCESS_STAT_NONPROCESSING) {
       msg = "";
       return msg;
-    } else if (res == ALPop3MailReceiver.RECEIVE_MSG_FAIL) {
+    } else if (res == ALMailReceiver.RECEIVE_MSG_FAIL) {
       msg = "メールを受信できませんでした。メールアカウントの設定をご確認ください。";
     } else if (res == ALPop3MailReceiver.RECEIVE_MSG_FAIL_LOCKED) {
       msg = "メールの受信中、もしくは、メンテナンス中です。しばらくしてから、『メール一覧』ボタンを押してください。";

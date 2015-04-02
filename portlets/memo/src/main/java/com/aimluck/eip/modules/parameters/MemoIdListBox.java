@@ -28,6 +28,7 @@ import org.apache.turbine.util.RunData;
 
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTMemo;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTMemo;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
 import com.aimluck.eip.util.ALEipUtils;
@@ -51,7 +52,7 @@ public class MemoIdListBox extends ListBox {
     try {
       SelectQuery<EipTMemo> query = Database.query(EipTMemo.class);
       Expression exp =
-        ExpressionFactory.matchExp(EipTMemo.OWNER_ID_PROPERTY, Integer
+        ExpressionFactory.matchExp(_EipTMemo.OWNER_ID_PROPERTY, Integer
           .valueOf(ALEipUtils.getUserId(data)));
       query.setQualifier(exp);
       List<EipTMemo> memos = query.fetchList();

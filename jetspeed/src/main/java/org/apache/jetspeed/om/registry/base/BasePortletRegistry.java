@@ -55,7 +55,8 @@ public class BasePortletRegistry extends BaseRegistry implements PortletRegistry
     /**
     @see Registry#setEntry
     */
-    public void setEntry( RegistryEntry entry ) throws InvalidEntryException
+    @Override
+	public void setEntry( RegistryEntry entry ) throws InvalidEntryException
     {
 		// Delegate to the RegistryService to ensure correct handling of
 		// persistence if using file fragments
@@ -73,7 +74,8 @@ public class BasePortletRegistry extends BaseRegistry implements PortletRegistry
     /**
     @see Registry#addEntry
     */
-    public void addEntry( RegistryEntry entry ) throws InvalidEntryException
+    @Override
+	public void addEntry( RegistryEntry entry ) throws InvalidEntryException
     {
 		// Delegate to the RegistryService to ensure correct handling of
 		// persistence if using file fragments
@@ -91,7 +93,8 @@ public class BasePortletRegistry extends BaseRegistry implements PortletRegistry
     /**
     @see Registry#removeEntry
     */
-    public void removeEntry( String name )
+    @Override
+	public void removeEntry( String name )
     {
 		// Delegate to the RegistryService to ensure correct handling of
 		// persistence if using file fragments
@@ -102,7 +105,8 @@ public class BasePortletRegistry extends BaseRegistry implements PortletRegistry
     /**
     @see Registry#removeEntry
     */
-    public void removeEntry( RegistryEntry entry )
+    @Override
+	public void removeEntry( RegistryEntry entry )
     {
 		// Delegate to the RegistryService to ensure correct handling of
 		// persistence if using file fragments
@@ -118,7 +122,7 @@ public class BasePortletRegistry extends BaseRegistry implements PortletRegistry
         synchronized (catMap)
         {
             int count = 0;
-            Iterator it = ((PortletEntry)entry).listCategories();
+            Iterator it = entry.listCategories();
             while (it.hasNext())
             {
                 Category category = (Category)it.next();
@@ -166,7 +170,8 @@ public class BasePortletRegistry extends BaseRegistry implements PortletRegistry
     }
 
 
-    public String getCategoryKey(Category category)
+    @Override
+	public String getCategoryKey(Category category)
     {
         if (category == null)
         {
@@ -190,7 +195,8 @@ public class BasePortletRegistry extends BaseRegistry implements PortletRegistry
      * @param category The category and optional subcategories.
      * @return Iterator The result as an iterator.
      */
-    public Iterator findPortletsByCategory(String category)
+    @Override
+	public Iterator findPortletsByCategory(String category)
     {
     	String key;
 
@@ -215,7 +221,8 @@ public class BasePortletRegistry extends BaseRegistry implements PortletRegistry
      * @param category The category and optional subcategories.
      * @return Iterator The result as an iterator.
      */
-    public Iterator findPortletsByGroupCategory(String group, String category)
+    @Override
+	public Iterator findPortletsByGroupCategory(String group, String category)
     {
         if ((group == null) || group.equals(""))
         {
@@ -234,7 +241,8 @@ public class BasePortletRegistry extends BaseRegistry implements PortletRegistry
      *
      * @return Iterator The result as an iterator.
      */
-    public Iterator listByCategory()
+    @Override
+	public Iterator listByCategory()
     {
         CategoryIterator iterator = new CategoryIterator((SortedMap)catMap, null);
         return iterator;
@@ -246,7 +254,8 @@ public class BasePortletRegistry extends BaseRegistry implements PortletRegistry
      *
      * @return the newly created RegistryEntry
      */
-    public RegistryEntry createEntry()
+    @Override
+	public RegistryEntry createEntry()
     {
 		return new BasePortletEntry();
 	}
@@ -254,7 +263,8 @@ public class BasePortletRegistry extends BaseRegistry implements PortletRegistry
     /**
     @see Registry#setEntry
     */
-    public void setLocalEntry( RegistryEntry entry ) throws InvalidEntryException
+    @Override
+	public void setLocalEntry( RegistryEntry entry ) throws InvalidEntryException
     {
         super.setLocalEntry(entry);
         setPortletEntry((PortletEntry)entry);
@@ -263,7 +273,8 @@ public class BasePortletRegistry extends BaseRegistry implements PortletRegistry
     /**
     @see Registry#addEntry
     */
-    public void addLocalEntry( RegistryEntry entry ) throws InvalidEntryException
+    @Override
+	public void addLocalEntry( RegistryEntry entry ) throws InvalidEntryException
     {
         super.addLocalEntry(entry);
         setPortletEntry((PortletEntry)entry);
@@ -272,7 +283,8 @@ public class BasePortletRegistry extends BaseRegistry implements PortletRegistry
     /**
     @see Registry#removeEntry
     */
-    public void removeLocalEntry( String name )
+    @Override
+	public void removeLocalEntry( String name )
     {
         if (name == null)
         {
@@ -292,7 +304,8 @@ public class BasePortletRegistry extends BaseRegistry implements PortletRegistry
     /**
     @see Registry#removeEntry
     */
-    public void removeLocalEntry( RegistryEntry entry )
+    @Override
+	public void removeLocalEntry( RegistryEntry entry )
     {
         synchronized(catMap)
         {

@@ -42,9 +42,13 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.commons.utils.ALStringUtil;
 import com.aimluck.eip.account.AccountResultData;
 import com.aimluck.eip.cayenne.om.account.EipMUserPosition;
+import com.aimluck.eip.cayenne.om.account.auto._EipMUserPosition;
 import com.aimluck.eip.cayenne.om.security.TurbineGroup;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.cayenne.om.security.TurbineUserGroupRole;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineGroup;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUserGroupRole;
 import com.aimluck.eip.common.ALAbstractSelectData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -140,13 +144,13 @@ public class UserSelectData extends
       Context context) {
 
     ObjectId oid =
-      new ObjectId("TurbineUser", TurbineUser.USER_ID_PK_COLUMN, 3);
+      new ObjectId("TurbineUser", _TurbineUser.USER_ID_PK_COLUMN, 3);
     Expression exp1 =
       ExpressionFactory.matchAllDbExp(
         oid.getIdSnapshot(),
         Expression.GREATER_THAN);
     Expression exp2 =
-      ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+      ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
 
     SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
     query.setQualifier(exp1.andExp(exp2));
@@ -161,11 +165,11 @@ public class UserSelectData extends
             .query(TurbineUserGroupRole.class)
             .where(
               Operations.eq(
-                TurbineUserGroupRole.TURBINE_ROLE_PROPERTY,
+                _TurbineUserGroupRole.TURBINE_ROLE_PROPERTY,
                 adminrole.getId()),
-              Operations.eq(TurbineUserGroupRole.TURBINE_GROUP_PROPERTY, group
+              Operations.eq(_TurbineUserGroupRole.TURBINE_GROUP_PROPERTY, group
                 .getId()),
-              Operations.ne(TurbineUserGroupRole.TURBINE_USER_PROPERTY, 1))
+              Operations.ne(_TurbineUserGroupRole.TURBINE_USER_PROPERTY, 1))
             .distinct(true)
             .fetchList();
         List<Integer> admin_ids = new ArrayList<Integer>();
@@ -174,7 +178,7 @@ public class UserSelectData extends
           admin_ids.add(tugr.getTurbineUser().getUserId());
         }
         query.andQualifier(ExpressionFactory.inDbExp(
-          TurbineUser.USER_ID_PK_COLUMN,
+          _TurbineUser.USER_ID_PK_COLUMN,
           admin_ids));
       } catch (Exception ex) {
         logger.error("userlist", ex);
@@ -185,11 +189,11 @@ public class UserSelectData extends
     current_filter = filter;
 
     if (!(filter == null || "".equals(filter))) {
-      query.where(Operations.eq(TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
+      query.where(Operations.eq(_TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
         + "."
-        + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+        + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
         + "."
-        + TurbineGroup.GROUP_NAME_PROPERTY, filter));
+        + _TurbineGroup.GROUP_NAME_PROPERTY, filter));
     }
 
     searchWord.setValue(UserListUtils.getKeyword(rundata, context));
@@ -203,68 +207,68 @@ public class UserSelectData extends
 
       for (int i = 0; i < transWords.length; i++) {
         Expression exp11 =
-          ExpressionFactory.likeExp(TurbineUser.FIRST_NAME_PROPERTY, "%"
+          ExpressionFactory.likeExp(_TurbineUser.FIRST_NAME_PROPERTY, "%"
             + searchWordValue
             + "%");
         Expression exp12 =
-          ExpressionFactory.likeExp(TurbineUser.LAST_NAME_PROPERTY, "%"
+          ExpressionFactory.likeExp(_TurbineUser.LAST_NAME_PROPERTY, "%"
             + searchWordValue
             + "%");
         Expression exp13 =
-          ExpressionFactory.likeExp(TurbineUser.FIRST_NAME_KANA_PROPERTY, "%"
+          ExpressionFactory.likeExp(_TurbineUser.FIRST_NAME_KANA_PROPERTY, "%"
             + searchWordValue
             + "%");
         Expression exp14 =
-          ExpressionFactory.likeExp(TurbineUser.LAST_NAME_KANA_PROPERTY, "%"
+          ExpressionFactory.likeExp(_TurbineUser.LAST_NAME_KANA_PROPERTY, "%"
             + searchWordValue
             + "%");
         Expression exp15 =
-          ExpressionFactory.likeExp(TurbineUser.EMAIL_PROPERTY, "%"
+          ExpressionFactory.likeExp(_TurbineUser.EMAIL_PROPERTY, "%"
             + searchWordValue
             + "%");
         Expression exp16 =
           ExpressionFactory.likeExp(
-            TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
+            _TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
               + "."
-              + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+              + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
               + "."
-              + TurbineGroup.GROUP_ALIAS_NAME_PROPERTY,
+              + _TurbineGroup.GROUP_ALIAS_NAME_PROPERTY,
             "%" + searchWord + "%");
         Expression exp21 =
-          ExpressionFactory.likeExp(TurbineUser.OUT_TELEPHONE_PROPERTY, "%"
+          ExpressionFactory.likeExp(_TurbineUser.OUT_TELEPHONE_PROPERTY, "%"
             + searchWordValue
             + "%");
         Expression exp22 =
-          ExpressionFactory.likeExp(TurbineUser.IN_TELEPHONE_PROPERTY, "%"
+          ExpressionFactory.likeExp(_TurbineUser.IN_TELEPHONE_PROPERTY, "%"
             + searchWordValue
             + "%");
         Expression exp23 =
-          ExpressionFactory.likeExp(TurbineUser.CELLULAR_PHONE_PROPERTY, "%"
+          ExpressionFactory.likeExp(_TurbineUser.CELLULAR_PHONE_PROPERTY, "%"
             + searchWordValue
             + "%");
         Expression exp31 =
-          ExpressionFactory.likeExp(TurbineUser.FIRST_NAME_PROPERTY, "%"
+          ExpressionFactory.likeExp(_TurbineUser.FIRST_NAME_PROPERTY, "%"
             + transWords[i]
             + "%");
         Expression exp32 =
-          ExpressionFactory.likeExp(TurbineUser.LAST_NAME_PROPERTY, "%"
+          ExpressionFactory.likeExp(_TurbineUser.LAST_NAME_PROPERTY, "%"
             + transWords[i]
             + "%");
         Expression exp33 =
-          ExpressionFactory.likeExp(TurbineUser.FIRST_NAME_KANA_PROPERTY, "%"
+          ExpressionFactory.likeExp(_TurbineUser.FIRST_NAME_KANA_PROPERTY, "%"
             + transWords[i]
             + "%");
         Expression exp34 =
-          ExpressionFactory.likeExp(TurbineUser.LAST_NAME_KANA_PROPERTY, "%"
+          ExpressionFactory.likeExp(_TurbineUser.LAST_NAME_KANA_PROPERTY, "%"
             + transWords[i]
             + "%");
         Expression exp35 =
           ExpressionFactory.likeExp(
-            TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
+            _TurbineUser.TURBINE_USER_GROUP_ROLE_PROPERTY
               + "."
-              + TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
+              + _TurbineUserGroupRole.TURBINE_GROUP_PROPERTY
               + "."
-              + TurbineGroup.GROUP_ALIAS_NAME_PROPERTY,
+              + _TurbineGroup.GROUP_ALIAS_NAME_PROPERTY,
             "%" + transWords[i] + "%");
 
         query.andQualifier(exp11.orExp(exp12).orExp(exp13).orExp(exp14).orExp(
@@ -490,9 +494,9 @@ public class UserSelectData extends
       Database
         .query(TurbineUserGroupRole.class)
         .where(
-          Operations.eq(TurbineUserGroupRole.TURBINE_ROLE_PROPERTY, adminrole
+          Operations.eq(_TurbineUserGroupRole.TURBINE_ROLE_PROPERTY, adminrole
             .getId()),
-          Operations.in(TurbineUserGroupRole.TURBINE_USER_PROPERTY, userIds))
+          Operations.in(_TurbineUserGroupRole.TURBINE_USER_PROPERTY, userIds))
         .fetchList();
 
     if (roleList == null) {
@@ -521,11 +525,11 @@ public class UserSelectData extends
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
     map.putValue("post", "POST_ID");
-    map.putValue("login_name", TurbineUser.LOGIN_NAME_PROPERTY);
-    map.putValue("name_kana", TurbineUser.LAST_NAME_KANA_PROPERTY);
-    map.putValue("userposition", TurbineUser.EIP_MUSER_POSITION_PROPERTY
+    map.putValue("login_name", _TurbineUser.LOGIN_NAME_PROPERTY);
+    map.putValue("name_kana", _TurbineUser.LAST_NAME_KANA_PROPERTY);
+    map.putValue("userposition", _TurbineUser.EIP_MUSER_POSITION_PROPERTY
       + "."
-      + EipMUserPosition.POSITION_PROPERTY); // ユーザの順番
+      + _EipMUserPosition.POSITION_PROPERTY); // ユーザの順番
     return map;
   }
 

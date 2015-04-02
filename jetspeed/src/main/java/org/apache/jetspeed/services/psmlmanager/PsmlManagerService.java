@@ -30,7 +30,7 @@ import org.apache.jetspeed.om.security.Group;
 /**
  * This service is responsible for loading and saving PSML documents.
  *
- * @author <a href="mailto:raphael@apache.org">Raphaël Luta</a>
+ * @author <a href="mailto:raphael@apache.org">Raphaï¿½l Luta</a>
  * @version $Id: PsmlManagerService.java,v 1.12 2004/02/23 03:32:51 jford Exp $
  */
 public interface PsmlManagerService extends Service
@@ -47,7 +47,8 @@ public interface PsmlManagerService extends Service
      * @deprecated
      * @param name the name of the document to retrieve
      */
-    public PSMLDocument getDocument( String name );
+    @Deprecated
+	public PSMLDocument getDocument( String name );
 
     /**
      * Returns a PSML document for the given locator
@@ -77,7 +78,8 @@ public interface PsmlManagerService extends Service
      * @param doc the document to save
      * @return true if the operation succeeded
      */
-    public boolean saveDocument(PSMLDocument doc);
+    @Deprecated
+	public boolean saveDocument(PSMLDocument doc);
     
     /** Save the PSML document on disk to the specififed fileOrUrl
      *
@@ -87,7 +89,8 @@ public interface PsmlManagerService extends Service
      * @param doc the document to save
      * @return true if the operation succeeded
      */
-    public boolean saveDocument(String fileOrUrl, PSMLDocument doc);
+    @Deprecated
+	public boolean saveDocument(String fileOrUrl, PSMLDocument doc);
 
     /** Create a new document.
      *

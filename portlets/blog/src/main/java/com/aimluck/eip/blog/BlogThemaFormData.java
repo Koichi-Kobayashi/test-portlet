@@ -32,6 +32,7 @@ import org.apache.velocity.context.Context;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.blog.util.BlogUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogThema;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogThema;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -148,18 +149,18 @@ public class BlogThemaFormData extends ALAbstractFormData {
       if (ALEipConstants.MODE_INSERT.equals(getMode())) {
         Expression exp =
           ExpressionFactory.matchExp(
-            EipTBlogThema.THEMA_NAME_PROPERTY,
+            _EipTBlogThema.THEMA_NAME_PROPERTY,
             thema_name.getValue());
         query.setQualifier(exp);
       } else if (ALEipConstants.MODE_UPDATE.equals(getMode())) {
         Expression exp1 =
           ExpressionFactory.matchExp(
-            EipTBlogThema.THEMA_NAME_PROPERTY,
+            _EipTBlogThema.THEMA_NAME_PROPERTY,
             thema_name.getValue());
         query.setQualifier(exp1);
         Expression exp2 =
           ExpressionFactory.noMatchDbExp(
-            EipTBlogThema.THEMA_ID_PK_COLUMN,
+            _EipTBlogThema.THEMA_ID_PK_COLUMN,
             Integer.valueOf(thema_id));
         query.andQualifier(exp2);
       }

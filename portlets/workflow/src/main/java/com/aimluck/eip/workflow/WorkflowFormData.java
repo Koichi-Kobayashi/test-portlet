@@ -41,7 +41,10 @@ import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRequest;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRequestMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTWorkflowRoute;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowFile;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTWorkflowRoute;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
+import com.aimluck.eip.cayenne.om.security.auto._TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -231,7 +234,7 @@ public class WorkflowFormData extends ALAbstractFormData {
               Database.query(EipTWorkflowRoute.class);
             Expression exp1 =
               ExpressionFactory.matchDbExp(
-                EipTWorkflowRoute.ROUTE_ID_PK_COLUMN,
+                _EipTWorkflowRoute.ROUTE_ID_PK_COLUMN,
                 route_id.getValue());
 
             query1.setQualifier(exp1);
@@ -257,7 +260,7 @@ public class WorkflowFormData extends ALAbstractFormData {
                 Database.query(TurbineUser.class);
               Expression exp2 =
                 ExpressionFactory.inExp(
-                  TurbineUser.LOGIN_NAME_PROPERTY,
+                  _TurbineUser.LOGIN_NAME_PROPERTY,
                   routeUserNames);
               query.setQualifier(exp2);
 
@@ -291,10 +294,10 @@ public class WorkflowFormData extends ALAbstractFormData {
             SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
             Expression exp1 =
               ExpressionFactory.inExp(
-                TurbineUser.LOGIN_NAME_PROPERTY,
+                _TurbineUser.LOGIN_NAME_PROPERTY,
                 userNames);
             Expression exp2 =
-              ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+              ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
             query.setQualifier(exp1);
             query.andQualifier(exp2);
 
@@ -526,7 +529,7 @@ public class WorkflowFormData extends ALAbstractFormData {
       SelectQuery<EipTWorkflowFile> query =
         Database.query(EipTWorkflowFile.class);
       query.andQualifier(ExpressionFactory.matchDbExp(
-        EipTWorkflowFile.EIP_TWORKFLOW_REQUEST_PROPERTY,
+        _EipTWorkflowFile.EIP_TWORKFLOW_REQUEST_PROPERTY,
         request.getRequestId()));
       List<EipTWorkflowFile> files = query.fetchList();
       if (files != null && files.size() > 0) {
@@ -953,17 +956,17 @@ public class WorkflowFormData extends ALAbstractFormData {
         // ユーザー一覧を得る
         SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
         Expression exp11 =
-          ExpressionFactory.matchExp(TurbineUser.DISABLED_PROPERTY, "F");
+          ExpressionFactory.matchExp(_TurbineUser.DISABLED_PROPERTY, "F");
         Expression exp =
           ExpressionFactory.matchDbExp(
-            TurbineUser.USER_ID_PK_COLUMN,
+            _TurbineUser.USER_ID_PK_COLUMN,
             routeArray[0]);
 
         Expression exptmp;
         for (int i = 1; i < routeArrayLength; i++) {
           exptmp =
             ExpressionFactory.matchDbExp(
-              TurbineUser.USER_ID_PK_COLUMN,
+              _TurbineUser.USER_ID_PK_COLUMN,
               routeArray[i]);
           exp = exp.orExp(exptmp);
         }

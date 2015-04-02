@@ -29,6 +29,7 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTTodo;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTTodo;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.modules.actions.common.ALBaseAction;
 import com.aimluck.eip.todo.ToDoCategoryFormData;
@@ -105,7 +106,7 @@ public class ToDoAction extends ALBaseAction {
       rundata,
       context,
       LIST_SORT_STR,
-      EipTTodo.UPDATE_DATE_PROPERTY);
+      _EipTTodo.UPDATE_DATE_PROPERTY);
     ALEipUtils.setTemp(
       rundata,
       context,

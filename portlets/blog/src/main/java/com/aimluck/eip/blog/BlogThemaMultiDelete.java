@@ -32,6 +32,8 @@ import org.apache.velocity.context.Context;
 import com.aimluck.eip.blog.util.BlogUtils;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogEntry;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogThema;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogEntry;
+import com.aimluck.eip.cayenne.om.portlet.auto._EipTBlogThema;
 import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.orm.Database;
@@ -72,7 +74,7 @@ public class BlogThemaMultiDelete extends ALAbstractCheckList {
 
       SelectQuery<EipTBlogThema> query = Database.query(EipTBlogThema.class);
       Expression exp2 =
-        ExpressionFactory.inDbExp(EipTBlogThema.THEMA_ID_PK_COLUMN, values);
+        ExpressionFactory.inDbExp(_EipTBlogThema.THEMA_ID_PK_COLUMN, values);
       query.setQualifier(exp2);
 
       List<EipTBlogThema> themalist = query.fetchList();
@@ -91,9 +93,9 @@ public class BlogThemaMultiDelete extends ALAbstractCheckList {
 
       SelectQuery<EipTBlogEntry> reqquery = Database.query(EipTBlogEntry.class);
       Expression reqexp1 =
-        ExpressionFactory.inDbExp(EipTBlogEntry.EIP_TBLOG_THEMA_PROPERTY
+        ExpressionFactory.inDbExp(_EipTBlogEntry.EIP_TBLOG_THEMA_PROPERTY
           + "."
-          + EipTBlogThema.THEMA_ID_PK_COLUMN, values);
+          + _EipTBlogThema.THEMA_ID_PK_COLUMN, values);
       reqquery.setQualifier(reqexp1);
       List<EipTBlogEntry> requests = reqquery.fetchList();
       if (requests != null && requests.size() > 0) {

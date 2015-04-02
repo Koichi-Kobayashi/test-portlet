@@ -38,7 +38,8 @@ public class ForwardImpl implements Forward, java.io.Serializable
     private String name;
     private Map queryParams = new HashMap();
 
-    public String getName()
+    @Override
+	public String getName()
     {
         return this.name;
     }
@@ -48,7 +49,8 @@ public class ForwardImpl implements Forward, java.io.Serializable
         this.name = name;
     }
 
-    public Page getPage()
+    @Override
+	public Page getPage()
     {
         return this.page;
     }
@@ -58,7 +60,8 @@ public class ForwardImpl implements Forward, java.io.Serializable
         this.page = page;
     }
 
-    public Pane getPane()
+    @Override
+	public Pane getPane()
     {
         return this.pane;
     }
@@ -68,7 +71,8 @@ public class ForwardImpl implements Forward, java.io.Serializable
         this.pane = pane;
     }
 
-    public Portlet getPortlet()
+    @Override
+	public Portlet getPortlet()
     {
         return this.portlet;
     }
@@ -78,7 +82,8 @@ public class ForwardImpl implements Forward, java.io.Serializable
         this.portlet = portlet;
     }
 
-    public Map getQueryParams()
+    @Override
+	public Map getQueryParams()
     {
         return this.queryParams;
     }
