@@ -57,6 +57,9 @@ import com.aimluck.eip.util.ALLocalizationUtils;
  * Testのフォームデータを管理するクラスです。 <BR>
  *
  */
+
+/** 以下testフォームの中に関すること */
+
 public class TestFormData extends ALAbstractFormData {
 
   /** logger */
@@ -73,6 +76,9 @@ public class TestFormData extends ALAbstractFormData {
 
   /** メモ */
   private ALStringField note;
+
+  /** URL欄 */
+  private ALStringField url;
 
 
   /** 現在の年 */
@@ -166,6 +172,11 @@ public class TestFormData extends ALAbstractFormData {
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
 
+    // URL
+    url = new ALStringField();
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
+    url.setTrim(false);
+
   }
 
 
@@ -177,7 +188,7 @@ public class TestFormData extends ALAbstractFormData {
     // Tタイトル必須項目
     test_name.setNotNull(true);
     // タイトルの文字数制限
-    test_name.limitMaxLength(50);
+    test_name.limitMaxLength(2);
     // メモの文字数制限
     note.limitMaxLength(1000);
 
