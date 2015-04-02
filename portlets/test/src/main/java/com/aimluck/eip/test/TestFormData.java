@@ -188,7 +188,7 @@ public class TestFormData extends ALAbstractFormData {
     // Tタイトル必須項目
     test_name.setNotNull(true);
     // タイトルの文字数制限
-    test_name.limitMaxLength(2);
+    test_name.limitMaxLength(50);
     // メモの文字数制限
     note.limitMaxLength(1000);
 
