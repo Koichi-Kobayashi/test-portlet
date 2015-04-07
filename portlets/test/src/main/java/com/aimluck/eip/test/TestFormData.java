@@ -330,6 +330,8 @@ public class TestFormData extends ALAbstractFormData {
 
       // メモ
       test.setNote(note.getValue());
+      //URL
+      test.setUrl(url.getValue());
       // 作成日
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
@@ -464,12 +466,13 @@ public class TestFormData extends ALAbstractFormData {
    *
    * @return
    */
-  public ALStringField getURL() {
+  public ALStringField getUrl() {
     return url;
   }
 
 
   /**
+   *
    * アクセス権限チェック用メソッド。<br />
    * アクセス権限の機能名を返します。
    *
