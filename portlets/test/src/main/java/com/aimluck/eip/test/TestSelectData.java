@@ -435,6 +435,9 @@ public class TestSelectData extends
       rd.setNote(record.getNote());
       rd.setCreateDate(ALDateUtil
         .format(record.getCreateDate(), "yyyy年M月d日(E)"));
+
+      rd.setUrl(record.getUrl());
+
       rd.setUpdateDate(record.getUpdateDate());
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);

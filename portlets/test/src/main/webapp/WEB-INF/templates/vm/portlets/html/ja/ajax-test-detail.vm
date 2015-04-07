@@ -39,6 +39,7 @@ $!result.Detail.TestName
 #ALtdcaption("URL")
 #ALtditem($!result.Detail.Url)
 
+
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
