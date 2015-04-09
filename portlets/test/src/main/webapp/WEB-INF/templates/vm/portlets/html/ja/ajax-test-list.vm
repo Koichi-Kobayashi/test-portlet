@@ -85,7 +85,6 @@
 #ALtdheadAtt("#ALswitchCheckbox()" "class='thin center'")
 <th>#ALajaxsort('test_name' $l10n.TODO_TITLE $result 'TestListScreen')</th>
 </tr>
-<tr>#ALajaxsort('url' $l10n.TODO_SETFIELDNAME_URL $result 'TestListScreen')</tr>
 #foreach ($record in $result.List)
 <tr>
 
@@ -93,8 +92,6 @@
 #ALtdcellheaderAtt('class="auiMTCaption"')
 <div>
 <a href="javascript:void(0);" onclick="aipo.common.showDialog('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","TestDetailScreen").addQueryData("entityid",$record.TestId))');">$!record.TestName</a>
-</div>
-#ALtdcellfeaderAtt('class="auiMTCaption"')
 </div>
 <div>
 <a href="$record.Url">$!record.Url</a>
