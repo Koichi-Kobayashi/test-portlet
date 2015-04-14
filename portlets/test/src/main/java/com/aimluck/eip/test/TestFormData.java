@@ -87,6 +87,9 @@ public class TestFormData extends ALAbstractFormData {
   /** メモ */
   private ALStringField note;
 
+  /** URL*/
+  private ALStringField url;
+
 
   /** 現在の年 */
   private int currentYear;
@@ -179,11 +182,17 @@ public class TestFormData extends ALAbstractFormData {
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
 
+ // 0414KeiN追加　URL
+    url = new ALStringField();
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
+    url.setTrim(false);
+
+
   }
 
 
   /**
-   * Testの各フィールドに対する制約条件を設定します。 <BR>
+   * Testの各フィールドに対する制約条件を設定します。 <BsR>
    */
   @Override
   protected void setValidator() {
@@ -328,6 +337,10 @@ public class TestFormData extends ALAbstractFormData {
 
       // メモ
       test.setNote(note.getValue());
+
+      // URL
+      test.setUrl(url.getValue());
+
       // 作成日
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
@@ -396,6 +409,9 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
       // メモ
       test.setNote(note.getValue());
+      
+      // URL
+      test.setUrl(url.getValue());
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
       // Test を更新
@@ -453,6 +469,12 @@ public class TestFormData extends ALAbstractFormData {
   public ALStringField getTestName() {
     return test_name;
   }
+  public ALStringField getUrl() {
+	return url;
+  }
+
+
+
 
 
   /**

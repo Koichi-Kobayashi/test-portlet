@@ -52,3 +52,10 @@ $!result.Detail.TestName
 #ALbuttonfooter()
 #ALformfooter()
 #ALdialogfooter()
+
+
+
+#ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
+#ALtditem($!result.Detail.UrlOnLink)
+#ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL)
+<td><a href="$!result.Detail.Url"><noscript><img title="$!result.Detail.Url" src="http://capture.heartrails.com/free?$!result.Detail.Url2"  alt="$!result.Detail.Url" width="200" height="300" /></noscript><img src="http://capture.heartrails.com/free?$!result.Detail.Url2" width="200" height="300" /></a></td>
