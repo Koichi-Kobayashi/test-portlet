@@ -243,7 +243,7 @@ public class TestFormData extends ALAbstractFormData {
    * @return TRUE 成功 FALSE 失敗
    */
   @Override
-  protected boolean loadFormData(RunData rundata, Context context,
+  protected boolean FormData(RunData rundata, Context context,
       List<String> msgList) {
     String date1 = null;
     try {

@@ -35,8 +35,10 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.UpdateDate)
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
-#ALtdcaption($!result.getFieldName("url"))
-#ALtditem("#ALtextfieldw100('url' $!result.url 50 'active')")
+#ALtdcaption($l10n.TODO_URL)
+#ALtditem($!result.Detail.UrlOnLink)
+#ALtdcaption("$l10n.TODO_THUMBNAIL")
+<td><a href="$!result.Detail.Url"><img title="$!result.Detail.Url" src="http://capture.heartrails.com/medium?$!result.Detail.Url"     data-lazy-src="http://capture.heartrails.com/free?$!result.Detail.Url" alt="$!result.Detail.Url" width="200" height="150"
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())

@@ -80,6 +80,7 @@ public class TestResultData implements ALData {
     test_id = new ALNumberField();
     test_name = new ALStringField();
     url = new ALStringField();
+    url.setTrim(false);
     note = new ALStringField();
     note.setTrim(false);
     create_date = new ALStringField();
@@ -101,12 +102,27 @@ public class TestResultData implements ALData {
     return ALCommonUtils.replaceToAutoCR(test_name.toString());
   }
 
+
   /**
    * @return
    */
   public String getUrl() {
-    return url.getValue();
+	  return (url.getValue());
   }
+
+  /**
+   * @return
+   */
+    public String getUrlOnLink() {
+    	return ALEipUtils.getMessageList(url.getValue());
+     }
+
+    /**
+     * @return
+     */
+    public String getUrlHtml() {
+    	return ALEipUtils.getMessageList(url.getValue());
+    	}
 
   /**
    * @param i
@@ -128,6 +144,7 @@ public class TestResultData implements ALData {
   public void setUrl(String string) {
     url.setValue(string);
   }
+
 
   /**
    * @return
