@@ -183,7 +183,7 @@ public class TestFormData extends ALAbstractFormData {
 
     // URL
     url = new ALStringField();
-    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
     url.setTrim(false);
 
 
@@ -411,8 +411,8 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
       // メモ
       test.setNote(note.getValue());
-      // メモ
-      test.setNote(url.getValue());
+      // url
+      test.setUrl(url.getValue());
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
       // Test を更新

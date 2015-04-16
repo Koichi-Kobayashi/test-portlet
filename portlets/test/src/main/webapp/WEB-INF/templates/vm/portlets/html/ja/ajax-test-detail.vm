@@ -35,6 +35,11 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.UpdateDate)
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
+#ALtdcaption($l10n.TODO_SETFIELDNAME_URL) ##
+#ALtditem($!result.Detail.Url) ##
+#ALtdcaption("サムネイル") ##
+<td><a href = "&!result.Detail.Urlstrings"><img title="ページ：$!result.Detail.Urlstrings" src="http://capture.heartrails.com/medium?$!result.Detail.Urlstrings" data-lazy-src = "http://capture.heartrails.com/free?$!result.Detail.Urlstrings" width=150 height=100>
+
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
