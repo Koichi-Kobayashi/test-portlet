@@ -26,6 +26,9 @@
 #ALajaxdetailformheader("ToDo")
 #ALtableheaderWide()
 #ALtdcaption("タイトル")
+
+#ALtdcaption("サムネイル")
+<td><a href="$!result.Detail.Url"><img title="$!result.Detail.Url" src="http://capture.heartrails.com/medium?$!result.Detail.Url"     data-lazy-src="http://capture.heartrails.com/free?$!result.Detail.Url" alt="$!result.Detail.Url" width="200" height="150" /></a></tb>
 #ALtditemheader()
 $!result.Detail.TestName
 #ALtditemfooter()

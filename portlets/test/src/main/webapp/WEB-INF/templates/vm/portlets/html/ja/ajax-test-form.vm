@@ -50,14 +50,10 @@
 #ALtableheaderWide()
 #ALtdcaption("#ALrequired($!result.getFieldName('test_name'))")
 #ALtditem("#ALtextfieldw100('test_name' $!result.TestName 50 'active')")
-
 #ALtdcaption($!result.getFieldName("note"))
 #ALtditemheader()
 #ALtextarea('note' $!result.Note 10 40)
-
-#ALtdcaption("URL")
-#ALtditem("#ALtextfieldw100('url' $!result.Url 50 'active')")
-
+#ALtditemfooter()
 #ALtablefooter()
 #ALbuttonheader()
 #ALsubmit($event_submit $action_str)#ALajaxbuttonClose()
@@ -67,3 +63,6 @@
 <input type="hidden" id="testUser$!portlet.ID" name="testUser$!portlet.ID" value="$!result.userId.value" />
 #ALformfooter()
 #ALdialogfooter()
+
+#ALtdcaption($!result.getFieldName('url'))
+#ALtditem("#ALtextfieldw100('url' $!result.TestName 1000 'active')")

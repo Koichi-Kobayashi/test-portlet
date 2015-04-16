@@ -55,12 +55,16 @@ public class TestResultData implements ALData {
   /** ユーザID */
   private ALStringField user_id;
 
+
+  /** s*/
+  private ALStringField url;
+
+
   /**
    * 期限状態（期限前/期限当日/期限後）． <br>
    * クラス TestUtils の変数 LIMIT_STATE_BEFORE，LIMIT_STATE_TODAY，LIMIT_STATE_AFTER
    * を参照．
-   */
-  private ALNumberField limit_state;
+   */ ALNumberField limit_state;
 
   private boolean is_self_test;
 
@@ -79,6 +83,8 @@ public class TestResultData implements ALData {
     note = new ALStringField();
     note.setTrim(false);
     create_date = new ALStringField();
+    url = new ALStringField();
+    url.setTrim(false);
     update_date = new ALDateTimeField();
     is_self_test = false;
   }
@@ -97,6 +103,9 @@ public class TestResultData implements ALData {
     return ALCommonUtils.replaceToAutoCR(test_name.toString());
   }
 
+
+
+
   /**
    * @param i
    */
@@ -104,7 +113,7 @@ public class TestResultData implements ALData {
     test_id.setValue(i);
   }
 
-  /**
+  /*
    * @param string
    */
   public void setTestName(String string) {
@@ -114,9 +123,30 @@ public class TestResultData implements ALData {
   /**
    * @return
    */
+
+
+
+	public String getUrl2() {
+	     return url.getValue();
+	  }
+
+	public String geturlOnLink() {
+	    return ALEipUtils.getMessageList(url.getValue());
+	   }
+
+
   public String getNote() {
     return ALEipUtils.getMessageList(note.getValue());
   }
+
+
+  public String geturl() {
+	  return ALEipUtils.getMessageList(url.getValue());
+	  }
+
+  public String geturlHtml() {
+	  return ALEipUtils.getMessageList(url.getValue());
+	  }
 
   /**
    * @param string
@@ -124,6 +154,7 @@ public class TestResultData implements ALData {
   public void setNote(String string) {
     note.setValue(string);
   }
+
 
   /**
    * @return
@@ -138,6 +169,11 @@ public class TestResultData implements ALData {
   public ALDateTimeField getUpdateDate() {
     return ALEipUtils.getFormattedTime(update_date);
   }
+
+
+  public void setUrl(String string) {
+	    url.setValue(string);
+	  }
 
   /**
    * @param string
@@ -193,4 +229,12 @@ public class TestResultData implements ALData {
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
+
+  /**
+   * 041611追記基礎編２
+   *
+   */
+
+
+
 }
