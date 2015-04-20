@@ -19,8 +19,6 @@
 
 package com.aimluck.eip.services.portal.impl;
 
-
-
 import org.apache.jetspeed.services.logging.JetspeedLogFactoryService;
 import org.apache.jetspeed.services.logging.JetspeedLogger;
 
