@@ -88,7 +88,10 @@ public class TestFormData extends ALAbstractFormData {
   private ALStringField note;
 
 
+<<<<<<< HEAD
   /** URL */
+=======
+>>>>>>> branch 'cojozzz' of https://github.com/aipocom/test-portlet.git
   private ALStringField url;
 
 
@@ -185,7 +188,11 @@ public class TestFormData extends ALAbstractFormData {
 
     // URL
     url = new ALStringField();
+<<<<<<< HEAD
     url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
+=======
+    url.setFieldName(ALLocalizationUtils.getl10n("REGISTRY_EDITOR_PORTLET_URL"));
+>>>>>>> branch 'cojozzz' of https://github.com/aipocom/test-portlet.git
     url.setTrim(false);
   }
 
@@ -257,8 +264,12 @@ public class TestFormData extends ALAbstractFormData {
       // メモ
       note.setValue(test.getNote());
       // URL
+<<<<<<< HEAD
       url.setValue(test.getNote());
 
+=======
+      url.setValue(test.getUrl());
+>>>>>>> branch 'cojozzz' of https://github.com/aipocom/test-portlet.git
       // 担当者
       user_id.setValue(test.getTurbineUser().getUserId());
 
@@ -339,7 +350,11 @@ public class TestFormData extends ALAbstractFormData {
       // メモ
       test.setNote(note.getValue());
       // URL
+<<<<<<< HEAD
       test.setNote(url.getValue());
+=======
+      test.setUrl(url.getValue());
+>>>>>>> branch 'cojozzz' of https://github.com/aipocom/test-portlet.git
       // 作成日
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
@@ -450,22 +465,22 @@ public class TestFormData extends ALAbstractFormData {
 
 
   /**
+   * URLを取得します。<BR>
+   *
+   * @return
+   */
+  public ALStringField getUrl() {
+	  return url;
+  }
+
+
+  /**
    * メモを取得します。 <BR>
    *
    * @return
    */
   public ALStringField getNote() {
     return note;
-  }
-
-
-  /**
-   * URLを取得します。 <BR>
-   *
-   * @return
-   */
-  public ALStringField getUrl() {
-    return url;
   }
 
 
