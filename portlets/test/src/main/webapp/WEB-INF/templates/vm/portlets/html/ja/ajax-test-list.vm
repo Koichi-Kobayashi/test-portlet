@@ -102,9 +102,7 @@
 
 
 <div>
-<a>$!record.Url</a>
-
-
+<a href="$record.Url">$!record.Url</a>
 </div>
 
 

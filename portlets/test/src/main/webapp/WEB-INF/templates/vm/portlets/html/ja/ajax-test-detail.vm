@@ -26,11 +26,19 @@
 #ALajaxdetailformheader("ToDo")
 #ALtableheaderWide()
 #ALtdcaption("タイトル")
+#ALtditem($!result.Detail.TestName)
+
+
+
+
++#ALtditemheader()
 
 #ALtdcaption("サムネイル")
-+#ALtditemheader()
-+<img src="http://capture.heartrails.com/free?$!result.Detail.Url2" width="200" height="300" />
-+#ALtditemfooter()
+
+<td><a href="$!result.Detail.Url"><img src="http://capture.heartrails.com/free?$!result.Detail.Url"   width="300" height="150" /></a></td>
+
+
+
 
 #ALtdcaption($l10n.TODO_CREATE_DATE)
 #ALtditem($!result.Detail.CreateDate)
@@ -38,6 +46,10 @@
 #ALtditem($!result.Detail.UpdateDate)
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
+#ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
+#ALtditem($!result.Detail.Url)
+
+
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())

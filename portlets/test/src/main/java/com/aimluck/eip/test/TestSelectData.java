@@ -433,6 +433,10 @@ public class TestSelectData extends
       rd.setCreateDate(ALDateUtil
         .format(record.getCreateDate(), "yyyy年M月d日(E)"));
       rd.setUpdateDate(record.getUpdateDate());
+
+      rd.setUrl(record.getUrl());
+
+
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);
       return rd;

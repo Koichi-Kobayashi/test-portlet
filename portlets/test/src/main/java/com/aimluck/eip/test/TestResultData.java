@@ -56,7 +56,7 @@ public class TestResultData implements ALData {
   private ALStringField user_id;
 
 
-  /** s*/
+  /** url*/
   private ALStringField url;
 
 
@@ -126,27 +126,20 @@ public class TestResultData implements ALData {
 
 
 
-	public String getUrl2() {
-	     return url.getValue();
-	  }
 
-	public String geturlOnLink() {
-	    return ALEipUtils.getMessageList(url.getValue());
-	   }
 
 
   public String getNote() {
     return ALEipUtils.getMessageList(note.getValue());
   }
 
-
-  public String geturl() {
-	  return ALEipUtils.getMessageList(url.getValue());
+  public String getUrl() {
+	    return (url.getValue());
 	  }
 
-  public String geturlHtml() {
-	  return ALEipUtils.getMessageList(url.getValue());
-	  }
+
+
+
 
   /**
    * @param string
@@ -154,6 +147,10 @@ public class TestResultData implements ALData {
   public void setNote(String string) {
     note.setValue(string);
   }
+
+  public void setUrl(String string) {
+	    url.setValue(string);
+	  }
 
 
   /**
@@ -171,9 +168,7 @@ public class TestResultData implements ALData {
   }
 
 
-  public void setUrl(String string) {
-	    url.setValue(string);
-	  }
+
 
   /**
    * @param string

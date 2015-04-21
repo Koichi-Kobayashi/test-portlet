@@ -178,13 +178,13 @@ public class TestFormData extends ALAbstractFormData {
       .getl10n("TODO_SETFIELDNAME_PREPARED"));
 
     // メモ
-   new ALStringField();
+   note = new ALStringField();
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
 
  // 0414KeiN追加　URL
 
-   new ALStringField();
+   url = new ALStringField();
     url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
     url.setTrim(false);
 
