@@ -169,7 +169,7 @@ public class TestFormData extends ALAbstractFormData {
     // タイトル
     test_name = new ALStringField();
     test_name.setFieldName(ALLocalizationUtils
-      .getl10n("TODO_SETFIELDNAME_URL"));
+      .getl10n("TODO_SETFIELDNAME_TITLE"));
     test_name.setTrim(true);
 
     // 担当者ID
