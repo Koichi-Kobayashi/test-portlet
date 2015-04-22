@@ -35,6 +35,15 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.UpdateDate)
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
+
+#ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
+#ALtditem($!result.Detail.Url)
+
+#ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL)
+#ALtditemheader()
+<a href="$result.Detail.Url"><img title="$result.Detail.Url" src="http://capture.heartrails.com/free/1429681233221?$result.Detail.Url" alt="$result.Detail.Url" width="200" height="300" /></a>
+#ALtditemfooter()
+
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
