@@ -39,7 +39,7 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.Url)
 #ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL)
 #ALtditemheader()
-<a href="https://ja.wikipedia.org/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8"><img title="Wikipedia" src="http://capture.heartrails.com/free?https://ja.wikipedia.org/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8" alt="https://ja.wikipedia.org/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8" width="200" height="300" /></a>
+<img src="http://capture.heartrails.com/free?$!result.Detail.Url2" width="200" height="300" />
 #ALtditemfooter()
 #ALtablefooter()
 #ALbuttonheader()

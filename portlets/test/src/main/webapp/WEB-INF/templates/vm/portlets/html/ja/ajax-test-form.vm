@@ -41,6 +41,7 @@
 <div id="messageDiv"></div>
 #ALajaxscreenformheader("testForm" $jslink $portlet "TestFormJSONScreen" "aimluck.io.submit(this,'$indicator_id','$!portlet.ID',aipo.test.onReceiveMessage)")
 #if($mode=="new_form")
+
 <input type="hidden" name="mode" value="insert" />
 <input type="hidden" name="user_id" value="$!result.loginUserId"/>
 #else
