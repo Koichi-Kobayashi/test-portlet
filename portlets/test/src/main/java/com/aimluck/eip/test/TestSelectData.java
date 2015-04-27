@@ -365,7 +365,9 @@ public class TestSelectData extends
       rd.setTestName(ALCommonUtils.compressString(
         record.getTestName(),
         getStrLength()));
+      rd.setUrl(record.getUrl());
       rd.setUpdateDate(record.getUpdateDate());
+      rd.setUrl(record.getUrl());
 
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);
@@ -432,6 +434,7 @@ public class TestSelectData extends
       rd.setUpdateDate(record.getUpdateDate());
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);
+      rd.setUrl(record.getUrl());
       return rd;
     } catch (Exception ex) {
       logger.error("test", ex);

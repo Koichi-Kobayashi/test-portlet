@@ -45,6 +45,8 @@ public class TestResultData implements ALData {
   /** メモ */
   private ALStringField note;
 
+  /** URL */
+  private ALStringField url;
 
   /** 登録日 */
   private ALStringField create_date;
@@ -54,6 +56,7 @@ public class TestResultData implements ALData {
 
   /** ユーザID */
   private ALStringField user_id;
+
 
   /**
    * 期限状態（期限前/期限当日/期限後）． <br>
@@ -78,10 +81,13 @@ public class TestResultData implements ALData {
     test_name = new ALStringField();
     note = new ALStringField();
     note.setTrim(false);
+    url = new ALStringField();
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     is_self_test = false;
+
   }
+
 
   /**
    * @return
@@ -124,6 +130,16 @@ public class TestResultData implements ALData {
   public void setNote(String string) {
     note.setValue(string);
   }
+  public String getUrl() {
+	   return url.getValue();
+	    }
+
+	   /**
+	    * @param string
+	    */
+	    public void setUrl(String string) {
+	      url.setValue(string);
+	    }
 
   /**
    * @return
