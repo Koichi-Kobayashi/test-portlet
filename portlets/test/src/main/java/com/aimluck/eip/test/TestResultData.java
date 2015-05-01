@@ -82,6 +82,7 @@ public class TestResultData implements ALData {
     note = new ALStringField();
     note.setTrim(false);
     url = new ALStringField();
+    url.setTrim(false);
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     is_self_test = false;
@@ -130,16 +131,31 @@ public class TestResultData implements ALData {
   public void setNote(String string) {
     note.setValue(string);
   }
+
+  /*
+   * @return string
+   */
   public String getUrl() {
-	   return url.getValue();
+	  return ALEipUtils.getMessageList(url.getValue());
 	    }
 
-	   /**
-	    * @param string
-	    */
-	    public void setUrl(String string) {
-	      url.setValue(string);
+
+
+  /*
+   * @return string
+   */
+  public String getUrl2() {
+	  return url.getValue();
 	    }
+
+  /**
+   * @param string
+   */
+   public void setUrl(String string) {
+     url.setValue(string);
+   }
+
+
 
   /**
    * @return
@@ -171,6 +187,8 @@ public class TestResultData implements ALData {
     }
     this.update_date.setValue(date);
   }
+
+
 
   /**
    * hasAclEditTestOtherを取得します。

@@ -410,12 +410,14 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
       // メモ
       test.setNote(note.getValue());
-      //URL
-      test.setUrl(url.getValue());
+
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
       // Test を更新
       Database.commit();
+
+      //URL
+      test.setUrl(url.getValue());
 
 
       // イベントログに保存

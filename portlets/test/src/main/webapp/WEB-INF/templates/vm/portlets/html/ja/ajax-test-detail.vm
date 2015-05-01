@@ -37,6 +37,8 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.Note)
 #ALtdcaption($l10n.TODO_URL)
 #ALtditem($!result.Detail.Url)
+#ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL)
+<td><a href="$!result.Detail.Url2"><img title="$!result.Detail.Url2" src="http://capture.heartrails.com/medium?$!result.Detail.Url2" alt="$!result.Detail.Url2" width="200" height="300" /></a></tb>
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
