@@ -99,6 +99,8 @@ public class TestResultData implements ALData {
     return ALCommonUtils.replaceToAutoCR(test_name.toString());
   }
 
+
+
   /**
    * @param i
    */
