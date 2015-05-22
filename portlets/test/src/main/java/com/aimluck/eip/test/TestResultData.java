@@ -20,6 +20,8 @@
 package com.aimluck.eip.test;
 
 import java.util.Date;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALNumberField;
@@ -57,6 +59,7 @@ public class TestResultData implements ALData {
   /** ユーザID */
   private ALStringField user_id;
 
+
   /**
    * 期限状態（期限前/期限当日/期限後）． <br>
    * クラス TestUtils の変数 LIMIT_STATE_BEFORE，LIMIT_STATE_TODAY，LIMIT_STATE_AFTER
@@ -77,6 +80,7 @@ public class TestResultData implements ALData {
   @Override
   public void initField() {
     test_id = new ALNumberField();
+    url = new ALStringField();
     test_name = new ALStringField();
     note = new ALStringField();
     note.setTrim(false);
@@ -127,7 +131,21 @@ public class TestResultData implements ALData {
   public String getUrl(){
 	  return ALEipUtils.getMessageList(url.getValue());
   }
+  /**
+   * @retrun
+   */
+  public String getUrl2(){
+	  	return url.getValue();
+  }
 
+  /**
+   * @return
+ * @throws Exception
+   */
+  public String getUrlDmain() throws Exception{
+		  URI u = new URI(url.getValue());
+		  return u.getScheme()+"://"+u.getHost();
+  }
   /**
    * @param string
    */
