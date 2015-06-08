@@ -1,5 +1,5 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
+x * Aipo is a groupware program developed by Aimluck,Inc.
  * Copyright (C) 2004-2011 Aimluck,Inc.
  * http://www.aipo.com
  *
