@@ -119,6 +119,7 @@
 <div>
 <a href="javascript:void(0);" onclick="aipo.common.showDialog('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","TestDetailScreen").addQueryData("entityid",$record.TestId))');">$!record.TestName</a>
 </div>
+#ALtdcellAtt("<div>$!record.Url</div>" 'class="center" nowrap="nowrap"')
 #ALtdcellfooter()
 #ALtdcellAtt("<div>$!record.UpdateDate</div>" 'class="right" nowrap="nowrap"')
 </tr>

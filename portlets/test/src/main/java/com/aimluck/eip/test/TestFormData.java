@@ -183,10 +183,9 @@ public class TestFormData extends ALAbstractFormData {
     note.setTrim(false);
 
     // URL
-    note = new ALStringField();
-    note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
-    note.setTrim(false);
-
+    url = new ALStringField();
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
+    url.setTrim(false);
   }
 
 
