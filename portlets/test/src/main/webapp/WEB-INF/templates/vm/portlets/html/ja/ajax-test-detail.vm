@@ -37,6 +37,8 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.Note)
 #ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
 #ALtditem($!result.Detail.url)
+#ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
+#ALtditem($!result.Detail.UrlDmain)
 #ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL)
 #ALtditemheader()
 <a href="http://www.yahoo.co.jp/"><img title="Yahoo! JAPAN" src="http://capture.heartrails.com/free?http://www.yahoo.co.jp/" alt="http://www.yahoo.co.jp/" width="200" height="300" /></a>
