@@ -140,11 +140,6 @@ public class TestResultData implements ALData {
 	  URI u = new URI(url.getValue());
 	  return u.getScheme()+"://"+u.getHost();
   }
-
-  public void setUrl(String string){
-	  url.setValue(string);
-  }
-
   /**
    * @return
    */
