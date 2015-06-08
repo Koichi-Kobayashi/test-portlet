@@ -132,6 +132,9 @@ public class TestResultData implements ALData {
   public String getUrl(){
 	  return url.getValue();
   }
+  public void setUrl(String string){
+	  url.setValue(string);
+  }
 
   public String getUrlDmain() throws Exception{
 	  URI u = new URI(url.getValue());
@@ -141,7 +144,6 @@ public class TestResultData implements ALData {
   public void setUrl(String string){
 	  url.setValue(string);
   }
-
 
   /**
    * @return
