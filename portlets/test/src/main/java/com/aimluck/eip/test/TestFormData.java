@@ -201,7 +201,6 @@ public class TestFormData extends ALAbstractFormData {
     test_name.limitMaxLength(50);
     // メモの文字数制限
     note.limitMaxLength(1000);
-
     // 担当者ID必須項目
     user_id.setNotNull(true);
   }
@@ -256,7 +255,7 @@ public class TestFormData extends ALAbstractFormData {
       // メモ
       note.setValue(test.getNote());
       // URL
-      url.setValue(test.getNote());
+      url.setValue(test.getUrl());
 
       // 担当者
       user_id.setValue(test.getTurbineUser().getUserId());
@@ -289,7 +288,7 @@ public class TestFormData extends ALAbstractFormData {
       // entityIdの取得
       int entityId = test.getTestId();
       // タイトルの取得
-      String testName = test.getTestName();
+      String Name = test.getTestName();
 
       // Testを削除
       Database.delete(test);
@@ -298,12 +297,6 @@ public class TestFormData extends ALAbstractFormData {
       TimelineUtils.deleteTimelineActivity(rundata, context, "test", test
         .getTestId()
         .toString());
-
-      // イベントログに保存
-      ALEventlogFactoryService.getInstance().getEventlogHandler().log(
-        entityId,
-        ALEventlogConstants.PORTLET_TYPE_TODO,
-        testName);
 
     } catch (Throwable t) {
       Database.rollback();
@@ -341,6 +334,8 @@ public class TestFormData extends ALAbstractFormData {
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
+      // URL
+      test.setUrl(url.getValue());
 
       // Testを登録
       Database.commit();
@@ -452,7 +447,6 @@ public class TestFormData extends ALAbstractFormData {
   public ALStringField getNote() {
     return note;
   }
-
 
   /**
    * タイトルを取得します。 <BR>
