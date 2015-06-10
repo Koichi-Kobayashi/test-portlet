@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.fileio.util;
 
 import java.util.ArrayList;
@@ -71,31 +70,6 @@ public class FileIOAccountCsvUtils {
 
   /** CSVファイルを一時保管するディレクトリの指定 */
   public static final String CSV_ACCOUNT_POST_TEMP_FOLDER = "account_post";
-
-  /**
-   * アクセスしてきたユーザが利用するブラウザ名が Windows の MSIE であるかを判定する．
-   * 
-   * @param rundata
-   * @return MSIE の場合は，true．
-   */
-  public static boolean isMsieBrowser(RunData rundata) {
-    String browserNames = "MSIE";
-
-    // User-Agent の取得
-    String userAgent = rundata.getRequest().getHeader("User-Agent");
-    if (userAgent == null || userAgent.equals("")) {
-      return false;
-    }
-
-    if (userAgent.indexOf("Win") < 0) {
-      return false;
-    }
-
-    if (userAgent.indexOf(browserNames) > 0) {
-      return true;
-    }
-    return false;
-  }
 
   /**
    * CSVファイルを字句毎のリストに変換

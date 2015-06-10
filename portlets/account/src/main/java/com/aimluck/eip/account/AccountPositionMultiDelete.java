@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.account;
 
 import java.util.ArrayList;
@@ -35,6 +34,8 @@ import com.aimluck.eip.common.ALAbstractCheckList;
 import com.aimluck.eip.common.ALEipManager;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.SelectQuery;
+import com.aimluck.eip.services.eventlog.ALEventlogConstants;
+import com.aimluck.eip.services.eventlog.ALEventlogFactoryService;
 
 /**
  * 役職を複数削除するためのクラスです．
@@ -82,6 +83,11 @@ public class AccountPositionMultiDelete extends ALAbstractCheckList {
       int psize = postisions.size();
       for (int i = 0; i < psize; i++) {
         Database.delete(list.get(i));
+        // イベントログに保存
+        ALEventlogFactoryService.getInstance().getEventlogHandler().log(
+          list.get(i).getPositionId(),
+          ALEventlogConstants.PORTLET_TYPE_ACCOUNT,
+          "役職「" + list.get(i).getPositionName() + "」を削除");
       }
 
       // この役職に設定されているユーザーの役職IDを0とする

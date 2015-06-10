@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.schedule;
 
 import java.text.DecimalFormat;
@@ -384,7 +383,15 @@ public class ScheduleFormData extends ALAbstractFormData {
           return;
         }
       } else {
-        dummy.setValue(new Date());
+        Date date = new Date();
+        Calendar tmpStartCal = Calendar.getInstance();
+        tmpStartCal.setTime(date);
+        int startHour = tmpStartCal.get(Calendar.HOUR_OF_DAY);
+        if (startHour != 23) {
+          tmpStartCal.set(Calendar.HOUR_OF_DAY, startHour + 1);
+          tmpStartCal.set(Calendar.MINUTE, 0);
+        }
+        dummy.setValue(tmpStartCal.getTime());
         ALEipUtils.setTemp(rundata, context, "tmpStart", dummy.toString());
       }
       if (rundata.getParameters().containsKey("form_end")) {
@@ -399,7 +406,18 @@ public class ScheduleFormData extends ALAbstractFormData {
           return;
         }
       } else {
-        dummy.setValue(new Date());
+        Date date = new Date();
+        Calendar tmpEndCal = Calendar.getInstance();
+        tmpEndCal.setTime(date);
+        int endHour = tmpEndCal.get(Calendar.HOUR_OF_DAY);
+        if (endHour != 22 && endHour != 23) {
+          tmpEndCal.set(Calendar.HOUR_OF_DAY, endHour + 2);
+          tmpEndCal.set(Calendar.MINUTE, 0);
+        } else if (endHour == 22) {
+          tmpEndCal.set(Calendar.HOUR_OF_DAY, endHour + 1);
+          tmpEndCal.set(Calendar.MINUTE, 55);
+        }
+        dummy.setValue(tmpEndCal.getTime());
         ALEipUtils.setTemp(rundata, context, "tmpEnd", dummy.toString());
       }
     }
@@ -453,7 +471,7 @@ public class ScheduleFormData extends ALAbstractFormData {
       tmpEndCal.setTime(end_date.getValue());
       int endHour = tmpEndCal.get(Calendar.HOUR_OF_DAY);
       if (endHour != 23) {
-        tmpEndCal.set(Calendar.HOUR_OF_DAY, endHour + 1);
+        tmpEndCal.set(Calendar.HOUR_OF_DAY, endHour);
       }
       end_date.setValue(tmpEndCal.getTime());
     } else {
@@ -668,7 +686,8 @@ public class ScheduleFormData extends ALAbstractFormData {
               end_date = start_date;
             } else if ("".equals(rundata.getParameters().get("end_date_hour"))
               || "".equals(rundata.getParameters().get("end_date_minute"))) {
-              end_date.setValue(start_date.getValue());
+              // 片方だけが"--"の時は開始日時と同じにせずにバリデートエラーにする
+              end_date = null;
             }
           }
         }
@@ -1809,7 +1828,9 @@ public class ScheduleFormData extends ALAbstractFormData {
     } catch (Exception e) {
       Database.rollback();
       logger.error("[ScheduleFormData]", e);
-      throw new ALDBErrorException();
+      msgList.add(ALLocalizationUtils.getl10n("ERROR_UPDATE_FAILURE"));
+      return false;
+      // throw new ALDBErrorException();
     }
     if (ScheduleUtils.MAIL_FOR_ALL.equals(schedule.getMailFlag())
       || ScheduleUtils.MAIL_FOR_UPDATE.equals(schedule.getMailFlag())) {
@@ -2888,6 +2909,15 @@ public class ScheduleFormData extends ALAbstractFormData {
    */
   public boolean getIsSameDate() {
     return is_same_date;
+  }
+
+  /**
+   * 開始時刻と終了時刻が同じかどうか返します。
+   * 
+   * @return
+   */
+  public boolean getIsSameTime() {
+    return start_date.getTime().equals(end_date.getTime());
   }
 
   /**

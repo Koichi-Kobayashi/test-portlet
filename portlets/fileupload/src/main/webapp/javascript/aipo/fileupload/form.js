@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 dojo.provide("aipo.fileupload");
 
 aipo.fileupload.getFolderName = function() {
@@ -74,14 +73,14 @@ aipo.fileupload.ImageDialog
 
 aipo.fileupload.showImageDialog = function(url, portlet_id, callback) {
 	var dialog=dojo.byId('imageDialog');
-	dojo.query("#imageDialog").addClass("preLoadImage");
+	//dojo.query("#imageDialog").addClass("preLoadImage");
 	aipo.fileupload.ImageDialog = dijit.byId("imageDialog");
     dojo.query(".auiPopup:not(.imgPopup)").addClass("mb_dialoghide");
     dojo.query("#imageDialog").addClass("mb_dialog");
 
     if(! aipo.fileupload.ImageDialog){
     	aipo.fileupload.ImageDialog = new aipo.fileupload.widget.FileuploadViewDialog({widgetId:'imageDialog', _portlet_id: portlet_id, _callback:callback}, "imageDialog");
-    	dojo.query("#imageDialog").addClass("preLoadImage");
+    	//dojo.query("#imageDialog").addClass("preLoadImage");
     }else{
     	aipo.fileupload.ImageDialog.setCallback(portlet_id, callback);
     }
@@ -96,15 +95,30 @@ aipo.fileupload.hideImageDialog = function() {
 
     if(arrDialog){
       arrDialog.hide();
+      var _dialog = dojo.byId("imageDialog");
+      if(_dialog){
+          _dialog.style.height = "";
+          _dialog.style.width = "";
+      }
     }
 };
 
 aipo.fileupload.onLoadImage=function(image){
+	dojo.style(image, 'display', '');
+	dojo.query(".indicatorDialog").style('display', 'none');
 	var dialog=dojo.byId('imageDialog');
-	dialog.style.width=image.width+"px";
-	dialog.style.height=image.height+"px";
+	if(dojo.style(image, 'max-width')){
+		dialog.style.width= Math.min(image.width, dojo.style(image, 'max-width'))+"px";
+	} else {
+		dialog.style.width= image.width + "px";
+	}
+	if(dojo.style(image, 'max-height')){
+		dialog.style.height= Math.min(image.height, dojo.style(image, 'max-height'))+"px";
+	} else {
+		dialog.style.height= image.height + "px";
+	}
 	aipo.fileupload.ImageDialog._position();//再調整
-	dojo.query("#imageDialog").removeClass("preLoadImage");
+	//dojo.query("#imageDialog").removeClass("preLoadImage");
 };
 
 aipo.fileupload.removeFileFromList=function(ul, li, pid){

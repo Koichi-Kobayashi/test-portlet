@@ -2,7 +2,7 @@
 <!--
 
     Aipo is a groupware program developed by Aimluck,Inc.
-    Copyright (C) 2004-2011 Aimluck,Inc.
+    Copyright (C) 2004-2015 Aimluck,Inc.
     http://www.aipo.com
 
     This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-
 <registry>
     <portlet-entry name="Workflow" hidden="false" type="ref" parent="Velocity" application="false">
         <security-ref parent="user-view"/>
         <meta-info>
             <title>ワークフロー</title>
-            <description>決裁や有給の稟議に利用できるワークフローです。</description>
+            <description>決済や有給などの稟議・申請を簡単に行うことができます。申請経路や、テンプレートをあらかじめ設定しておくことも可能です。申請・承認はお知らせで通知されます。</description>
         </meta-info>
         <classname>org.apache.jetspeed.portal.portlets.VelocityPortlet</classname>
         <parameter name="template" value="workflow" hidden="true" cachedOnName="true" cachedOnValue="true"/>
@@ -66,7 +65,7 @@
         <security-ref parent="admin-view"/>
         <meta-info>
             <title>ワークフロー管理</title>
-            <description>決裁や有給の稟議に利用できるワークフローです。</description>
+            <description>決済や有給などの稟議・申請を簡単に行うことができます。申請経路や、テンプレートをあらかじめ設定しておくことも可能です。申請・承認はお知らせで通知されます。</description>
         </meta-info>
         <classname>org.apache.jetspeed.portal.portlets.VelocityPortlet</classname>
         <parameter name="template" value="workflow-category-list" hidden="true" cachedOnName="true" cachedOnValue="true"/>

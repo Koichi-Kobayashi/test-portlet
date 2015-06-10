@@ -1,12 +1,6 @@
-dojo._xdResourceLoaded({
-depends: [["provide", "aipo.widget.AddressbookDialog"],
-["provide", "aipo.widget.AddressbookDialogUnderlay"],
-["require", "aimluck.widget.Dialog"]],
-defineResource: function(dojo){if(!dojo._hasResource["aipo.widget.AddressbookDialog"]){ //_hasResource checks added by build. Do not use _hasResource directly in your code.
-dojo._hasResource["aipo.widget.AddressbookDialog"] = true;
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +16,12 @@ dojo._hasResource["aipo.widget.AddressbookDialog"] = true;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+dojo._xdResourceLoaded({
+depends: [["provide", "aipo.widget.AddressbookDialog"],
+["provide", "aipo.widget.AddressbookDialogUnderlay"],
+["require", "aimluck.widget.Dialog"]],
+defineResource: function(dojo){if(!dojo._hasResource["aipo.widget.AddressbookDialog"]){ //_hasResource checks added by build. Do not use _hasResource directly in your code.
+dojo._hasResource["aipo.widget.AddressbookDialog"] = true;
 
 dojo.provide("aipo.widget.AddressbookDialog");
 dojo.provide("aipo.widget.AddressbookDialogUnderlay");
@@ -41,8 +41,8 @@ dojo.declare(
     "aipo.webmail.widget.AddressbookDialog",
     [aimluck.widget.Dialog],
     {
-        loadingMessage:"<div class='indicator'>読み込み中...</div>",
-        templateCssString:"addressbookDialog",
+        loadingMessage:"<div class='auiPopup indicatorDialog center'><i class='auiIcon auiIconIndicator'></i>読み込み中...</div>",
+        templateCssString:"modalDialog",
         templateString:"<div id='addressbookDialog' class='${templateCssString}' dojoattachpoint='wrapper'><span dojoattachpoint='tabStartOuter' dojoonfocus='trapTabs' dojoonblur='clearTrap'tabindex='0'></span><span dojoattachpoint='tabStart' dojoonfocus='trapTabs' dojoonblur='clearTrap' tabindex='0'></span><div dojoattachpoint='containerNode' style='position: relative; z-index: 2;'></div><span dojoattachpoint='tabEnd' dojoonfocus='trapTabs' dojoonblur='clearTrap' tabindex='0'></span><span dojoattachpoint='tabEndOuter' dojoonfocus='trapTabs' dojoonblur='clearTrap' tabindex='0'></span></div>",
         _setup: function(){
 

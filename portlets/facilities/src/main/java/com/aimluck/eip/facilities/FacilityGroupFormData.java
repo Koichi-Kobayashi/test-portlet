@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.facilities;
 
 import java.util.ArrayList;
@@ -42,6 +41,9 @@ import com.aimluck.eip.modules.actions.common.ALAction;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.Operations;
 import com.aimluck.eip.orm.query.SelectQuery;
+import com.aimluck.eip.services.eventlog.ALEventlogConstants;
+import com.aimluck.eip.services.eventlog.ALEventlogFactoryService;
+import com.aimluck.eip.util.ALLocalizationUtils;
 
 /**
  * 設備のフォームデータを管理するクラスです。 <BR>
@@ -93,7 +95,8 @@ public class FacilityGroupFormData extends ALAbstractFormData {
     // 設備名
     facility_group_name = new ALStringField();
     facility_group_name.getFieldName();
-    facility_group_name.setFieldName("設備グループ名");
+    facility_group_name.setFieldName(ALLocalizationUtils
+      .getl10n("FACILITIES_FACILITYGROUP_NAME"));
     facility_group_name.setTrim(true);
 
     // 設備リスト
@@ -184,9 +187,10 @@ public class FacilityGroupFormData extends ALAbstractFormData {
       }
 
       if (query.fetchList().size() != 0) {
-        msgList.add("設備グループ名『 <span class='em'>"
-          + facility_group_name.toString()
-          + "</span> 』は既に登録されています。");
+        msgList.add(ALLocalizationUtils.getl10nFormat(
+          "FACILITIES_FACILITYGROUP_IS_ALREADY_ADDED",
+          facility_group_name.toString()));
+
       }
     } catch (Exception ex) {
       logger.error("facilities", ex);
@@ -279,6 +283,15 @@ public class FacilityGroupFormData extends ALAbstractFormData {
       // 設備グループを削除
       Database.delete(facility);
       Database.commit();
+
+      // イベントログに保存
+      ALEventlogFactoryService.getInstance().getEventlogHandler().log(
+        facility.getGroupId(),
+        ALEventlogConstants.PORTLET_TYPE_FACILITY,
+        ALLocalizationUtils.getl10nFormat(
+          "FACILITIES_DELETED_FACILITYGROUP_WITH_NAME",
+          facility.getGroupName()));
+
       // orm.doDelete(facility);
     } catch (Exception ex) {
       Database.rollback();
@@ -316,6 +329,14 @@ public class FacilityGroupFormData extends ALAbstractFormData {
       }
       // 設備を登録
       Database.commit();
+
+      // イベントログに保存
+      ALEventlogFactoryService.getInstance().getEventlogHandler().log(
+        facilitygroup.getGroupId(),
+        ALEventlogConstants.PORTLET_TYPE_FACILITY,
+        ALLocalizationUtils.getl10nFormat(
+          "FACILITIES_ADDED_FACILITYGROUP_WITH_NAME",
+          facilitygroup.getGroupName()));
     } catch (Exception ex) {
       Database.rollback();
       logger.error("facilities", ex);
@@ -386,6 +407,14 @@ public class FacilityGroupFormData extends ALAbstractFormData {
       facilityGroup.setGroupName(facility_group_name.getValue());
       // 設備を更新
       Database.commit();
+
+      // イベントログに保存
+      ALEventlogFactoryService.getInstance().getEventlogHandler().log(
+        facilityGroup.getGroupId(),
+        ALEventlogConstants.PORTLET_TYPE_FACILITY,
+        ALLocalizationUtils.getl10nFormat(
+          "FACILITIES_UPDATED_FACILITYGROUP_WITH_NAME",
+          facilityGroup.getGroupName()));
     } catch (Exception ex) {
       Database.rollback();
       logger.error("facilities", ex);

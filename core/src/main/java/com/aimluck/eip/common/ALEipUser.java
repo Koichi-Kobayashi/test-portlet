@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,8 +16,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.common;
+
+import java.util.Date;
 
 import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
@@ -42,6 +43,8 @@ public class ALEipUser implements ALData {
 
   private long photoModified;
 
+  private Date created;
+
   /**
    *
    */
@@ -52,6 +55,7 @@ public class ALEipUser implements ALData {
     alias_name = new ALStringField();
     hasPhoto = false;
     photoModified = 0L;
+    created = null;
   }
 
   /**
@@ -134,6 +138,21 @@ public class ALEipUser implements ALData {
    */
   public void setPhotoModified(long photoModified) {
     this.photoModified = photoModified;
+  }
+
+  /**
+   * @return created
+   */
+  public Date getCreated() {
+    return created;
+  }
+
+  /**
+   * @param created
+   *          セットする created
+   */
+  public void setCreated(Date created) {
+    this.created = created;
   }
 
 }

@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.mail.util;
 
 import java.io.BufferedReader;
@@ -40,6 +39,8 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.activation.DataHandler;
 import javax.crypto.Cipher;
@@ -51,6 +52,7 @@ import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Part;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
@@ -100,7 +102,7 @@ import com.sk_jp.mail.MailUtility;
 
 /**
  * メールのユーティリティクラスです。 <BR>
- * 
+ *
  */
 public class ALMailUtils {
 
@@ -208,7 +210,7 @@ public class ALMailUtils {
 
   /**
    * メールアカウントを取得する．
-   * 
+   *
    * @param userId
    * @param accountId
    * @return
@@ -233,7 +235,7 @@ public class ALMailUtils {
       EipMMailAccount account =
         query.andQualifier(exp1).andQualifier(exp2).fetchSingle();
       if (account == null) {
-        logger.debug("[WebMail] Not found AccountID...");
+        logger.error("[WebMail] Not found AccountID...");
         return null;
       }
       return account;
@@ -244,8 +246,41 @@ public class ALMailUtils {
   }
 
   /**
+   * メールアカウント一覧を取得する．
+   *
+   * @param userId
+   * @param accountId
+   * @return
+   */
+  public static List<EipMMailAccount> getMailAccountList(int userId) {
+    if (userId < 0) {
+      return null;
+    }
+
+    try {
+
+      SelectQuery<EipMMailAccount> query =
+        Database.query(EipMMailAccount.class);
+      Expression exp1 =
+        ExpressionFactory.matchExp(EipMMailAccount.USER_ID_PROPERTY, Integer
+          .valueOf(userId));
+
+      List<EipMMailAccount> fetchList = query.andQualifier(exp1).fetchList();
+
+      if (fetchList == null || fetchList.size() <= 0) {
+        logger.debug("[WebMail] Not found AccountID...");
+        return null;
+      }
+      return fetchList;
+    } catch (Exception ex) {
+      logger.error("ALMailUtils.getMailAccountList", ex);
+      return null;
+    }
+  }
+
+  /**
    * メールアカウント名を取得する．
-   * 
+   *
    * @param userId
    * @param accountId
    * @return
@@ -271,7 +306,7 @@ public class ALMailUtils {
 
   /**
    * メールの返信に必要な値をセットする．
-   * 
+   *
    * @param msg
    * @return
    */
@@ -285,9 +320,7 @@ public class ALMailUtils {
       msg = (ALLocalMailMessage) mailmsg;
 
       StringBuffer sb = new StringBuffer();
-      sb.append(" ").append(CR).append("----- Original Message ----- ").append(
-        CR);
-      sb.append("From: ").append(getAddressString(msg.getFrom())).append(CR);
+      sb.append("From: ").append(getFromDelegate(msg)).append(CR);
       sb
         .append("To: ")
         .append(
@@ -301,14 +334,62 @@ public class ALMailUtils {
         .append(" ")
         .append(CR);
 
-      msg.setSubject(MimeUtility.encodeText("Re: "
-        + UnicodeCorrecter.correctToISO2022JP(msg.getSubject())));
-      msg.setRecipient(Message.RecipientType.TO, msg.getReplyTo()[0]);
+      msg.setSubject(MimeUtility.encodeText(UnicodeCorrecter
+        .correctToISO2022JP(msg.getSubject())));
+      msg
+        .setRecipient(Message.RecipientType.TO, getReplyToDelegateExtract(msg));
       String[] lines = msg.getBodyTextArray();
       if (lines != null && lines.length > 0) {
         int length = lines.length;
         for (int i = 0; i < length; i++) {
-          sb.append("> ").append(lines[i]).append(CR);
+          sb.append(lines[i]).append(CR);
+        }
+      }
+      msg.setText(UnicodeCorrecter.correctToISO2022JP(sb.toString()));
+    } catch (Exception e) {
+      logger.error("ALMailUtils.getReplyMessage", e);
+      return null;
+    }
+    return msg;
+  }
+
+  /**
+   * メールの返信に必要な値をセットする．
+   *
+   * @param msg
+   * @return
+   */
+  public static ALMailMessage getReplyAllMessage(ALMailMessage mailmsg) {
+    if (mailmsg == null) {
+      return null;
+    }
+
+    ALLocalMailMessage msg = null;
+    try {
+      msg = (ALLocalMailMessage) mailmsg;
+
+      StringBuffer sb = new StringBuffer();
+      sb.append("From: ").append(getFromDelegate(msg)).append(CR);
+      sb
+        .append("To: ")
+        .append(
+          getAddressString(msg.getRecipients(Message.RecipientType.TO, false)))
+        .append(CR);
+      sb.append("Sent: ").append(msg.getSentDate()).append(CR);
+      sb
+        .append("Subject: ")
+        .append(UnicodeCorrecter.correctToISO2022JP(msg.getSubject()))
+        .append(CR)
+        .append(" ")
+        .append(CR);
+
+      msg.setSubject(MimeUtility.encodeText(UnicodeCorrecter
+        .correctToISO2022JP(msg.getSubject())));
+      String[] lines = msg.getBodyTextArray();
+      if (lines != null && lines.length > 0) {
+        int length = lines.length;
+        for (int i = 0; i < length; i++) {
+          sb.append(lines[i]).append(CR);
         }
       }
       msg.setText(UnicodeCorrecter.correctToISO2022JP(sb.toString()));
@@ -321,7 +402,7 @@ public class ALMailUtils {
 
   /**
    * メールの転送に必要な値をセットする．
-   * 
+   *
    * @param msg
    * @return
    */
@@ -335,9 +416,7 @@ public class ALMailUtils {
       msg = (ALLocalMailMessage) mailmsg;
 
       StringBuffer sb = new StringBuffer();
-      sb.append(" ").append(CR).append("----- Original Message ----- ").append(
-        CR);
-      sb.append("From: ").append(getAddressString(msg.getFrom())).append(CR);
+      sb.append("From: ").append(getFromDelegate(msg)).append(CR);
       sb
         .append("To: ")
         .append(
@@ -351,8 +430,8 @@ public class ALMailUtils {
         .append(" ")
         .append(CR);
 
-      msg.setSubject(MimeUtility.encodeText("Fwd: "
-        + UnicodeCorrecter.correctToISO2022JP(msg.getSubject())));
+      msg.setSubject(MimeUtility.encodeText(UnicodeCorrecter
+        .correctToISO2022JP(msg.getSubject())));
       // msg.setRecipient(Message.RecipientType.TO, msg.getFrom()[0]);
       String[] lines = msg.getBodyTextArray();
       if (lines != null && lines.length > 0) {
@@ -371,7 +450,7 @@ public class ALMailUtils {
 
   /**
    * 改行を含む文字列を，改行で区切った文字列の配列を取得する．
-   * 
+   *
    * @param str
    * @return
    */
@@ -409,7 +488,7 @@ public class ALMailUtils {
 
   /**
    * 区切り文字で区切った文字列の配列を取得する．
-   * 
+   *
    * @param line
    *          区切り文字を含む文字列
    * @param delim
@@ -421,7 +500,15 @@ public class ALMailUtils {
       return null;
     }
     if (line.indexOf(delim) < 0) {
-      return new String[] { line };
+
+      if (delim.length() > 1 && !"\r\n".equals(delim)) {
+        String regex = "^.*[" + delim + "].*";
+        if (!line.matches(regex)) {
+          return new String[] { line };
+        }
+      } else {
+        return new String[] { line };
+      }
     }
 
     StringTokenizer st = new StringTokenizer(line, delim);
@@ -435,7 +522,7 @@ public class ALMailUtils {
 
   /**
    * 指定された配列の並び順を逆にする．
-   * 
+   *
    * @param objs
    * @return
    */
@@ -458,7 +545,7 @@ public class ALMailUtils {
 
   /**
    * 複数のアドレスをカンマ区切りの1つの文字列に変換する．
-   * 
+   *
    * @param addresses
    * @return
    */
@@ -493,7 +580,7 @@ public class ALMailUtils {
 
   /**
    * 複数の文字列を区切り文字で区切った1つの文字列に変換する．
-   * 
+   *
    * @param addresses
    * @param delim
    * @return
@@ -514,7 +601,7 @@ public class ALMailUtils {
 
   /**
    * Date のオブジェクトを "yyyy/MM/dd hh:mm" 形式の文字列に変換する．
-   * 
+   *
    * @param date
    * @return
    */
@@ -531,7 +618,7 @@ public class ALMailUtils {
 
   /**
    * "yyyy/MM/dd hh:mm" 形式の文字列を Date のオブジェクトに変換する．
-   * 
+   *
    * @param dateStr
    * @return
    */
@@ -554,7 +641,7 @@ public class ALMailUtils {
 
   /**
    * 受信メールの受信日時を取得する（ヘッダ Recieved を解析する）．
-   * 
+   *
    * @param msg
    * @return
    */
@@ -610,7 +697,7 @@ public class ALMailUtils {
 
   /**
    * String 型のアドレス → InternetAddress 型のアドレス に変換する．
-   * 
+   *
    * @param addr
    * @return
    */
@@ -691,7 +778,7 @@ public class ALMailUtils {
 
   /**
    * 「暗号化＋Base64符号化」の文字列を，もとの文字列に復号する．
-   * 
+   *
    * @param password
    * @param data
    * @return
@@ -702,7 +789,7 @@ public class ALMailUtils {
 
   /**
    * 「暗号化＋Base64符号化」の文字列を，もとの文字列に復号する．
-   * 
+   *
    * @param password
    * @param data
    * @return
@@ -729,7 +816,7 @@ public class ALMailUtils {
 
   /**
    * 「暗号化＋Base64符号化」した文字列を取得する．
-   * 
+   *
    * @param password
    * @param data
    * @return
@@ -740,7 +827,7 @@ public class ALMailUtils {
 
   /**
    * 「暗号化＋Base64符号化」した文字列を取得する．
-   * 
+   *
    * @param password
    * @param data
    * @return
@@ -764,7 +851,7 @@ public class ALMailUtils {
 
   /**
    * 指定したパスワードでデータを暗号化／復号する． 暗号化方式：PBEWithMD5AndDES
-   * 
+   *
    * @param cipherMode
    *          Cipher.ENCRYPT_MODE もしくは Cipher.DECRYPT_MODE
    * @param password
@@ -818,7 +905,7 @@ public class ALMailUtils {
 
   /**
    * メール受信用コンテキスト（POP3）を取得します。
-   * 
+   *
    * @param orgId
    * @param account
    * @return
@@ -848,6 +935,7 @@ public class ALMailUtils {
       rcontext.setAuthReceiveFlag(account.getAuthReceiveFlg().intValue());
       rcontext.setEncryptionFlag(account.getPop3EncryptionFlg());
     } catch (Exception e) {
+      logger.error("ALMailUtils.getALPop3MailReceiverContext", e);
       return null;
     }
 
@@ -856,7 +944,7 @@ public class ALMailUtils {
 
   /**
    * メール送信用コンテキスト（SMTP）を取得します。
-   * 
+   *
    * @param orgId
    * @param account
    * @return
@@ -911,7 +999,7 @@ public class ALMailUtils {
 
   /**
    * 送信メッセージ（SMTP）のコンテキストを取得します。
-   * 
+   *
    * @param orgId
    * @param account
    * @return
@@ -936,7 +1024,7 @@ public class ALMailUtils {
 
   /**
    * 管理者 admin のメールアカウントのオブジェクトモデルを取得する． <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param isJoin
@@ -966,7 +1054,7 @@ public class ALMailUtils {
 
   /**
    * デフォルトのメールアカウントの情報をデータベースから所得する．
-   * 
+   *
    * @param userId
    * @return
    */
@@ -998,7 +1086,7 @@ public class ALMailUtils {
 
   /**
    * メールアカウント情報をデータベースに保存する．
-   * 
+   *
    * @param rundata
    * @param msgList
    * @param userId
@@ -1112,9 +1200,9 @@ public class ALMailUtils {
       mailAccount.setSmtpEncryptionFlg((short) smtpEncryptionFlg);
       mailAccount.setPop3EncryptionFlg((short) pop3EncryptionFlg);
       mailAccount.setAuthReceiveFlg(Short.valueOf((short) authReceiveFlg));
-      mailAccount.setDelAtPop3Flg(Integer.valueOf(delAtPop3Flg).toString());
-      mailAccount.setDelAtPop3BeforeDaysFlg(Integer.valueOf(
-        delAtPop3BeforeDaysFlg).toString());
+      mailAccount.setDelAtPop3Flg(Integer.toString(delAtPop3Flg));
+      mailAccount.setDelAtPop3BeforeDaysFlg(Integer
+        .toString(delAtPop3BeforeDaysFlg));
       mailAccount.setDelAtPop3BeforeDays(Integer.valueOf(delAtPop3BeforeDays));
       mailAccount.setNonReceivedFlg(nonReceivedFlg);
       mailAccount.setUpdateDate(createdDate);
@@ -1171,7 +1259,7 @@ public class ALMailUtils {
   }
 
   /**
-   * 
+   *
    * @param org_id
    * @param srcUserId
    * @param destMemberList
@@ -1183,7 +1271,7 @@ public class ALMailUtils {
    * @param msgList
    * @return
    * @throws Exception
-   * 
+   *
    * @deprecated {@link ALMailService#sendAdminMail}
    */
   @Deprecated
@@ -1322,7 +1410,7 @@ public class ALMailUtils {
   }
 
   /**
-   * 
+   *
    * @param org_id
    * @param srcUserId
    * @param destMemberList
@@ -1504,7 +1592,7 @@ public class ALMailUtils {
 
   /**
    * ALEipUserのリストをもとに、ALEipUserAddrのリストを取得する。
-   * 
+   *
    * @param memberList
    * @param loginUserId
    * @param includeLoginUser
@@ -1540,7 +1628,7 @@ public class ALMailUtils {
 
   /**
    * メール通知設定表から送信先の設定を取得する。
-   * 
+   *
    * @param keyMsgtype
    * @return
    */
@@ -1572,7 +1660,7 @@ public class ALMailUtils {
 
   /**
    * メール通知設定表から送信先の設定を取得する。
-   * 
+   *
    * @param keyMsgtype
    * @return
    */
@@ -1649,7 +1737,7 @@ public class ALMailUtils {
 
   /**
    * 指定されたIDのメール通知設定表を取得します。
-   * 
+   *
    * @param category_id
    * @return
    */
@@ -1729,7 +1817,7 @@ public class ALMailUtils {
 
   /**
    * フォルダオブジェクトモデルを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -1778,7 +1866,7 @@ public class ALMailUtils {
 
   /**
    * 指定されたフォルダに入っているメールを全て取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -1809,7 +1897,7 @@ public class ALMailUtils {
 
   /**
    * フィルタオブジェクトモデルを取得します。（アカウントで検索） <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -1840,7 +1928,7 @@ public class ALMailUtils {
 
   /**
    * メールがフィルタの条件(件名、送信元メールアドレス、送信先メールアドレス)に合致するかどうか調べます。
-   * 
+   *
    * @param mailFilter
    * @param subject
    * @param from
@@ -1889,7 +1977,7 @@ public class ALMailUtils {
 
   /**
    * フィルタタイプの一覧を取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -1907,7 +1995,7 @@ public class ALMailUtils {
 
   /**
    * 件名のデコードを行ないます。
-   * 
+   *
    * @param subject
    * @return
    */
@@ -1923,5 +2011,117 @@ public class ALMailUtils {
   /** 送受信可能なメール容量．Base64 処理後のサイズ */
   public static int getMaxMailSize() {
     return (int) (TurbineUpload.getSizeMax() * 1.37);
+  }
+
+  public static String getRawFrom(MimeMessage msg) {
+    String rawFrom = null;
+    try {
+      rawFrom = msg.getHeader("From", ",");
+      if (null == rawFrom) {
+        rawFrom = msg.getHeader("Sender", ",");
+      }
+    } catch (MessagingException ignore) {
+    }
+    return null != rawFrom ? rawFrom : "";
+  }
+
+  public static String getRawReplyTo(MimeMessage msg) {
+    String rawReplyto = null;
+    try {
+      rawReplyto = msg.getHeader("Reply-To", ",");
+
+      if (rawReplyto == null) {
+        rawReplyto = getRawFrom(msg);
+      }
+    } catch (MessagingException ignore) {
+    }
+    return null != rawReplyto ? rawReplyto : "";
+  }
+
+  public static String getFromInetAddressForBroken(MimeMessage msg) {
+    String rawFrom = getRawFrom(msg);
+    String inetAddress = null;
+    try {
+      inetAddress = MimeUtility.decodeText(MimeUtility.unfold(rawFrom));
+    } catch (UnsupportedEncodingException ignore) {
+    }
+    return null != inetAddress ? inetAddress : "";
+  }
+
+  public static String getReplytoInetAddressForBroken(MimeMessage msg) {
+    String rawReplyto = getRawReplyTo(msg);
+    String inetAddress = null;
+    try {
+      inetAddress = MimeUtility.decodeText(MimeUtility.unfold(rawReplyto));
+    } catch (UnsupportedEncodingException ignore) {
+    }
+    return null != inetAddress ? inetAddress : "";
+  }
+
+  public static String extractAddress(String rawAddress) {
+    String regex =
+      "[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})";
+    Pattern mailPattern = Pattern.compile(regex);
+    Matcher matcher = mailPattern.matcher(rawAddress);
+    if (matcher.find()) {
+      String result = matcher.group(0);
+      return null != result ? result : "";
+    } else {
+      return "";
+    }
+  }
+
+  public static String getFromDelegate(MimeMessage msg)
+      throws MessagingException {
+    String from = null;
+    try {
+      from = ALMailUtils.getAddressString(msg.getFrom());
+    } catch (AddressException e) {
+      logger.info("ALMailUtils.getFromDelegate", e);
+      from = ALMailUtils.getFromInetAddressForBroken(msg);
+    }
+    return from;
+  }
+
+  public static String getFromDelegateExtract(MimeMessage msg)
+      throws MessagingException {
+    String from = null;
+    try {
+      from = ALMailUtils.getAddressString(msg.getFrom());
+    } catch (AddressException e) {
+      logger.info("ALMailUtils.getFromDelegateExtract", e);
+      from = ALMailUtils.getFromInetAddressForBroken(msg);
+      from = ALMailUtils.extractAddress(from);
+    }
+    return from;
+  }
+
+  public static Address[] getFromDelegateExtractForAddress(MimeMessage msg)
+      throws MessagingException {
+    Address[] addresses = new InternetAddress[1];
+    try {
+      addresses = msg.getFrom();
+    } catch (AddressException e) {
+      logger.info("ALMailUtils.getFromDelegateExtractForAddress", e);
+      String from = ALMailUtils.getFromInetAddressForBroken(msg);
+      from = ALMailUtils.extractAddress(from);
+      Address address = new InternetAddress(from, false);
+      addresses[0] = address;
+    }
+    return addresses;
+  }
+
+  public static Address getReplyToDelegateExtract(MimeMessage msg)
+      throws MessagingException {
+    Address replyTo = null;
+    try {
+      replyTo = msg.getReplyTo()[0];
+    } catch (AddressException e) {
+      logger.info("ALMailUtils.getReplyToDelegateExtract", e);
+      String _replyTo = getReplytoInetAddressForBroken(msg);
+      _replyTo = ALMailUtils.extractAddress(_replyTo);
+      replyTo = new InternetAddress(_replyTo, false);
+    }
+    return replyTo;
   }
 }

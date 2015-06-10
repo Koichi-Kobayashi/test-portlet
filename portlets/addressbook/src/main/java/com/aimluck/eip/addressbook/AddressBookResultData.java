@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.addressbook;
 
 import java.util.ArrayList;
@@ -26,6 +25,7 @@ import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.addressbookuser.beans.AddressBookUserGroupLiteBean;
 import com.aimluck.eip.common.ALData;
+import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * アドレス帳のリザルトデータクラスです。
@@ -71,6 +71,9 @@ public class AddressBookResultData implements ALData {
   /** 役職名 */
   private ALStringField position_name;
 
+  /** 備考 */
+  private ALStringField note;
+
   /** 公開フラグ */
   private ALStringField public_flag;
 
@@ -98,7 +101,7 @@ public class AddressBookResultData implements ALData {
   /** グループ名 */
   // private ALStringField group_name;
 
-  /** 登録日 */
+  /** 作成日 */
   private ALStringField create_date;
 
   /** 更新日 */
@@ -107,8 +110,14 @@ public class AddressBookResultData implements ALData {
   /** 登録者 */
   private ALStringField created_user;
 
+  /** 登録者のID */
+  private ALNumberField created_user_id;
+
   /** 更新者 */
   private ALStringField updated_user;
+
+  /** 更新者のID */
+  private ALNumberField updated_user_id;
 
   /** 索引 */
   private ALStringField index;
@@ -116,6 +125,7 @@ public class AddressBookResultData implements ALData {
   /**
    *
    */
+  @Override
   public void initField() {
     address_id = new ALNumberField();
     name = new ALStringField();
@@ -130,6 +140,7 @@ public class AddressBookResultData implements ALData {
     post_name = new ALStringField();
     post_list = new ArrayList<AddressBookUserGroupLiteBean>();
     position_name = new ALStringField();
+    note = new ALStringField();
     public_flag = new ALStringField();
     company_name_kana = new ALStringField();
     zipcode = new ALStringField();
@@ -142,7 +153,9 @@ public class AddressBookResultData implements ALData {
     create_date = new ALStringField();
     update_date = new ALStringField();
     created_user = new ALStringField();
+    created_user_id = new ALNumberField();
     updated_user = new ALStringField();
+    updated_user_id = new ALNumberField();
     index = new ALStringField();
   }
 
@@ -300,9 +313,21 @@ public class AddressBookResultData implements ALData {
     return position_name;
   }
 
+  public void setNote(String string) {
+    note.setValue(string);
+  }
+
+  public String getNote() {
+    return ALEipUtils.getMessageList(note.getValue());
+  }
+
+  public String getNoteRaw() {
+    return note.getValue();
+  }
+
   /**
    * 公開フラグを設定します。
-   * 
+   *
    * @param string
    */
   public void setPublicFlag(String string) {
@@ -311,7 +336,7 @@ public class AddressBookResultData implements ALData {
 
   /**
    * 公開フラグを取得します。
-   * 
+   *
    * @return
    */
   public ALStringField getPublicFlag() {
@@ -443,6 +468,20 @@ public class AddressBookResultData implements ALData {
   }
 
   /**
+   * @param field
+   */
+  public void setCreatedUserId(Integer i) {
+    created_user_id.setValue(i.longValue());
+  }
+
+  /**
+   * @return
+   */
+  public ALNumberField getCreatedUserId() {
+    return created_user_id;
+  }
+
+  /**
    * @return
    */
   public ALStringField getUpdatedUser() {
@@ -454,6 +493,20 @@ public class AddressBookResultData implements ALData {
    */
   public void setUpdatedUser(String string) {
     updated_user.setValue(string);
+  }
+
+  /**
+   * @param field
+   */
+  public void setUpdatedUserId(Integer i) {
+    updated_user_id.setValue(i.longValue());
+  }
+
+  /**
+   * @return
+   */
+  public ALNumberField getUpdatedUserId() {
+    return updated_user_id;
   }
 
   /**

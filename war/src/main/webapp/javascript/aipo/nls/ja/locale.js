@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 {
 	// 'この'+button.form.name+'を削除してよろしいですか？'
 	DW_STR:"${dw_this}${dw_name}\u3092${dw_del}\u3057\u3066\u3088\u308d\u3057\u3044\u3067\u3059\u304b\uff1f",
@@ -26,6 +25,10 @@
 	DWS_STR:"${dws_sel}${dws_name}\u3092${dws_del}\u3057\u3066\u3088\u308d\u3057\u3044\u3067\u3059\u304b\uff1f",
 	DWS_DEL:"\u524a\u9664",
 	DWS_SEL:"\u9078\u629e\u3057\u305f",
+	// 'すべての'+button.form.name+'を削除してよろしいですか？'
+	DWA_STR:"${dwa_sel}${dwa_name}\u3092${dwa_del}\u3057\u3066\u3088\u308d\u3057\u3044\u3067\u3059\u304b\uff1f",
+	DWA_DEL:"\u524a\u9664",
+	DWA_SEL:"\u3059\u3079\u3066\u306e",
 	// "チェックボックスを１つ以上選択してください。"
 	VERIFYCB_STR:"${verifycb_cb}\u3092${verifycb_gt_one}${verifycb_sel}\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
 	VERIFYCB_SEL:"\u9078\u629e",
@@ -65,14 +68,16 @@
 	DELETE_STR:"\u524a\u9664",
     //指定しない
 	NOT_SPECIFIED_STR:"\u0020\u6307\u5b9a\u3057\u306a\u3044",
-	//　＜ 追加　
-	ADDBTN_STR:"\u3000\uff1c \u8ffd\u52a0\u3000",
-	//　削除　
-	DELETEBTN_STR:"\u3000\u524a\u9664\u3000",
+	//＜ 追加
+	ADDBTN_STR:"\uff1c \u8ffd\u52a0",
+	//削除
+	DELETEBTN_STR:"\u524a\u9664",
 	//"一覧の総数が"+max+"件を超えています。\n日付の範囲を変更してください。"
 	EVENTLOG_STR:"\u4e00\u89a7\u306e\u7dcf\u6570\u304c${max}\u4ef6\u3092\u8d85\u3048\u3066\u3044\u307e\u3059\u3002\n\u65e5\u4ed8\u306e\u7bc4\u56f2\u3092\u5909\u66f4\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
 	// 新しく入力する
 	NEW_INPUT_STR:"\u65b0\u3057\u304f\u5165\u529b\u3059\u308b",
 	// 一覧から選択する
-	SELECT_FROM_LIST_STR:"\u4e00\u89a7\u304b\u3089\u9078\u629e\u3059\u308b"
+	SELECT_FROM_LIST_STR:"\u4e00\u89a7\u304b\u3089\u9078\u629e\u3059\u308b",
+	// 閉じる
+	CLOSE_STR:"\u9589\u3058\u308b"
 }

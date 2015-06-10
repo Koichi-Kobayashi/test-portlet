@@ -1,6 +1,6 @@
 #*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,15 +19,15 @@
 ## ---------------------------------------------------------------------------
 #ALjavascript("javascript/aipo/webmail/form.js")
 
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 //<![CDATA[
 
     dojo.require("aipo.widget.AddressbookDialog");
 
-    ptConfig['$!portlet.ID'] = { group:"webmail", initUrl:'$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","WebMailScreen"))', reloadFunction:aipo.reloadPage };
+    ptConfig['$!portlet.ID'] = { group:"webmail", initUrl:'$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","WebMailScreen"))', reloadFunction:aipo.webmail.reloadMailList };
 
 	aipo.webmail.onProcessingTimer();
 
 //]]>
 </script>
-#parse("/portlets/html/ja/ajax-webmail.vm")
+#parse("/portlets/html/ajax-webmail.vm")

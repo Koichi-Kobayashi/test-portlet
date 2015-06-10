@@ -1,6 +1,6 @@
 #*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *#
-
 ## ---------------------------------------------------------------------------
 #if($mode=="new_form")
 #set ($action_str = $l10n.WEBMAIL_DO_ADD)
@@ -51,7 +50,7 @@
 #ALtdcaption($l10n.WEBMAIL_MAILACCOUNT_SELECTED)
 #ALtditem($!result.MailAccountName)
 #ALtdcaption("#ALrequired($!result.getFieldName('filter_name'))")
-#ALtditem("#ALtextfield('filter_name' $!result.FilterName '90%' 50 'active')")
+#ALtditem("#ALtextfieldw100('filter_name' $!result.FilterName 50 'active')")
 #ALtdcaption("#ALrequired($!result.getFieldName('filter_string'))")
 #ALtdcellheader()
 <select name="filter_type">

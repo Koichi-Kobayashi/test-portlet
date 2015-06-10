@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.system;
 
 import java.net.InetAddress;
@@ -40,6 +39,8 @@ import com.aimluck.eip.modules.actions.common.ALAction;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.services.config.ALConfigHandler.Property;
 import com.aimluck.eip.services.config.ALConfigService;
+import com.aimluck.eip.services.eventlog.ALEventlogConstants;
+import com.aimluck.eip.services.eventlog.ALEventlogFactoryService;
 import com.aimluck.eip.system.util.SystemUtils;
 import com.aimluck.eip.util.ALLocalizationUtils;
 
@@ -219,6 +220,18 @@ public class SystemNetworkInternalFormData extends ALAbstractFormData {
 
       // 会社を更新
       Database.commit();
+
+      // イベントログに保存
+      ALEventlogFactoryService.getInstance().getEventlogHandler().log(
+        record.getCompanyId(),
+        ALEventlogConstants.PORTLET_TYPE_SYSTEM,
+        "社内アドレスを"
+          + protocol.getValue()
+          + "://"
+          + ipaddress_internal.getValue()
+          + ":"
+          + (int) port_internal.getValue()
+          + "に更新");
 
       // singletonの更新
       ALEipManager.getInstance().reloadCompany();

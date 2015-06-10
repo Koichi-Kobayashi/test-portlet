@@ -48,7 +48,7 @@ public class TutorialScreen extends ALVelocityScreen {
 
     putData(rundata, context);
 
-    String layout_template = "portlets/html/ja/tutorial.vm";
+    String layout_template = "portlets/html/tutorial.vm";
     setTemplate(rundata, context, layout_template);
   }
 

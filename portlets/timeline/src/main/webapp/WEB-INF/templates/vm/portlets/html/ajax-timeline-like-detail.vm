@@ -1,6 +1,6 @@
 #*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,9 @@
 ## ---------------------------------------------------------------------------
 #set ($record = $result.Detail)
 ## ---------------------------------------------------------------------------
+<div class="borderAuiHead">
 <div id="messageDiv"></div>
-<div class="auiPopup">
-<h2>$l10n.TIMELINE_SAYING_LIKE</h2>
+#ALdialogheader($l10n.TIMELINE_SAYING_LIKE)
     <div class="auiListWrapper">
 		<ul class="userList">
 #foreach ($record2 in $record.LikeList)
@@ -41,9 +41,8 @@
 </li>
 #end
 </ul>
-</div>
-#ALbuttonheader()
-<p class="rightBtn pt10" onclick="aipo.common.hideDialog();" ><button>$l10n.TIMELINE_CLOSE</button></p>
+#ALdialogfooter()
+#ALbuttonheaderPt10()
+#ALajaxbuttonClose()
 #ALbuttonfooter()
 </div>
-

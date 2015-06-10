@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.account;
 
 import java.util.List;
@@ -36,6 +35,8 @@ import com.aimluck.eip.orm.query.SelectQuery;
 import com.aimluck.eip.services.config.ALConfigHandler.Property;
 import com.aimluck.eip.services.config.ALConfigService;
 import com.aimluck.eip.services.datasync.ALDataSyncFactoryService;
+import com.aimluck.eip.services.eventlog.ALEventlogConstants;
+import com.aimluck.eip.services.eventlog.ALEventlogFactoryService;
 import com.aimluck.eip.util.ALEipUtils;
 import com.aimluck.eip.util.ALLocalizationUtils;
 
@@ -129,6 +130,23 @@ public class AccountUserMultiDisable extends ALAbstractCheckList {
 
         // ワークフロー自動承認
         AccountUtils.acceptWorkflow(user.getUserId());
+
+        // イベントログに保存
+        String name = "";
+        if (user.getLastName() != null
+          && !" ".equals(user.getLastName())
+          && user.getFirstName() != null
+          && !" ".equals(user.getFirstName())) {
+          name =
+            new StringBuffer().append(user.getLastName()).append(" ").append(
+              user.getFirstName()).toString();
+        } else {
+          name = user.getEmail();
+        }
+        ALEventlogFactoryService.getInstance().getEventlogHandler().log(
+          user.getUserId(),
+          ALEventlogConstants.PORTLET_TYPE_ACCOUNT,
+          "ユーザー「" + name + "」を無効化");
       }
 
       Database.commit();

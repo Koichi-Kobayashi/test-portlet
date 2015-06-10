@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.modules.actions.msgboard;
 
 import java.util.ArrayList;
@@ -82,6 +81,7 @@ public class MsgboardAction extends ALBaseAction {
 
     MsgboardTopicSelectData listData = new MsgboardTopicSelectData();
     listData.initField();
+    listData.setFiltersFromPSML(portlet, context, rundata);
     listData.loadCategoryList(rundata, context);
     listData.setRowsNum(Integer.parseInt(portlet
       .getPortletConfig()
@@ -483,8 +483,8 @@ public class MsgboardAction extends ALBaseAction {
     list.add("entityid");
     list.add("com.aimluck.eip.msgboard.MsgboardTopicSelectDatasort");
     list.add("com.aimluck.eip.msgboard.MsgboardTopicSelectDatasorttype");
-    list.add("com.aimluck.eip.msgboard.MsgboardTopicSelectDatafilter");
-    list.add("com.aimluck.eip.msgboard.MsgboardTopicSelectDatafiltertype");
+    // list.add("com.aimluck.eip.msgboard.MsgboardTopicSelectDatafilter");
+    // list.add("com.aimluck.eip.msgboard.MsgboardTopicSelectDatafiltertype");
     list.add("com.aimluck.eip.msgboard.MsgboardTopicSelectDatasearch");
     ALEipUtils.removeTemp(rundata, context, list);
 

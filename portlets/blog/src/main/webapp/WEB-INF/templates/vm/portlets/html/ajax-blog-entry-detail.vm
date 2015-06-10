@@ -1,6 +1,6 @@
 #*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *#
-
 ## ---------------------------------------------------------------------------
 #set ($indicator_id = "indicator-dlg-")
-#set ($indicator_str = "データを送信")
+#set ($indicator_str = $l10n.BLOG_SEND_DATA)
 ## ---------------------------------------------------------------------------
 ## IE文字化け対策
 <span id="blog_val_confirm1" style="display:none">$l10n.BLOG_CONFIRM_DELETE_COMMENT</span>
@@ -31,20 +30,23 @@
 #ALajaxscreenformheader("blogEntryForm" $jslink $portlet "BlogEntryFormJSONScreen" "aimluck.io.disableForm(this, true)")
 <table class="listTable wide">
 <caption>
-<span class="floatRight" style="font-weight:normal; color:#434343;">$!{result.Detail.ThemaNameHtml}</span>
+<span class="subCaption">$!{result.Detail.ThemaNameHtml}</span>
 $!{result.Detail.TitleHtml}
 </cation>
 <tr>
 <td>
 <div class="clearfix">
 <div class="avatar floatLeft mr10">
+<a href="javascript: void(0)" onclick="aipo.message.popupProfile($!{result.Detail.User.UserId},arguments[0])">
 #if(${result.Detail.hasPhoto()})
 <img src="$!utils.escapeXML($jslink.getTemplate("FileuploadFacePhotoScreen").addQueryData("uid", ${result.Detail.OwnerId}).addQueryData("t", ${result.Detail.PhotoModified}))" alt="${result.Detail.OwnerName}" width="32" height="32" />
 #else
 <img src="images/common/avatar_default3.png" alt="${result.Detail.OwnerName}" width="32" height="32" />
 #end
+</a>
 </div>
-<div class="alignleft"><strong>${result.Detail.OwnerName}</strong>
+<div class="alignleft"><a href="javascript: void(0)" onclick="aipo.message.popupProfile($!{result.Detail.User.UserId},arguments[0])">
+<strong>${result.Detail.OwnerName}</strong></a>
 <br />
 $!{result.Detail.CreateDateAlternative.Year}$l10n.BLOG_YEAR$!{result.Detail.CreateDateAlternative.Month}$l10n.BLOG_MONTH$!{result.Detail.CreateDateAlternative.Day}$l10n.BLOG_DAY$!{result.Detail.CreateDateAlternative.DayOfWeek} $!{result.Detail.CreateDateAlternative.time}
 </div>
@@ -53,7 +55,7 @@ $!{result.Detail.CreateDateAlternative.Year}$l10n.BLOG_YEAR$!{result.Detail.Crea
 #ALajaxbuttonEditCallback("$!jslink.getPortletById($!portlet.ID).addQueryData('template','BlogEntryFormScreen').addQueryData('entityid',$entityid)" "$!portlet.ID" "aipo.blog.onLoadMsgboardDialog")
 #end
 #if($!{result.Deletable})
-#ALbutton("eventSubmit_doBlog_entry_delete" "$l10n.BLOG_DO_DELETE " "aipo.blog.delBlogEntry(this,'$indicator_id','$!{portlet.ID}');")
+#ALbutton("eventSubmit_doBlog_entry_delete" "$l10n.COMMON_DELETE" "aipo.blog.delBlogEntry(this,'$indicator_id','$!{portlet.ID}');")
 #end
 </div>
 </div>
@@ -61,24 +63,25 @@ $!{result.Detail.CreateDateAlternative.Year}$l10n.BLOG_YEAR$!{result.Detail.Crea
 </tr>
 
 <tr>
-<td style="border-bottom:none;">
+<td style="border-top:none;" class="sentence">
 <div class="clearfix">
   <div>
   $!{result.Detail.Note}
   #if($!result.Detail.AttachmentFileList && $!result.Detail.AttachmentFileList.size() > 0)
     <div style="padding-top:15px;">
+    <ul>
     #foreach( $attachmentFile in $!result.Detail.AttachmentFileList )
-      <div style="padding-top:5px;">
-      <img src="images/blog/blog_item.gif">&nbsp;<a #if("$!{client}"=="IPHONE")target="_blank"#end href="$jslink.getTemplate("BlogFileRawScreen").addPathInfo("ownerid", $!{result.Detail.OwnerId}).addPathInfo("entityid", $!result.Detail.EntryId).addPathInfo("attachmentIndex", $attachmentFile.FileId).addPathInfo("f", ${attachmentFile.getURLEncodedValue()})"> $result.getStringCR($attachmentFile.FileNameField) </a><br />
+      <li><a #if("$!{client}"=="IPHONE")target="_blank"#end href="$jslink.getTemplate("BlogFileRawScreen").addPathInfo("ownerid", $!{result.Detail.OwnerId}).addPathInfo("entityid", $!result.Detail.EntryId).addPathInfo("attachmentIndex", $attachmentFile.FileId).addPathInfo("f", ${attachmentFile.getURLEncodedValue()})">$result.getStringCR($attachmentFile.FileNameField)</a>
       #if($attachmentFile.isImage())
-        <div style="padding-top:3px;padding-left:12px;" class="thumbBlock">
+        <div class="thumbBlock">
         <div id='popc' style='position:absolute'></div>
         <a href="javascript:aipo.fileupload.showImageDialog('$jslink.getTemplate('FileuploadViewScreen').addPathInfo('screen',"BlogFileRawScreen").addPathInfo("ownerid", $!{result.Detail.OwnerId}).addPathInfo("entryid", $!result.Detail.EntryId).addPathInfo("attachmentIndex", $attachmentFile.FileId).addPathInfo("f", ${attachmentFile.FileNameField})');">
         <img class="width_thumbs mb5" border="0" alt="$attachmentFile.FileName" title="$attachmentFile.FileName" src="$jslink.getTemplate("BlogFileThumbnailScreen").addPathInfo("ownerid", $!{result.Detail.OwnerId}).addPathInfo("entityid", $!result.Detail.EntryId).addPathInfo("attachmentIndex", $attachmentFile.FileId).addPathInfo("f", ${attachmentFile.FileNameField})"></a>
         </div>
       #end
-      </div>
+      </li>
     #end
+    </ul>
     </div>
   #end
   </div>
@@ -91,25 +94,30 @@ $!{result.Detail.CreateDateAlternative.Year}$l10n.BLOG_YEAR$!{result.Detail.Crea
 
 #if($!result.CommentList && $!result.CommentList.size() > 0 || ("$!{client}"!="IPHONE" && $!result.CommentList.size() == 0))
 <table class="listTable wide mb0">
-<caption>コメント</cation>
+<caption>$l10n.BLOG_COMMENT</cation>
 #foreach ($record in $result.CommentList)
   <tr>
   <td>
   <div class="clearfix mb10">
   <div class="avatar floatLeft mr10">
+  	<a href="javascript: void(0)" onclick="aipo.message.popupProfile($!{record.OwnerId},arguments[0])">
   #if(${record.Owner.hasPhoto()})
     <img src="$!utils.escapeXML($jslink.getTemplate("FileuploadFacePhotoScreen").addQueryData("uid", ${record.OwnerId}).addQueryData("t", ${record.Owner.PhotoModified}))" alt="${record.OwnerName}" width="32" height="32" />
   #else
     <img src="images/common/avatar_default3.png" alt="${result.Detail.OwnerName}" width="32" height="32" />
   #end
+  </a>
   </div>
-  <div class="alignleft"><strong>$!{record.OwnerName}</strong>
+  <div class="alignleft">
+  	<a href="javascript: void(0)" onclick="aipo.message.popupProfile($!{record.OwnerId},arguments[0])">
+  	<strong>$!{record.OwnerName}</strong>
+  	</a>
   <br />
-  $!{record.UpdateDateAlternative.Year}年$!{record.UpdateDateAlternative.Month}月$!{record.UpdateDateAlternative.Day}日$!{record.UpdateDateAlternative.DayOfWeek} $!{record.UpdateDateAlternative.time}
+  $!{record.UpdateDateAlternative.Year}$l10n.BLOG_YEAR$!{record.UpdateDateAlternative.Month}$l10n.BLOG_MONTH$!{record.UpdateDateAlternative.Day}$l10n.BLOG_DAY$!{record.UpdateDateAlternative.DayOfWeek} $!{record.UpdateDateAlternative.time}
   </div>
   <div class="alignright">
   #if($!{result.OtherCommentDeletable} || ($!result.isMatch($!{result.UserId} , $!{record.OwnerId.Value}) && $!{result.CommentDeletable}))
-    #ALbutton("eventSubmit_doBlog_comment_delete" "削除する" "aipo.blog.delCommentReply(this, ${record.CommentId}, '$!indicator_id', '$!portlet.ID');")
+    #ALbutton("eventSubmit_doBlog_comment_delete" "$l10n.COMMON_DELETE" "aipo.blog.delCommentReply(this, ${record.CommentId}, '$!indicator_id', '$!portlet.ID');")
   #end
   </div>
   </div>

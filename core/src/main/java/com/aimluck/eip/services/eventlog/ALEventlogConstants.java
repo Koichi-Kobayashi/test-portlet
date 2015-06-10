@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,20 +16,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.services.eventlog;
 
 /**
  * イベントログの定数です。 <br />
- *
+ * 
  */
 public class ALEventlogConstants {
 
   /**
    * PORTLET_TYPE
-   *
+   * 
    * 1-99 管理者用ポートレット 100- 一般ポートレット 0 その他ポートレット
-   *
+   * 
    * XX1- 一般ポートレット上位2桁:ポートレットごとに振る 10X-
    * 一般ポートレット上位2桁:ポートレットごとの詳細モード(category,thema etc...)
    */
@@ -44,6 +43,10 @@ public class ALEventlogConstants {
   public static final int PORTLET_TYPE_ACCOUNT = 3;
 
   public static final int PORTLET_TYPE_SYSTEM = 4;
+
+  public static final int PORTLET_TYPE_FACILITY = 5;
+
+  public static final int PORTLET_TYPE_GADGET = 6;
 
   public static final int PORTLET_TYPE_AJAXSCHEDULEWEEKLY = 100;
 
@@ -118,5 +121,13 @@ public class ALEventlogConstants {
   public static final int PORTLET_TYPE_REPORT = 320;
 
   public static final int PORTLET_TYPE_TIMELINE = 330;
+
+  public static final int PORTLET_TYPE_GPDB = 340;
+
+  public static final int PORTLET_TYPE_ACCESSCTL = 350;
+
+  public static final int PORTLET_TYPE_WIKI = 360;
+
+  public static final int PORTLET_TYPE_PROJECT = 370;
 
 }

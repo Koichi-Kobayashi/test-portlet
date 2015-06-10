@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,12 +16,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.facilities.util;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.apache.cayenne.exp.Expression;
@@ -327,7 +324,8 @@ public class FacilitiesUtils {
       SelectQuery<EipMFacility> query) {
     List<FacilityResultData> list = new ArrayList<FacilityResultData>();
     try {
-      List<EipMFacility> aList = query.fetchList();
+      List<EipMFacility> aList =
+        query.orderAscending(EipMFacility.SORT_PROPERTY).fetchList();
 
       for (EipMFacility record : aList) {
         FacilityResultData rd = new FacilityResultData();
@@ -341,13 +339,6 @@ public class FacilitiesUtils {
     } catch (Exception ex) {
       logger.error("[Exception]", ex);
     }
-    Collections.sort(list, new Comparator<FacilityResultData>() {
-      @Override
-      public int compare(FacilityResultData str1, FacilityResultData str2) {
-        return str1.getStringFacilityName().compareTo(
-          str2.getStringFacilityName());
-      }
-    });
     return list;
   }
 

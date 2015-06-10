@@ -2,7 +2,7 @@
 <!--
 
     Aipo is a groupware program developed by Aimluck,Inc.
-    Copyright (C) 2004-2011 Aimluck,Inc.
+    Copyright (C) 2004-2015 Aimluck,Inc.
     http://www.aipo.com
 
     This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-
 <portlets id="01">
     <metainfo>
         <title>システム管理者ホーム</title>
@@ -38,6 +37,12 @@
         <controller name="MenuController"/>
         <entry id="131" parent="SysInfo">
             <layout position="1" size="-1">
+                <property name="column" value="0"/>
+                <property name="row" value="0"/>
+            </layout>
+        </entry>
+        <entry id="127" parent="FileIO">
+            <layout position="2" size="-1">
                 <property name="column" value="0"/>
                 <property name="row" value="0"/>
             </layout>

@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.services.eventlog;
 
 import org.apache.jetspeed.services.logging.JetspeedLogFactoryService;
@@ -34,7 +33,8 @@ public abstract class ALEventlogHandler {
 
   public abstract void log(int entity_id, int portlet_type, String note);
 
-  public abstract void log(int entity_id, int portlet_type, String note, String mode);
+  public abstract void log(int entity_id, int portlet_type, String note,
+      String mode);
 
   public abstract void logLogin(int userid);
 
@@ -42,4 +42,9 @@ public abstract class ALEventlogHandler {
 
   public abstract void logXlsScreen(int userid, String Note, int _p_type);
 
+  public abstract int getEventTypeValue(String mode);
+
+  public abstract String getEventAliasName(int eventType);
+
+  public abstract String getPortletAliasName(int portletType);
 }

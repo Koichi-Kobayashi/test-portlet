@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.webmail;
 
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ import java.util.List;
 
 import org.apache.cayenne.exp.Expression;
 import org.apache.cayenne.exp.ExpressionFactory;
+import org.apache.commons.lang.StringUtils;
 import org.apache.jetspeed.services.logging.JetspeedLogFactoryService;
 import org.apache.jetspeed.services.logging.JetspeedLogger;
 import org.apache.turbine.util.RunData;
@@ -41,6 +41,9 @@ import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.common.ALEipUser;
 import com.aimluck.eip.common.ALPageNotFoundException;
+import com.aimluck.eip.mail.ALFolder;
+import com.aimluck.eip.mail.ALMailFactoryService;
+import com.aimluck.eip.mail.ALMailHandler;
 import com.aimluck.eip.mail.util.ALMailUtils;
 import com.aimluck.eip.modules.actions.common.ALAction;
 import com.aimluck.eip.orm.Database;
@@ -49,6 +52,7 @@ import com.aimluck.eip.services.eventlog.ALEventlogConstants;
 import com.aimluck.eip.services.eventlog.ALEventlogFactoryService;
 import com.aimluck.eip.services.storage.ALStorageService;
 import com.aimluck.eip.util.ALEipUtils;
+import com.aimluck.eip.util.ALLocalizationUtils;
 import com.aimluck.eip.webmail.util.WebMailUtils;
 
 /**
@@ -174,7 +178,8 @@ public class WebMailFolderFormData extends ALAbstractFormData {
   public void initField() {
     // フォルダ名
     folder_name = new ALStringField();
-    folder_name.setFieldName("フォルダ名");
+    folder_name
+      .setFieldName(ALLocalizationUtils.getl10n("WEBMAIL_FOLDER_NAME"));
     folder_name.setTrim(true);
   }
 
@@ -293,7 +298,8 @@ public class WebMailFolderFormData extends ALAbstractFormData {
         ALEipUtils.getParameter(rundata, context, ALEipConstants.ENTITY_ID);
 
       // デフォルトのフォルダは削除不可。
-      if (mailAccount.getDefaultFolderId() == Integer.parseInt(folderId)) {
+      if (StringUtils.isEmpty(folderId)
+        || mailAccount.getDefaultFolderId() == Integer.parseInt(folderId)) {
         return false;
       }
 
@@ -330,6 +336,14 @@ public class WebMailFolderFormData extends ALAbstractFormData {
           mailPaths.add(mail.getFilePath());
         }
       }
+
+      // 一緒にメールを削除する
+      String sql = "DELETE FROM eip_t_mail WHERE FOLDER_ID = #bind($folderId)";
+      Database
+        .sql(EipTMail.class, sql)
+        .param("folderId", folder.getFolderId())
+        .execute();
+
       // フォルダ情報を削除
       Database.delete(folder);
       Database.commit();
@@ -340,18 +354,40 @@ public class WebMailFolderFormData extends ALAbstractFormData {
         ALEventlogConstants.PORTLET_TYPE_WEBMAIL_FOLDER,
         folder.getFolderName());
 
+      // ローカルファイルに保存されているファイルのパスを取得する．
+      String currentTab = ALEipUtils.getTemp(rundata, context, "tab");
+      int type_mail =
+        (WebMailUtils.TAB_RECEIVE.equals(currentTab))
+          ? ALFolder.TYPE_RECEIVE
+          : ALFolder.TYPE_SEND;
+      int userId = ALEipUtils.getUserId(rundata);
+
+      String orgId = Database.getDomainName();
+
+      int accountId = -1;
+      accountId =
+        Integer.parseInt(ALEipUtils.getTemp(
+          rundata,
+          context,
+          WebMailUtils.ACCOUNT_ID));
+      ALMailHandler handler =
+        ALMailFactoryService.getInstance().getMailHandler();
+      ALFolder alFolder =
+        handler.getALFolder(type_mail, orgId, userId, Integer
+          .valueOf(accountId));
       // ローカルファイルに保存されているファイルを削除する．
       if (mailPaths.size() > 0) {
         int size = mailPaths.size();
         for (int k = 0; k < size; k++) {
-          ALStorageService.deleteFile(ALMailUtils.getLocalurl()
+          ALStorageService.deleteFile(alFolder.getFullName()
+            + ALStorageService.separator()
             + mailPaths.get(k));
         }
       }
       return true;
     } catch (Throwable t) {
       Database.rollback();
-      logger.error("[WebMailFolderFormData]", t);
+      logger.error("[WebMailFolderFormData.deleteFormData]", t);
       return false;
     }
   }
@@ -390,6 +426,7 @@ public class WebMailFolderFormData extends ALAbstractFormData {
         folder_name.getValue());
       return true;
     } catch (Throwable t) {
+      Database.rollback();
       logger.error("[WebMailFolderFormData]", t);
       return false;
     }

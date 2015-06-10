@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.addressbook;
 
 import java.util.ArrayList;
@@ -224,19 +223,23 @@ public class AddressBookFormData extends ALAbstractFormData {
     position_name.setFieldName(ALLocalizationUtils
       .getl10n("ADDRESSBOOK_SETFIELDNAME_POSITION"));
     position_name.setTrim(true);
+
+    note = new ALStringField();
+    note.setFieldName(ALLocalizationUtils
+      .getl10n("ADDRESSBOOK_SETFIELDNAME_NOTE"));
+    note.setTrim(true);
+
     public_flag = new ALStringField();
     public_flag.setFieldName(ALLocalizationUtils
       .getl10n("ADDRESSBOOK_SETFIELDNAME_PUBLIC"));
     public_flag.setTrim(true);
     create_user = new ALStringField();
     create_user.setFieldName(ALLocalizationUtils
-      .getl10n("ADDRESSBOOK_SETFIELDNAME_CREATE_USER"));
+      .getl10n("COMMON_CREATE_USER"));
     update_user = new ALStringField();
-    update_user.setFieldName(ALLocalizationUtils
-      .getl10n("ADDRESSBOOK_SETFIELDNAME_UPDATE_USER"));
+    update_user.setFieldName(ALLocalizationUtils.getl10n("COMMON_UPDATE_USER"));
     create_date = new ALDateField();
-    create_date.setFieldName(ALLocalizationUtils
-      .getl10n("ADDRESSBOOK_SETFIELDNAME_CREATE_DATE"));
+    create_date.setFieldName(ALLocalizationUtils.getl10n("COMMON_CREATE_DATE"));
     update_date = new ALDateField();
     update_date.setFieldName(ALLocalizationUtils
       .getl10n("ADDRESSBOOK_SETFIELDNAME_LAST_UPDATE_DATE"));
@@ -384,6 +387,7 @@ public class AddressBookFormData extends ALAbstractFormData {
 
       // exclude default company
       query.setQualifier(AddressBookUtils.excludeDefaultCompanyCriteria());
+      query.orderAscending(EipMAddressbookCompany.COMPANY_NAME_KANA_PROPERTY);
 
       List<EipMAddressbookCompany> aList = query.fetchList();
       int size = aList.size();
@@ -435,6 +439,8 @@ public class AddressBookFormData extends ALAbstractFormData {
     cellular_mail.setCharacterType(ALStringField.TYPE_ASCII);
     cellular_mail.limitMaxLength(50);
     position_name.limitMaxLength(50);
+
+    note.limitMaxLength(1000);
 
     // 会社情報
     if (is_new_company) {
@@ -524,6 +530,8 @@ public class AddressBookFormData extends ALAbstractFormData {
       msgList
         .add(ALLocalizationUtils.getl10n("ADDRESSBOOK_ALERT_SET_CELLMAIL"));
     }
+
+    note.validate(msgList);
 
     position_name.validate(msgList);
 
@@ -643,6 +651,7 @@ public class AddressBookFormData extends ALAbstractFormData {
 
       cellular_mail.setValue(address.getCellularMail());
       position_name.setValue(address.getPositionName());
+      note.setValue(address.getNote());
       public_flag.setValue(address.getPublicFlag());
 
       create_date.setValue(address.getCreateDate());
@@ -715,6 +724,9 @@ public class AddressBookFormData extends ALAbstractFormData {
 
       address.setCellularMail(cellular_mail.getValue());
       address.setPositionName(position_name.getValue());
+
+      // メモの設定
+      address.setNote(note.getValue());
 
       // 会社の設定
       boolean hasCompany = false;
@@ -905,6 +917,7 @@ public class AddressBookFormData extends ALAbstractFormData {
       }
 
       address.setPositionName(position_name.getValue());
+      address.setNote(note.getValue());
 
       if (user_id == address.getOwnerId()) {
         address.setPublicFlag(public_flag.getValue());

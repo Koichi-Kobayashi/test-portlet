@@ -1,6 +1,6 @@
 #*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,12 +25,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 #if($config.getString("portal.title"))#set($titlePrefix = $config.getString("portal.title"))#else#set($titlePrefix = "")#end
 <title>$l10n.WAR_SELECT_FILE</title>
-<meta name="description" content="" />
-<meta name="keywords" content="" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta name="copyright" content="${copyright}" />
-<meta http-equiv="X-UA-Compatible" content="IE=emulateIE7,chrome=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8,chrome=1" />
 <meta name="robots" content="noindex,follow" />
 #if("${client}" == "IPHONE")
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.6667, maximum-scale=1, user-scalable=no">
@@ -55,6 +53,6 @@
   };
 </script>
 #end
-#parse("/portlets/html/ja/fileupload-mini.vm")
+#parse($contentTemplate)
 </body>
 </html>

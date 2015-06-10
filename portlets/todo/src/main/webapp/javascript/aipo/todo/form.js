@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 dojo.provide("aipo.todo");
 
 dojo.require("aipo.widget.DropdownDatepicker");
@@ -32,7 +31,9 @@ aipo.todo.toggleMenu=function (node,filters,event){
         	top:document.documentElement.scrollTop||document.body.scrollTop
         };
         node.style.opacity="0";
-        node.style.display="block";
+        setTimeout( function(){
+			dojo.style(node, "display" , "block");
+		}, 0);
         if(html.right-node.clientWidth>rect.left){
        		node.style.left=rect.left+scroll.left+"px";
         }else{
@@ -55,18 +56,22 @@ aipo.todo.toggleMenu=function (node,filters,event){
  * @param portlet_id
  */
 aipo.todo.initFilterSearch = function(portlet_id) {
-	var q = dojo.byId("q" + portlet_id)
-	var filters = dojo.byId('filters_' + portlet_id)
+	var q = dojo.byId("q" + portlet_id);
+	var filters = dojo.byId('filters_' + portlet_id);
 	if (filters && q) {
-		var filterOffset = filters.offsetWidth
-		if (aipo.userAgent.isAndroid4()) {
-			var searchForm = dojo.query("div.filterInputField")[0]
-			searchForm.style.left = filterOffset + "px"
-			filters.style.left = -filterOffset + "px"
-			q.style.width = parseInt(dojo.getComputedStyle(q).width) - filterOffset + "px"
-			q.style.paddingLeft = "0px"
+		var filterOffset = filters.offsetWidth;
+		if (aipo.userAgent.isAndroid4_0()) {
+			var searchForm = dojo.query("div.filterInputField")[0];
+			var fieldlength = parseInt(dojo.getComputedStyle(q).width);
+			searchForm.style.left = filterOffset + "px";
+			filters.style.left = -filterOffset + "px";
+			q.style.width = fieldlength - filterOffset + "px";
+			searchForm.style.width = fieldlength - filterOffset + "px";
+			q.style.paddingLeft = "2px";
 		} else {
-			q.style.paddingLeft = filterOffset + "px"
+			if(filterOffset != 0) {
+				q.style.paddingLeft = filterOffset + "px";
+			}
 		}
 	}
 }
@@ -77,16 +82,18 @@ aipo.todo.initFilterSearch = function(portlet_id) {
  * @param portlet_id
  */
 aipo.todo.finFilterSearch = function(portlet_id) {
-	if (aipo.userAgent.isAndroid4()) {
-		var q = dojo.byId("q" + portlet_id)
-		var filters = dojo.byId('filters_' + portlet_id)
+	if (aipo.userAgent.isAndroid4_0()) {
+		var q = dojo.byId("q" + portlet_id);
+		var filters = dojo.byId('filters_' + portlet_id);
 		if (filters && q) {
-			var filterOffset = filters.offsetWidth
-			var searchForm = dojo.query("div.filterInputField")[0]
-			searchForm.style.left = "0px"
-			filters.style.left = "0px"
-			q.style.width = parseInt(dojo.getComputedStyle(q).width) + filterOffset + "px"
-			q.style.paddingLeft = filterOffset + "px"
+			var filterOffset = filters.offsetWidth;
+			var searchForm = dojo.query("div.filterInputField")[0];
+			var fieldlength = parseInt(dojo.getComputedStyle(q).width);
+			searchForm.style.left = "0px";
+			filters.style.left = "0px";
+			q.style.width = fieldlength + filterOffset + "px";
+			searchForm.style.width = fieldlength + filterOffset + "px";
+			q.style.paddingLeft = filterOffset + 2 + "px";
 		}
 	}
 }
