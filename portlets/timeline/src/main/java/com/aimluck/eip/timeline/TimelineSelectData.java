@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.timeline;
 
 import java.util.ArrayList;
@@ -67,7 +66,7 @@ import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * タイムライントピックの検索データを管理するクラスです。 <BR>
- * 
+ *
  */
 public class TimelineSelectData extends
     ALAbstractSelectData<EipTTimeline, EipTTimeline> implements ALData {
@@ -135,7 +134,7 @@ public class TimelineSelectData extends
   private HashMap<String, String> portletIdFromAppId;
 
   /**
-   * 
+   *
    * @param action
    * @param rundata
    * @param context
@@ -172,7 +171,7 @@ public class TimelineSelectData extends
 
   /**
    * My グループの一覧を取得する．
-   * 
+   *
    * @return
    */
   public List<ALEipGroup> getMyGroupList() {
@@ -181,7 +180,7 @@ public class TimelineSelectData extends
 
   /**
    * 一覧データを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -245,7 +244,7 @@ public class TimelineSelectData extends
 
   /**
    * 検索条件を設定した SelectQuery を返します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -262,7 +261,7 @@ public class TimelineSelectData extends
 
   /**
    * ResultData に値を格納して返します。（一覧データ） <BR>
-   * 
+   *
    * @param obj
    * @return
    */
@@ -304,7 +303,7 @@ public class TimelineSelectData extends
 
   /**
    * ResultData に値を格納して返します。（詳細データ） <BR>
-   * 
+   *
    * @param obj
    * @return
    */
@@ -440,16 +439,8 @@ public class TimelineSelectData extends
       rd.setThumbnailFlag(flag);
 
       String url = model.getUrl();
-      if (url.startsWith("http://www.youtube.com")
-        || url.startsWith("https://www.youtube.com")) {
-        String youtubeId = model.getUrl();
-        int startpoint = youtubeId.indexOf("v=");
-        int endpoint = youtubeId.indexOf("&", startpoint);
-        if (endpoint == -1) {
-          endpoint = youtubeId.length();
-        }
-        youtubeId = youtubeId.substring(startpoint + 2, endpoint);
-        rd.setYoutubeId(youtubeId);
+      if (TimelineUtils.isYoutubeUrl(url)) {
+        rd.setYoutubeId(TimelineUtils.getYoutubeId(url));
         rd.setYoutubeFlag(true);
       }
       rdList.add(rd);
@@ -468,6 +459,9 @@ public class TimelineSelectData extends
       Database.query(EipTTimelineFile.class);
     query
       .where(Operations.in(EipTTimelineFile.TIMELINE_ID_PROPERTY, parentIds));
+
+    query.orderAscending(EipTTimelineFile.UPDATE_DATE_PROPERTY);
+    query.orderAscending(EipTTimelineFile.FILE_PATH_PROPERTY);
 
     List<EipTTimelineFile> list = query.fetchList();
     Map<Integer, List<FileuploadBean>> result =
@@ -733,7 +727,7 @@ public class TimelineSelectData extends
 
   /**
    * トピックの総数を返す． <BR>
-   * 
+   *
    * @return
    */
   public int getTopicSum() {
@@ -742,7 +736,7 @@ public class TimelineSelectData extends
 
   /**
    * トピックの総数を返す． <BR>
-   * 
+   *
    * @return
    */
   public int getContentHeight() {
@@ -751,7 +745,7 @@ public class TimelineSelectData extends
 
   /**
    * トピックの総数を返す． <BR>
-   * 
+   *
    * @return
    */
   public int getContentHeightMax() {
@@ -760,7 +754,7 @@ public class TimelineSelectData extends
 
   /**
    * @return
-   * 
+   *
    */
   @Override
   protected Attributes getColumnMap() {
@@ -772,7 +766,7 @@ public class TimelineSelectData extends
   }
 
   /**
-   * 
+   *
    * @param id
    * @return
    */
@@ -794,7 +788,7 @@ public class TimelineSelectData extends
 
   /**
    * 他ユーザのトピックを編集する権限があるかどうかを返します。
-   * 
+   *
    * @return
    */
   public boolean hasAclUpdateTopicOthers() {
@@ -803,7 +797,7 @@ public class TimelineSelectData extends
 
   /**
    * 他ユーザのトピックを削除する権限があるかどうかを返します。
-   * 
+   *
    * @return
    */
   public boolean hasAclDeleteTopicOthers() {
@@ -812,7 +806,7 @@ public class TimelineSelectData extends
 
   /**
    * 部署の一覧を取得する．
-   * 
+   *
    * @return
    */
   public Map<Integer, ALEipPost> getPostMap() {
@@ -849,7 +843,7 @@ public class TimelineSelectData extends
     if (baseuser == null) {
       return false;
     }
-    return baseuser.getPhoto() != null;
+    return baseuser.hasPhoto();
   }
 
   public ALEipUser getMyUser() {
@@ -857,7 +851,7 @@ public class TimelineSelectData extends
   }
 
   /**
-   * 
+   *
    * @param id
    * @return
    */
@@ -876,7 +870,7 @@ public class TimelineSelectData extends
 
   /**
    * 指定グループや指定ユーザをセッションに設定する．
-   * 
+   *
    * @param rundata
    * @param context
    * @throws ALDBErrorException
@@ -886,21 +880,41 @@ public class TimelineSelectData extends
     target_group_name = getTargetGroupName(rundata, context);
     current_filter = target_group_name;
     if ((!target_group_name.equals("")) && (!target_group_name.equals("all"))) {
-      userList = ALEipUtils.getUsers(target_group_name);
-    } else if ((!target_group_name.equals(""))
-      && (!target_group_name.equals("all"))) {
-      userList = ALEipUtils.getUsers(target_group_name);
+      boolean existPost = false;
+      for (int i = 0; i < myGroupList.size(); i++) {
+        String pid = myGroupList.get(i).getName().toString();
+        if (pid.equals(target_group_name)) {
+          existPost = true;
+          break;
+        }
+      }
+      Map<Integer, ALEipPost> map = ALEipManager.getInstance().getPostMap();
+      for (Map.Entry<Integer, ALEipPost> item : map.entrySet()) {
+        String pid = item.getValue().getGroupName().toString();
+        if (pid.equals(target_group_name)) {
+          existPost = true;
+          break;
+        }
+      }
+      if (existPost) {
+        userList = ALEipUtils.getUsers(target_group_name);
+      } else {
+        target_group_name = "all";
+        userList = ALEipUtils.getUsers("LoginUser");
+      }
     } else {
       userList = ALEipUtils.getUsers("LoginUser");
     }
     for (int i = 0; i < userList.size(); i++) {
       useridList.add((int) (userList.get(i).getUserId().getValue()));
     }
+    // ガイドユーザー表示用
+    useridList.add(2);
   }
 
   /**
    * 表示切り替えで指定したグループ ID を取得する．
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -911,7 +925,7 @@ public class TimelineSelectData extends
 
   /**
    * 表示切り替えで指定したグループ ID を取得する．
-   * 
+   *
    * @param rundata
    * @param target_key
    * @param context
@@ -939,7 +953,7 @@ public class TimelineSelectData extends
 
   /**
    * 表示切り替え時に指定するグループ名
-   * 
+   *
    * @return
    */
   public String getTargetGroupName() {

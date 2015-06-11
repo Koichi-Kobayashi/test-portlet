@@ -1,6 +1,6 @@
 #*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *#
-
 ## ---------------------------------------------------------------------------
 <script type="text/javascript">
 
@@ -41,21 +40,24 @@ function onCommentDelete(form) {
 #ALcell_contents_header($career)
 #ALcell_msgboard_detail($career $!{result.ParentTopic})
 #if($result.ParentTopic.AttachmentFileList && $result.ParentTopic.AttachmentFileList.size()>0)
-<p>
+<div style="padding-top:15px;">
+<ul>
 #foreach( $attachmentFile in $!result.ParentTopic.AttachmentFileList )
-<img src="images/msgboard/msgboard_item.gif">&nbsp;<a href="$jslink.getTemplate("MsgboardTopicFileRawScreen").addQueryData("ownerid", $!{result.ParentTopic.OwnerId}).addQueryData("entityid", $!result.ParentTopic.TopicId).addQueryData("attachmentIndex", $attachmentFile.FileId)">$result.getStringCR($attachmentFile.FileNameField)</a><br>
+<li><a href="$jslink.getTemplate("MsgboardTopicFileRawScreen").addQueryData("ownerid", $!{result.ParentTopic.OwnerId}).addQueryData("entityid", $!result.ParentTopic.TopicId).addQueryData("attachmentIndex", $attachmentFile.FileId)">$result.getStringCR($attachmentFile.FileNameField)</a>
     #if($attachmentFile.isImage())
-    <img border="0" style="padding-left:13px" alt="$attachmentFile.FileName" title="$attachmentFile.FileName" src="$jslink.getTemplate("MsgboardTopicFileThumbnailScreen").addQueryData("ownerid", $!{result.ParentTopic.OwnerId}).addQueryData("entityid", $!result.ParentTopic.TopicId).addQueryData("attachmentIndex", $attachmentFile.FileId)"><br>
+    <img border="0" alt="$attachmentFile.FileName" title="$attachmentFile.FileName" src="$jslink.getTemplate("MsgboardTopicFileThumbnailScreen").addQueryData("ownerid", $!{result.ParentTopic.OwnerId}).addQueryData("entityid", $!result.ParentTopic.TopicId).addQueryData("attachmentIndex", $attachmentFile.FileId)"><br>
     #end
+</li>
 #end
-</p>
+</ul>
+</div>
 #end
 #if($!result.isMatch($!{result.UserId} , $!{result.ParentTopic.OwnerId.Value}) || $!result.hasAclDeleteTopicOthers())
 <form action="$!jslink.getPortletById($!portlet.ID)" method="post">
 <input type="hidden" name="entityid" value=$!{result.ParentTopic.TopicId}>
 <input type="hidden" name="mode" value="delete">
 <input type="hidden" name="secid" value="$secid" />
-<p class="right ma0"><input type="button" onClick="onTopicDelete(this.form);return false" class="submit" name="eventSubmit_doMsgboard_topic_delete" value="削除する"></p>
+<p class="right ma0"><input type="button" onClick="onTopicDelete(this.form);return false" class="submit" name="eventSubmit_doMsgboard_topic_delete" value="$l10n.COMMON_DELETE"></p>
 </form>
 #end
 <h3>コメント一覧</h3>
@@ -65,14 +67,17 @@ function onCommentDelete(form) {
     #foreach ($record in $result.CoTopicList)
     #ALcell_msgboard_comment($career $!{record})
         #if($!record.AttachmentFileList && $!record.AttachmentFileList.size()>0)
-        <p>
+        <div style="padding-top:15px;">
+        <ul>
         #foreach( $attachmentFile in $!record.AttachmentFileList )
-        <img src="images/msgboard/msgboard_item.gif">&nbsp;<a href="$jslink.getTemplate("MsgboardTopicFileRawScreen").addQueryData("ownerid", ${record.OwnerId}).addQueryData("entityid", $record.TopicId).addQueryData("attachmentIndex", $attachmentFile.FileId)">$result.getStringCR($attachmentFile.FileNameField)</a><br>
+        <li><a href="$jslink.getTemplate("MsgboardTopicFileRawScreen").addQueryData("ownerid", ${record.OwnerId}).addQueryData("entityid", $record.TopicId).addQueryData("attachmentIndex", $attachmentFile.FileId)">$result.getStringCR($attachmentFile.FileNameField)</a>
             #if($attachmentFile.isImage())
-            <img border="0" style="padding-left:13px" alt="$attachmentFile.FileName" title="$attachmentFile.FileName" src="$jslink.getTemplate("MsgboardTopicFileThumbnailScreen").addQueryData("ownerid", ${record.OwnerId}).addQueryData("entityid", $record.TopicId).addQueryData("attachmentIndex", $attachmentFile.FileId)"><br>
+            <img border="0" alt="$attachmentFile.FileName" title="$attachmentFile.FileName" src="$jslink.getTemplate("MsgboardTopicFileThumbnailScreen").addQueryData("ownerid", ${record.OwnerId}).addQueryData("entityid", $record.TopicId).addQueryData("attachmentIndex", $attachmentFile.FileId)"><br>
             #end
+        </li>
         #end
-        </p>
+        </ul>
+        </div>
         #end
 
         #if($!result.isMatch($!{result.UserId} , $!{record.OwnerId.Value}) || $!result.hasAclDeleteTopicOthers())
@@ -80,7 +85,7 @@ function onCommentDelete(form) {
         <input type="hidden" name="topic_reply_id" value=${record.TopicId}>
         <input type="hidden" name="mode" value="delete_reply">
         <input type="hidden" name="secid" value="$secid" />
-        <p class="right ma0"><input type="button" onClick="onCommentDelete(this.form);return false" class="submit" name="eventSubmit_doMsgboard_topic_reply_delete" value="削除する"></p>
+        <p class="right ma0"><input type="button" onClick="onCommentDelete(this.form);return false" class="submit" name="eventSubmit_doMsgboard_topic_reply_delete" value="$l10n.COMMON_DELETE"></p>
         </form>
         #end
     #end

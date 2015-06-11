@@ -1,8 +1,6 @@
-if(!dojo._hasResource["aimluck.widget.Dialog"]){ //_hasResource checks added by build. Do not use _hasResource directly in your code.
-dojo._hasResource["aimluck.widget.Dialog"] = true;
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,6 +16,8 @@ dojo._hasResource["aimluck.widget.Dialog"] = true;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+if(!dojo._hasResource["aimluck.widget.Dialog"]){ //_hasResource checks added by build. Do not use _hasResource directly in your code.
+dojo._hasResource["aimluck.widget.Dialog"] = true;
 
 dojo.provide("aimluck.widget.Dialog");
 dojo.provide("aimluck.widget.DialogSub");
@@ -80,8 +80,9 @@ dojo.declare(
     [dijit.Dialog],
     {
     	//読み込み中...
-        loadingMessage:"<div class='indicatorDialog'><div class='indicator'>"+nlsStrings.LOADING_STR+"</div></div>",
-        templateString:null,
+    	loadingMessage:"<div class='auiPopup indicatorDialog center'><i class='auiIcon auiIconIndicator'></i> "+nlsStrings.LOADING_STR+"</div>",
+    	errorMessage: "<div class='auiPopup indicatorDialog center'>${errorState}</div>",
+    	templateString:null,
         templateString:"<div id='modalDialog' class='modalDialog' dojoattachpoint='wrapper'><span dojoattachpoint='tabStartOuter' dojoonfocus='trapTabs' dojoonblur='clearTrap'tabindex='0'></span><span dojoattachpoint='tabStart' dojoonfocus='trapTabs' dojoonblur='clearTrap' tabindex='0'></span><div dojoattachpoint='containerNode' style='position: relative; z-index: 2;'></div><span dojoattachpoint='tabEnd' dojoonfocus='trapTabs' dojoonblur='clearTrap' tabindex='0'></span><span dojoattachpoint='tabEndOuter' dojoonfocus='trapTabs' dojoonblur='clearTrap' tabindex='0'></span></div>",//<div dojoAttachPoint=\"titleBar\" class=\"modalDialogTitleBar\" tabindex=\"0\" waiRole=\"dialog\">&nbsp;</div>
         duration: 10,
         extractContent: false,
@@ -235,6 +236,15 @@ dojo.declare(
             		}
             	});
         	}
+        	//android時、長い詳細画面を最後までスクロールできない問題の対策
+        	if(aipo.userAgent.isAndroid()){
+        		var modalDialog = document.getElementById('modalDialog');
+        		if(modalDialog) {
+        			var wrapper = document.getElementById('wrapper');
+        			wrapper.style.minHeight = modalDialog.clientHeight + 'px';
+        		}
+
+        	}
 
             var focusNode = dojo.byId( this.widgetId );
             if ( focusNode ) {
@@ -282,7 +292,14 @@ dojo.declare(
             var mb = dojo.marginBox(this.domNode);
 
             var style = this.domNode.style;
-            style.left = Math.floor((viewport.l + (viewport.w - mb.w)/2)) + "px";
+            if(this.id=="imageDialog"){
+                if(style.width == 0) {
+                    //loading
+                    style.marginLeft = "-150px";
+                }else{
+                    style.marginLeft = Math.floor(-style.width.replace("px","")/2) + "px";
+                }
+            }
             if(Math.floor((viewport.t + (viewport.h - mb.h)/2)) > 0){
                 style.top = Math.floor((viewport.t + (viewport.h - mb.h)/2)) + "px";
             } else {
@@ -342,6 +359,8 @@ dojo.declare(
                 return err;
             });
         },
+        _onKey: function(/*Event*/ evt){
+		},
         hide:function(){
         	var wrapper = document.getElementById('wrapper');
         	if(wrapper) {

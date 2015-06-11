@@ -1,6 +1,6 @@
 #*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,21 +16,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *#
-
 ## ---------------------------------------------------------------------------
 #set ($indicator_id = "indicator-list-")
 ## ---------------------------------------------------------------------------
 <div id="auiContentsArea" #if($clientVer && $clientVer == "5") style="margin-bottom:45px" #end><div id="auiContentsAreaInner">
 <div id="auiThreeClumns">
 <div id="auiThreeClumnsInner">
-<div class="auiSummaryMeta clearfix">
-<form class="auiSearch" id="searchForm_$!{portlet.ID}" action="$!jslink.getPortletById($!portlet.ID)" onsubmit="aimluck.io.postViewPage(this, '$!{portlet.ID}', 'search-${indicator_id}'); return false;">
+
+#AUISummaryDivHeader()
+#AUISearchHeader("searchForm_" "searchForm_" "$!jslink.getPortletById($!portlet.ID)" "aimluck.io.postViewPage(this, '$!{portlet.ID}', 'search-${indicator_id}'); return false;")
 <input type="hidden" name="template" value="BlogEntryListScreen"/>
-<input class="text floatLeft long" type="text" name="keyword" id="q$!{portlet.ID}" style="margin-right:5px;" value="$!result.Keyword.toString()"/>
-<a class="auiButtonSearch floatLeft" onclick="dojo.byId('searchForm_$!{portlet.ID}').onsubmit();">$l10n.BLOG_SEARCH</a>
-</form>
-<div class="floatLeft ml10" style="padding-top: 0.4em;">#ALajaxIndicator("search-${indicator_id}" "$!{portlet.ID}" "&nbsp;")</div>
-</div>
+#AUISearchInput("q$!{portlet.ID}" "keyword" "$!result.Keyword.toString()" "style='margin-right:5px;'")
+#AUIButtonSearch("$l10n.COMMON_SEARCH")
+#AUISearchIndicator()
+#AUISearchFooter()
+#AUISummaryDivFooter()
+
 <div class="auiSummaryMeta clearfix">
 #AUIsearchresult($!result.Keyword.toString())
 #if ($result.List.size() != 0)
@@ -39,14 +40,14 @@
 </div>
 
 #if($result.List.size() == 0)
-<div class="message">$l10n.BLOG_NOTHING_ENTRY。</div>
+#AUIEmptyMessage("icon-book" "$l10n.BLOG_EMPTY_SHORT_MESSAGE")
 <div id="messageDivList_$!portlet.ID"></div>
 #else
 <div id="auiBlogEntries">
 #foreach ($record in $result.List)
 <div class="entry clearfix">
 <div class="avatar">
-<a href="$!utils.escapeXML($!jslink.getAction('controls.Maximize',$!portlet.ID).addQueryData('eventSubmit_doBlog_entry_list_user','1').addQueryData('view_uid',${record.OwnerId}).addQueryData('view_month', 'none'))">
+<a href="$!utils.escapeXML($!jslink.getAction('controls.Maximize',$!portlet.ID).addQueryData('eventSubmit_doBlog_entry_list_user','1').addQueryData('view_uid',${record.OwnerId}).addQueryData('ownerid',${record.OwnerId}).addQueryData('view_month', 'none'))">
 #if(${record.hasPhoto()})
 <img src="$!utils.escapeXML($jslink.getTemplate("FileuploadFacePhotoScreen").addQueryData("uid", ${record.OwnerId}).addQueryData("t", ${record.PhotoModified}))" alt="${record.OwnerName}" width="50" height="50" />
 #else
@@ -58,8 +59,8 @@
 <div class="entryHeader"><p><a href="javascript:void(0);" onclick="aipo.common.showDialog('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","BlogDetailScreen").addQueryData("entityid",$record.EntryId))', '$!portlet.ID', aipo.blog.onLoadBlogDetailDialog );"> ${record.TitleHtml}#if($record.CommentsNum > 0)（${record.CommentsNum}）#end</a></p></div>
 <div class='entryText'>${record.CompressedNote}</div>
 <div class="entryFooter">
-<div class="floatRight">${record.TitleDate}｜${record.OwnerName}</div>
-<a href="javascript:void(0);" onclick="aipo.viewPage('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","BlogEntryListScreen").addQueryData("themeid", $!record.ThemaId.toString()))', '$!portlet.ID');">$!record.ThemaNameHtml</a>
+<div class="floatRight">${record.TitleDate}｜<a href="javascript: void(0)" onclick="aipo.message.popupProfile(${record.OwnerId},arguments[0])">${record.OwnerName}</a></div>
+<a href="javascript:void(0);" class="subCaption" onclick="aipo.viewPage('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","BlogEntryListScreen").addQueryData("themeid", $!record.ThemaId.toString()))', '$!portlet.ID');">$!record.ThemaNameHtml</a>
 
 </div>
 </div>
@@ -79,7 +80,7 @@
 <div class="auiWidget clearfix mb_hide">
 <form class="auiForm">
 <select name="groupId" onChange="aipo.viewPage(this.options[this.selectedIndex].value, '$!portlet.ID')" class="wide">
-<option value="$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","BlogEntryListScreen").addQueryData("groupid","LoginUser").addQueryData("target_user_id", "all"))">すべてのグループ</option>
+<option value="$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","BlogEntryListScreen").addQueryData("groupid","LoginUser").addQueryData("target_user_id", "all"))">$l10n.BLOG_GROUP_LIST</option>
 #foreach( $record in $!result.MyGroupList )
 <option value="$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","BlogEntryListScreen").addQueryData("groupid","$!{record.Name.toString()}"))" #if($!result.GroupId == $!record.Name.toString()) selected #set($groupName = $!record.Name) #end>$!record.AliasName</option>
 #end
@@ -105,4 +106,4 @@ ${user.AliasName}</a></li>
 </div>
 </div>
 #AUIcontentsAreaFooter()
-#parse("/portlets/html/ja/blog-widgets.vm")
+#parse("/portlets/html/blog-widgets.vm")

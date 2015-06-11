@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.common;
 
 /**
@@ -30,4 +29,15 @@ public class ALPageNotFoundException extends Exception {
    */
   private static final long serialVersionUID = 5975426959528143587L;
 
+  public ALPageNotFoundException() {
+    super();
+  }
+
+  public ALPageNotFoundException(String s) {
+    super(s);
+  }
+
+  public ALPageNotFoundException(Throwable throwable) {
+    super(throwable);
+  }
 }

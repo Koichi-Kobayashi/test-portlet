@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,35 +16,51 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.timeline;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.util.ALCommonUtils;
 
 /**
  * タイムライントピックの検索データを管理するクラスです。 <BR>
- * 
+ *
  */
 public class TimelineUrlBeans {
   /** 画像 */
   private List<String> images;
 
   /** タイトル */
-  private String title;
+  private final ALStringField title;
 
   /** URL */
-  private String url;
+  private final ALStringField url;
 
   /** メモ */
-  private String body;
+  private final ALStringField body;
 
   /** YouTube動画Id */
-  private String youtubeId;
+  private final ALStringField youtubeId;
 
   /** YouTubeの判断 */
   private boolean youtubeFlag;
+
+  /** og:imageで指定された画像 */
+  private String ogImage;
+
+  /**
+   * コンストラクタ
+   */
+  public TimelineUrlBeans() {
+    images = new ArrayList<String>();
+    title = new ALStringField();
+    url = new ALStringField();
+    body = new ALStringField();
+    youtubeId = new ALStringField();
+    youtubeFlag = false;
+  }
 
   /**
    * @return images
@@ -64,7 +80,7 @@ public class TimelineUrlBeans {
   /**
    * @return title
    */
-  public String getTitle() {
+  public ALStringField getTitle() {
     return title;
   }
 
@@ -73,18 +89,18 @@ public class TimelineUrlBeans {
    *          セットする title
    */
   public void setTitle(String title) {
-    this.title = title;
+    this.title.setValue(title);
   }
 
   /**
    * @return url
    */
-  public String getUrl() {
+  public ALStringField getUrl() {
     return url;
   }
 
   public String getAutoCRUrl() {
-    return ALCommonUtils.replaceToAutoCRString(url);
+    return ALCommonUtils.replaceToAutoCRString(url.getValue());
   }
 
   /**
@@ -92,13 +108,13 @@ public class TimelineUrlBeans {
    *          セットする url
    */
   public void setUrl(String url) {
-    this.url = url;
+    this.url.setValue(url);
   }
 
   /**
    * @return body
    */
-  public String getBody() {
+  public ALStringField getBody() {
     return body;
   }
 
@@ -107,13 +123,13 @@ public class TimelineUrlBeans {
    *          セットする body
    */
   public void setBody(String body) {
-    this.body = body;
+    this.body.setValue(body);
   }
 
   /**
    * @return youtubeId
    */
-  public String getYoutubeId() {
+  public ALStringField getYoutubeId() {
     return youtubeId;
   }
 
@@ -122,7 +138,7 @@ public class TimelineUrlBeans {
    *          セットする youtubeId
    */
   public void setYoutubeId(String youtubeId) {
-    this.youtubeId = youtubeId;
+    this.youtubeId.setValue(youtubeId);
   }
 
   /**
@@ -140,4 +156,18 @@ public class TimelineUrlBeans {
     this.youtubeFlag = youtubeFlag;
   }
 
+  /**
+   * @return ogImage
+   */
+  public String getOgImage() {
+    return ogImage;
+  }
+
+  /**
+   * @param ogimage
+   *          セットする youtubeFlag
+   */
+  public void setOgImage(String ogImage) {
+    this.ogImage = ogImage;
+  }
 }

@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.modules.screens;
 
 import org.apache.jetspeed.portal.portlets.VelocityPortlet;
@@ -201,7 +200,7 @@ public class ScheduleScreenPrint extends ALVelocityScreen {
         listData = new ScheduleOnedaySelectData();
         ((ScheduleOnedaySelectData) listData).setPortletId(portletId);
         // ブラウザ名を受け渡す．
-        boolean isMsie = ScheduleUtils.isMsieBrowser(rundata);
+        boolean isMsie = ALEipUtils.isMsieBrowser(rundata);
         context.put("isMeie", Boolean.valueOf(isMsie));
       } else if ("weekly".equals(currentTab)) {
         // tab = "weekly";
@@ -244,7 +243,7 @@ public class ScheduleScreenPrint extends ALVelocityScreen {
         listData = new ScheduleOnedayGroupSelectData();
         ((ScheduleOnedayGroupSelectData) listData).setPortletId(portletId);
         // ブラウザ名を受け渡す．
-        boolean isMsie = ScheduleUtils.isMsieBrowser(rundata);
+        boolean isMsie = ALEipUtils.isMsieBrowser(rundata);
         context.put("isMeie", Boolean.valueOf(isMsie));
       } else if ("weekly-group".equals(currentTab)) {
         // tab = "weekly-group";
@@ -277,7 +276,7 @@ public class ScheduleScreenPrint extends ALVelocityScreen {
       listData.initField();
       listData.doViewList(this, rundata, context);
 
-      String layout_template = "portlets/html/ja/ajax-schedule-print.vm";
+      String layout_template = "portlets/html/ajax-schedule-print.vm";
 
       setTemplate(rundata, context, layout_template);
 

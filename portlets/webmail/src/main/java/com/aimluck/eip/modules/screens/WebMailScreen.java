@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.modules.screens;
 
 import org.apache.jetspeed.portal.portlets.VelocityPortlet;
@@ -62,6 +61,10 @@ public class WebMailScreen extends ALVelocityScreen {
 
       VelocityPortlet portlet = ALEipUtils.getPortlet(rundata, context);
 
+      ALEipUtils.passPSML(rundata, context, "p3a-accounts", rundata
+        .getParameters()
+        .getString(WebMailUtils.ACCOUNT_ID));
+
       // 受信フォルダもしくは送信フォルダに保存されているメールの一覧を表示する．
       WebMailSelectData listData = new WebMailSelectData();
       listData.initField();
@@ -72,7 +75,7 @@ public class WebMailScreen extends ALVelocityScreen {
       listData.setStrLength(0);
       listData.doViewList(this, rundata, context);
 
-      setTemplate(rundata, context, "portlets/html/ja/ajax-webmail.vm");
+      setTemplate(rundata, context, "portlets/html/ajax-webmail.vm");
     } catch (Exception ex) {
       logger.error("[WebMailListScreen] Exception.", ex);
       ALEipUtils.redirectDBError(rundata);

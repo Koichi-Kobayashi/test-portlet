@@ -7,10 +7,9 @@
   <parent>
     <artifactId>aipo</artifactId>
     <groupId>com.aimluck.eip</groupId>
-    <version>7.0.2</version>
+    <version>8.0.1</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
-
   <groupId>com.aimluck.eip</groupId>
   <artifactId>war</artifactId>
   <packaging>war</packaging>
@@ -31,17 +30,51 @@
         <pluginManagement>
       <plugins>
         <plugin>
-          <groupId>net.sf.alchim</groupId>
+          <groupId>net.alchim31.maven</groupId>
           <artifactId>yuicompressor-maven-plugin</artifactId>
-          <version>0.7.1</version>
+          <version>1.3.2</version>
         </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
       <plugin>
-        <groupId>net.sf.alchim</groupId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+            <execution>
+                <id>copy-resources</id>
+                <phase>initialize</phase>
+		        <configuration>
+		          <target>
+		            <echo message="copy localization files from ja.properties"/>
+		            <property name="localizationDir" value="src/main/resources/com/aimluck/eip/modules/localization"/>
+		            <copy file="${localizationDir}/AipoLocalization_ja.properties" tofile="${localizationDir}/AipoLocalization_de.properties"/>
+		            <copy file="${localizationDir}/AipoLocalization_ja.properties" tofile="${localizationDir}/AipoLocalization_el.properties"/>
+		            <copy file="${localizationDir}/AipoLocalization_ja.properties" tofile="${localizationDir}/AipoLocalization_en.properties"/>
+		            <copy file="${localizationDir}/AipoLocalization_ja.properties" tofile="${localizationDir}/AipoLocalization_es.properties"/>
+		            <copy file="${localizationDir}/AipoLocalization_ja.properties" tofile="${localizationDir}/AipoLocalization_fr.properties"/>
+		            <copy file="${localizationDir}/AipoLocalization_ja.properties" tofile="${localizationDir}/AipoLocalization_it.properties"/>
+		            <copy file="${localizationDir}/AipoLocalization_ja.properties" tofile="${localizationDir}/AipoLocalization_ko.properties"/>
+		            <copy file="${localizationDir}/AipoLocalization_ja.properties" tofile="${localizationDir}/AipoLocalization_my.properties"/>
+		            <copy file="${localizationDir}/AipoLocalization_ja.properties" tofile="${localizationDir}/AipoLocalization_nl.properties"/>
+		            <copy file="${localizationDir}/AipoLocalization_ja.properties" tofile="${localizationDir}/AipoLocalization_no.properties"/>
+		            <copy file="${localizationDir}/AipoLocalization_ja.properties" tofile="${localizationDir}/AipoLocalization_pl.properties"/>
+		            <copy file="${localizationDir}/AipoLocalization_ja.properties" tofile="${localizationDir}/AipoLocalization_pt.properties"/>
+		            <copy file="${localizationDir}/AipoLocalization_ja.properties" tofile="${localizationDir}/AipoLocalization_tr.properties"/>
+		            <copy file="${localizationDir}/AipoLocalization_ja.properties" tofile="${localizationDir}/AipoLocalization_zh.properties"/>
+		          </target>
+		        </configuration>
+        		<goals>
+	              <goal>run</goal>
+	            </goals>
+            </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
         <artifactId>yuicompressor-maven-plugin</artifactId>
-        <version>0.7.1</version>
+        <version>1.3.2</version>
         <executions>
           <execution>
             <goals>
@@ -51,6 +84,7 @@
         </executions>
         <configuration>
           <sourceDirectory>${basedir}/src/main/webapp</sourceDirectory>
+          <outputDirectory>target/aipo</outputDirectory>
           <nosuffix>true</nosuffix>
           <encoding>UTF-8</encoding>
           <gzip>false</gzip>
@@ -70,7 +104,6 @@
                 <include>aipo/io/*.js</include>
                 <include>aimluck/dnd/*.js</include>
                 <include>aimluck/widget/*.js</include>
-                <include>aipo/widget/ActivityList.js</include>
                 <include>aipo/widget/GroupSelectList.js</include>
                 <include>aipo/widget/GroupNormalSelectList.js</include>
                 <include>aipo/widget/GroupNormalSelectList.js</include>
@@ -79,15 +112,21 @@
                 <include>aipo/widget/MemberNormalSelectList.js</include>
                 <include>aipo/workflow/MemberNormalSelectList.js</include>
                 <include>aipo/widget/DateCalendar.js</include>
-                <include>aipo/widget/DropdownActivityChecker.js</include>
                 <include>aipo/widget/DropdownDatepicker.js</include>
                 <include>aipo/widget/DropdownGrouppicker.js</include>
                 <include>aipo/widget/DropdownMemberpicker.js</include>
                 <include>aipo/widget/ToolTip.js</include>
+                <include>aipo/widget/ActivityList.js</include>
+                <include>aipo/widget/DropdownActivityChecker.js</include>
                 <include>aipo/fileupload/widget/FileuploadDialog.js</include>
                 <include>aipo/fileupload/widget/FileuploadViewDialog.js</include>
                 <include>aipo/gadgets.js</include>
                 <include>aipo/container.js</include>
+                <include>aipo/menu/menu.js</include>
+                <include>aipo/menu/activity.js</include>
+                <include>aipo/menu/message.js</include>
+                <include>aipo/message.js</include>
+                <include>aipo/notification.js</include>
               </includes>
               <excludes>
                 <exclude>**/*.xd.js</exclude>
@@ -109,7 +148,6 @@
                 <include>aipo/io/*.xd.js</include>
                 <include>aimluck/dnd/*.xd.js</include>
                 <include>aimluck/widget/*.xd.js</include>
-                <include>aipo/widget/ActivityList.xd.js</include>
                 <include>aipo/widget/GroupSelectList.xd.js</include>
                 <include>aipo/widget/GroupNormalSelectList.xd.js</include>
                 <include>aipo/widget/GroupNormalSelectList.xd.js</include>
@@ -118,7 +156,6 @@
                 <include>aipo/widget/MemberNormalSelectList.xd.js</include>
                 <include>aipo/workflow/MemberNormalSelectList.xd.js</include>
                 <include>aipo/widget/DateCalendar.xd.js</include>
-                <include>aipo/widget/DropdownActivityChecker.xd.js</include>
                 <include>aipo/widget/DropdownDatepicker.xd.js</include>
                 <include>aipo/widget/DropdownGrouppicker.xd.js</include>
                 <include>aipo/widget/DropdownMemberpicker.xd.js</include>
@@ -137,7 +174,6 @@
                 <include>../../../../target/aipo/javascript/aipo/fileupload/form.js</include>
                 <include>../../../../target/aipo/javascript/aipo/schedule/form.js</include>
                 <include>../../../../target/aipo/javascript/aipo/todo/form.js</include>
-                <include>../../../../target/aipo/javascript/aipo/test/form.js</include>
                 <include>../../../../target/aipo/javascript/aipo/workflow/form.js</include>
                 <include>../../../../target/aipo/javascript/aipo/blog/form.js</include>
                 <include>../../../../target/aipo/javascript/aipo/msgboard/form.js</include>
@@ -150,9 +186,14 @@
                 <include>../../../../target/aipo/javascript/aipo/gadgets_admin/form.js</include>
                 <include>../../../../target/aipo/javascript/aipo/timeline/form.js</include>
                 <include>../../../../target/aipo/javascript/aipo/page/form.js</include>
-                <include>../../../../target/aipo/javascript/aipo/tutorial/tutorial.js</include>
                 <include>../../../../target/aipo/javascript/aipo/calendar/weekly.js</include>
                 <include>../../../../target/aipo/javascript/aipo/mygroup/form.js</include>
+                <include>../../../../target/aipo/javascript/aipo/gpdb/form.js</include>
+                <include>../../../../target/aipo/javascript/aipo/fileuploadadv/form.js</include>
+                <include>../../../../target/aipo/javascript/aipo/wiki/form.js</include>
+                <include>../../../../target/aipo/javascript/aipo/project/raphael-min.js</include>
+                <include>../../../../target/aipo/javascript/aipo/project/form.js</include>
+                <include>../../../../target/aipo/javascript/aipo/test/form.js</include>
               </includes>
             </aggregation>
             <aggregation>
@@ -188,6 +229,13 @@
           <jswarn>false</jswarn>
           <statistics>false</statistics>
           <force>true</force>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <warSourceExcludes>**/*.css</warSourceExcludes>
         </configuration>
       </plugin>
     </plugins>

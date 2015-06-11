@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.modules.actions.webmail;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.jetspeed.portal.portlets.VelocityPortlet;
 import org.apache.jetspeed.services.logging.JetspeedLogFactoryService;
 import org.apache.jetspeed.services.logging.JetspeedLogger;
@@ -58,12 +58,6 @@ public class WebMailAction extends ALBaseAction {
     clearWebMailSession(rundata, context);
     ALEipUtils.setTemp(rundata, context, "WebMail_Normal", "true");
 
-    ALEipUtils.setTemp(rundata, context, ALEipConstants.ENTITY_ID, ALEipUtils
-      .getPortlet(rundata, context)
-      .getPortletConfig()
-      .getInitParameter("p3a-accounts")
-      .trim());
-
     WebMailSelectData listData = new WebMailSelectData();
     listData.initField();
     listData.loadMailAccountList(rundata, context);
@@ -71,6 +65,7 @@ public class WebMailAction extends ALBaseAction {
       .getPortletConfig()
       .getInitParameter("p1a-rows")));
     listData.setStrLength(0);
+    listData.setFiltersPSML(portlet, context, rundata);
     listData.doViewList(this, rundata, context);
     setTemplate(rundata, "webmail");
   }
@@ -86,18 +81,21 @@ public class WebMailAction extends ALBaseAction {
       Context context, RunData rundata) {
     // MODEを取得
     String mode = rundata.getParameters().getString(ALEipConstants.MODE);
+
     ALEipUtils.setTemp(rundata, context, "WebMail_Normal", "false");
 
     try {
-      if (ALEipConstants.MODE_LIST.equals(mode)) {
-        doWebmail_list(rundata, context);
+      if (ALEipConstants.MODE_LIST.equals(mode) || getMode() == null) {
+        String admintab = rundata.getParameters().getString("admintab");
+        if (!StringUtils.isEmpty(admintab)) {
+          doWebmail_account_list(rundata, context);
+        } else {
+          doWebmail_list(rundata, context);
+        }
       }
 
-      if (getMode() == null) {
-        doWebmail_list(rundata, context);
-      }
     } catch (Exception e) {
-      logger.error("webmail", e);
+      logger.error("WebMailAction.buildMaximizedContext", e);
     }
   }
 
@@ -109,8 +107,9 @@ public class WebMailAction extends ALBaseAction {
    * @throws Exception
    */
   public void doWebmail_list(RunData rundata, Context context) throws Exception {
-    VelocityPortlet portlet = ALEipUtils.getPortlet(rundata, context);
+    ALEipUtils.setTemp(rundata, context, "WebMail_Normal", "false");
 
+    VelocityPortlet portlet = ALEipUtils.getPortlet(rundata, context);
     WebMailSelectData listData = new WebMailSelectData();
     listData.initField();
     listData.loadMailAccountList(rundata, context);
@@ -202,7 +201,6 @@ public class WebMailAction extends ALBaseAction {
   public void doWebmail_folder_list(RunData rundata, Context context)
       throws Exception {
     VelocityPortlet portlet = ALEipUtils.getPortlet(rundata, context);
-
     WebMailFolderSelectData listData = new WebMailFolderSelectData();
     listData.initField();
     listData.setRowsNum(Integer.parseInt(portlet

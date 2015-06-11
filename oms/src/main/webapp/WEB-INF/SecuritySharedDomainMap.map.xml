@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Aipo is a groupware program developed by Aimluck,Inc.
+    Copyright (C) 2004-2015 Aimluck,Inc.
+    http://www.aipo.com
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
 <data-map project-version="2.0">
 	<property name="defaultPackage" value="com.aimluck.eip.cayenne.om.security"/>
 	<db-entity name="turbine_group">
@@ -158,6 +178,12 @@
 	<db-relationship name="turbineRole" source="turbine_role_permission" target="turbine_role" toMany="false">
 		<db-attribute-pair source="ROLE_ID" target="ROLE_ID"/>
 	</db-relationship>
+	<db-relationship name="EipTProjectTaskComment" source="turbine_user" target="eip_t_project_task_comment" toMany="true">
+		<db-attribute-pair source="USER_ID" target="CREATE_USER_ID"/>
+	</db-relationship>
+	<db-relationship name="EipTTimelineLike" source="turbine_user" target="eip_t_timeline_like" toMany="true">
+		<db-attribute-pair source="USER_ID" target="OWNER_ID"/>
+	</db-relationship>
 	<db-relationship name="eipMUserPosition" source="turbine_user" target="eip_m_user_position" toMany="false">
 		<db-attribute-pair source="USER_ID" target="USER_ID"/>
 	</db-relationship>
@@ -170,13 +196,25 @@
 	<db-relationship name="eipTEventlog" source="turbine_user" target="eip_t_eventlog" toMany="true">
 		<db-attribute-pair source="USER_ID" target="USER_ID"/>
 	</db-relationship>
+	<db-relationship name="eipTGpdb" source="turbine_user" target="eip_t_gpdb" toMany="true">
+		<db-attribute-pair source="USER_ID" target="CREATE_USER_ID"/>
+	</db-relationship>
+	<db-relationship name="eipTGpdbItem" source="turbine_user" target="eip_t_gpdb_item" toMany="true">
+		<db-attribute-pair source="USER_ID" target="CREATE_USER_ID"/>
+	</db-relationship>
+	<db-relationship name="eipTGpdbRecord" source="turbine_user" target="eip_t_gpdb_record" toMany="true">
+		<db-attribute-pair source="USER_ID" target="CREATE_USER_ID"/>
+	</db-relationship>
 	<db-relationship name="eipTMsgboardCategory" source="turbine_user" target="eip_t_msgboard_category" toMany="true">
 		<db-attribute-pair source="USER_ID" target="OWNER_ID"/>
 	</db-relationship>
-	<db-relationship name="eipTReport" source="turbine_user" target="eip_t_report" toMany="true">
-		<db-attribute-pair source="USER_ID" target="USER_ID"/>
+	<db-relationship name="eipTProject" source="turbine_user" target="eip_t_project" toMany="true">
+		<db-attribute-pair source="USER_ID" target="CREATE_USER_ID"/>
 	</db-relationship>
-	<db-relationship name="eipTTest" source="turbine_user" target="eip_t_test" toMany="true">
+	<db-relationship name="eipTProjectTask" source="turbine_user" target="eip_t_project_task" toMany="true">
+		<db-attribute-pair source="USER_ID" target="CREATE_USER_ID"/>
+	</db-relationship>
+	<db-relationship name="eipTReport" source="turbine_user" target="eip_t_report" toMany="true">
 		<db-attribute-pair source="USER_ID" target="USER_ID"/>
 	</db-relationship>
 	<db-relationship name="eipTTimeline" source="turbine_user" target="eip_t_timeline" toMany="true">
@@ -190,6 +228,12 @@
 	</db-relationship>
 	<db-relationship name="eipTTodoCategory" source="turbine_user" target="eip_t_todo_category" toMany="true">
 		<db-attribute-pair source="USER_ID" target="USER_ID"/>
+	</db-relationship>
+	<db-relationship name="eipTWikiCreateUser" source="turbine_user" target="eip_t_wiki" toMany="true">
+		<db-attribute-pair source="USER_ID" target="CREATE_USER_ID"/>
+	</db-relationship>
+	<db-relationship name="eipTWikiUpdateUser" source="turbine_user" target="eip_t_wiki" toMany="true">
+		<db-attribute-pair source="USER_ID" target="UPDATE_USER_ID"/>
 	</db-relationship>
 	<db-relationship name="eipTWorkflowRequest" source="turbine_user" target="eip_t_workflow_request" toMany="true">
 		<db-attribute-pair source="USER_ID" target="USER_ID"/>
@@ -221,13 +265,18 @@
 	<obj-relationship name="eipTAclUserRoleMaps" source="TurbineUser" target="EipTAclUserRoleMap" db-relationship-path="eipTAclUserRoleMaps"/>
 	<obj-relationship name="eipTCabinetFile" source="TurbineUser" target="EipTCabinetFile" db-relationship-path="eipTCabinet"/>
 	<obj-relationship name="eipTEventlog" source="TurbineUser" target="EipTEventlog" db-relationship-path="eipTEventlog"/>
+	<obj-relationship name="eipTGpdb" source="TurbineUser" target="EipTGpdb" db-relationship-path="eipTGpdb"/>
+	<obj-relationship name="eipTGpdbItem" source="TurbineUser" target="EipTGpdbItem" db-relationship-path="eipTGpdbItem"/>
+	<obj-relationship name="eipTGpdbRecord" source="TurbineUser" target="EipTGpdbRecord" db-relationship-path="eipTGpdbRecord"/>
 	<obj-relationship name="eipTMsgboardCategory" source="TurbineUser" target="EipTMsgboardCategory" db-relationship-path="eipTMsgboardCategory"/>
 	<obj-relationship name="eipTReport" source="TurbineUser" target="EipTReport" db-relationship-path="eipTReport"/>
-	<obj-relationship name="eipTTest" source="TurbineUser" target="EipTTest" db-relationship-path="eipTTest"/>
 	<obj-relationship name="eipTTimeline" source="TurbineUser" target="EipTTimeline" db-relationship-path="eipTTimeline"/>
-	<obj-relationship name="eipTTimelineLike" source="TurbineUser" target="EipTTimelineLike" db-relationship-path="eipTTimelineLike"/>
+	<obj-relationship name="eipTTimelineLike" source="TurbineUser" target="EipTTimelineLike" db-relationship-path="EipTTimelineLike"/>
+	<obj-relationship name="eipTTimelineLike1" source="TurbineUser" target="EipTTimelineLike" db-relationship-path="eipTTimelineLike"/>
 	<obj-relationship name="eipTTodo" source="TurbineUser" target="EipTTodo" db-relationship-path="eipTTodo"/>
 	<obj-relationship name="eipTTodoCategory" source="TurbineUser" target="EipTTodoCategory" db-relationship-path="eipTTodoCategory"/>
+	<obj-relationship name="eipTWikiCreateUser" source="TurbineUser" target="EipTWiki" db-relationship-path="eipTWikiCreateUser"/>
+	<obj-relationship name="eipTWikiUpdateUser" source="TurbineUser" target="EipTWiki" db-relationship-path="eipTWikiUpdateUser"/>
 	<obj-relationship name="eipTWorkflowRequest" source="TurbineUser" target="EipTWorkflowRequest" db-relationship-path="eipTWorkflowRequest"/>
 	<obj-relationship name="turbineUserGroupRole" source="TurbineUser" target="TurbineUserGroupRole" db-relationship-path="turbineUserGroupRole"/>
 	<obj-relationship name="eipTScheduleMap" source="TurbineUserGroupRole" target="EipTScheduleMap" db-relationship-path="eipTScheduleMap"/>

@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 dojo.provide("aipo.note");
 
 dojo.require("aipo.widget.DropdownDatepicker");
@@ -65,6 +64,12 @@ aipo.note.changeGroup = function(link, group, sel) {
 	// IE文字化け対策
 		var val1 = aimluck.io.escapeText("note_val_destuser1");
 		var val2 = aimluck.io.escapeText("note_val_destuser2");
+		var select = dojo.byId("target_group_name");
+		var select_group =select.options[select.selectedIndex].value;
+		if(select_group){
+			group=select_group;
+
+		}
 
 
     aimluck.utils.form.createSelect("dest_user_id", "destuserDiv", link + "?mode=group&groupname=" + group + "&inc_luser=false", "userId", "aliasName", sel, '<option value="">'+val1+'<\/option><option value="all">'+val2+'<\/option>','class="w49"');

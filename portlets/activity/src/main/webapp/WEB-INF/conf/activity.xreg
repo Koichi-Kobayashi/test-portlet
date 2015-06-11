@@ -2,7 +2,7 @@
 <!--
 
     Aipo is a groupware program developed by Aimluck,Inc.
-    Copyright (C) 2004-2011 Aimluck,Inc.
+    Copyright (C) 2004-2015 Aimluck,Inc.
     http://www.aipo.com
 
     This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-
 <registry>
     <portlet-entry name="Activity" hidden="false" type="ref" parent="Velocity" application="false">
         <security-ref parent="user-view"/>
         <meta-info>
             <title>更新情報</title>
-            <description>追加や更新のあった内容を時系列で表示します。</description>
+            <description>追加や更新があった場合にその内容を時系列で表示します。 キーワードを入力して検索することができます。</description>
         </meta-info>
         <classname>org.apache.jetspeed.portal.portlets.VelocityPortlet</classname>
         <parameter name="action" value="activity.ActivityAction" hidden="true" cachedOnName="true" cachedOnValue="true"/>
@@ -46,6 +45,16 @@
         <parameter name="p1b-rows.style" value="ListBox" hidden="true" cachedOnName="true" cachedOnValue="true"/>
         <parameter name="p1b-rows.style.items" value="5,10,20,50" hidden="true" cachedOnName="true" cachedOnValue="true"/>
         <parameter name="p1b-rows.style.values" value="5件,10件,20件,50件" hidden="true" cachedOnName="true" cachedOnValue="true"/>
+
+        <parameter name="p2e-rows" value="2" type="style" hidden="false" cachedOnName="true" cachedOnValue="true">
+            <meta-info>
+                <title>表示形式（トップページ）</title>
+            </meta-info>
+        </parameter>
+        <parameter name="p2e-rows.style" value="ListBox" hidden="true" cachedOnName="true" cachedOnValue="true"/>
+        <parameter name="p2e-rows.style.items" value="2,4" hidden="true" cachedOnName="true" cachedOnValue="true"/>
+        <parameter name="p2e-rows.style.values" value="簡易表示,詳細表示" hidden="true" cachedOnName="true" cachedOnValue="true"/>
+
         <media-type ref="html"/>
         <url cachedOnURL="true"/>
     </portlet-entry>

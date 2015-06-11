@@ -2865,7 +2865,7 @@ if(!dojo._hasResource["dojo.dnd.Avatar"]){ //_hasResource checks added by build.
 					node = this.manager.nodes[i].cloneNode(true);
 				node.id = "";
 				node.style.width=(this.manager.nodes[i].clientWidth || this.manager.nodes[i].offsetWidth)+"px";
-				node.style.height=(this.manager.nodes[i].clientHeight|| this.manager.nodes[i].offsetHeight)+"px";
+				node.style.height="auto";
 				td.appendChild(node);
 				tr.appendChild(td);
 				dojo.style(tr, "opacity", (9 - i) / 10);
@@ -2918,8 +2918,8 @@ if(!dojo._hasResource["dojo.dnd.Manager"]){ //_hasResource checks added by build
 
 	dojo.extend(dojo.dnd.Manager, {
 		// avatar's offset from the mouse
-		OFFSET_X: 16,
-		OFFSET_Y: 16,
+		OFFSET_X: -10,
+		OFFSET_Y: 5,
 		// methods
 		overSource: function(source){
 			// summary: called when a source detected a mouse-over conditiion

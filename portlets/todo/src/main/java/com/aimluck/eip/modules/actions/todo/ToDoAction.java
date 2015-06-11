@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.modules.actions.todo;
 
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * ToDoのアクションクラスです。 <BR>
- * 
+ *
  */
 public class ToDoAction extends ALBaseAction {
 
@@ -52,26 +51,27 @@ public class ToDoAction extends ALBaseAction {
     .getLogger(ToDoAction.class.getName());
 
   static final String LIST_FILTER_STR = new StringBuffer()
-    .append(ToDoSelectData.class.getName())
+    .append(ToDoSelectData.class.getSimpleName())
     .append(ALEipConstants.LIST_FILTER)
     .toString();
 
-  static final String LIST_FILTER_TYPE_STR = new StringBuffer()
-    .append(ToDoSelectData.class.getName())
-    .append(ALEipConstants.LIST_FILTER_TYPE)
+  static final String LIST_FILTER_TYPE_STR = new StringBuffer().append(
+    ToDoSelectData.class.getSimpleName()).append(
+    ALEipConstants.LIST_FILTER_TYPE).toString();
+
+  static final String LIST_SORT_STR = new StringBuffer()
+    .append(ToDoSelectData.class.getSimpleName())
+    .append(ALEipConstants.LIST_SORT)
     .toString();
 
-  static final String LIST_SORT_STR = new StringBuffer().append(
-    ToDoSelectData.class.getName()).append(ALEipConstants.LIST_SORT).toString();
-
   static final String LIST_SORT_TYPE_STR = new StringBuffer()
-    .append(ToDoSelectData.class.getName())
+    .append(ToDoSelectData.class.getSimpleName())
     .append(ALEipConstants.LIST_SORT_TYPE)
     .toString();
 
   /**
    * 通常表示の際の処理を記述します。 <BR>
-   * 
+   *
    * @param portlet
    * @param context
    * @param rundata
@@ -96,10 +96,12 @@ public class ToDoAction extends ALBaseAction {
     listData.setFiltersPSML(portlet, context, rundata);
 
     if (listData.getTableColumNum() == 4) {
-      ALEipUtils.setTemp(rundata, context, LIST_FILTER_STR, portlet
-        .getPortletConfig()
-        .getInitParameter("p1d-categories")
-        .trim());
+      String p12f_filters =
+        portlet.getPortletConfig().getInitParameter("p12f-filters");
+      if (null != p12f_filters) {
+        ALEipUtils.setTemp(rundata, context, LIST_FILTER_STR, p12f_filters
+          .trim());
+      }
     }
     ALEipUtils.setTemp(
       rundata,
@@ -135,7 +137,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * 最大化表示の際の処理を記述します。 <BR>
-   * 
+   *
    * @param portlet
    * @param context
    * @param rundata
@@ -166,7 +168,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * ToDo登録のフォームを表示します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -182,7 +184,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * ToDoを登録します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -209,7 +211,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * ToDoを更新します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -234,7 +236,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * ToDoを削除します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -256,7 +258,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * ToDoを削除します。（複数） <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -276,7 +278,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * ToDoを一覧表示します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -308,7 +310,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * ToDoを詳細表示します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -325,7 +327,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * ToDoの状態を完了にします。（複数） <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -339,7 +341,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * カテゴリ登録のフォームを表示します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -354,7 +356,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * カテゴリを登録します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -380,7 +382,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * カテゴリを更新します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -405,7 +407,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * カテゴリを削除します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -428,7 +430,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * カテゴリを削除します。（複数） <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -448,7 +450,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * カテゴリを一覧表示します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -474,7 +476,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * カテゴリを詳細表示します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -497,7 +499,7 @@ public class ToDoAction extends ALBaseAction {
 
   /**
    * ToDoの状態を更新します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception

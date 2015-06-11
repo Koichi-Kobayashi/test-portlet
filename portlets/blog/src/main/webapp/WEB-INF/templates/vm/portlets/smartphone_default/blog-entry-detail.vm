@@ -1,6 +1,6 @@
 #*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *#
-
 ## ---------------------------------------------------------------------------
 <script type="text/javascript">
 
@@ -41,14 +40,15 @@ function onCommentDelete(form) {
 #ALcell_linklist_iphone($career $methodlist)
 #ALcell_contents_header($career)
 #ALcell_blog_detail($career $!{result.Detail})
-<p>
+<ul>
 #foreach( $attachmentFile in $!result.Detail.AttachmentFileList )
-<img src="images/blog/blog_item.gif">&nbsp;<a href="$jslink.getTemplate("BlogFileRawScreen").addQueryData("ownerid", $!{result.Detail.OwnerId}).addQueryData("entityid", $!result.Detail.EntryId).addQueryData("attachmentIndex", $attachmentFile.FileId)"> $result.getStringCR($attachmentFile.FileNameField) </a><br/>
+<li><a href="$jslink.getTemplate("BlogFileRawScreen").addQueryData("ownerid", $!{result.Detail.OwnerId}).addQueryData("entityid", $!result.Detail.EntryId).addQueryData("attachmentIndex", $attachmentFile.FileId)">$result.getStringCR($attachmentFile.FileNameField)</a>
 #if($attachmentFile.isImage())
-<img border="0" style="padding-left:12px;" alt="$attachmentFile.FileName" title="$attachmentFile.FileName" src="$jslink.getTemplate("BlogFileThumbnailScreen").addQueryData("ownerid", $!{result.Detail.OwnerId}).addQueryData("entityid", $!result.Detail.EntryId).addQueryData("attachmentIndex", $attachmentFile.FileId)"><br/>
+<img border="0" alt="$attachmentFile.FileName" title="$attachmentFile.FileName" src="$jslink.getTemplate("BlogFileThumbnailScreen").addQueryData("ownerid", $!{result.Detail.OwnerId}).addQueryData("entityid", $!result.Detail.EntryId).addQueryData("attachmentIndex", $attachmentFile.FileId)"><br/>
 #end
+</li>
 #end
-</p>
+</ul>
 #ALcell_formheader($career $jslink $portlet)
 <input type="hidden" name="mode" value="delete">
 <p class="right ma0">
@@ -56,7 +56,7 @@ function onCommentDelete(form) {
 <input class="submit" type="submit" name="eventSubmit_doBlog_entry_form" value="編集する">
 #end
 #if($result.Deletable)
-<input class="submit" type="button" onClick="onEntryDelete(this.form);return false" name="eventSubmit_doBlog_entry_detail" value="削除する">
+<input class="submit" type="button" onClick="onEntryDelete(this.form);return false" name="eventSubmit_doBlog_entry_detail" value="$l10n.COMMON_DELETE">
 #end
 </p>
 #ALcell_formfooter()
@@ -71,7 +71,7 @@ function onCommentDelete(form) {
 <input type="hidden" name="entityid" value=${result.Detail.EntryId}>
 <input type="hidden" name="comment_id" value=${record.CommentId}>
 <input type="hidden" name="mode" value="view">
-<p class="right ma0"><input class="submit" type="button" onClick="onCommentDelete(this.form);return false" name="eventSubmit_doBlog_entry_comment_delete" value="削除する"></p>
+<p class="right ma0"><input class="submit" type="button" onClick="onCommentDelete(this.form);return false" name="eventSubmit_doBlog_entry_comment_delete" value="$l10n.COMMON_DELETE"></p>
 #ALcell_formfooter()
 #end
 #end

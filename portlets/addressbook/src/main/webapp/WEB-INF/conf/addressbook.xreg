@@ -2,7 +2,7 @@
 <!--
 
     Aipo is a groupware program developed by Aimluck,Inc.
-    Copyright (C) 2004-2011 Aimluck,Inc.
+    Copyright (C) 2004-2015 Aimluck,Inc.
     http://www.aipo.com
 
     This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-
 <registry>
     <portlet-entry name="AddressBook" hidden="false" type="ref" parent="Velocity" application="false">
         <security-ref parent="user-view"/>
         <meta-info>
             <title>アドレス帳</title>
-            <description>電話番号やメールアドレスを共有できます。</description>
+            <description>個人のアドレス、会社情報が管理・共有できます。非公開で登録することもできるため、幅広く管理できます。</description>
         </meta-info>
         <classname>org.apache.jetspeed.portal.portlets.VelocityPortlet</classname>
         <parameter name="template" value="addressbook" hidden="true" cachedOnName="true" cachedOnValue="true"/>

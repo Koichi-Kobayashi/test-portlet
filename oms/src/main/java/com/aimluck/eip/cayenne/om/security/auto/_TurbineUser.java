@@ -44,13 +44,18 @@ public class _TurbineUser extends org.apache.cayenne.CayenneDataObject {
     public static final String EIP_TACL_USER_ROLE_MAPS_PROPERTY = "eipTAclUserRoleMaps";
     public static final String EIP_TCABINET_FILE_PROPERTY = "eipTCabinetFile";
     public static final String EIP_TEVENTLOG_PROPERTY = "eipTEventlog";
+    public static final String EIP_TGPDB_PROPERTY = "eipTGpdb";
+    public static final String EIP_TGPDB_ITEM_PROPERTY = "eipTGpdbItem";
+    public static final String EIP_TGPDB_RECORD_PROPERTY = "eipTGpdbRecord";
     public static final String EIP_TMSGBOARD_CATEGORY_PROPERTY = "eipTMsgboardCategory";
     public static final String EIP_TREPORT_PROPERTY = "eipTReport";
-    public static final String EIP_TTEST_PROPERTY = "eipTTest";
     public static final String EIP_TTIMELINE_PROPERTY = "eipTTimeline";
     public static final String EIP_TTIMELINE_LIKE_PROPERTY = "eipTTimelineLike";
+    public static final String EIP_TTIMELINE_LIKE1_PROPERTY = "eipTTimelineLike1";
     public static final String EIP_TTODO_PROPERTY = "eipTTodo";
     public static final String EIP_TTODO_CATEGORY_PROPERTY = "eipTTodoCategory";
+    public static final String EIP_TWIKI_CREATE_USER_PROPERTY = "eipTWikiCreateUser";
+    public static final String EIP_TWIKI_UPDATE_USER_PROPERTY = "eipTWikiUpdateUser";
     public static final String EIP_TWORKFLOW_REQUEST_PROPERTY = "eipTWorkflowRequest";
     public static final String TURBINE_USER_GROUP_ROLE_PROPERTY = "turbineUserGroupRole";
 
@@ -346,6 +351,39 @@ public class _TurbineUser extends org.apache.cayenne.CayenneDataObject {
     }
     
     
+    public void addToEipTGpdb(com.aimluck.eip.cayenne.om.portlet.EipTGpdb obj) {
+        addToManyTarget("eipTGpdb", obj, true);
+    }
+    public void removeFromEipTGpdb(com.aimluck.eip.cayenne.om.portlet.EipTGpdb obj) {
+        removeToManyTarget("eipTGpdb", obj, true);
+    }
+    public List getEipTGpdb() {
+        return (List)readProperty("eipTGpdb");
+    }
+    
+    
+    public void addToEipTGpdbItem(com.aimluck.eip.cayenne.om.portlet.EipTGpdbItem obj) {
+        addToManyTarget("eipTGpdbItem", obj, true);
+    }
+    public void removeFromEipTGpdbItem(com.aimluck.eip.cayenne.om.portlet.EipTGpdbItem obj) {
+        removeToManyTarget("eipTGpdbItem", obj, true);
+    }
+    public List getEipTGpdbItem() {
+        return (List)readProperty("eipTGpdbItem");
+    }
+    
+    
+    public void addToEipTGpdbRecord(com.aimluck.eip.cayenne.om.portlet.EipTGpdbRecord obj) {
+        addToManyTarget("eipTGpdbRecord", obj, true);
+    }
+    public void removeFromEipTGpdbRecord(com.aimluck.eip.cayenne.om.portlet.EipTGpdbRecord obj) {
+        removeToManyTarget("eipTGpdbRecord", obj, true);
+    }
+    public List getEipTGpdbRecord() {
+        return (List)readProperty("eipTGpdbRecord");
+    }
+    
+    
     public void addToEipTMsgboardCategory(com.aimluck.eip.cayenne.om.portlet.EipTMsgboardCategory obj) {
         addToManyTarget("eipTMsgboardCategory", obj, true);
     }
@@ -365,17 +403,6 @@ public class _TurbineUser extends org.apache.cayenne.CayenneDataObject {
     }
     public List getEipTReport() {
         return (List)readProperty("eipTReport");
-    }
-    
-    
-    public void addToEipTTest(com.aimluck.eip.cayenne.om.portlet.EipTTest obj) {
-        addToManyTarget("eipTTest", obj, true);
-    }
-    public void removeFromEipTTest(com.aimluck.eip.cayenne.om.portlet.EipTTest obj) {
-        removeToManyTarget("eipTTest", obj, true);
-    }
-    public List getEipTTest() {
-        return (List)readProperty("eipTTest");
     }
     
     
@@ -401,6 +428,17 @@ public class _TurbineUser extends org.apache.cayenne.CayenneDataObject {
     }
     
     
+    public void addToEipTTimelineLike1(com.aimluck.eip.cayenne.om.portlet.EipTTimelineLike obj) {
+        addToManyTarget("eipTTimelineLike1", obj, true);
+    }
+    public void removeFromEipTTimelineLike1(com.aimluck.eip.cayenne.om.portlet.EipTTimelineLike obj) {
+        removeToManyTarget("eipTTimelineLike1", obj, true);
+    }
+    public List getEipTTimelineLike1() {
+        return (List)readProperty("eipTTimelineLike1");
+    }
+    
+    
     public void addToEipTTodo(com.aimluck.eip.cayenne.om.portlet.EipTTodo obj) {
         addToManyTarget("eipTTodo", obj, true);
     }
@@ -420,6 +458,28 @@ public class _TurbineUser extends org.apache.cayenne.CayenneDataObject {
     }
     public List getEipTTodoCategory() {
         return (List)readProperty("eipTTodoCategory");
+    }
+    
+    
+    public void addToEipTWikiCreateUser(com.aimluck.eip.cayenne.om.portlet.EipTWiki obj) {
+        addToManyTarget("eipTWikiCreateUser", obj, true);
+    }
+    public void removeFromEipTWikiCreateUser(com.aimluck.eip.cayenne.om.portlet.EipTWiki obj) {
+        removeToManyTarget("eipTWikiCreateUser", obj, true);
+    }
+    public List getEipTWikiCreateUser() {
+        return (List)readProperty("eipTWikiCreateUser");
+    }
+    
+    
+    public void addToEipTWikiUpdateUser(com.aimluck.eip.cayenne.om.portlet.EipTWiki obj) {
+        addToManyTarget("eipTWikiUpdateUser", obj, true);
+    }
+    public void removeFromEipTWikiUpdateUser(com.aimluck.eip.cayenne.om.portlet.EipTWiki obj) {
+        removeToManyTarget("eipTWikiUpdateUser", obj, true);
+    }
+    public List getEipTWikiUpdateUser() {
+        return (List)readProperty("eipTWikiUpdateUser");
     }
     
     

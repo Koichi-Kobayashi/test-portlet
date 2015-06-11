@@ -32,7 +32,7 @@
 </script>
 ##if($!result.hasAuthority())
 #ALcontentheader($!utils.escapeXML($!{portletInstanceTitle}) $navilist)
-#parse("/portlets/html/ja/ajax-test-list.vm")
+#parse("/portlets/html/ajax-test-list.vm")
 #ALcontentfooter()
 ##else
 ##parse("/portlets/html/PermissionError.vm")

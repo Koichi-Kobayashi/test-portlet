@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.eventlog.action;
 
 import com.aimluck.eip.common.ALEipConstants;
@@ -203,9 +202,9 @@ public class ALActionEventlogConstants {
 
   public static final String PORTLET_TYPE_STR_WHATSNEW = "新着情報";
 
-  public static final String PORTLET_TYPE_STR_CABINET_FILE = "共有フォルダ";
+  public static final String PORTLET_TYPE_STR_CABINET_FILE = "フォルダ";
 
-  public static final String PORTLET_TYPE_STR_CABINET_FOLDER = "共有フォルダ";
+  public static final String PORTLET_TYPE_STR_CABINET_FOLDER = "フォルダ";
 
   public static final String PORTLET_TYPE_STR_WEBMAIL = "Webメールアカウント";
 
@@ -234,5 +233,17 @@ public class ALActionEventlogConstants {
   public static final String PORTLET_TYPE_STR_REPORT = "報告書";
 
   public static final String PORTLET_TYPE_STR_TIMELINE = "タイムライン";
+
+  public static final String PORTLET_TYPE_STR_GPDB = "Webデータベース";
+
+  public static final String PORTLET_TYPE_STR_ACCESSCTL = "アクセス権限管理";
+
+  public static final String PORTLET_TYPE_STR_FACILITY = "設備管理";
+
+  public static final String PORTLET_TYPE_STR_GADGET = "アプリ管理";
+
+  public static final String PORTLET_TYPE_STR_WIKI = "Wiki";
+
+  public static final String PORTLET_TYPE_STR_PROJECT = "プロジェクト管理";
 
 }

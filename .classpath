@@ -28,6 +28,8 @@
 	<classpathentry kind="src" output="target/test-classes" path="lib/userfacility/src/test/java"/>
 	<classpathentry kind="src" path="lib/social/src/main/java"/>
 	<classpathentry kind="src" output="target/test-classes" path="lib/social/src/test/java"/>
+	<classpathentry kind="src" path="lib/push/src/main/java"/>
+	<classpathentry kind="src" output="target/test-classes" path="lib/push/src/test/java"/>
 	<classpathentry kind="src" path="lib/config/src/main/java"/>
 	<classpathentry kind="src" output="target/test-classes" path="lib/config/src/test/java"/>
 	<classpathentry kind="src" path="lib/storage/src/main/java"/>
@@ -102,6 +104,16 @@
 	<classpathentry kind="src" output="target/test-classes" path="portlets/gadgets/src/test/java"/>
 	<classpathentry kind="src" path="portlets/gadgets/src/main/java"/>
 	<classpathentry kind="src" output="target/test-classes" path="portlets/system/src/test/java"/>
+	<classpathentry kind="src" path="portlets/fileuploadadv/src/main/java"/>
+	<classpathentry kind="src" output="target/test-classes" path="portlets/fileuploadadv/src/test/java"/>
+	<classpathentry kind="src" path="portlets/gpdb/src/main/java"/>
+	<classpathentry kind="src" output="target/test-classes" path="portlets/gpdb/src/test/java"/>
+	<classpathentry kind="src" path="portlets/wiki/src/main/java"/>
+	<classpathentry kind="src" output="target/test-classes" path="portlets/wiki/src/test/java"/>
+	<classpathentry kind="src" path="portlets/project/src/main/java"/>
+	<classpathentry kind="src" output="target/test-classes" path="portlets/project/src/test/java"/>
+	<classpathentry kind="src" path="portlets/message/src/main/java"/>
+	<classpathentry kind="src" output="target/test-classes" path="portlets/message/src/test/java"/>
 	<classpathentry kind="src" path="portlets/test/src/main/java"/>
 	<classpathentry kind="src" output="target/test-classes" path="portlets/test/src/test/java"/>
 	<classpathentry kind="var" path="M2_REPO/javax/activation/activation/1.1.1/activation-1.1.1.jar"/>
@@ -111,7 +123,11 @@
 	<classpathentry kind="var" path="M2_REPO/ant/ant/1.5/ant-1.5.jar"/>
 	<classpathentry kind="var" path="M2_REPO/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/castor/castor/0.9.3/castor-0.9.3.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/cayenne/cayenne/2.0.4/cayenne-2.0.4.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/apache/cayenne/cayenne/2.0.4/cayenne-2.0.4.jar" sourcepath="/CAYENNE2_SRC">
+		<attributes>
+			<attribute name="source_encoding" value="UTF-8"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="var" path="M2_REPO/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-beanutils/commons-beanutils-core/1.7.0/commons-beanutils-core-1.7.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-betwixt/commons-betwixt/0.8/commons-betwixt-0.8.jar"/>
@@ -168,10 +184,15 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="M2_REPO/net/sourceforge/nekohtml/nekohtml/1.9.15/nekohtml-1.9.15.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/drewnoakes/metadata-extractor/2.6.2/metadata-extractor-2.6.2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/info/bliki/wiki/bliki-core/3.0.19/bliki-core-3.0.19.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/apache/jetspeed/aipo-jetspeed/8.0.1/aipo-jetspeed-8.0.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/gnu/inet/libidn/1.15/libidn-1.15.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/easymock/easymock/3.2/easymock-3.2.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/lib/servlet-api.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/lib/jasper.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/lib/jsp-api.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/lib/el-api.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/lib/annotations-api.jar"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/lib/catalina.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.facilities;
 
 import java.util.ArrayList;
@@ -49,7 +48,10 @@ import com.aimluck.eip.modules.actions.common.ALAction;
 import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.Operations;
 import com.aimluck.eip.orm.query.SelectQuery;
+import com.aimluck.eip.services.eventlog.ALEventlogConstants;
+import com.aimluck.eip.services.eventlog.ALEventlogFactoryService;
 import com.aimluck.eip.util.ALEipUtils;
+import com.aimluck.eip.util.ALLocalizationUtils;
 
 /**
  * 設備のフォームデータを管理するクラスです。 <BR>
@@ -99,11 +101,12 @@ public class FacilityFormData extends ALAbstractFormData {
   public void initField() {
     // 設備名
     facility_name = new ALStringField();
-    facility_name.setFieldName("設備名");
+    facility_name.setFieldName(ALLocalizationUtils
+      .getl10n("FACILITIES_FACILITY_NAME"));
     facility_name.setTrim(true);
     // メモ
     note = new ALStringField();
-    note.setFieldName("メモ");
+    note.setFieldName(ALLocalizationUtils.getl10n("FACILITIES_MEMO"));
     note.setTrim(false);
   }
 
@@ -189,9 +192,9 @@ public class FacilityFormData extends ALAbstractFormData {
       }
 
       if (query.fetchList().size() != 0) {
-        msgList.add("設備名『 <span class='em'>"
-          + facility_name.toString()
-          + "</span> 』は既に登録されています。");
+        msgList.add(ALLocalizationUtils.getl10nFormat(
+          "FACILITIES_FACILITY_IS_ALREADY_ADDED",
+          facility_name.toString()));
       }
     } catch (Exception ex) {
       logger.error("facilities", ex);
@@ -307,6 +310,15 @@ public class FacilityFormData extends ALAbstractFormData {
       // 設備を削除
       Database.delete(facility);
       Database.commit();
+
+      // イベントログに保存
+      ALEventlogFactoryService.getInstance().getEventlogHandler().log(
+        facility.getFacilityId(),
+        ALEventlogConstants.PORTLET_TYPE_FACILITY,
+        ALLocalizationUtils.getl10nFormat(
+          "FACILITIES_DELETED_FACILITY_WITH_NAME",
+          facility.getFacilityName()));
+
       // orm.doDelete(facility);
     } catch (Exception ex) {
       Database.rollback();
@@ -381,6 +393,14 @@ public class FacilityFormData extends ALAbstractFormData {
 
       // 設備を登録
       Database.commit();
+
+      // イベントログに保存
+      ALEventlogFactoryService.getInstance().getEventlogHandler().log(
+        facility.getFacilityId(),
+        ALEventlogConstants.PORTLET_TYPE_FACILITY,
+        ALLocalizationUtils.getl10nFormat(
+          "FACILITIES_ADDED_FACILITY_WITH_NAME",
+          facility.getFacilityName()));
 
       // ACL
       // EipTAclMap scheduleAcl = Database.create(EipTAclMap.class);
@@ -471,6 +491,14 @@ public class FacilityFormData extends ALAbstractFormData {
 
       // 設備を更新
       Database.commit();
+
+      // イベントログに保存
+      ALEventlogFactoryService.getInstance().getEventlogHandler().log(
+        facility.getFacilityId(),
+        ALEventlogConstants.PORTLET_TYPE_FACILITY,
+        ALLocalizationUtils.getl10nFormat(
+          "FACILITIES_UPDATED_FACILITY_WITH_NAME",
+          facility.getFacilityName()));
     } catch (Exception ex) {
       Database.rollback();
       logger.error("facilities", ex);

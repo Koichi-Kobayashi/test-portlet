@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.services.config.impl;
 
+import org.apache.cayenne.CayenneRuntimeException;
 import org.apache.jetspeed.services.logging.JetspeedLogFactoryService;
 import org.apache.jetspeed.services.logging.JetspeedLogger;
 
@@ -93,13 +93,13 @@ public class ALDefaultConfigHanlder extends ALConfigHandler {
             config.getValue());
         }
       }
-    } catch (Throwable t) {
-      // ignore
+    } catch (CayenneRuntimeException e) {
+      throw e;
+    } catch (Exception ignore) {
     }
     if (config == null) {
       return defaultValue;
     }
-
     return config.getValue();
   }
 
@@ -121,7 +121,11 @@ public class ALDefaultConfigHanlder extends ALConfigHandler {
       Database.commit();
     } catch (Throwable t) {
       Database.rollback();
-      throw new RuntimeException(t);
+      if (t instanceof CayenneRuntimeException) {
+        throw (CayenneRuntimeException) t;
+      } else {
+        throw new RuntimeException(t);
+      }
     }
   }
 }

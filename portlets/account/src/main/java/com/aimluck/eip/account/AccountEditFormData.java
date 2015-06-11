@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.account;
 
 import java.util.ArrayList;
@@ -36,6 +35,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.commons.utils.ALStringUtil;
+import com.aimluck.eip.account.util.AccountUtils;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALBaseUser;
@@ -199,7 +199,7 @@ public class AccountEditFormData extends ALAbstractFormData {
     // 新しいパスワード（確認用）
     new_password_confirm = new ALStringField();
     new_password_confirm.setFieldName(ALLocalizationUtils
-      .getl10nFormat("ACCOUNT_PASSWORDCONFIRMMSG"));
+      .getl10nFormat("ACCOUNT_PASSWORDCONFIRMMSG_NOT_INDENTION"));
     new_password_confirm.setTrim(true);
 
     // メールアドレス
@@ -498,7 +498,7 @@ public class AccountEditFormData extends ALAbstractFormData {
   protected boolean loadFormData(RunData rundata, Context context,
       List<String> msgList) {
     try {
-      ALBaseUser user = (ALBaseUser) rundata.getUser();
+      ALBaseUser user = AccountUtils.getBaseUser(rundata, context);
       if (user == null) {
         logger
           .debug("Not found. (" + AccountEditFormData.class.getName() + ")");
@@ -609,7 +609,7 @@ public class AccountEditFormData extends ALAbstractFormData {
       List<String> msgList) {
     try {
       // 編集者自身を示すオブジェクト
-      ALBaseUser user = (ALBaseUser) rundata.getUser();
+      ALBaseUser user = AccountUtils.getBaseUser(rundata, context);
       if (user == null) {
         return false;
       }
@@ -655,16 +655,14 @@ public class AccountEditFormData extends ALAbstractFormData {
       user.setLastNameKana(last_name_kana.getValue());
       user.setEmail(email.getValue());
 
-      if (filebean != null) {
-        if (filebean.getFileId() != 0) {
-          // 顔写真を登録する．
-          user.setPhotoSmartphone(facePhoto_smartphone);
-          user.setHasPhotoSmartphone(true);
-          user.setPhotoModifiedSmartphone(new Date());
-          user.setPhoto(facePhoto);
-          user.setHasPhoto(true);
-          user.setPhotoModified(new Date());
-        }
+      if (filebean != null && filebean.getFileId() != 0) {
+        // 顔写真を登録する．
+        user.setPhotoSmartphone(facePhoto_smartphone);
+        user.setHasPhotoSmartphone(true);
+        user.setPhotoModifiedSmartphone(new Date());
+        user.setPhoto(facePhoto);
+        user.setHasPhoto(true);
+        user.setPhotoModified(new Date());
       } else if (delete_photo) {
         user.setPhoto(null);
         user.setHasPhoto(false);

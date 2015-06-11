@@ -65,7 +65,7 @@ public class TestFormScreen extends ALVelocityScreen {
 //      formData.setCategoryId(1);
 //    }
 
-    String layout_template = "portlets/html/ja/ajax-test-form.vm";
+    String layout_template = "portlets/html/ajax-test-form.vm";
     setTemplate(rundata, context, layout_template);
   }
 

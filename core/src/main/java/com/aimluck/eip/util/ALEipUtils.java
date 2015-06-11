@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.util;
 
 import java.io.BufferedReader;
@@ -24,6 +23,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,9 +48,11 @@ import org.apache.jetspeed.capability.CapabilityMap;
 import org.apache.jetspeed.capability.CapabilityMapFactory;
 import org.apache.jetspeed.om.profile.Entry;
 import org.apache.jetspeed.om.profile.Layout;
+import org.apache.jetspeed.om.profile.PSMLDocument;
 import org.apache.jetspeed.om.profile.Parameter;
 import org.apache.jetspeed.om.profile.Portlets;
 import org.apache.jetspeed.om.profile.Profile;
+import org.apache.jetspeed.om.profile.ProfileException;
 import org.apache.jetspeed.om.profile.ProfileLocator;
 import org.apache.jetspeed.om.profile.psml.PsmlLayout;
 import org.apache.jetspeed.om.profile.psml.PsmlParameter;
@@ -78,6 +80,7 @@ import org.apache.jetspeed.util.template.BaseJetspeedLink;
 import org.apache.jetspeed.util.template.ContentTemplateLink;
 import org.apache.jetspeed.util.template.JetspeedLink;
 import org.apache.jetspeed.util.template.JetspeedLinkFactory;
+import org.apache.turbine.om.security.User;
 import org.apache.turbine.services.TurbineServices;
 import org.apache.turbine.util.DynamicURI;
 import org.apache.turbine.util.RunData;
@@ -86,6 +89,8 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.context.Context;
+import org.apache.velocity.exception.ParseErrorException;
+import org.apache.velocity.exception.ResourceNotFoundException;
 
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALStringField;
@@ -117,7 +122,7 @@ import com.aimluck.eip.services.config.ALConfigService;
 
 /**
  * Aimluck EIP のユーティリティクラスです。 <br />
- * 
+ *
  */
 public class ALEipUtils {
 
@@ -149,7 +154,7 @@ public class ALEipUtils {
   /**
    * セッション変数に値を格納します。 <br />
    * セッション変数は各ポートレット毎に管理されます。
-   * 
+   *
    * @param rundata
    * @param context
    * @param key
@@ -182,7 +187,7 @@ public class ALEipUtils {
   /**
    * セッション変数を削除します。 <br />
    * セッション変数は各ポートレット毎に管理されます。
-   * 
+   *
    * @param rundata
    * @param context
    * @param key
@@ -238,7 +243,7 @@ public class ALEipUtils {
   /**
    * セッション変数の値を取得します。 <br />
    * セッション変数は各ポートレット毎に管理されます。
-   * 
+   *
    * @param rundata
    * @param context
    * @param key
@@ -268,7 +273,7 @@ public class ALEipUtils {
 
   /**
    * セッションに保存されているエンティティIDを整数値として返します。
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -287,7 +292,7 @@ public class ALEipUtils {
 
   /**
    * ユーザーIDを返します。
-   * 
+   *
    * @param rundata
    * @return ユーザーID
    */
@@ -299,7 +304,7 @@ public class ALEipUtils {
 
   /**
    * ポートレットを返します。
-   * 
+   *
    * @param rundata
    * @param context
    * @return 自ポートレット
@@ -310,15 +315,18 @@ public class ALEipUtils {
 
   /**
    * 指定したポートレット ID を持つポートレットのオブジェクトを取得します。
-   * 
+   *
    * @param rundata
    * @param portletId
    * @return 自ポートレット
    */
   public static Portlet getPortlet(RunData rundata, String portletId) {
     try {
-      Portlets portlets =
-        ((JetspeedRunData) rundata).getProfile().getDocument().getPortlets();
+      Profile profile = ((JetspeedRunData) rundata).getProfile();
+      if (profile == null) {
+        return null;
+      }
+      Portlets portlets = profile.getDocument().getPortlets();
       if (portlets == null) {
         return null;
       }
@@ -370,7 +378,7 @@ public class ALEipUtils {
 
   /**
    * 指定したポートレット ID を持つポートレットのオブジェクトを取得します。
-   * 
+   *
    * @param rundata
    * @param portletId
    * @return 自ポートレット
@@ -417,7 +425,7 @@ public class ALEipUtils {
   /**
    * リクエストが自ポートレットに対するものであるかを返します。 <br />
    * true となる場合、そのポートレットに対するフォーム送信となります。
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -441,7 +449,7 @@ public class ALEipUtils {
   /**
    * 指定されたグループに所属するユーザーを取得します。<br/>
    * DISABLEDがNのユーザー（即ち無効化されたユーザー）は取得しないことに注意してください。
-   * 
+   *
    * @param groupname
    *          グループ名
    * @return ALEipUser の List
@@ -473,15 +481,8 @@ public class ALEipUtils {
           .sql(TurbineUser.class, query)
           .param("groupName", groupname)
           .fetchList();
-
-      ALEipUser user;
       for (TurbineUser tuser : list2) {
-        user = new ALEipUser();
-        user.initField();
-        user.setUserId(tuser.getUserId());
-        user.setName(tuser.getLoginName());
-        user.setAliasName(tuser.getFirstName(), tuser.getLastName());
-        list.add(user);
+        list.add(getALEipUser(tuser));
       }
     } catch (Throwable t) {
       logger.error("ALEipUtils.getUsers", t);
@@ -493,7 +494,7 @@ public class ALEipUtils {
   /**
    * 指定されたグループに所属するユーザーを取得します。<br/>
    * DISABLEDがNのユーザー（即ち無効化されたユーザー）も取得します。
-   * 
+   *
    * @param groupname
    *          グループ名
    * @return ALEipUser の List
@@ -526,14 +527,8 @@ public class ALEipUtils {
           .param("groupName", groupname)
           .fetchList();
 
-      ALEipUser user;
       for (TurbineUser tuser : list2) {
-        user = new ALEipUser();
-        user.initField();
-        user.setUserId(tuser.getUserId());
-        user.setName(tuser.getLoginName());
-        user.setAliasName(tuser.getFirstName(), tuser.getLastName());
-        list.add(user);
+        list.add(getALEipUser(tuser));
       }
     } catch (Throwable t) {
       logger.error("ALEipUtils.getUsersIncludingN", t);
@@ -544,7 +539,7 @@ public class ALEipUtils {
 
   /**
    * 指定されたグループに所属するユーザーのIDを取得します。
-   * 
+   *
    * @param groupname
    *          グループ名
    * @return Integer の List
@@ -586,7 +581,7 @@ public class ALEipUtils {
 
   /**
    * 指定された部署に所属するユーザーを取得します。
-   * 
+   *
    * @param postid
    *          部署ID
    * @return ALEipUser の List
@@ -618,14 +613,8 @@ public class ALEipUtils {
           .param("postId", postid)
           .fetchList();
 
-      ALEipUser user;
       for (TurbineUser tuser : list2) {
-        user = new ALEipUser();
-        user.initField();
-        user.setUserId(tuser.getUserId());
-        user.setName(tuser.getLoginName());
-        user.setAliasName(tuser.getFirstName(), tuser.getLastName());
-        list.add(user);
+        list.add(getALEipUser(tuser));
       }
     } catch (Throwable t) {
       logger.error("ALEipUtils.getUsersFromPost", t);
@@ -636,7 +625,7 @@ public class ALEipUtils {
 
   /**
    * <code>SelectQuery</code> の条件に従ってユーザーを取得します。
-   * 
+   *
    * @param crt
    * @return ALEipUser の List
    */
@@ -650,13 +639,8 @@ public class ALEipUtils {
             + "."
             + EipMUserPosition.POSITION_PROPERTY).fetchList();
 
-      for (TurbineUser record : ulist) {
-        ALEipUser user = new ALEipUser();
-        user.initField();
-        user.setUserId(record.getUserId().intValue());
-        user.setName(record.getLoginName());
-        user.setAliasName(record.getFirstName(), record.getLastName());
-        list.add(user);
+      for (TurbineUser tuser : ulist) {
+        list.add(getALEipUser(tuser));
       }
     } catch (Throwable t) {
       logger.error("ALEipUtils.getUsersFromSelectQuery", t);
@@ -666,25 +650,25 @@ public class ALEipUtils {
 
   /**
    * 自ユーザーの簡易オブジェクトを取得します。
-   * 
+   *
    * @param crt
    * @return ALEipUser
    */
   public static ALEipUser getALEipUser(RunData rundata) {
     JetspeedRunData jdata = (JetspeedRunData) rundata;
+    ALBaseUser baseuser = (ALBaseUser) jdata.getJetspeedUser();
     ALEipUser user = new ALEipUser();
     user.initField();
-    user.setUserId(Integer.parseInt(jdata.getJetspeedUser().getUserId()));
-    user.setName(jdata.getJetspeedUser().getUserName());
-    user.setAliasName(jdata.getJetspeedUser().getFirstName(), jdata
-      .getJetspeedUser()
-      .getLastName());
+    user.setUserId(Integer.parseInt(baseuser.getUserId()));
+    user.setName(baseuser.getUserName());
+    user.setAliasName(baseuser.getFirstName(), baseuser.getLastName());
+    user.setCreated(baseuser.getCreated());
     return user;
   }
 
   /**
    * 指定したユーザーIDの簡易オブジェクトを取得します。
-   * 
+   *
    * @param id
    * @return
    */
@@ -695,7 +679,7 @@ public class ALEipUtils {
 
   /**
    * 指定したユーザーIDの簡易オブジェクトを取得します。
-   * 
+   *
    * @param id
    * @return
    */
@@ -713,12 +697,13 @@ public class ALEipUtils {
     user.setPhotoModified(tuser.getPhotoModified() != null ? tuser
       .getPhotoModified()
       .getTime() : 0);
+    user.setCreated(tuser.getCreated());
     return user;
   }
 
   /**
    * 指定したユーザーIDの簡易オブジェクトを取得します。
-   * 
+   *
    * @param id
    * @return
    */
@@ -728,19 +713,12 @@ public class ALEipUtils {
     if (tuser == null) {
       return null;
     }
-
-    ALEipUser user = new ALEipUser();
-    user.initField();
-    user.setUserId(tuser.getUserId().intValue());
-    user.setName(tuser.getLoginName());
-    user.setAliasName(tuser.getFirstName(), tuser.getLastName());
-
-    return user;
+    return getALEipUser(tuser);
   }
 
   /**
    * 指定したユーザーIDのオブジェクトを取得します。
-   * 
+   *
    * @param userid
    *          ユーザID
    * @return
@@ -761,7 +739,7 @@ public class ALEipUtils {
 
   /**
    * 指定したユーザーIDのユーザーオブジェクトを取得します。
-   * 
+   *
    * @param id
    * @return
    */
@@ -779,7 +757,7 @@ public class ALEipUtils {
 
   /**
    * 指定したログイン名のユーザーオブジェクトを取得します。
-   * 
+   *
    * @param login_name
    * @return
    */
@@ -802,7 +780,7 @@ public class ALEipUtils {
 
   /**
    * 指定したユーザーIDが有効か（無効化、削除されていないか）どうか調べます。
-   * 
+   *
    * @param id
    * @return
    */
@@ -816,7 +794,7 @@ public class ALEipUtils {
 
   /**
    * ユーザーのフルネームを取得します。
-   * 
+   *
    * @param userid
    *          ユーザID
    * @return
@@ -835,7 +813,7 @@ public class ALEipUtils {
   /**
    * 部署の変更を行います。 <br>
    * 部署に関連付けされているグループの更新も同時に行います。
-   * 
+   *
    * @param rundata
    * @param username
    *          ユーザー名
@@ -876,7 +854,7 @@ public class ALEipUtils {
    * 自ユーザーのマイグループを再読み込みします。 <br>
    * 読み込まれたマイグループはセッションに保存されます。 <br>
    * マイグループの更新が行われた場合はこのメソッドを呼び出してください。
-   * 
+   *
    * @param rundata
    */
   public static void reloadMygroup(RunData rundata) throws ALDBErrorException {
@@ -900,29 +878,38 @@ public class ALEipUtils {
       throw new ALDBErrorException();
     }
 
-    // セッションのマイグループに保存
-    JetspeedRunData jdata = (JetspeedRunData) rundata;
+    // ServletRequestのマイグループに保存
     ALMyGroups mygroups = new ALMyGroups();
     mygroups.addList(ulist);
-    jdata.getUser().setTemp(ALEipConstants.MYGROUP, mygroups);
+    HttpServletRequest request = HttpServletRequestLocator.get();
+    if (request != null) {
+      request.setAttribute(ALEipConstants.MYGROUP, mygroups);
+    }
 
   }
 
   /**
    * 自ユーザーのマイグループを取得します。
-   * 
+   *
    * @param rundata
    * @return ALEipGroup の List
    */
   public static List<ALEipGroup> getMyGroups(RunData rundata)
       throws ALDBErrorException {
     JetspeedRunData jdata = (JetspeedRunData) rundata;
-    // セッションからマイグループのリストを読み込む
-    Object obj = jdata.getUser().getTemp(ALEipConstants.MYGROUP);
+    // ServletRequestからマイグループのリストを読み込み
+    Object obj = null;
+    HttpServletRequest request = HttpServletRequestLocator.get();
+    if (request != null) {
+      obj = request.getAttribute(ALEipConstants.MYGROUP);
+    }
+
     if (obj == null || !(obj instanceof ALMyGroups)) {
-      // まだMyGroupが読み込まれていない場合はセッションに読み込む
+      // まだMyGroupが読み込まれていない場合は
       reloadMygroup(rundata);
-      obj = jdata.getUser().getTemp(ALEipConstants.MYGROUP);
+      if (request != null) {
+        obj = request.getAttribute(ALEipConstants.MYGROUP);
+      }
     }
     ALMyGroups mygroups = (ALMyGroups) obj;
     return mygroups.getList();
@@ -974,7 +961,7 @@ public class ALEipUtils {
 
   /**
    * 会社名を取得します。
-   * 
+   *
    * @param id
    * @return
    */
@@ -1007,7 +994,7 @@ public class ALEipUtils {
 
   /**
    * 部署名を取得します。
-   * 
+   *
    * @param id
    * @return
    */
@@ -1025,7 +1012,7 @@ public class ALEipUtils {
 
   /**
    * 役職名を取得します。
-   * 
+   *
    * @param id
    * @return
    */
@@ -1040,7 +1027,7 @@ public class ALEipUtils {
 
   /**
    * ページが見つからない場合に、リダイレクト処理します。
-   * 
+   *
    * @return
    */
   public static boolean redirectPageNotFound(RunData rundata) {
@@ -1069,8 +1056,15 @@ public class ALEipUtils {
             templete.merge(context, writer);
             writer.flush();
             writer.close();
+          } catch (ResourceNotFoundException e) {
+            logger.error("ALEipUtils.redirectPageNotFound", e);
+            throw new RuntimeException(e);
+          } catch (ParseErrorException e) {
+            logger.error("ALEipUtils.redirectPageNotFound", e);
+            throw new RuntimeException(e);
           } catch (Exception e) {
-            return false;
+            logger.error("ALEipUtils.redirectPageNotFound", e);
+            throw new RuntimeException(e);
           }
           return true;
         }
@@ -1095,7 +1089,7 @@ public class ALEipUtils {
 
   /**
    * データベースエラーの場合に、リダイレクト処理します。
-   * 
+   *
    * @return
    */
   public static boolean redirectDBError(RunData rundata) {
@@ -1105,9 +1099,15 @@ public class ALEipUtils {
       String template =
         rundata.getParameters().getString(JetspeedResources.PATH_TEMPLATE_KEY);
       if (template != null && !("".equals(template))) {
-        if (template.endsWith("DetailScreen")) {
-          VelocityContext context = new VelocityContext();
-          setupContext(rundata, context);
+        if (template.endsWith("DetailScreen")
+          || (template.endsWith("FormScreen"))) {
+          Context context =
+            org.apache.turbine.services.velocity.TurbineVelocity
+              .getContext(rundata);
+          if (null == context) {
+            context = new VelocityContext();
+            setupContext(rundata, context);
+          }
           try {
             ServletOutputStream out = null;
             HttpServletResponse response = rundata.getResponse();
@@ -1118,13 +1118,21 @@ public class ALEipUtils {
                 ALEipConstants.DEF_CONTENT_ENCODING));
             context
               .put("l10n", ALLocalizationUtils.createLocalization(rundata));
+            context.put("utils", new ALCommonUtils());
             Template templete =
               Velocity.getTemplate("screens/html/AjaxDBError.vm");
             templete.merge(context, writer);
             writer.flush();
             writer.close();
+          } catch (ResourceNotFoundException e) {
+            logger.error("ALEipUtils.redirectDBError", e);
+            throw new RuntimeException(e);
+          } catch (ParseErrorException e) {
+            logger.error("ALEipUtils.redirectDBError", e);
+            throw new RuntimeException(e);
           } catch (Exception e) {
-            return false;
+            logger.error("ALEipUtils.redirectDBError", e);
+            throw new RuntimeException(e);
           }
           return true;
         }
@@ -1149,7 +1157,7 @@ public class ALEipUtils {
 
   /**
    * パーミッションエラーの場合に、リダイレクト処理します。
-   * 
+   *
    * @return
    */
   public static boolean redirectPermissionError(RunData rundata) {
@@ -1204,8 +1212,15 @@ public class ALEipUtils {
             templete.merge(context, writer);
             writer.flush();
             writer.close();
+          } catch (ResourceNotFoundException e) {
+            logger.error("ALEipUtils.redirectPermissionError", e);
+            throw new RuntimeException(e);
+          } catch (ParseErrorException e) {
+            logger.error("ALEipUtils.redirectPermissionError", e);
+            throw new RuntimeException(e);
           } catch (Exception e) {
-            return false;
+            logger.error("ALEipUtils.redirectPermissionError", e);
+            throw new RuntimeException(e);
           }
           return true;
         } else if (template.endsWith("Screen")) {
@@ -1320,7 +1335,7 @@ public class ALEipUtils {
 
   /**
    * 改行コードを含む文字列を、複数行に分割します。
-   * 
+   *
    * @return
    */
   public static String getMessageList(String msgline) {
@@ -1330,13 +1345,15 @@ public class ALEipUtils {
     if (msgline == null || msgline.equals("")) {
       return "";
     }
+    msgline = Normalizer.normalize(msgline, Normalizer.Form.NFC);
     if (msgline.indexOf("\r") < 0
       && msgline.indexOf("\n") < 0
       && msgline.indexOf("\r\n") < 0) {
       field = new ALStringField();
       field.setTrim(false);
       field.setValue(msgline);
-      return ALCommonUtils.replaceToAutoCR(replaceStrToLink(field.toString()));
+      return ALCommonUtils
+        .replaceToAutoCR(replaceStrToLink(replaseLeftSpace(field.toString())));
     }
 
     String token = null;
@@ -1364,12 +1381,12 @@ public class ALEipUtils {
     if (index == -1) {
       return sb.toString();
     }
-    return sb.substring(0, index);
+    return sb.substring(0, index).replaceAll("<wbr/><br/>", "<br/>");
   }
 
   /**
    * 左端の半角空文字を「&nbsp;」に変換する。
-   * 
+   *
    * @param str
    * @return
    */
@@ -1383,11 +1400,13 @@ public class ALEipUtils {
     char[] val = str.toCharArray();
 
     StringBuffer sb = new StringBuffer();
+    boolean left = true;
     while ((st < len)) {
-      if (val[st] == ' ') {
+      if (val[st] == ' ' && left) {
         sb.append("&nbsp;");
       } else {
         sb.append(val[st]);
+        left = false;
       }
       st++;
     }
@@ -1396,7 +1415,7 @@ public class ALEipUtils {
 
   /**
    * アクセス元の端末が携帯電話であるかを判定します。
-   * 
+   *
    * @param data
    * @return
    */
@@ -1423,7 +1442,7 @@ public class ALEipUtils {
 
   /**
    * アクセス元の端末がスマートフォンであるかを判定します。
-   * 
+   *
    * @param data
    * @return
    */
@@ -1447,7 +1466,7 @@ public class ALEipUtils {
 
   /**
    * 指定した2つの日付を比較します。
-   * 
+   *
    * @param date1
    * @param date2
    * @return 等しい場合、0。date1>date2の場合、1。date1 < date2の場合、2。
@@ -1488,7 +1507,7 @@ public class ALEipUtils {
 
   /**
    * データベースの検索結果から、指定したキーに対応する値を取得します。
-   * 
+   *
    * @param dataRow
    * @param key
    * @return
@@ -1504,7 +1523,7 @@ public class ALEipUtils {
 
   /**
    * 会社情報のオブジェクトを取得します。
-   * 
+   *
    * @param id
    * @return
    */
@@ -1562,7 +1581,7 @@ public class ALEipUtils {
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    */
@@ -1581,8 +1600,16 @@ public class ALEipUtils {
     context.put("clink", new ContentTemplateLink(rundata));
   }
 
+  public static void setupContext(String js_peid, RunData rundata,
+      Context context) {
+    Portlet portlet = getPortlet(rundata, js_peid);
+    context.put("portlet", portlet);
+    context.put("jslink", new BaseJetspeedLink(rundata));
+    context.put("clink", new ContentTemplateLink(rundata));
+  }
+
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @param key
@@ -1604,7 +1631,7 @@ public class ALEipUtils {
 
   /**
    * 指定したエントリー名のポートレットへの URI を取得します。
-   * 
+   *
    * @param rundata
    * @param portletEntryName
    *          PSML ファイルに記述されているタグ entry の要素 parent
@@ -1661,7 +1688,7 @@ public class ALEipUtils {
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param portletEntryId
    * @return
@@ -1717,7 +1744,7 @@ public class ALEipUtils {
 
   /**
    * 文字列内のリンクにタグAを追加します。
-   * 
+   *
    * @param msg
    * @return
    */
@@ -1741,10 +1768,12 @@ public class ALEipUtils {
           }
         }
       }
+
+      // 日本語（ひらがな、かたかな、漢字）が含まれていてもリンク化されるように正規表現を追加する。
       String newMsg =
         msg
           .replaceAll(
-            "(https?|ftp|gopher|telnet|whois|news)\\:([\\w|\\:\\!\\#\\$\\%\\=\\&\\-\\^\\`\\\\|\\@\\~\\[\\{\\]\\}\\;\\+\\*\\,\\.\\?\\/]+)",
+            "(https?|ftp|gopher|telnet|whois|news)\\:([\\w|\\p{InHiragana}\\p{InKatakana}\\p{InCJKUnifiedIdeographs}\\:\\!\\#\\$\\%\\=\\&\\-\\^\\`\\\\|\\@\\~\\[\\{\\]\\}\\;\\+\\*\\,\\.\\?\\/]+)",
             "<a href=\"$1\\:$2\" target=\"_blank\">$1\\:$2</a>");
       return newMsg.replaceAll(
         "[\\w\\.\\-]+@([\\w\\-]+\\.)+[\\w\\-]+",
@@ -1756,17 +1785,17 @@ public class ALEipUtils {
 
   /**
    * フォルダを再帰的に消します。
-   * 
+   *
    * @param parent_folder
    *          親フォルダ
    * @param cal
-   * 
+   *
    * @return フォルダの中身が全て消去されたときのみtrueを返します
    */
 
   /**
    * ユーザーの所属する部署を取得します。
-   * 
+   *
    * @param id
    *          ユーザーID
    * @return 所属する部署リスト
@@ -1803,7 +1832,7 @@ public class ALEipUtils {
 
   /**
    * ユーザーの所属する部署のIDを取得します。
-   * 
+   *
    * @param id
    *          ユーザーID
    * @return 所属する部署リスト
@@ -1838,7 +1867,7 @@ public class ALEipUtils {
 
   /**
    * アクセス権限をチェックします（ポートレットカスタマイズ）
-   * 
+   *
    * @return
    */
   public static boolean checkAclPermissionForCustomize(RunData rundata,
@@ -1900,7 +1929,7 @@ public class ALEipUtils {
 
   /**
    * 現在登録されている有効なユーザー数(システムユーザ、論理削除は除く)を取得します。
-   * 
+   *
    * @return
    */
   public static int getCurrentUserNumEnabledOnly(RunData rundata) {
@@ -1932,7 +1961,7 @@ public class ALEipUtils {
 
   /**
    * 現在登録されている有効なユーザー数(システムユーザ、論理削除、無効化は除く)を取得します。
-   * 
+   *
    * @return
    */
   public static int getCurrentUserNum(RunData rundata) {
@@ -1964,7 +1993,7 @@ public class ALEipUtils {
 
   /**
    * 指定されたユーザが管理者権限を持っているかを返します。
-   * 
+   *
    * @param uid
    * @return
    */
@@ -1990,7 +2019,7 @@ public class ALEipUtils {
 
   /**
    * ログインユーザが管理者権限を持っているかを返します。
-   * 
+   *
    * @param rundata
    * @return
    */
@@ -2019,7 +2048,7 @@ public class ALEipUtils {
 
   /**
    * Dateに対して整形されたALDateTimeFieldを返します。
-   * 
+   *
    * @param date
    * @return 整形されたALDateTimeField
    */
@@ -2047,9 +2076,31 @@ public class ALEipUtils {
     return getFormattedTime(timeField.getValue());
   }
 
+  public static ALDateTimeField getFormattedTimeDetail(Date date) {
+    Calendar Now = new GregorianCalendar();
+    Now.setTime(new Date());
+    Calendar Time = new GregorianCalendar();
+    Time.setTime(date);
+    ALDateTimeField rtn;
+
+    rtn =
+      (Now.get(Calendar.YEAR) == Time.get(Calendar.YEAR))
+        ? new ALDateTimeField("M月d日 H:mm")
+        : new ALDateTimeField("yyyy年M月d日 H:mm");
+    rtn.setValue(date);
+    return rtn;
+  }
+
+  public static ALDateTimeField getFormattedTimeDetail(ALDateTimeField timeField) {
+    if (!timeField.isNotNullValue()) {
+      return null;
+    }
+    return getFormattedTimeDetail(timeField.getValue());
+  }
+
   /**
    * 指定したユーザのPSMLにシステム管理のページを追加します。
-   * 
+   *
    * @param user_name
    * @throws Exception
    */
@@ -2155,7 +2206,7 @@ public class ALEipUtils {
 
   /**
    * 期待するユーザーエージェントが含まれていればtrue
-   * 
+   *
    * @param expect
    * @param rundata
    * @return
@@ -2166,23 +2217,26 @@ public class ALEipUtils {
     if (userAgent == null || "".equals(userAgent)) {
       return false;
     }
+
     return userAgent.indexOf(expect) > -1;
   }
 
   /**
    * アクセスしてきたユーザが利用するブラウザ名が Windows の MSIE であるかを判定する．
-   * 
+   *
    * @param rundata
    * @return MSIE の場合は，true．
    */
   public static boolean isMsieBrowser(RunData rundata) {
     return isMatchUserAgent("Win", rundata)
-      && isMatchUserAgent("MSIE", rundata);
+      && (isMatchUserAgent("MSIE", rundata) || isMatchUserAgent(
+        "Trident",
+        rundata));
   }
 
   /**
    * アクセスしてきたユーザが利用するブラウザ名が Android．
-   * 
+   *
    * @param rundata
    * @return MSIE の場合は，true．
    */
@@ -2270,12 +2324,14 @@ public class ALEipUtils {
   }
 
   public static boolean isIE(String userAgent) {
-    return userAgent.matches(".*((MSIE)+ [0-9]\\.[0-9]).*");
+    return (userAgent.matches(".*((MSIE)+ [0-9]\\.[0-9]).*") || userAgent
+      .matches(".*(.*(Trident/)+[0-9]\\.[0-9]).*"));
+
   }
 
   /**
    * PSMLにデータを埋め込みます。
-   * 
+   *
    * @param rundata
    * @param context
    * @param key
@@ -2343,10 +2399,10 @@ public class ALEipUtils {
   }
 
   /**
-   * 
+   *
    * PSMLに設定されているデータと比較して valueが正しい値ならその値を新しくPSMLに保存。
-   * 
-   * 
+   *
+   *
    * @param rundata
    * @param context
    * @param config
@@ -2394,12 +2450,47 @@ public class ALEipUtils {
   public static String getIEVersion(String userAgent) {
     Pattern pattern = Pattern.compile("MSIE\\s[0-9_]+");
     Matcher matcher = pattern.matcher(userAgent);
+    Pattern pattern2 = Pattern.compile("rv:[0-9_]+");
+    Matcher matcher2 = pattern2.matcher(userAgent);
 
     if (matcher.find()) {
       String words = matcher.group();
       return words.replaceAll("MSIE\\s", "");
+    } else if (matcher2.find()) {
+      String words2 = matcher2.group();
+      return words2.replaceAll("rv:", "");
     }
 
     return "";
+  }
+
+  public static Map<String, Entry> getGlobalPortlets(RunData rundata) {
+    Map<String, Entry> maps = new HashMap<String, Entry>();
+    Profile profile = ((JetspeedRunData) rundata).getProfile();
+    if (profile == null) {
+      User user = rundata.getUser();
+      if (user != null) {
+        ProfileLocator locator = Profiler.createLocator();
+        locator.createFromPath(String.format("user/%s/media-type/html", user
+          .getUserName()));
+        try {
+          profile = Profiler.getProfile(locator);
+        } catch (ProfileException ignore) {
+          // ignore
+        }
+      }
+    }
+    if (profile != null) {
+      PSMLDocument doc = profile.getDocument();
+      if (doc != null) {
+        @SuppressWarnings("unchecked")
+        Iterator<Entry> iterator = doc.getPortlets().getEntriesIterator();
+        while (iterator.hasNext()) {
+          Entry next = iterator.next();
+          maps.put(next.getParent(), next);
+        }
+      }
+    }
+    return maps;
   }
 }

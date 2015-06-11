@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.blog;
 
 import java.text.SimpleDateFormat;
@@ -386,6 +385,8 @@ public class BlogEntrySelectData extends
           + "."
           + EipTBlogEntry.ENTRY_ID_PK_COLUMN, record.getEntryId());
       filequery.setQualifier(fileexp);
+      filequery.orderAscending(EipTBlogFile.UPDATE_DATE_PROPERTY);
+      filequery.orderAscending(EipTBlogFile.FILE_PATH_PROPERTY);
       List<EipTBlogFile> files = filequery.fetchList();
 
       if (files != null && files.size() > 0) {

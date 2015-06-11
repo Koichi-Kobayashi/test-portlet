@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.msgboard;
 
 import java.util.ArrayList;
@@ -31,6 +30,7 @@ import java.util.jar.Attributes;
 
 import org.apache.cayenne.exp.Expression;
 import org.apache.cayenne.exp.ExpressionFactory;
+import org.apache.commons.lang.StringUtils;
 import org.apache.jetspeed.portal.portlets.VelocityPortlet;
 import org.apache.jetspeed.services.logging.JetspeedLogFactoryService;
 import org.apache.jetspeed.services.logging.JetspeedLogger;
@@ -68,7 +68,7 @@ import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * 掲示板トピックの検索データを管理するクラスです。 <BR>
- * 
+ *
  */
 public class MsgboardTopicSelectData extends
     ALAbstractMultiFilterSelectData<EipTMsgboardTopic, EipTMsgboardTopic>
@@ -132,7 +132,7 @@ public class MsgboardTopicSelectData extends
   private boolean isFileUploadable;
 
   /**
-   * 
+   *
    * @param action
    * @param rundata
    * @param context
@@ -197,7 +197,7 @@ public class MsgboardTopicSelectData extends
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    */
@@ -208,67 +208,78 @@ public class MsgboardTopicSelectData extends
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    */
   public void setCategory(RunData rundata, Context context) {
-    filterType = rundata.getParameters().getString("filtertype", "");
-    String categoryId;
-    if (filterType.equals("category") || filterType.equals("")) {
-      categoryId = rundata.getParameters().getString("filter", "");
+    // validate categoryId and filterType, categoryId set
+    String filter = rundata.getParameters().getString("filter", "");
+    String filterType = rundata.getParameters().getString("filtertype", "");
+    String sesFilter = ALEipUtils.getTemp(rundata, context, LIST_FILTER_STR);
+    String sesFilterType =
+      ALEipUtils.getTemp(rundata, context, LIST_FILTER_TYPE_STR);
+
+    sesFilter = sesFilter == null ? "" : sesFilter;
+    sesFilterType = sesFilterType == null ? "" : sesFilterType;
+
+    if (filterType.isEmpty()) {
+      filter = sesFilter;
+      filterType = sesFilterType;
+    }
+
+    if (filterType.equals("category")) {
+      filter = "0," + filter;
+      filterType = "post,category";
     } else if (filterType.equals("post,category")) {
-      categoryId =
-        rundata.getParameters().getString("filter", "").split(",")[1];
+      // do nothing
     } else {
+      filter = "";
+      filterType = "";
+    }
+
+    if (StringUtils.isEmpty(filter) || StringUtils.isEmpty(filterType)) {
+      this.filterType = "";
+      categoryId = "";
       return;
     }
-    boolean exsitedCategoryId = false;
-    if (!categoryId.equals("")) {
-      exsitedCategoryId = true;
-    } else {
-      categoryId = ALEipUtils.getTemp(rundata, context, "p3a-category");
-      if (categoryId == null || categoryId.isEmpty()) {
-        VelocityPortlet portlet = ALEipUtils.getPortlet(rundata, context);
-        categoryId =
-          portlet.getPortletConfig().getInitParameter("p3a-category");
+
+    String[] splited = filter.split(",");
+    if (splited.length < 2) {
+      this.filterType = "";
+      categoryId = "";
+      return;
+    }
+
+    categoryId = filter.split(",")[1];
+    this.filterType = filterType;
+
+    boolean existCategory = false;
+    for (MsgboardCategoryResultData data : categoryList) {
+      if (categoryId.equals(data.getCategoryId().toString())) {
+        existCategory = true;
+        break;
       }
     }
-    boolean existCategory = false;
-    if (categoryId != null && "0".equals(categoryId)) { // 「すべてのカテゴリ」選択時
-      existCategory = true;
-    } else {
-      if (categoryId != null) {
-        List<MsgboardCategoryResultData> categoryList =
-          MsgboardUtils.loadCategoryList(rundata);
 
-        if (categoryList != null && categoryList.size() > 0) {
-          for (MsgboardCategoryResultData category : categoryList) {
-            if (categoryId.equals(category.getCategoryId().toString())) {
-              existCategory = true;
-              break;
-            }
-          }
-        }
-        if (!existCategory) {
-          categoryId = "";
-        }
-        if (exsitedCategoryId) {
-          this.categoryId = categoryId;
-          ALEipUtils.setTemp(rundata, context, "p3a-category", categoryId);
-        } else {
-          ALEipUtils.setTemp(rundata, context, LIST_FILTER_STR, categoryId);
-          ALEipUtils
-            .setTemp(rundata, context, LIST_FILTER_TYPE_STR, "category");
-          this.categoryId = categoryId;
-        }
-      }
+    if (!existCategory) {
+      categoryId = "0";
+      ALEipUtils.setTemp(
+        rundata,
+        context,
+        LIST_FILTER_STR,
+        filter.split(",")[0] + "," + categoryId);
+      ALEipUtils.setTemp(
+        rundata,
+        context,
+        LIST_FILTER_TYPE_STR,
+        "post,category");
     }
   }
 
   /**
    * 一覧データを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -303,7 +314,7 @@ public class MsgboardTopicSelectData extends
 
   /**
    * 検索条件を設定した SelectQuery を返します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -374,7 +385,7 @@ public class MsgboardTopicSelectData extends
 
   /**
    * パラメータをマップに変換します。
-   * 
+   *
    * @param key
    * @param val
    */
@@ -429,21 +440,44 @@ public class MsgboardTopicSelectData extends
       // 部署を含んでいる場合デフォルトとは別にフィルタを用意
 
       List<String> postIds = current_filterMap.get("post");
-
-      HashSet<Integer> userIds = new HashSet<Integer>();
-      for (String post : postIds) {
-        List<Integer> userId = ALEipUtils.getUserIds(post);
-        userIds.addAll(userId);
+      boolean existPost = false;
+      for (int i = 0; i < postList.size(); i++) {
+        String pid = postList.get(i).getName().toString();
+        if (pid.equals(postIds.get(0).toString())) {
+          existPost = true;
+          break;
+        }
       }
-      if (userIds.isEmpty()) {
-        userIds.add(-1);
+      Map<Integer, ALEipPost> map = ALEipManager.getInstance().getPostMap();
+      if (postIds != null && !postIds.isEmpty()) {
+        for (Map.Entry<Integer, ALEipPost> item : map.entrySet()) {
+          String pid = item.getValue().getGroupName().toString();
+          if (pid.equals(postIds.get(0).toString())) {
+            existPost = true;
+            break;
+          }
+        }
       }
-      Expression exp =
-        ExpressionFactory.inExp(EipTMsgboardTopic.OWNER_ID_PROPERTY, userIds);
-      query.andQualifier(exp);
+      if (existPost) {
+        HashSet<Integer> userIds = new HashSet<Integer>();
+        for (String post : postIds) {
+          List<Integer> userId = ALEipUtils.getUserIds(post);
+          userIds.addAll(userId);
+        }
+        if (userIds.isEmpty()) {
+          userIds.add(-1);
+        }
+        Expression exp =
+          ExpressionFactory.inExp(EipTMsgboardTopic.OWNER_ID_PROPERTY, userIds);
+        query.andQualifier(exp);
 
-      postId = postIds.get(0).toString();
-      updatePostName();
+        postId = postIds.get(0).toString();
+        updatePostName();
+      } else {
+        postId = "";
+        updatePostName();
+        current_filterMap.remove("post");
+      }
     }
 
     String search = ALEipUtils.getTemp(rundata, context, LIST_SEARCH_STR);
@@ -485,7 +519,7 @@ public class MsgboardTopicSelectData extends
 
   /**
    * ResultData に値を格納して返します。（一覧データ） <BR>
-   * 
+   *
    * @param obj
    * @return
    */
@@ -520,6 +554,7 @@ public class MsgboardTopicSelectData extends
       now.add(Calendar.DATE, -1);
       rd.setNewTopicFlag(date.after(now.getTime()));
       rd.setReplyCount(MsgboardUtils.countReply(record.getTopicId()));
+      rd.setLoginUserId(uid);
 
       return rd;
     } catch (Exception ex) {
@@ -531,7 +566,7 @@ public class MsgboardTopicSelectData extends
 
   /**
    * 詳細表示します。
-   * 
+   *
    * @param action
    * @param rundata
    * @param context
@@ -573,7 +608,7 @@ public class MsgboardTopicSelectData extends
 
   /**
    * 詳細データを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -653,12 +688,14 @@ public class MsgboardTopicSelectData extends
         EipTMsgboardTopic.TOPIC_ID_PK_COLUMN,
         Integer.valueOf(topicid));
     query.setQualifier(exp);
+    query.orderAscending(EipTMsgboardFile.UPDATE_DATE_PROPERTY);
+    query.orderAscending(EipTMsgboardFile.FILE_PATH_PROPERTY);
     return query;
   }
 
   /**
    * ResultData に値を格納して返します。（詳細データ） <BR>
-   * 
+   *
    * @param obj
    * @return
    */
@@ -718,6 +755,7 @@ public class MsgboardTopicSelectData extends
       rd.setNote(record.getNote());
       rd.setCreateDate(record.getCreateDate());
       rd.setUpdateDate(record.getUpdateDate());
+      rd.setLoginUserId(uid);
 
       List<EipTMsgboardFile> list =
         getSelectQueryForFiles(record.getTopicId().intValue()).fetchList();
@@ -754,7 +792,7 @@ public class MsgboardTopicSelectData extends
   }
 
   /**
-   * 
+   *
    * @return
    */
   public List<MsgboardCategoryResultData> getCategoryList() {
@@ -767,7 +805,7 @@ public class MsgboardTopicSelectData extends
 
   /**
    * トピックの総数を返す． <BR>
-   * 
+   *
    * @return
    */
   public int getTopicSum() {
@@ -776,7 +814,7 @@ public class MsgboardTopicSelectData extends
 
   /**
    * @return
-   * 
+   *
    */
   @Override
   protected Attributes getColumnMap() {
@@ -796,7 +834,7 @@ public class MsgboardTopicSelectData extends
   }
 
   /**
-   * 
+   *
    * @param id
    * @return
    */
@@ -826,7 +864,7 @@ public class MsgboardTopicSelectData extends
 
   /**
    * アクセス権限チェック用メソッド。 アクセス権限の機能名を返します。
-   * 
+   *
    * @return
    */
   @Override
@@ -836,7 +874,7 @@ public class MsgboardTopicSelectData extends
 
   /**
    * 他ユーザのトピックを編集する権限があるかどうかを返します。
-   * 
+   *
    * @return
    */
   public boolean hasAclUpdateTopicOthers() {
@@ -845,7 +883,7 @@ public class MsgboardTopicSelectData extends
 
   /**
    * 他ユーザのトピックを削除する権限があるかどうかを返します。
-   * 
+   *
    * @return
    */
   public boolean hasAclDeleteTopicOthers() {
@@ -880,7 +918,7 @@ public class MsgboardTopicSelectData extends
 
   /**
    * 部署一覧を取得します
-   * 
+   *
    * @return postList
    */
   public List<ALEipGroup> getPostList() {
@@ -889,14 +927,14 @@ public class MsgboardTopicSelectData extends
 
   /**
    * 部署の一覧を取得する．
-   * 
+   *
    * @return
    */
   public Map<Integer, ALEipPost> getPostMap() {
     return ALEipManager.getInstance().getPostMap();
   }
 
-  public void setFiltersPSML(VelocityPortlet portlet, Context context,
+  public void setFiltersFromPSML(VelocityPortlet portlet, Context context,
       RunData rundata) {
     ALEipUtils.setTemp(rundata, context, LIST_FILTER_STR, portlet
       .getPortletConfig()

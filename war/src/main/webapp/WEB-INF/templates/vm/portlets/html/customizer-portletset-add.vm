@@ -1,6 +1,6 @@
 #*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *#
-
 ## ---------------------------------------------------------------------------
 #set ($tabs = [["$l10n.WAR_ADD_APP", "",""]])
 ## ---------------------------------------------------------------------------
@@ -65,13 +64,16 @@
 #ALtablefooter()
 <input type="hidden" name="size" value="30"/>
 #ALbuttonheader()
-#ALbutton('eventSubmit_doAdd' $l10n.TODO_ADD 'aimluck.io.checkboxActionSubmit(this)')#ALsubmit('eventSubmit_doCancel' $l10n.ACCOUNT_CANCEL)
+<div class="center auiPopupButtons">
+<input name="eventSubmit_doAdd" class="auiButtonAction" type="button" value="$l10n.COMMON_ADD" onclick="aimluck.io.checkboxActionSubmit(this)">
+<input name="eventSubmit_doCancel" class="button" type="submit" value="$l10n.COMMON_BACK" onclick="aimluck.io.setHiddenValue(this);">
+</div>
 #ALbuttonfooter()
 #ALformfooter()
 #ALspacebothfooter()
 ##ALtabfooter()
 
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 //<![CDATA[
     aipo.portletset.menuSelected = 1;
 //]]>

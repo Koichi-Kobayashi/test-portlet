@@ -51,7 +51,7 @@ public class TestDetailScreen extends ALVelocityScreen {
       detailData.initField();
       detailData.doViewDetail(this, rundata, context);
 
-      String layout_template = "portlets/html/ja/ajax-test-detail.vm";
+      String layout_template = "portlets/html/ajax-test-detail.vm";
       setTemplate(rundata, context, layout_template);
     } catch (Exception ex) {
       logger.error("[TestDetailScreen] Exception.", ex);

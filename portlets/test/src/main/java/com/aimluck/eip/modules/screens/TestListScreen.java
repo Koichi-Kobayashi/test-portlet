@@ -65,7 +65,7 @@ public class TestListScreen extends TestScreen {
       listData.setStrLength(0);
       listData.doViewList(this, rundata, context);
 
-      String layout_template = "portlets/html/ja/ajax-test-list.vm";
+      String layout_template = "portlets/html/ajax-test-list.vm";
       setTemplate(rundata, context, layout_template);
 
     } catch (Exception ex) {

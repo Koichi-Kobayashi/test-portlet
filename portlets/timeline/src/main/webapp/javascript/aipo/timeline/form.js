@@ -1,6 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Copyright (C) 2004-2015 Aimluck,Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 dojo.require("aipo.widget.MemberNormalSelectList");
 
 dojo.provide("aipo.timeline");
@@ -110,7 +109,7 @@ aipo.timeline.nextThumbnail = function(pid) {
 		value++;
 		page.value = value;
 		dojo.byId("tlClipImage_" + pid + "_" + page.value).style.display = "";
-		dojo.byId("count_" + pid).innerHTML = max + " 件中 " + page.value + " 件";
+		dojo.byId("count_" + pid).innerHTML = maxval + " 件中 " + page.value + " 件";
 	}
 }
 
@@ -139,10 +138,10 @@ aipo.timeline.refreshImageList = function(pid, i) {
 		var page = dojo.byId("TimelinePage_" + pid);
 		var value = parseInt(page.value);
 		if (aipo.timeline.revmaxlist[pid] > 0) {
-			if (dojo.byId("auiSummaryMeta_" + pid).style.display != "block") {
+			if (dojo.hasClass(dojo.byId("auiSummaryMeta_" + pid),"hide")) {
 				document.getElementById("tlClipImage_" + pid + "_1").style.display = "";
-				dojo.byId("auiSummaryMeta_" + pid).style.display = "block";
-				dojo.byId("ViewThumbnail_" + pid).style.display = "block";
+				dojo.removeClass(dojo.byId("auiSummaryMeta_" + pid),"hide");
+				dojo.removeClass(dojo.byId("ViewThumbnail_" + pid),"hide");
 			}
 			if (!value) {
 				value = 1;
@@ -162,12 +161,52 @@ aipo.timeline.refreshImageList = function(pid, i) {
 	var w = dojo.byId("tlClipImage_" + pid + "_" + i + "_img").naturalWidth;
 	var h = dojo.byId("tlClipImage_" + pid + "_" + i + "_img").naturalHeight;
 
-	if ((w > 80) && (h > 80) || dojo.isIE) {
+	if (dojo.isIE) {
+		// IE対応
+		var img = new Image();
+		img.src = dojo.byId("tlClipImage_" + pid + "_" + i + "_img").src;
+		var iew = img.width;
+		var ieh = img.height;
+		if ((iew > 80) && (ieh > 80)){
+			// 描画対象
+			if (aipo.timeline.revmaxlist.hasOwnProperty(pid)) {
+				revmax = aipo.timeline.revmaxlist[pid];
+			}
+			if(revmax==0&&document.getElementById("tlClipImage_"+pid+"_1")!=null){
+				revmax = 1;
+			} else {
+				revmax++;
+			}
+			aipo.timeline.revmaxlist[pid] = revmax;
+
+			var info = dojo.byId("tlClipImage_" + pid + "_1_untiview");
+
+			var divNode = document.createElement('div');
+			divNode.id = "tlClipImage_" + pid + "_" + revmax;
+			divNode.className = "tlClipImage";
+			divNode.style.display = "none";
+
+			var imgNode = document.createElement('img');
+			imgNode.src = dojo.byId("tlClipImage_" + pid + "_" + i + "_img").src;
+			imgNode.name = dojo.byId("tlClipImage_" + pid + "_" + i + "_img").name;
+
+			divNode.appendChild(imgNode);
+			info.parentNode.insertBefore(divNode, info);
+			var delay = 200;
+			setTimeout(function() {
+				showImageList(pid);
+			}, delay);
+		}
+	}else if ((w > 80) && (h > 80)){
 		// 描画対象
 		if (aipo.timeline.revmaxlist.hasOwnProperty(pid)) {
 			revmax = aipo.timeline.revmaxlist[pid];
 		}
-		revmax++;
+		if(revmax==0&&document.getElementById("tlClipImage_"+pid+"_1")!=null){
+			revmax = 1;
+		} else {
+			revmax++;
+		}
 		aipo.timeline.revmaxlist[pid] = revmax;
 
 		var info = dojo.byId("tlClipImage_" + pid + "_1_untiview");
@@ -184,9 +223,6 @@ aipo.timeline.refreshImageList = function(pid, i) {
 		divNode.appendChild(imgNode);
 		info.parentNode.insertBefore(divNode, info);
 		var delay = 0;
-		if (dojo.isIE) {
-			delay = 200;
-		}
 		setTimeout(function() {
 			showImageList(pid);
 		}, delay);
@@ -245,8 +281,12 @@ aipo.timeline.onKeyUp = function(pid, tid, e) {
 				var spritval = _val.split(/\r\n|\n/g);
 				for (i in spritval) {
 					if (spritval[i].match(/^https?:\/\/[^ 	]/i)) {
-						aipo.timeline.getUrl(spritval[i], pid);
-						aipo.timeline.revmaxlist[pid] = 0;
+						var url = spritval[i].replace(/　/g, " ").split(" ");
+						if(dojo.byId("flag_" + pid).value == "none"){
+							dojo.byId("flag_" + pid).value = "processing";
+							aipo.timeline.getUrl(url[0], pid);
+							aipo.timeline.revmaxlist[pid] = 0;
+						}
 					}
 				}
 			}
@@ -277,23 +317,25 @@ aipo.timeline.onKeyUp = function(pid, tid, e) {
 	shadow.style.left = "-1000";
 	shadow.style.border = "0";
 	shadow.style.outline = "0";
-	shadow.style.lineHeight = "normal";
+	shadow.style.fontSize = "14px";
+    shadow.style.lineHeight = "1.38";
 	shadow.style.height = "auto";
 	shadow.style.resize = "none";
-	shadow.cols = "10"
+	shadow.cols = "10";
 	// これが呼ばれる際の入力はまだ入ってこないので、適当に1文字追加
 	shadow.innerHTML = shadowVal + "あ";
 
 	var objBody = document.getElementsByTagName("body").item(0);
 	objBody.appendChild(shadow);
-	dojo.byId("shadow").style.width = document.getElementById(objId).offsetWidth
-			+ "px";
+	dojo.byId("shadow").style.width = document.getElementById(objId).offsetWidth + "px";
 
 	var shadowHeight = document.getElementById("shadow").offsetHeight;
 
-	if (shadowHeight < 18)
-		shadowHeight = 18;
-	dojo.byId(objId).style.height = shadowHeight * 1.2 + 21 + "px";
+    // 文字サイズを14pxに設定したため、"あ"の高さが18→20に変更
+    if (shadowHeight < 20) {
+        shadowHeight = 20;
+    }
+	dojo.byId(objId).style.height = shadowHeight * 1.0 + 23 + "px";
 	objBody.removeChild(shadow);
 }
 
@@ -303,6 +345,16 @@ aipo.timeline.onPaste = function(pid, tid, e) {
 	}, 100);
 }
 
+aipo.timeline.onkeydown =function(pid){
+	if(dojo.isSafari){
+		var keycode = window.event.keyCode;
+		if(keycode== dojo.keys.TAB){
+		var	submit =dojo.byId("al_submit_"+pid);
+		dojo.stopEvent(window.event);
+		 submit.focus();
+		}
+	}
+}
 aipo.timeline.lock = false;
 aipo.timeline.onReceiveMessage = function(msg) {
 	var pid = dojo.byId("getTimelinePortletId").innerHTML;
@@ -323,7 +375,6 @@ aipo.timeline.onReceiveMessage = function(msg) {
 		dojo.byId("messageDiv_" + pid).innerHTML = msg;
 	}
 }
-
 aipo.timeline.onReceiveMessageToList = function(msg) {
 	var pid = dojo.byId("getTimelinePortletId").innerHTML;
 	if (!msg) {
@@ -351,21 +402,14 @@ aipo.timeline.onReceiveLikeMessage = function(portletId, timelineId, mode,
 	if (arrDialog) {
 		arrDialog.hide();
 	}
-	var form = dojo.query("#likeForm_" + portletId + "_" + timelineId)[0];
+	var form = dojo.byId("likeForm_" + portletId + "_" + timelineId);
 	var a = dojo.query("#likeForm_" + portletId + "_" + timelineId + " > a")[0];
 	var inputname = dojo.query("#likeForm_" + portletId + "_" + timelineId
 			+ " > input")[1];
 	if (mode == 'like') {
-		var onsubmit = form.getAttribute("onsubmit");
-		if (typeof onsubmit == "string") {
-			onsubmit = onsubmit.replace("\'like\'", "\'dislike\'");
-			form.setAttribute("onsubmit", onsubmit);
-		} else {
-			var onsubmitString = onsubmit.toString().replace("\'like\'",
-					"\'dislike\'");
-			onsubmitString = onsubmitString.substring(onsubmitString
-					.indexOf("{") + 1, onsubmitString.lastIndexOf("}") - 1);
-			form.setAttribute("onsubmit", new Function(onsubmitString));
+		form.onsubmit = function(event) {
+			aimluck.io.submit(form, '', portletId,
+					aipo.timeline.onReceiveLikeMessage(portletId, timelineId, 'dislike', isComment))
 		}
 		var onclick = a.getAttribute("onclick");
 		if (typeof onclick == "string") {
@@ -381,21 +425,14 @@ aipo.timeline.onReceiveLikeMessage = function(portletId, timelineId, mode,
 		}
 		a.innerHTML = "いいね！を取り消す";
 		if (isComment) {
-			aipo.timeline.increaseComLikeValue(timelineId);
+			aipo.timeline.increaseComLikeValue(portletId, timelineId);
 		} else {
-			aipo.timeline.increaseLikeValue(timelineId);
+			aipo.timeline.increaseLikeValue(portletId, timelineId);
 		}
 	} else if (mode == 'dislike') {
-		var onsubmit = form.getAttribute("onsubmit");
-		if (typeof onsubmit == "string") {
-			onsubmit = onsubmit.replace("\'dislike\'", "\'like\'");
-			form.setAttribute("onsubmit", onsubmit);
-		} else {
-			var onsubmitString = onsubmit.toString().replace("\'dislike\'",
-					"\'like\'");
-			onsubmitString = onsubmitString.substring(onsubmitString
-					.indexOf("{") + 1, onsubmitString.lastIndexOf("}") - 1);
-			form.setAttribute("onsubmit", new Function(onsubmitString));
+		form.onsubmit = function(event) {
+			aimluck.io.submit(form, '', portletId,
+					aipo.timeline.onReceiveLikeMessage(portletId, timelineId, 'like', isComment))
 		}
 		var onclick = a.getAttribute("onclick");
 		if (typeof onclick == "string") {
@@ -411,16 +448,16 @@ aipo.timeline.onReceiveLikeMessage = function(portletId, timelineId, mode,
 		}
 		a.innerHTML = "いいね！";
 		if (isComment) {
-			aipo.timeline.decreaseComLikeValue(timelineId);
+			aipo.timeline.decreaseComLikeValue(portletId, timelineId);
 		} else {
-			aipo.timeline.decreaseLikeValue(timelineId);
+			aipo.timeline.decreaseLikeValue(portletId, timelineId);
 		}
 	}
 }
 
-aipo.timeline.increaseLikeValue = function(timelineId) {
-	var div = dojo.query("#like_" + timelineId)[0];
-	var a = dojo.query("#like_" + timelineId + " > a")[0];
+aipo.timeline.increaseLikeValue = function(portletId, timelineId) {
+	var div = dojo.query("#like_" + portletId + "_" + timelineId)[0];
+	var a = dojo.query("#like_" + portletId + "_" + timelineId + " > a")[0];
 	if (dojo.isFF > 0) {
 		var likeLinkString = a.textContent; // FirefoxではinnerTextが動作しないため
 	} else {
@@ -445,8 +482,8 @@ aipo.timeline.increaseLikeValue = function(timelineId) {
 	}
 }
 
-aipo.timeline.increaseComLikeValue = function(timelineId) {
-	var a = dojo.query("#likeCount_" + timelineId)[0];
+aipo.timeline.increaseComLikeValue = function(portletId, timelineId) {
+	var a = dojo.query("#likeCount_" + portletId + "_" + timelineId)[0];
 	if (dojo.isFF > 0) {
 		var likeLinkString = a.textContent; // FirefoxではinnerTextが動作しないため
 	} else {
@@ -464,8 +501,8 @@ aipo.timeline.increaseComLikeValue = function(timelineId) {
 	}
 }
 
-aipo.timeline.decreaseLikeValue = function(timelineId) {
-	var a = dojo.query("#like_" + timelineId + " > a")[0];
+aipo.timeline.decreaseLikeValue = function(portletId, timelineId) {
+	var a = dojo.query("#like_" + portletId + "_" + timelineId + " > a")[0];
 	if (dojo.isFF > 0) {
 		var likeLinkString = a.textContent; // FirefoxではinnerTextが動作しないため
 	} else {
@@ -485,8 +522,8 @@ aipo.timeline.decreaseLikeValue = function(timelineId) {
 	}
 }
 
-aipo.timeline.decreaseComLikeValue = function(timelineId) {
-	var a = dojo.query("#likeCount_" + timelineId)[0];
+aipo.timeline.decreaseComLikeValue = function(portletId, timelineId) {
+	var a = dojo.query("#likeCount_" + portletId + "_" + timelineId)[0];
 	if (dojo.isFF > 0) {
 		var likeLinkString = a.textContent; // FirefoxではinnerTextが動作しないため
 	} else {
@@ -565,26 +602,23 @@ aipo.timeline.addText = function(form, pid) {
 							"tlClipImage",
 							dojo.byId("tlClipImage_" + pid + "_" + page.value).children[0].name);
 		}
-		aipo.timeline.addHiddenValue(form, "tlClipTitle", dojo
-				.byId("tlClipTitle_" + pid).children[0].innerHTML);
 		if (dojo.byId("tlClipUrl_" + pid).children[0].innerHTML) {
 			aipo.timeline.addHiddenValue(form, "tlClipUrl", dojo
 					.byId("tlClipUrl_" + pid).children[0].getAttribute("href"));
 		}
-		aipo.timeline.addHiddenValue(form, "tlClipBody", dojo
-				.byId("tlClipBody_" + pid).innerHTML);
 	}
 }
 
 aipo.timeline.viewThumbnail = function(pid) {
 	var page = dojo.byId("TimelinePage_" + pid);
 	var value = parseInt(page.value);
+
 	if (dojo.byId("checkbox_" + pid).checked) {
 		dojo.byId("tlClipImage_" + pid + "_" + page.value).style.display = "none";
-		dojo.byId("auiSummaryMeta_" + pid).style.display = "none";
+		dojo.addClass(dojo.byId("auiSummaryMeta_" + pid),"hide");
 	} else {
 		dojo.byId("tlClipImage_" + pid + "_" + page.value).style.display = "";
-		dojo.byId("auiSummaryMeta_" + pid).style.display = "";
+		dojo.removeClass(dojo.byId("auiSummaryMeta_" + pid),"hide");
 	}
 }
 
