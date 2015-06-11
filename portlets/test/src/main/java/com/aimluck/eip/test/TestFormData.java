@@ -86,7 +86,6 @@ public class TestFormData extends ALAbstractFormData {
 
   /** メモ */
   private ALStringField note;
-
   private ALStringField url;
 
   /** 現在の年 */
