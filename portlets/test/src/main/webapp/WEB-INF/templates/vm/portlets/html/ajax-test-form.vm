@@ -18,6 +18,8 @@
  *#
 
 ## ---------------------------------------------------------------------------
+#ALtdcaption($!result.getFieldName("url"))
+#ALtditem("#ALtextfieldw100('url' $!result.Url 50 'active')")
 #if  ($mode=="new_form")
 #set ($indicator_str = "データを送信")
 #set ($action_str = "Test追加")
