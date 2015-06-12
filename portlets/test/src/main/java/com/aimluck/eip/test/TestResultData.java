@@ -54,7 +54,8 @@ public class TestResultData implements ALData {
 
   /** ユーザID */
   private ALStringField user_id;
-
+  /** URL */
+  private ALStringField url;
   /**
    * 期限状態（期限前/期限当日/期限後）． <br>
    * クラス TestUtils の変数 LIMIT_STATE_BEFORE，LIMIT_STATE_TODAY，LIMIT_STATE_AFTER
@@ -81,8 +82,15 @@ public class TestResultData implements ALData {
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     is_self_test = false;
+    url = new ALStringField();
+    url.setTrim(false);
   }
-
+  public String getUrl(){
+	  return url.getValue();
+  }
+  public void setUrl(String string){
+	  url.setValue(string);
+  }
   /**
    * @return
    */
