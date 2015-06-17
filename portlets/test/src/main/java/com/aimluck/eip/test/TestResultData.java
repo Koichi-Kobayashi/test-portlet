@@ -88,6 +88,9 @@ public class TestResultData implements ALData {
   public String getUrl(){
 	  return url.getValue();
   }
+  public String getUrlHtml() {
+	  return ALEipUtils.getMessageList(url.getValue());
+  }
   public void setUrl(String string){
 	  url.setValue(string);
   }

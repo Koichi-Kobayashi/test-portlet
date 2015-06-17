@@ -67,3 +67,4 @@
 #ALdialogfooter()
 #ALtdcaption($!result.getFieldName("url"))
 #ALtditem("#ALtextfieldw100('url' $!result.Url 50 'active')")
+

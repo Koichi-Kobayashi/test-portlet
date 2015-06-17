@@ -40,8 +40,8 @@ $!result.Detail.TestName
 #ALtablefooter()
 #ALbuttonheader()
 #ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL)
+<td><a href="$!result.Detail.Url"><img title="$!result.Detail.Url" src="http://capture.heartrails.com/medium?$!result.Detail.Url"     data-lazy-src="http://capture.heartrails.com/free?$!result.Detail.Url" alt="$!result.Detail.Url" width="200" height="150" /></a></tb>
 #ALtditemheader()
-<a href="$result.Detail.Url"><img title="$result.Detail.Url" src="http://hack.aipo.com/wp-content/plugins/lazy-load/images/1x1.trans.gif"       data-lazy-src="http://capture.heartrails.com/free/1429681233221?$result.Detail.Url"  alt="$result.Detail.Url" width="200" height="300" /><noscript><img title="$result.Detail.Url" src="http://capture.heartrails.com/free/1429681233221?$result.Detail.Url"  alt="$result.Detail.Url" width="200" height="300" /></noscript></a>
 #ALtditemfooter()
 #if($result.Detail.isSelfTest())
 #ALajaxbuttonEditCallback("$!jslink.getPortletById($!portlet.ID).addQueryData('template','TestFormScreen').addQueryData('entityid',$entityid)" "$!portlet.ID" "aipo.todo.onLoadTodoDialog")

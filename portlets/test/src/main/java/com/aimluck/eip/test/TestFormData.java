@@ -86,6 +86,7 @@ public class TestFormData extends ALAbstractFormData {
 
   /** メモ */
   private ALStringField note;
+  /** URL */
   private ALStringField url;
 
   /** 現在の年 */
@@ -179,6 +180,11 @@ public class TestFormData extends ALAbstractFormData {
     note.setFieldName(ALLocalizationUtils.getl10n("REGISTRY_EDITOR_POTLET_"));
     note.setTrim(false);
 
+
+    // URL
+    url = new ALStringField();
+    url.setFieldName(ALLocalizationUtils.getl10n("REGISTRY_EDITOR_PORTLET_URL"));
+    url.setTrim(false);
   }
 
 
@@ -221,7 +227,8 @@ public class TestFormData extends ALAbstractFormData {
     test_name.validate(msgList);
     // メモ
     note.validate(msgList);
-
+    // URL
+    url.validate(msgList);
     return (msgList.size() == 0);
 
   }
@@ -332,7 +339,7 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
 
       // URL
-      url.setValue(test.getUrl());
+      test.setUrl(url.getValue());
       // メモ
       test.setNote(note.getValue());
       // 作成日
