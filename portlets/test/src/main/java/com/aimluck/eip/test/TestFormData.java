@@ -177,7 +177,7 @@ public class TestFormData extends ALAbstractFormData {
 
     // メモ
     note = new ALStringField();
-    note.setFieldName(ALLocalizationUtils.getl10n("REGISTRY_EDITOR_POTLET_"));
+    note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
 
 

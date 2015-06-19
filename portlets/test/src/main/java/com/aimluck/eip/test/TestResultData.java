@@ -56,6 +56,7 @@ public class TestResultData implements ALData {
   private ALStringField user_id;
   /** URL */
   private ALStringField url;
+
   /**
    * 期限状態（期限前/期限当日/期限後）． <br>
    * クラス TestUtils の変数 LIMIT_STATE_BEFORE，LIMIT_STATE_TODAY，LIMIT_STATE_AFTER
