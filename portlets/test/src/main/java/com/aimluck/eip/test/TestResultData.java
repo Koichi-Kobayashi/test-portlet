@@ -45,6 +45,8 @@ public class TestResultData implements ALData {
   /** メモ */
   private ALStringField note;
 
+  /** URL */
+  private ALStringField create_url;
 
   /** 登録日 */
   private ALStringField create_date;
