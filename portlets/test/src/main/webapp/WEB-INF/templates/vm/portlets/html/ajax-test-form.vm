@@ -59,7 +59,7 @@
 #ALtditemfooter()
 
 #ALtdcaption($!result.getFieldName("url"))
-#ALtditem("#ALtextfieldw100('url' $!result.Url 50 'active')")
+#ALtditem("#ALtextfieldw100('url' $!result.Url 100 'active')")
 
 #ALtablefooter()
 #ALbuttonheader()

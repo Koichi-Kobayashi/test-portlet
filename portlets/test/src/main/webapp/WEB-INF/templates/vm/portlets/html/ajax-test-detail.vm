@@ -37,10 +37,13 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.Url)
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
+#ALtdcaption($l10n.TODO_DMAINURL)
+#ALtditem($!result.Detail.UrlDmain)
 #ALtablefooter()
 #ALbuttonheader()
 #ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL)
-<td><a href="http://www.aipo.com/"><img title="無料グループウェア「アイポ」" src="http://capture.heartrails.com/free?http://www.aipo.com/" alt="http://www.aipo.com/" width="200" height="300" /></a></tb>
+<td><a href="$!result.Detail.Url"><img title="$!result.Detail.Url" src="http://capture.heartrails.com/free?$!result.Detail.Url"  alt="$!result.Detail.Url" width="200" height="100" /><noscript><img title="$!result.Detail.Url" src="http://capture.heartrails.com/free?$!result.Detail.Url"  alt="$!result.Detail.Url" width="200" height="100" /></noscript></a></td>
+</tr>
 #ALtditemheader()
 #ALtditemfooter()
 #if($result.Detail.isSelfTest())

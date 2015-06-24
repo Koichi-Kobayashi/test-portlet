@@ -27,6 +27,9 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
+import java.net.URI;
+
+
 
 /**
  * TestのResultDataです。 <BR>
@@ -56,6 +59,7 @@ public class TestResultData implements ALData {
   private ALStringField user_id;
   /** URL */
   private ALStringField url;
+
 
   /**
    * 期限状態（期限前/期限当日/期限後）． <br>
@@ -205,4 +209,11 @@ public class TestResultData implements ALData {
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
+  /** ドメイン取得の処理です　**/
+  public String getUrlDmain() throws Exception{
+	  URI u = new URI(url.getValue());
+	  return u.getScheme()+"://"+u.getHost();
+  }
 }
+
+

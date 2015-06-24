@@ -743,6 +743,7 @@ public class AjaxScheduleWeeklyGroupSelectData extends
         rd.setStartDate(record.getStartDate());
         rd.setEndDate(record.getEndDate());
         rd.setTodoUrl(todo_url);
+
         // 公開/非公開を設定する．
         rd.setPublicFlag("T".equals(record.getPublicFlag()));
 
