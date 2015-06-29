@@ -202,6 +202,8 @@ public class TestFormData extends ALAbstractFormData {
     note.limitMaxLength(1000);
  // URL必須項目
     url.setNotNull(true);
+ // URLの文字数制限
+    url.limitMaxLength(1000);
 
 
     // 担当者ID必須項目
@@ -232,6 +234,8 @@ public class TestFormData extends ALAbstractFormData {
     note.validate(msgList);
     // URL
     url.validate(msgList);
+    // ID
+    user_id.validate(msgList);
     return (msgList.size() == 0);
 
   }
