@@ -86,11 +86,8 @@ public class TestFormData extends ALAbstractFormData {
 
   /** メモ */
   private ALStringField note;
-
-
   /** URL */
-  private ALStringField test_URL;
-
+  private ALStringField url;
 
   /** 現在の年 */
   private int currentYear;
@@ -183,12 +180,13 @@ public class TestFormData extends ALAbstractFormData {
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
 
-    // URL
-    test_URL = new ALStringField();
-    test_URL.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
-    test_URL.setTrim(true);
 
+    // URL
+    url = new ALStringField();
+    url.setFieldName(ALLocalizationUtils.getl10n("REGISTRY_EDITOR_PORTLET_URL"));
+    url.setTrim(false);
   }
+
 
 
   /**
@@ -199,13 +197,10 @@ public class TestFormData extends ALAbstractFormData {
     // Tタイトル必須項目
     test_name.setNotNull(true);
     // タイトルの文字数制限
-    test_name.limitMaxLength(50);
+    test_name.limitMaxLength(100);
     // メモの文字数制限
     note.limitMaxLength(1000);
 
-    /**
-     * ENTER SOMETHING HERE FOR UNICODE LIMITATIONS
-     */
 
     // 担当者ID必須項目
     user_id.setNotNull(true);
@@ -234,8 +229,7 @@ public class TestFormData extends ALAbstractFormData {
     // メモ
     note.validate(msgList);
     // URL
-    test_URL.validate(msgList);
-
+    url.validate(msgList);
     return (msgList.size() == 0);
 
   }
@@ -258,12 +252,14 @@ public class TestFormData extends ALAbstractFormData {
       if (test == null) {
         return false;
       }
+      // URL
+      url.setValue(test.getUrl());
       // タイトル
       test_name.setValue(test.getTestName());
       // メモ
       note.setValue(test.getNote());
-      // URL
-      test_URL.setValue(test.getTestURL());
+
+
 
 
       // 担当者
@@ -343,14 +339,15 @@ public class TestFormData extends ALAbstractFormData {
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
 
+      // URL
+      test.setUrl(url.getValue());
       // メモ
       test.setNote(note.getValue());
-      // URL
-      test.setTestURL(test_URL.getValue());;
       // 作成日
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
+
 
       // Testを登録
       Database.commit();
@@ -406,7 +403,6 @@ public class TestFormData extends ALAbstractFormData {
         return false;
       }
 
-
       // タイトル
       test.setTestName(test_name.getValue());
 
@@ -415,12 +411,12 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
       // メモ
       test.setNote(note.getValue());
-      // URL
-      test.setTestURL(test_URL.getValue());
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
       // Test を更新
       Database.commit();
+      // URL
+      test.setUrl(url.getValue());
 
 
       // イベントログに保存
@@ -455,7 +451,6 @@ public class TestFormData extends ALAbstractFormData {
     return true;
   }
 
-
   /**
    * メモを取得します。 <BR>
    *
@@ -464,6 +459,17 @@ public class TestFormData extends ALAbstractFormData {
   public ALStringField getNote() {
     return note;
   }
+
+  /**
+   * URLを取得します。 <BR>
+   *
+   * @return
+   */
+
+ public ALStringField getUrl() {
+    return url;
+ }
+
 
 
   /**
