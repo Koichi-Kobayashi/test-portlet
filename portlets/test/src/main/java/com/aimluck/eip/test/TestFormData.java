@@ -183,7 +183,7 @@ public class TestFormData extends ALAbstractFormData {
 
     // URL
     url = new ALStringField();
-    url.setFieldName(ALLocalizationUtils.getl10n("REGISTRY_EDITOR_PORTLET_URL"));
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
     url.setTrim(false);
   }
 
