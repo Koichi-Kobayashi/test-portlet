@@ -126,6 +126,13 @@ public class TestResultData implements ALData {
   public String getNote() {
     return ALEipUtils.getMessageList(note.getValue());
   }
+  
+  /**
+   * @param
+   */
+  public void setTestURL(String string) {
+	  test_URL.setValue(string);
+  }
 
   /**
    * @param string
@@ -134,20 +141,6 @@ public class TestResultData implements ALData {
     note.setValue(string);
   }
 
-  /**
-   * @param
-   */
-  public String getTestURL() {
-	  return ALCommonUtils.replaceToAutoCR(test_URL.toString());
-  }
-  
-  /**
-   * @param
-   */
-  public void setTestURL(String string) {
-	  test_URL.setValue(string);
-  }
-  
   /**
    * @return
    */
