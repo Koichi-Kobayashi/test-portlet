@@ -81,12 +81,18 @@ public class TestResultData implements ALData {
     test_name = new ALStringField();
     note = new ALStringField();
     note.setTrim(false);
+    test_URL = ALStringField();
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     is_self_test = false;
   }
 
-  /**
+  private ALStringField ALStringField() {
+	// TODO 自動生成されたメソッド・スタブ
+	return null;
+}
+
+/**
    * @return
    */
   public ALNumberField getTestId() {
@@ -120,13 +126,6 @@ public class TestResultData implements ALData {
   public String getNote() {
     return ALEipUtils.getMessageList(note.getValue());
   }
-  
-  /**
-   * @param
-   */
-  public void setTestURL(String string) {
-	  test_URL.setValue(string);
-  }
 
   /**
    * @param string
@@ -135,6 +134,20 @@ public class TestResultData implements ALData {
     note.setValue(string);
   }
 
+  /**
+   * @param
+   */
+  public String getTestURL() {
+	  return ALCommonUtils.replaceToAutoCR(test_URL.toString());
+  }
+  
+  /**
+   * @param
+   */
+  public void setTestURL(String string) {
+	  test_URL.setValue(string);
+  }
+  
   /**
    * @return
    */

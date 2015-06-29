@@ -203,6 +203,10 @@ public class TestFormData extends ALAbstractFormData {
     // メモの文字数制限
     note.limitMaxLength(1000);
 
+    /**
+     * ENTER SOMETHING HERE FOR UNICODE LIMITATIONS
+     */
+    
     // 担当者ID必須項目
     user_id.setNotNull(true);
   }
