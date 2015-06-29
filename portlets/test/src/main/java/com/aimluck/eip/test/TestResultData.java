@@ -46,7 +46,7 @@ public class TestResultData implements ALData {
   private ALStringField note;
 
   /** URL */
-  private ALStringField url;
+  private ALStringField test_URL;
 
 
   /** 登録日 */
@@ -81,7 +81,7 @@ public class TestResultData implements ALData {
     test_name = new ALStringField();
     note = new ALStringField();
     note.setTrim(false);
-    url = ALStringField();
+    test_URL = ALStringField();
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     is_self_test = false;
@@ -131,7 +131,7 @@ public class TestResultData implements ALData {
    * @param
    */
   public void setTestURL(String string) {
-	  url.setValue(string);
+	  test_URL.setValue(string);
   }
 
   /**
