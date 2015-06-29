@@ -432,7 +432,7 @@ public class TestSelectData extends
       rd.setUpdateDate(record.getUpdateDate());
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);
-      rd.setUrl(record.getUrl());
+      //rd.setUrl(record.getUrl());
       return rd;
     } catch (Exception ex) {
       logger.error("test", ex);
