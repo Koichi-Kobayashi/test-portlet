@@ -86,8 +86,8 @@ public class TestFormData extends ALAbstractFormData {
 
   /** メモ */
   private ALStringField note;
-  
-  
+
+
   /** URL */
   private ALStringField test_URL;
 
@@ -182,7 +182,7 @@ public class TestFormData extends ALAbstractFormData {
     note = new ALStringField();
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
-    
+
     // URL
     test_URL = new ALStringField();
     test_URL.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
@@ -206,7 +206,7 @@ public class TestFormData extends ALAbstractFormData {
     /**
      * ENTER SOMETHING HERE FOR UNICODE LIMITATIONS
      */
-    
+
     // 担当者ID必須項目
     user_id.setNotNull(true);
   }

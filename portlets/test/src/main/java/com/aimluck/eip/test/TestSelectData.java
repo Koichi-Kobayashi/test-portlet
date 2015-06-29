@@ -365,6 +365,7 @@ public class TestSelectData extends
       rd.setTestName(ALCommonUtils.compressString(
         record.getTestName(),
         getStrLength()));
+      rd.setTestURL(ALCommonUtils.compressString(record.getTestURL(), getStrLength()));
       rd.setUpdateDate(record.getUpdateDate());
 
       rd.setAclEditTestOther(hasAclEditTestOther);
@@ -427,6 +428,7 @@ public class TestSelectData extends
       rd.setTestName(record.getTestName());
       rd.setTestId(record.getTestId().longValue());
       rd.setNote(record.getNote());
+      rd.setTestURL(record.getTestURL());
       rd.setCreateDate(ALDateUtil
         .format(record.getCreateDate(), "yyyy年M月d日(E)"));
       rd.setUpdateDate(record.getUpdateDate());

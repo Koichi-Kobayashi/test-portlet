@@ -40,4 +40,9 @@ public class EipTTest extends _EipTTest {
 
   }
 
+public String getTestURL() {
+	// TODO 自動生成されたメソッド・スタブ
+	return null;
+}
+
 }
