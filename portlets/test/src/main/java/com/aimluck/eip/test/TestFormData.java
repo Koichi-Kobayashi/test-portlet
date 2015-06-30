@@ -87,7 +87,7 @@ public class TestFormData extends ALAbstractFormData {
   /** メモ */
   private ALStringField note;
   /** URL */
-  private ALStringField url;
+  private ALStringField test_url;
 
   /** 現在の年 */
   private int currentYear;
@@ -182,9 +182,9 @@ public class TestFormData extends ALAbstractFormData {
 
 
     // URL
-    url = new ALStringField();
-    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
-    url.setTrim(false);
+    test_url = new ALStringField();
+    test_url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
+    test_url.setTrim(false);
   }
 
 
@@ -201,10 +201,10 @@ public class TestFormData extends ALAbstractFormData {
     // メモの文字数制限
     note.limitMaxLength(1000);
  // URL必須項目
-    url.setNotNull(true);
+    test_url.setNotNull(true);
  // URLの文字数制限
-    url.limitMaxLength(1000);
-    url.setCharacterType(ALStringField.TYPE_ASCII);
+    test_url.limitMaxLength(1000);
+    test_url.setCharacterType(ALStringField.TYPE_ASCII);
 
 
     // 担当者ID必須項目
@@ -234,7 +234,7 @@ public class TestFormData extends ALAbstractFormData {
     // メモ
     note.validate(msgList);
     // URL
-    url.validate(msgList);
+    test_url.validate(msgList);
     // ID
     user_id.validate(msgList);
     return (msgList.size() == 0);
@@ -260,7 +260,7 @@ public class TestFormData extends ALAbstractFormData {
         return false;
       }
       // URL
-      url.setValue(test.getUrl());
+      test_url.setValue(test.getUrl());
       // タイトル
       test_name.setValue(test.getTestName());
       // メモ
@@ -347,7 +347,7 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
 
       // URL
-      test.setUrl(url.getValue());
+      test.setUrl(test_url.getValue());
       // メモ
       test.setNote(note.getValue());
       // 作成日
@@ -423,7 +423,7 @@ public class TestFormData extends ALAbstractFormData {
       // Test を更新
       Database.commit();
       // URL
-      test.setUrl(url.getValue());
+      test.setUrl(test_url.getValue());
 
 
       // イベントログに保存
@@ -474,7 +474,7 @@ public class TestFormData extends ALAbstractFormData {
    */
 
  public ALStringField getUrl() {
-    return url;
+    return test_url;
  }
 
 
