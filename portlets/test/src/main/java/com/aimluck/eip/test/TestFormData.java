@@ -72,6 +72,7 @@ import com.aimluck.eip.util.ALLocalizationUtils;
  */
 public class TestFormData extends ALAbstractFormData {
 
+	
   /** logger */
   private static final JetspeedLogger logger = JetspeedLogFactoryService
     .getLogger(TestFormData.class.getName());
@@ -82,8 +83,7 @@ public class TestFormData extends ALAbstractFormData {
 
   /** 担当者ID */
   private ALNumberField user_id;
-
-
+  
   /** メモ */
   private ALStringField note;
 
@@ -103,6 +103,9 @@ public class TestFormData extends ALAbstractFormData {
   /** 他人のTest編集権限を持つかどうか */
   private boolean hasAclInsertTestOther;
 
+  /** URL */
+   private ALStringField url;
+  
   /**
    *
    * @param action
