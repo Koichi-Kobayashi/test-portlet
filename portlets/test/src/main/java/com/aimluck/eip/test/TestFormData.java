@@ -201,7 +201,7 @@ public class TestFormData extends ALAbstractFormData {
     // メモの文字数制限
     note.limitMaxLength(1000);
  // URL必須項目
-    test_url.setNotNull(true);
+    test_url.setNotNull(false);
  // URLの文字数制限
     test_url.limitMaxLength(1000);
     test_url.setCharacterType(ALStringField.TYPE_ASCII);
