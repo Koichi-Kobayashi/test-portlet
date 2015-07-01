@@ -184,7 +184,7 @@ public class TestFormData extends ALAbstractFormData {
     // URL
     test_url = new ALStringField();
     test_url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
-    test_url.setTrim(false);
+    test_url.setTrim(true);
   }
 
 
@@ -200,10 +200,7 @@ public class TestFormData extends ALAbstractFormData {
     test_name.limitMaxLength(100);
     // メモの文字数制限
     note.limitMaxLength(1000);
- // URL必須項目
-    test_url.setNotNull(false);
  // URLの文字数制限
-    test_url.limitMaxLength(1000);
     test_url.setCharacterType(ALStringField.TYPE_ASCII);
 
 
