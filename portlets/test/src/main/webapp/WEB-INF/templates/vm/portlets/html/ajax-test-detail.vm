@@ -38,7 +38,7 @@ $!result.Detail.TestName
 #ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
 #ALtditem($!result.Detail.Url)
 #ALtdcaption("サムネイル")
-<td><a href="$!result.Detail.Url"><img title="$!result.Detail.Url" src="http://capture.heartrails.com/free?http://www.google.co.uk/" alt="http://www.google.co.uk/" width="200" height="300" /></a></td>
+<td><a href="$!result.Detail.Url"><img title="$!result.Detail.Url" src="http://capture.heartrails.com/200x150/cool?$!result.Detail.Url" width="200" height="150" /></a></td>
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())

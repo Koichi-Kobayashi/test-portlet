@@ -42,7 +42,7 @@ import com.aimluck.eip.services.portal.ALPortalApplicationService;
 
 /**
  * Aimluck EIP のユーティリティクラスです。 <br />
- * 
+ *
  */
 public class ALCommonUtils {
 
@@ -71,7 +71,7 @@ public class ALCommonUtils {
 
   /**
    * * 長いアルファベットのテキストを自動的に折り返すヘルパー
-   * 
+   *
    * @subpackage helper
    * @param string
    *          $text
@@ -89,7 +89,7 @@ public class ALCommonUtils {
     int j;
     for (int i = 0; i < count; i++) {
       j = i * step;
-      res.append(str.substring(j, j + step)).append("<wbr/>");
+      res.append(str.substring(j, j + step)).append("");
     }
     if (count * step < size) {
       res.append(str.substring(count * step));
@@ -113,7 +113,7 @@ public class ALCommonUtils {
 
   /**
    * * 長いアルファベットのテキストを自動的に折り返すヘルパー
-   * 
+   *
    * @subpackage helper
    * @param string
    *          $text
@@ -164,7 +164,7 @@ public class ALCommonUtils {
 
   /**
    * * 長いアルファベットのテキストを自動的に折り返すヘルパー
-   * 
+   *
    * @subpackage helper
    * @param string
    *          $text
@@ -215,7 +215,7 @@ public class ALCommonUtils {
 
   /**
    * 第二引数で指定した長さで、第一引数の文字列を丸める。
-   * 
+   *
    * @param src
    *          元の文字列
    * @param length
@@ -239,7 +239,7 @@ public class ALCommonUtils {
 
   /**
    * ランダムなセキュリティIDを生成する。
-   * 
+   *
    * @return string ランダムIDの文字列型
    */
   public static String getSecureRandomString() {
@@ -269,7 +269,7 @@ public class ALCommonUtils {
 
   /**
    * セキュリティID生成用のSecureRandomを生成します。
-   * 
+   *
    * @return random セキュリティID生成用のSecureRandom
    */
   public static SecureRandom getSecureRandom() {
@@ -287,7 +287,7 @@ public class ALCommonUtils {
 
   /**
    * 画像表示用の整数をランダムで生成します。
-   * 
+   *
    * @return
    */
   public int getImageRandomNumber() {
@@ -297,7 +297,7 @@ public class ALCommonUtils {
 
   /**
    * URL文字列にスキーマ部分が含まれていなかった場合、先頭に付加した物を返します
-   * 
+   *
    * @param url
    * @return
    */
@@ -311,7 +311,7 @@ public class ALCommonUtils {
 
   /**
    * 指定したエントリー名を持つ個人設定ページに含まれるポートレットへの URI を取得する．
-   * 
+   *
    * @param rundata
    * @param portletEntryName
    *          PSML ファイルに記述されているタグ entry の要素 parent
@@ -371,7 +371,7 @@ public class ALCommonUtils {
 
   /**
    * 指定したエントリー名を持つ個人設定ページに含まれるポートレットへの URI を取得する．
-   * 
+   *
    * @param rundata
    * @param portletEntryName
    *          PSML ファイルに記述されているタグ entry の要素 parent
@@ -448,9 +448,9 @@ public class ALCommonUtils {
 
   /**
    * 指定したポートレットが利用可能かどうかを返す
-   * 
+   *
    * @param portletName
-   * 
+   *
    * @return
    */
   public static boolean isActive(String portletName) {
