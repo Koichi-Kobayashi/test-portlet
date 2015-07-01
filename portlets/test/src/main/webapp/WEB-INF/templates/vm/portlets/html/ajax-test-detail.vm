@@ -25,7 +25,7 @@
 <div id="messageDiv"></div>
 #ALajaxdetailformheader("ToDo")
 #ALtableheaderWide()
-#ALtdcaption("タイトル")
+#ALtdcaption($l10n.TODO_SETFIELDNAME_TITLE)
 #ALtditemheader()
 $!result.Detail.TestName
 #ALtditemfooter()
@@ -37,8 +37,10 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.Note)
 #ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
 #ALtditem($!result.Detail.Url)
-#ALtdcaption("サムネイル")
+#ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL)
 <td><a href="$!result.Detail.Url"><img title="$!result.Detail.Url" src="http://capture.heartrails.com/200x150/cool?$!result.Detail.Url" width="200" height="150" /></a></td>
+#ALtdcaption($l10n.TODO_SETFIELDNAME_DOMAIN)
+#ALtditem($!result.Detail.Domain)
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())

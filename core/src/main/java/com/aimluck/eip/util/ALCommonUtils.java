@@ -89,7 +89,7 @@ public class ALCommonUtils {
     int j;
     for (int i = 0; i < count; i++) {
       j = i * step;
-      res.append(str.substring(j, j + step)).append("");
+      res.append(str.substring(j, j + step)).append(""); //removed <wbr/> line break tag
     }
     if (count * step < size) {
       res.append(str.substring(count * step));

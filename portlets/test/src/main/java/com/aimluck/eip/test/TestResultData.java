@@ -48,6 +48,9 @@ public class TestResultData implements ALData {
   /** URL */
   private ALStringField test_url;
 
+  /**Domain */
+  private ALStringField domain;
+
 
   /** 登録日 */
   private ALStringField create_date;
@@ -82,6 +85,7 @@ public class TestResultData implements ALData {
     note = new ALStringField();
     note.setTrim(false);
     test_url = new ALStringField();
+    domain = new ALStringField();
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     is_self_test = false;
@@ -139,6 +143,25 @@ public class TestResultData implements ALData {
    */
   public void setUrl(String string) {
 	  test_url.setValue(string);
+  }
+
+  public String getDomain() {
+	  return ALEipUtils.getMessageList(test_url.getValue()); //EXPERIMENT WITH GETS AND SETS TO FIND WAY TO CONVERT TO STRING AND TRUNCATE
+	  }
+
+
+  /**
+   * @return
+   *
+  public String getDomain() {
+	  	return ALCommonUtils.replaceToAutoCR(test_url.toString());
+  }
+
+  /**
+   * @param string
+   */
+  public void setDomain(String string) {
+	  domain.setValue(string);
   }
 
   /**
