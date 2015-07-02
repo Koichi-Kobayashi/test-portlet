@@ -19,6 +19,8 @@
 
 package com.aimluck.eip.test;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 
 import com.aimluck.commons.field.ALDateTimeField;
@@ -145,23 +147,22 @@ public class TestResultData implements ALData {
 	  test_url.setValue(string);
   }
 
-  public String getDomain() {
-	  return ALEipUtils.getMessageList(test_url.getValue()); //EXPERIMENT WITH GETS AND SETS TO FIND WAY TO CONVERT TO STRING AND TRUNCATE
-	  }
-
+  //Figure out how to truncate the URL input to give a domain output
 
   /**
    * @return
-   *
-  public String getDomain() {
-	  	return ALCommonUtils.replaceToAutoCR(test_url.toString());
+ * @throws URISyntaxException
+   */
+  public String getDomain() throws URISyntaxException {
+	  URI uri = new URI(test_url.getValue());
+	  return uri.getHost().toString(); //check getHost function
   }
 
   /**
    * @param string
    */
   public void setDomain(String string) {
-	  domain.setValue(string);
+	test_url.setValue(string);
   }
 
   /**
