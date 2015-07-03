@@ -83,6 +83,8 @@ public class TestResultData implements ALData {
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     is_self_test = false;
+    url= new ALStringField();
+    url.setTrim(false);
   }
 
   
@@ -92,6 +94,13 @@ public class TestResultData implements ALData {
   public String getUrl() {
 	  return (url.getValue());
   }
+  
+  /**
+   * @return   
+   */
+    public String getUrlOnLink() {
+      return ALEipUtils.getMessageList(url.getValue());
+     }
  
    /**
    * @param string
