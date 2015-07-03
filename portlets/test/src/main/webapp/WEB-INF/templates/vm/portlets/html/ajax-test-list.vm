@@ -107,6 +107,7 @@
 </div>
 #end
 
+<th>#ALajaxsort('url' $l10n.TODO_SETFIELDNAME_URL $result 'TestListScreen')</th>
 <img src="images/common/dot.gif" alt="" width="1" height="1" onload='dojo.byId("q$!{portlet.ID}").style.paddingLeft=dojo.byId("filters_$!{portlet.ID}").offsetWidth+"px"; if(dojo.isIE){ dojo.byId("q$!{portlet.ID}").style.width=480-dojo.byId("filters_$!{portlet.ID}").offsetWidth+"px"; }' />
 
 <div class="menubar multi" id="menubar_auiFilter_$!portlet.ID" style="display:none; top:85px; left:276px;">
@@ -121,6 +122,11 @@
 <li data-param="$!record.GroupName" #if($!result.issetFilter("post",$!{record.GroupName})) class="selected" #end><a href="javascript:void(0)" #if($!result.issetFilter("post",$!{record.GroupName})) class="selected" #end onclick="aipo.test.filterClick('$!portlet.ID',this,event)">$!record.PostName</a></li>
 #end
 </ul>
+#ALtdcellheaderAtt('class="auiMTCaption"')
+ <div>
+<a href="$!record.Url">$!record.Url</a>
+ </div>
+ #ALtdcellfooter()
 </div>
 ##<div>
 ##<p class="caption">$l10n.TODO_CATEGORY</p>
