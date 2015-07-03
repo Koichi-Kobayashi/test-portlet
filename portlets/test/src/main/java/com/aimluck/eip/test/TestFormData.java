@@ -254,6 +254,8 @@ public class TestFormData extends ALAbstractFormData {
       // メモ
       note.setValue(test.getNote());
 
+      //URL
+      url.setValue(test.getUrl());
 
       // 担当者
       user_id.setValue(test.getTurbineUser().getUserId());
@@ -341,7 +343,8 @@ public class TestFormData extends ALAbstractFormData {
 
       // Testを登録
       Database.commit();
-
+     //URL
+      test.setUrl(url.getValue());
 
       // イベントログに保存
       ALEventlogFactoryService.getInstance().getEventlogHandler().log(
@@ -414,7 +417,9 @@ public class TestFormData extends ALAbstractFormData {
         ALEventlogConstants.PORTLET_TYPE_TODO,
         test_name.getValue());
 
-
+           //URL
+      test.setUrl(url.getValue());
+      
       // アクティビティの送信
       String loginName = ALEipUtils.getLoginName(rundata);
       List<String> recipients = new ArrayList<String>();
@@ -508,4 +513,7 @@ public class TestFormData extends ALAbstractFormData {
   public boolean hasAclInsertTestOther() {
     return hasAclInsertTestOther;
   }
+  public ALStringField getUrl1() {
+	     return url;
+	   }
 }
