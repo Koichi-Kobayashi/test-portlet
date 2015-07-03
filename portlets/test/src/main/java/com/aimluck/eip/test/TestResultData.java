@@ -85,6 +85,21 @@ public class TestResultData implements ALData {
     is_self_test = false;
   }
 
+  
+  /**
+   * @return
+   */
+  public String getUrl() {
+	  return (url.getValue());
+  }
+ 
+   /**
+   * @param string
+   */
+  public void setUrl(String string) {
+    Url.setValue(string);
+  }
+  
   /**
    * @return
    */
