@@ -18,7 +18,6 @@
  */
 
 package com.aimluck.eip.test;
-
 import java.util.Date;
 
 import com.aimluck.commons.field.ALDateTimeField;
@@ -53,16 +52,7 @@ public class TestResultData implements ALData {
   private ALDateTimeField update_date;
 
   /** ユーザID */
-  private ALStringField user_id;
-
-  /**
-   * 期限状態（期限前/期限当日/期限後）． <br>
-   * クラス TestUtils の変数 LIMIT_STATE_BEFORE，LIMIT_STATE_TODAY，LIMIT_STATE_AFTER
-   * を参照．
-   */
-  private ALNumberField limit_state;
-
-  private boolean is_self_test;
+  
 
   private boolean hasAclEditTestOther;
 
@@ -80,7 +70,7 @@ public class TestResultData implements ALData {
     note.setTrim(false);
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
-    is_self_test = false;
+    
   }
 
   /**
@@ -104,6 +94,9 @@ public class TestResultData implements ALData {
     test_id.setValue(i);
   }
 
+ 
+
+  
   /**
    * @param string
    */
@@ -193,4 +186,8 @@ public class TestResultData implements ALData {
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
+
+ public void setUrl(String url) {
+
+}
 }
