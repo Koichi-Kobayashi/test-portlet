@@ -98,6 +98,11 @@
 </tr>
 
 #end
+#ALtdcellheaderAtt('class="auiMTCaption"')
+<div>
+<a href="$record.Url"></a>
+</div>
+#ALtdcellfooter()
 #AUItablefooter()
 <div class="auiSummaryMeta clearfix">
 	<div class="floatLeft">
