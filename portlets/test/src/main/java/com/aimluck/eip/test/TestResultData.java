@@ -52,12 +52,16 @@ public class TestResultData implements ALData {
   private ALDateTimeField update_date;
 
   /** ユーザID */
-  
+  private ALStringField user_id;
 
+  
   private boolean hasAclEditTestOther;
 
   private boolean hasAclDeleteTestOther;
 
+  private ALNumberField limit_state;
+  
+  private boolean it_self_test;
   /**
    *
    *
@@ -70,7 +74,7 @@ public class TestResultData implements ALData {
     note.setTrim(false);
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
-    
+    it_self_test=false;
   }
 
   /**
@@ -78,6 +82,7 @@ public class TestResultData implements ALData {
    */
   public ALNumberField getTestId() {
     return test_id;
+   
   }
 
   /**
