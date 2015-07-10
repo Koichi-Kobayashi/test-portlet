@@ -25,16 +25,20 @@
 <div id="messageDiv"></div>
 #ALajaxdetailformheader("ToDo")
 #ALtableheaderWide()
-#ALtdcaption("タイトル")
+#ALtdcaption("サムネイル")
 #ALtditemheader()
-$!result.Detail.TestName
+<a href="$!result.Detail.Url2"><img title="$!result.Detail.Url2" src="http://capture.heartrails.com/free?$!result.Detail.Url2" alt="$!result.Detail.Url2" width="200" height="300" /></a>
 #ALtditemfooter()
+#ALtdcaption("タイトル")
+#ALtditem($!result.Detail.TestName)
 #ALtdcaption($l10n.COMMON_CREATE_DATE)
 #ALtditem($!result.Detail.CreateDate)
 #ALtdcaption($l10n.COMMON_UPDATE_DATE)
 #ALtditem($!result.Detail.UpdateDate)
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
+#ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
+#ALtditem($!result.Detail.UrlDmain)
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())

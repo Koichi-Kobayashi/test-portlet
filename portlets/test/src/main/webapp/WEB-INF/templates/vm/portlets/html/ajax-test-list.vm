@@ -88,10 +88,13 @@
 #foreach ($record in $result.List)
 <tr>
 
+
 #ALtdcellAtt("<input name='check$!record.TestId' type='checkbox' value='$!record.TestId'/>" 'align="center" class="auiMTCheck"')
+#ALajaxsort('url' $l10n.TODO_SETFIELDNAME_URL $result 'TestListScreen')
 #ALtdcellheaderAtt('class="auiMTCaption"')
 <div>
 <a href="javascript:void(0);" onclick="aipo.common.showDialog('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","TestDetailScreen").addQueryData("entityid",$record.TestId))');">$!record.TestName</a>
+<a href="$!record.Url">$!record.Url</a>
 </div>
 #ALtdcellfooter()
 
@@ -106,6 +109,7 @@
 #AUIajaxpageview('TestListScreen' $result)
 </div>
 #end
+
 
 <img src="images/common/dot.gif" alt="" width="1" height="1" onload='dojo.byId("q$!{portlet.ID}").style.paddingLeft=dojo.byId("filters_$!{portlet.ID}").offsetWidth+"px"; if(dojo.isIE){ dojo.byId("q$!{portlet.ID}").style.width=480-dojo.byId("filters_$!{portlet.ID}").offsetWidth+"px"; }' />
 

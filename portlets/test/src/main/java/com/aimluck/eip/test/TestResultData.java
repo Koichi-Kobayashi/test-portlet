@@ -21,12 +21,14 @@ package com.aimluck.eip.test;
 
 import java.util.Date;
 
+
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
+import java.net.URI;
 
 /**
  * TestのResultDataです。 <BR>
@@ -84,6 +86,8 @@ public class TestResultData implements ALData {
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     is_self_test = false;
+    url = new ALStringField();
+    url.setTrim(false);
   }
 
   /**
@@ -124,9 +128,19 @@ public class TestResultData implements ALData {
    * @return
    */
   public String getUrl(){
-      return ALEipUtils.getMessageList(url.getValue());
+	  return (url.getValue());
   }
 
+  public String getUrl2() {
+      return url.getValue();
+    }
+
+  /**
+   * @return
+   */
+    public String getUrlOnLink() {
+      return ALEipUtils.getMessageList(url.getValue());
+     }
 
   /**
    * @param string
@@ -210,4 +224,10 @@ public class TestResultData implements ALData {
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
+
+  public String getUrlDmain() throws Exception{
+      URI u = new URI(url.getValue());
+      return u.getScheme()+"://"+u.getHost();
+  }
+
 }
