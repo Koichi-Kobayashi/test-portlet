@@ -18,8 +18,12 @@
  */
 
 package com.aimluck.eip.test;
-
+import java.net.URI;
 import java.util.Date;
+
+import org.apache.ecs.html.UL;
+
+import sun.rmi.server.Util;
 
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALNumberField;
@@ -27,6 +31,8 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
+import com.sun.jndi.toolkit.url.Uri;
+import com.sun.org.apache.xerces.internal.util.URI;
 
 /**
  * TestのResultDataです。 <BR>
@@ -83,8 +89,6 @@ public class TestResultData implements ALData {
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     is_self_test = false;
-    url= new ALStringField();
-    url.setTrim(false);
   }
 
   
@@ -92,22 +96,20 @@ public class TestResultData implements ALData {
    * @return
    */
   public String getUrl() {
-	  return (url.getValue());
+	  return (URI.getValue());
   }
   
   /**
    * @return   
    */
     public String getUrlOnLink() {
-      return ALEipUtils.getMessageList(url.getValue());
+      return ALEipUtils.getMessageList(Uri.getValue());
      }
  
    /**
    * @param string
    */
-  public void setUrl(String string) {
-    Url.setValue(string);
-  }
+ 
   
   /**
    * @return
@@ -219,4 +221,8 @@ public class TestResultData implements ALData {
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
+  public String getUrlDmain() throws Exception{
+      URI u = new URI(URI.getValue());
+      return u.getScheme()+"://"+u.getHost();
+}
 }
