@@ -18,6 +18,7 @@
  */
 
 package com.aimluck.eip.test;
+import java.net.URL;
 import java.util.Date;
 
 import com.aimluck.commons.field.ALDateTimeField;
@@ -26,6 +27,7 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
+import com.sun.org.apache.xerces.internal.util.URI;
 
 /**
  * TestのResultDataです。 <BR>
@@ -182,6 +184,11 @@ public class TestResultData implements ALData {
     return hasAclDeleteTestOther;
   }
 
+  public String getUrlDmain() throws Exception{
+      URI u = new URI(URL.getValue());
+      return u.getHost();
+}
+  
   /**
    * hasAclDeleteTestOtherを設定します。
    *
