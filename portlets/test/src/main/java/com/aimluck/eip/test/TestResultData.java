@@ -57,7 +57,6 @@ public class TestResultData implements ALData {
 
   /** ユーザID */
   private ALStringField user_id;
-
   
   private boolean hasAclEditTestOther;
 
@@ -97,6 +96,7 @@ public class TestResultData implements ALData {
     return ALCommonUtils.replaceToAutoCR(test_name.toString());
   }
 
+  
   /**
    * @param i
    */
@@ -191,11 +191,14 @@ public class TestResultData implements ALData {
       URI u = new URI(url.getValue());
       return u.getHost();
 }
-  
+ 
   
   public String getUrl(){
       return url.getValue();
 }
+  
+ 
+  
   /**
    * hasAclDeleteTestOtherを設定します。
    *
