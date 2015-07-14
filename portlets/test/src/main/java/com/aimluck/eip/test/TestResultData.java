@@ -193,7 +193,7 @@ public class TestResultData implements ALData {
 }
   
   
-  public String getUrl2(){
+  public String getUrl(){
       return url.getValue();
 }
   /**

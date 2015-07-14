@@ -110,9 +110,7 @@ public class TestFormData extends ALAbstractFormData {
    public ALStringField getUrl(){
       return url;}
    
-   public ALStringField getUrl2(){
-	   return url;
-   }
+  
   /**
    *
    * @param action
@@ -517,8 +515,6 @@ public class TestFormData extends ALAbstractFormData {
   public boolean hasAclInsertTestOther() {
     return hasAclInsertTestOther;
   }
-  public ALStringField getUrl1() {
-	     return url;
-	   }
+ 
  
 }
