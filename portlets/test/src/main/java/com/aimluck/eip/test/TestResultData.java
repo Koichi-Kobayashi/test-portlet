@@ -187,7 +187,7 @@ public class TestResultData implements ALData {
     return hasAclDeleteTestOther;
   }
 
-  public String getUrlDmain() throws Exception{
+  public String getUrlDomain() throws Exception{
       URI u = new URI(url.getValue());
       return u.getHost();
 }
@@ -197,7 +197,8 @@ public class TestResultData implements ALData {
       return url.getValue();
 }
   
- 
+  
+
   
   /**
    * hasAclDeleteTestOtherを設定します。
