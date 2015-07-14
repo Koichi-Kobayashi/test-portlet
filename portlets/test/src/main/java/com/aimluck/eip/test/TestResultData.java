@@ -187,9 +187,13 @@ public class TestResultData implements ALData {
 
   public String getUrlDmain() throws Exception{
       URI u = new URI(url.getValue());
-      return u.getHost();
+      return u.getScheme()+"://"+ u.getHost();
 }
   
+  
+  public String getUrl2(){
+      return url.getValue();
+}
   /**
    * hasAclDeleteTestOtherを設定します。
    *

@@ -28,6 +28,9 @@
 #ALtdcaption("タイトル")
 #ALtditemheader()
 $!result.Detail.TestName
+#ALtditemheader()
+<a href="$!result.Detail.Url2"><img title="$!result.Detail.Url2" src="http://capture.heartrails.com/free?$!result.Detail.Url2" alt="$!result.Detail.Url2" width="200" height="300" /></a>
+#ALtditemfooter()
 #ALtditemfooter()
 #ALtdcaption($l10n.COMMON_CREATE_DATE)
 #ALtditem($!result.Detail.CreateDate)
