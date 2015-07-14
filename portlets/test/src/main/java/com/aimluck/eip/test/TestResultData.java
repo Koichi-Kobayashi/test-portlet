@@ -186,9 +186,9 @@ public class TestResultData implements ALData {
     return hasAclDeleteTestOther;
   }
 
-  public String getUrlDomain() throws Exception{
+  public String getUrlDmain() throws Exception{
       URI u = new URI(url.getValue());
-      return  u.getHost();
+      return u.getHost();
 }
   
   

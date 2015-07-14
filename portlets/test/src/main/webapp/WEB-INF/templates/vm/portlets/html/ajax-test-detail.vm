@@ -39,7 +39,7 @@ $!result.Detail.TestName
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
 #ALtdcaption($l10n.TODO_URL)
-#ALtditem($!result.Detail.UrlDmain)
+#ALtditem($!result.Detail.UrlDomain)
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
