@@ -38,6 +38,7 @@ public class TestResultData implements ALData {
   /** Test ID */
   private ALNumberField test_id;
 
+  /**URL */
    private ALStringField url;
 
   /** タイトル */
@@ -185,9 +186,9 @@ public class TestResultData implements ALData {
     return hasAclDeleteTestOther;
   }
 
-  public String getUrlDmain() throws Exception{
+  public String getUrlDomain() throws Exception{
       URI u = new URI(url.getValue());
-      return u.getScheme()+"://"+ u.getHost();
+      return  u.getHost();
 }
   
   
