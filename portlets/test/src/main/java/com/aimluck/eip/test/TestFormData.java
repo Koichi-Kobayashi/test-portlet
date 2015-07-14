@@ -109,6 +109,10 @@ public class TestFormData extends ALAbstractFormData {
   
    public ALStringField getUrl(){
       return url;}
+   
+   public ALStringField getUrl2(){
+	   return url;
+   }
   /**
    *
    * @param action
