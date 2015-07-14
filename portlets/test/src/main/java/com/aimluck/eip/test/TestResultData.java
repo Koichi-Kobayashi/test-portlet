@@ -38,6 +38,7 @@ public class TestResultData implements ALData {
   /** Test ID */
   private ALNumberField test_id;
 
+   private ALStringField url;
 
   /** タイトル */
   private ALStringField test_name;
@@ -185,7 +186,7 @@ public class TestResultData implements ALData {
   }
 
   public String getUrlDmain() throws Exception{
-      URI u = new URI(URL.getValue());
+      URI u = new URI(url.getValue());
       return u.getHost();
 }
   
