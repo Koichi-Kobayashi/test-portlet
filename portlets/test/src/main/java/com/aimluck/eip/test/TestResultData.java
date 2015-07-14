@@ -79,6 +79,7 @@ public class TestResultData implements ALData {
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     it_self_test=false;
+    url= new ALStringField();
   }
 
   /**
