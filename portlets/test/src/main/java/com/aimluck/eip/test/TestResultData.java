@@ -53,6 +53,7 @@ public class TestResultData implements ALData {
   /** ユーザID */
   private ALStringField user_id;
 
+  /** URL */
   private ALStringField url;
 
   /**
@@ -83,6 +84,7 @@ public class TestResultData implements ALData {
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     url = new ALStringField();
+    url.setTrim(false);
     is_self_test = false;
   }
 
