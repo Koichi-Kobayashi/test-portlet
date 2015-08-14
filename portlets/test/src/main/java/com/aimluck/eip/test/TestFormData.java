@@ -257,8 +257,10 @@ public class TestFormData extends ALAbstractFormData {
       test_name.setValue(test.getTestName());
       // メモ
       note.setValue(test.getNote());
-
-
+      // URL
+      url.setValue(test.getUrl());
+      // URL
+      test.setUrl(url.getValue());
       // 担当者
       user_id.setValue(test.getTurbineUser().getUserId());
 
@@ -464,6 +466,14 @@ public class TestFormData extends ALAbstractFormData {
     return test_name;
   }
 
+  /**
+   * URLを取得します。　<BR>
+   *
+   * @return
+   */
+  public ALStringField getUrl() {
+        return url;
+     }
 
   /**
    * アクセス権限チェック用メソッド。<br />
