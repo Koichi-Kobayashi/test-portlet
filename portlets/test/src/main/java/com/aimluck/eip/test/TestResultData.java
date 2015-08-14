@@ -41,10 +41,8 @@ public class TestResultData implements ALData {
   /** タイトル */
   private ALStringField test_name;
 
-
   /** メモ */
   private ALStringField note;
-
 
   /** 登録日 */
   private ALStringField create_date;
@@ -54,6 +52,8 @@ public class TestResultData implements ALData {
 
   /** ユーザID */
   private ALStringField user_id;
+
+  private ALStringField url;
 
   /**
    * 期限状態（期限前/期限当日/期限後）． <br>
@@ -68,6 +68,8 @@ public class TestResultData implements ALData {
 
   private boolean hasAclDeleteTestOther;
 
+
+
   /**
    *
    *
@@ -80,6 +82,7 @@ public class TestResultData implements ALData {
     note.setTrim(false);
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
+    url = new ALStringField();
     is_self_test = false;
   }
 
@@ -117,6 +120,19 @@ public class TestResultData implements ALData {
   public String getNote() {
     return ALEipUtils.getMessageList(note.getValue());
   }
+
+  /**
+   * @return
+   */
+  public String getUrl() {
+	  return url.getValue();
+  }
+
+  public void setUrl(String string){
+	  url.setValue(string);
+  }
+
+
 
   /**
    * @param string
@@ -193,4 +209,5 @@ public class TestResultData implements ALData {
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
+
 }
