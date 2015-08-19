@@ -87,6 +87,8 @@ public class TestFormData extends ALAbstractFormData {
   /** メモ */
   private ALStringField note;
 
+  /** URL */
+  private ALStringField url;
 
   /** 現在の年 */
   private int currentYear;
@@ -179,6 +181,11 @@ public class TestFormData extends ALAbstractFormData {
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
 
+    // URL
+    url = new ALStringField();
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
+    url.setTrim(false);
+
   }
 
 
@@ -193,6 +200,8 @@ public class TestFormData extends ALAbstractFormData {
     test_name.limitMaxLength(50);
     // メモの文字数制限
     note.limitMaxLength(1000);
+    // URLの文字数制限
+    url.limitMaxLength(1000);
 
     // 担当者ID必須項目
     user_id.setNotNull(true);
@@ -220,6 +229,8 @@ public class TestFormData extends ALAbstractFormData {
     test_name.validate(msgList);
     // メモ
     note.validate(msgList);
+    // メモ
+    url.validate(msgList);
 
     return (msgList.size() == 0);
 
@@ -247,6 +258,8 @@ public class TestFormData extends ALAbstractFormData {
       test_name.setValue(test.getTestName());
       // メモ
       note.setValue(test.getNote());
+      // URL
+      url.setValue(test.getUrl());
 
 
       // 担当者
@@ -328,6 +341,8 @@ public class TestFormData extends ALAbstractFormData {
 
       // メモ
       test.setNote(note.getValue());
+      // メモ
+      test.setUrl(url.getValue());
       // 作成日
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
@@ -394,6 +409,8 @@ public class TestFormData extends ALAbstractFormData {
       // ユーザーID
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
+      // URL
+      test.setUrl(url.getValue());
       // メモ
       test.setNote(note.getValue());
       // 更新日
@@ -442,6 +459,15 @@ public class TestFormData extends ALAbstractFormData {
    */
   public ALStringField getNote() {
     return note;
+  }
+
+  /**
+   * メモを取得します。 <BR>
+   *
+   * @return
+   */
+  public ALStringField getUrl() {
+    return url;
   }
 
 
