@@ -196,6 +196,7 @@ public class TestFormData extends ALAbstractFormData {
    * Testの各フィールドに対する制約条件を設定します。 <BR>
    */
   @Override
+  //バリデート
   protected void setValidator() {
     // Tタイトル必須項目
     test_name.setNotNull(true);
@@ -230,6 +231,7 @@ public class TestFormData extends ALAbstractFormData {
     test_name.validate(msgList);
     // メモ
     note.validate(msgList);
+    //URLバリデート箇所？
 
     return (msgList.size() == 0);
 
@@ -340,6 +342,10 @@ public class TestFormData extends ALAbstractFormData {
 
       // メモ
       test.setNote(note.getValue());
+
+      //URl追加箇所
+      test.setUrl(url.getValue());
+
       // 作成日
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
@@ -408,8 +414,13 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
       // メモ
       test.setNote(note.getValue());
+
+      //URL変更箇所
+      test.setUrl(url.getValue());
+
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
+
       // Test を更新
       Database.commit();
 
