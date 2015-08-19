@@ -95,7 +95,14 @@
 </div>
 #ALtdcellfooter()
 
+#ALtdcellheaderAtt('class="auiMTCaption"')
+<div>
+<a href="$record.Url"></a>
+</div>
+#ALtdcellfooter()
 </tr>
+
+≈
 
 #end
 #AUItablefooter()
@@ -104,6 +111,7 @@
 		#AUIajaxbuttonCheckboxDelete($l10n.COMMON_DELETE "$!jslink.getPortletById($!portlet.ID).addQueryData('template','TestFormJSONScreen').addQueryData('mode','multi_delete')" "$indicator_id" "$!portlet.ID" "aipo.test.onListReceiveMessage")
 	</div>
 #AUIajaxpageview('TestListScreen' $result)
+
 </div>
 #end
 
