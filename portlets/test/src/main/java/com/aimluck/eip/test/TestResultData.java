@@ -135,7 +135,7 @@ public class TestResultData implements ALData {
    * @return
    */
   public String getUrl() {
-    return ALEipUtils.getMessageList(url.getValue());
+    return url.getValue();
   }
 
   /**

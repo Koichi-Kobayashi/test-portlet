@@ -99,8 +99,11 @@
 <a href="javascript:void(0);" onclick="aipo.common.showDialog('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","TestDetailScreen").addQueryData("entityid",$record.TestId))');">$!record.TestName</a>
 </div>
 #ALtdcellfooter()
-#ALtdcell($!record.Url)
-#ALtdcellAtt("<div>$!record.UpdateDate</div>" 'class="right" nowrap="nowrap"')
+#ALtdcellheader()
+<div>
+<a href="$!record.Url">$!record.Url</a>
+</div>
+#ALtdcellfooter()#ALtdcellAtt("<div>$!record.UpdateDate</div>" 'class="right" nowrap="nowrap"')
 </tr>
 #end
 </tbody>
@@ -110,7 +113,7 @@
 #ALformheaderAction('Test' $jslink $portlet)
 <table class="auiRowTable wide">
 <colgroup />
-<colgroup style="width:6em;" />
+<colgroup style="width:25em;" />
 <tbody>
 #foreach ($record in $result.List)
 <tr>
@@ -119,7 +122,11 @@
 <a href="javascript:void(0);" onclick="aipo.common.showDialog('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","TestDetailScreen").addQueryData("entityid",$record.TestId))');">$!record.TestName</a>
 </div>
 #ALtdcellfooter()
-#ALtdcell($!record.Url)
+#ALtdcellheader()
+<div>
+<a href="$!record.Url">$!record.Url</a>
+</div>
+#ALtdcellfooter()
 #ALtdcellAtt("<div>$!record.UpdateDate</div>" 'class="right" nowrap="nowrap"')
 </tr>
 #end
