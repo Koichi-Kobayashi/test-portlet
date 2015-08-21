@@ -35,6 +35,11 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.UpdateDate)
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
+##変更箇所ここから**************************************************************
+#ALtditemheader()
+<a href = "$!result.Detail.Url2"><img title="$!result.Detail.Url2" src="http://capture.heartrails.com/free?$!result.Detail.Url2" alt="$!result.Detail.Url2" width="200" height="300" /><a>
+#ALtditemfooter()
+##ここまで********************************************************************
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
