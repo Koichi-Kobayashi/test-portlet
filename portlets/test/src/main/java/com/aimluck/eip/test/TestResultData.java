@@ -1,5 +1,6 @@
 /*
  * Aipo is a groupware program developed by Aimluck,Inc.
+
  * Copyright (C) 2004-2011 Aimluck,Inc.
  * http://www.aipo.com
  *
@@ -16,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+//test 123
 package com.aimluck.eip.test;
 
 import java.util.Date;
