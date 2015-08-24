@@ -201,7 +201,6 @@ public class TestFormData extends ALAbstractFormData {
     //URL
     url.limitMaxLength(1000);
 
-
     url.setCharacterType(ALStringField.TYPE_ALPHABET_NUMBER);
 
     // 担当者ID必須項目
