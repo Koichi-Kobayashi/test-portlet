@@ -17,8 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.aimluck.eip.test;// test chc
-
+package com.aimluck.eip.test;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
