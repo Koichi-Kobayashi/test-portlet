@@ -35,163 +35,177 @@ import com.aimluck.eip.util.ALEipUtils;
  */
 public class TestResultData implements ALData {
 
-  /** Test ID */
-  private ALNumberField test_id;
+	/** Test ID */
+	private ALNumberField test_id;
 
+	/** タイトル */
+	private ALStringField test_name;
 
-  /** タイトル */
-  private ALStringField test_name;
+	/** メモ */
+	private ALStringField note;
 
+	/** URL */
+	private ALStringField url;
 
-  /** メモ */
-  private ALStringField note;
+	/** 登録日 */
+	private ALStringField create_date;
 
+	/** 更新日 */
+	private ALDateTimeField update_date;
 
-  /** 登録日 */
-  private ALStringField create_date;
+	/** ユーザID */
+	private ALStringField user_id;
 
-  /** 更新日 */
-  private ALDateTimeField update_date;
+	/**
+	 * 期限状態（期限前/期限当日/期限後）． <br>
+	 * クラス TestUtils の変数 LIMIT_STATE_BEFORE，LIMIT_STATE_TODAY，LIMIT_STATE_AFTER
+	 * を参照．
+	 */
+	private ALNumberField limit_state;
 
-  /** ユーザID */
-  private ALStringField user_id;
+	private boolean is_self_test;
 
-  /**
-   * 期限状態（期限前/期限当日/期限後）． <br>
-   * クラス TestUtils の変数 LIMIT_STATE_BEFORE，LIMIT_STATE_TODAY，LIMIT_STATE_AFTER
-   * を参照．
-   */
-  private ALNumberField limit_state;
+	private boolean hasAclEditTestOther;
 
-  private boolean is_self_test;
+	private boolean hasAclDeleteTestOther;
 
-  private boolean hasAclEditTestOther;
-
-  private boolean hasAclDeleteTestOther;
-
-  /**
+	/**
    *
    *
    */
-  @Override
-  public void initField() {
-    test_id = new ALNumberField();
-    test_name = new ALStringField();
-    note = new ALStringField();
-    note.setTrim(false);
-    create_date = new ALStringField();
-    update_date = new ALDateTimeField();
-    is_self_test = false;
-  }
+	@Override
+	public void initField() {
+		test_id = new ALNumberField();
+		test_name = new ALStringField();
+		note = new ALStringField();
 
-  /**
-   * @return
-   */
-  public ALNumberField getTestId() {
-    return test_id;
-  }
+		url = new ALStringField();
 
-  /**
-   * @return
-   */
-  public String getTestName() {
-    return ALCommonUtils.replaceToAutoCR(test_name.toString());
-  }
+		note.setTrim(false);
+		create_date = new ALStringField();
+		update_date = new ALDateTimeField();
+		is_self_test = false;
+	}
 
-  /**
-   * @param i
-   */
-  public void setTestId(long i) {
-    test_id.setValue(i);
-  }
+	/**
+	 * @return
+	 */
+	public ALNumberField getTestId() {
+		return test_id;
+	}
 
-  /**
-   * @param string
-   */
-  public void setTestName(String string) {
-    test_name.setValue(string);
-  }
+	/**
+	 * @return
+	 */
+	public String getTestName() {
+		return ALCommonUtils.replaceToAutoCR(test_name.toString());
+	}
 
-  /**
-   * @return
-   */
-  public String getNote() {
-    return ALEipUtils.getMessageList(note.getValue());
-  }
+	/**
+	 * @param i
+	 */
+	public void setTestId(long i) {
+		test_id.setValue(i);
+	}
 
-  /**
-   * @param string
-   */
-  public void setNote(String string) {
-    note.setValue(string);
-  }
+	/**
+	 * @param string
+	 */
+	public void setTestName(String string) {
+		test_name.setValue(string);
+	}
 
-  /**
-   * @return
-   */
-  public ALStringField getCreateDate() {
-    return create_date;
-  }
+	/**
+	 * @return
+	 */
+	public String getNote() {
+		return ALEipUtils.getMessageList(note.getValue());
+	}
 
-  /**
-   * @return
-   */
-  public ALDateTimeField getUpdateDate() {
-    return ALEipUtils.getFormattedTime(update_date);
-  }
+	/**
+	 * @param string
+	 */
+	public void setNote(String string) {
+		note.setValue(string);
+	}
 
-  /**
-   * @param string
-   */
-  public void setCreateDate(String string) {
-    create_date.setValue(string);
-  }
+	public String getUrl() {
+		return ALEipUtils.getMessageList(url.getValue());
+	}
 
-  /**
-   * @param string
-   */
-  public void setUpdateDate(Date date) {
-    if (date == null) {
-      return;
-    }
-    this.update_date.setValue(date);
-  }
+	/**
+	 * @param string
+	 */
+	public void setUrl(String string) {
+		url.setValue(string);
+	}
 
-  /**
-   * hasAclEditTestOtherを取得します。
-   *
-   * @return hasAclEditTestOther
-   */
-  public boolean hasAclEditTestOther() {
-    return hasAclEditTestOther;
-  }
+	/**
+	 * @return
+	 */
+	public ALStringField getCreateDate() {
+		return create_date;
+	}
 
-  /**
-   * hasAclEditTestOtherを設定します。
-   *
-   * @param hasAclEditTestOther
-   *          hasAclEditTestOther
-   */
-  public void setAclEditTestOther(boolean hasAclEditTestOther) {
-    this.hasAclEditTestOther = hasAclEditTestOther;
-  }
+	/**
+	 * @return
+	 */
+	public ALDateTimeField getUpdateDate() {
+		return ALEipUtils.getFormattedTime(update_date);
+	}
 
-  /**
-   * hasAclDeleteTestOtherを取得します。
-   *
-   * @return hasAclDeleteTestOther
-   */
-  public boolean hasAclDeleteTestOther() {
-    return hasAclDeleteTestOther;
-  }
+	/**
+	 * @param string
+	 */
+	public void setCreateDate(String string) {
+		create_date.setValue(string);
+	}
 
-  /**
-   * hasAclDeleteTestOtherを設定します。
-   *
-   * @param hasAclDeleteTestOther
-   *          hasAclDeleteTestOther
-   */
-  public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
-    this.hasAclDeleteTestOther = hasAclDeleteTestOther;
-  }
+	/**
+	 * @param string
+	 */
+	public void setUpdateDate(Date date) {
+		if (date == null) {
+			return;
+		}
+		this.update_date.setValue(date);
+	}
+
+	/**
+	 * hasAclEditTestOtherを取得します。
+	 *
+	 * @return hasAclEditTestOther
+	 */
+	public boolean hasAclEditTestOther() {
+		return hasAclEditTestOther;
+	}
+
+	/**
+	 * hasAclEditTestOtherを設定します。
+	 *
+	 * @param hasAclEditTestOther
+	 *            hasAclEditTestOther
+	 */
+	public void setAclEditTestOther(boolean hasAclEditTestOther) {
+		this.hasAclEditTestOther = hasAclEditTestOther;
+	}
+
+	/**
+	 * hasAclDeleteTestOtherを取得します。
+	 *
+	 * @return hasAclDeleteTestOther
+	 */
+	public boolean hasAclDeleteTestOther() {
+		return hasAclDeleteTestOther;
+	}
+
+	/**
+	 * hasAclDeleteTestOtherを設定します。
+	 *
+	 * @param hasAclDeleteTestOther
+	 *            hasAclDeleteTestOther
+	 */
+	public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
+		this.hasAclDeleteTestOther = hasAclDeleteTestOther;
+	}
 }
