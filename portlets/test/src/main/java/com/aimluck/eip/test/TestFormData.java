@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.cayenne.exp.Expression;
 import org.apache.cayenne.exp.ExpressionFactory;
@@ -228,6 +229,15 @@ public class TestFormData extends ALAbstractFormData {
     test_name.validate(msgList);
     // メモ
     note.validate(msgList);
+    //url
+    url.validate(msgList);
+    if(url.getValue().matches("^.*[^ -~｡-ﾟ]+.*$")){
+    	//urlに全角文字が含まれる場合
+    	System.out.println("COMMONS_FIELD_INPUT_NOT_MUL");
+    	msgList.add(ALLocalizationUtils.getl10nFormat(
+    		"COMMONS_FIELD_INPUT_NOT_MULTIBYTE",
+   			url.getFieldName()));
+    }
 
     return (msgList.size() == 0);
 
