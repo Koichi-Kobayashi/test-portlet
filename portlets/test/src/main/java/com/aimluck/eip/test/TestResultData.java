@@ -128,9 +128,28 @@ public class TestResultData implements ALData {
 	public void setNote(String string) {
 		note.setValue(string);
 	}
-
-	public String getUrl() {
+	public String getURL() {
 		return ALEipUtils.getMessageList(url.getValue());
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setURL(String string) {
+		url.setValue(string);
+	}
+	public String getDomain() {
+		return ALEipUtils.getMessageList(url.getValue());
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setDomain(String string) {
+		url.setValue(string);
+	}
+	public String getUrl() {
+		return url.getValue();
 	}
 
 	/**

@@ -228,7 +228,7 @@ public class TestFormData extends ALAbstractFormData {
     test_name.validate(msgList);
     // メモ
     note.validate(msgList);
-    // メモ
+    // url
     url.validate(msgList);
 
     return (msgList.size() == 0);

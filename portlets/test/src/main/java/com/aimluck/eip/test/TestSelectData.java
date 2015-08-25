@@ -361,6 +361,7 @@ public class TestSelectData extends
 
       TestResultData rd = new TestResultData();
       rd.initField();
+      rd.setUrl(record.getUrl());
       rd.setTestId(record.getTestId().intValue());
       rd.setTestName(ALCommonUtils.compressString(
         record.getTestName(),
