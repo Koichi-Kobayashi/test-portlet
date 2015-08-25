@@ -202,6 +202,8 @@ public class TestFormData extends ALAbstractFormData {
     test_name.limitMaxLength(50);
     // メモの文字数制限
     note.limitMaxLength(1000);
+    // URLを半角のみに制限
+    url.setCharacterType(ALStringField.TYPE_ASCII);
 
     // 担当者ID必須項目
     user_id.setNotNull(true);
@@ -231,13 +233,6 @@ public class TestFormData extends ALAbstractFormData {
     note.validate(msgList);
     //url
     url.validate(msgList);
-    if(url.getValue().matches("^.*[^ -~｡-ﾟ]+.*$")){
-    	//urlに全角文字が含まれる場合
-    	System.out.println("COMMONS_FIELD_INPUT_NOT_MUL");
-    	msgList.add(ALLocalizationUtils.getl10nFormat(
-    		"COMMONS_FIELD_INPUT_NOT_MULTIBYTE",
-   			url.getFieldName()));
-    }
 
     return (msgList.size() == 0);
 
