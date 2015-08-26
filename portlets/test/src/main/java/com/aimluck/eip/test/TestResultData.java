@@ -21,7 +21,6 @@ package com.aimluck.eip.test;
 
 import java.net.URI;
 import java.util.Date;
-
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
