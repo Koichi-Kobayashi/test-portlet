@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-//test 123
 package com.aimluck.eip.test;
 
 import java.net.URI;
@@ -130,7 +129,6 @@ public class TestResultData implements ALData {
 		note.setValue(string);
 	}
 	public String getURL() throws Exception {
-
 		URI domain = new URI(url.getValue());
 		if(domain.getHost()==null){
 			URI u = new URI( "http://"+domain.getPath());
