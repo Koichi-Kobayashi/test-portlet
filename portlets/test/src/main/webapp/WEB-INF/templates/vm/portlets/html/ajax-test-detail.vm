@@ -37,7 +37,12 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.Note)
 #ALtdcaption($l10n.TODO_URL)
 #ALtditemheader()
-<a target="_blank" href=$!{result.Detail.UrlOriginal}><img src="http://capture.heartrails.com/free/1440556126970?$!result.Detail.UrlOriginal" alt="$!result.Detail.UrlOriginal" width="200" height="300" /></a>
+<div>
+	<a target="_blank" href=$!result.Detail.UrlOriginal><img src="http://capture.heartrails.com/free/1440556126970?$!result.Detail.UrlOriginal" alt="$!result.Detail.UrlOriginal" width="200" height="300" /></a>
+</div>
+<div>
+	<a target="_blank" href=$!result.Detail.UrlOriginal>$result.Detail.UrlDomain</a>
+</div>
 #ALtditemfooter()
 #ALtablefooter()
 #ALbuttonheader()
