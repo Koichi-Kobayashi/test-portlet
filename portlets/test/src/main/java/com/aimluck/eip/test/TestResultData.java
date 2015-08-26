@@ -68,7 +68,6 @@ public class TestResultData implements ALData {
 	private boolean hasAclEditTestOther;
 
 	private boolean hasAclDeleteTestOther;
-
 	/**
    *
    *
