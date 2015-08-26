@@ -112,7 +112,7 @@
 #ALformheaderAction('Test' $jslink $portlet)
 <table class="auiRowTable wide">
 <colgroup />
-<colgroup style="width:6em;" />
+##<colgroup style="width:6em;" />
 <tbody>
 #foreach ($record in $result.List)
 <tr>
