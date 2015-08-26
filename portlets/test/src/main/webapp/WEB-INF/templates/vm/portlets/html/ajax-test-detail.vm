@@ -38,7 +38,7 @@ $!result.Detail.TestName
 #ALtdcaption($l10n.TODO_URL)
 #ALtditemheader()
 <div>
-<a href="$!result.Detail.Url">$!result.Detail.Url</a>
+<a href="$!result.Detail.Url">$!result.Detail.Domain</a>
 </div>
 #ALtditemfooter()
 #ALtdcaption($l10n.TODO_URLIMG)
