@@ -20,6 +20,8 @@
 package com.aimluck.eip.test;
 
 import java.util.Date;
+import java.net.URL;
+import java.lang.String;
 
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALNumberField;
@@ -27,6 +29,8 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
+import com.google.common.net.InternetDomainName;//google
+
 
 /**
  * TestのResultDataです。 <BR>
@@ -163,8 +167,9 @@ public class TestResultData implements ALData {
   }
   public String getUrl(){
       return ALEipUtils.getMessageList(url.getValue());
+	  //return url.getValue();
   }
-
+//変更箇所サムネイル表示のためのURL取得メソッドの追加
   public String getUrl2(){
 	  return url.getValue();
   }
@@ -210,4 +215,12 @@ public class TestResultData implements ALData {
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
+
+  //ドメインに関するメソッド
+  public String getUrlDmain() throws Exception{
+	  URL u = new URL(url.getValue());
+	  return "http://"+u.getHost()/*+InternetDomainName.from(u.getHost()).topPrivateDomain().name()*/;
+	  //return "http://"+u.getHost();
+  }
+
 }

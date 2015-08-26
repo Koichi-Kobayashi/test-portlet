@@ -97,7 +97,13 @@
 #ALtdcellfooter()
 
 </tr>
-
+#*ここじゃない?
+#ALtdcellheaderAtt('class="auiMTCaption"')
+<div>
+	<a href="$!record.Url"></a>
+</div>
+#ALtdcellfooter()
+*#
 #end
 #AUItablefooter()
 <div class="auiSummaryMeta clearfix">
