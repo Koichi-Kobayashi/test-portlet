@@ -132,6 +132,13 @@ public class TestResultData implements ALData {
   /**
    * @param string
    */
+  public String getUrlOriginal() {
+	    return url.getValue();
+	  }
+
+  /**
+   * @param string
+   */
   public void setNote(String string) {
     note.setValue(string);
   }
