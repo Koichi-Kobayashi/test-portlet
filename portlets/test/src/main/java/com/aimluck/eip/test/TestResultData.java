@@ -20,6 +20,7 @@
 //test 123
 package com.aimluck.eip.test;
 
+import java.net.URI;
 import java.util.Date;
 
 import com.aimluck.commons.field.ALDateTimeField;
@@ -128,8 +129,16 @@ public class TestResultData implements ALData {
 	public void setNote(String string) {
 		note.setValue(string);
 	}
-	public String getURL() {
-		return ALEipUtils.getMessageList(url.getValue());
+	public String getURL() throws Exception {
+
+		URI domain = new URI(url.getValue());
+		if(domain.getHost()==null){
+			URI u = new URI( "http://"+domain.getPath());
+			return ALEipUtils.getMessageList(("http://"+u.getHost()));
+			}
+		else{
+			return ALEipUtils.getMessageList(("http://"+domain.getHost()));
+			}
 	}
 
 	/**
@@ -138,16 +147,7 @@ public class TestResultData implements ALData {
 	public void setURL(String string) {
 		url.setValue(string);
 	}
-	public String getDomain() {
-		return ALEipUtils.getMessageList(url.getValue());
-	}
 
-	/**
-	 * @param string
-	 */
-	public void setDomain(String string) {
-		url.setValue(string);
-	}
 	public String getUrl() {
 		return url.getValue();
 	}
