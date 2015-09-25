@@ -256,6 +256,7 @@ public class TestSelectData extends
       Expression exp2 =
         ExpressionFactory.likeExp(EipTTest.NOTE_PROPERTY, keyword);
 
+
       /* フルネーム対応 */
       String first_name = keyword;
       String last_name = keyword;
@@ -427,6 +428,7 @@ public class TestSelectData extends
       rd.setTestName(record.getTestName());
       rd.setTestId(record.getTestId().longValue());
       rd.setNote(record.getNote());
+      rd.setUrl(record.getUrl());
       rd.setCreateDate(ALDateUtil
         .format(record.getCreateDate(), "yyyy年M月d日(E)"));
       rd.setUpdateDate(record.getUpdateDate());

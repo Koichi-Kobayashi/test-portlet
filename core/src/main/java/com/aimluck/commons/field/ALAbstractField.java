@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 /**
  * 入力フィールドを表す抽象クラスです。 <br />
- * 
+ *
  */
 public abstract class ALAbstractField implements Serializable {
 
@@ -42,14 +42,14 @@ public abstract class ALAbstractField implements Serializable {
 
   /**
    * コンストラクタ
-   * 
+   *
    */
   public ALAbstractField() {
   }
 
   /**
    * notNull(必須入力)フラグを設定します。
-   * 
+   *
    * @param bool
    *          notNullフラグ
    */
@@ -59,7 +59,7 @@ public abstract class ALAbstractField implements Serializable {
 
   /**
    * notNull(必須入力)フラグを取得します。
-   * 
+   *
    * @return
    */
   public boolean isNotNull() {
@@ -68,7 +68,7 @@ public abstract class ALAbstractField implements Serializable {
 
   /**
    * 入力フィールド名を設定します。
-   * 
+   *
    * @param str
    */
   public void setFieldName(String str) {
@@ -77,7 +77,7 @@ public abstract class ALAbstractField implements Serializable {
 
   /**
    * 入力フィールド名を取得します。
-   * 
+   *
    * @return
    */
   public String getFieldName() {
@@ -86,7 +86,7 @@ public abstract class ALAbstractField implements Serializable {
 
   /**
    * 入力フィールドに値を設定します。
-   * 
+   *
    * @param str
    */
   public abstract void setValue(String str);
