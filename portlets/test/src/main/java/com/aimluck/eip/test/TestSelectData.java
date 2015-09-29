@@ -368,6 +368,8 @@ public class TestSelectData extends
         getStrLength()));
       rd.setUpdateDate(record.getUpdateDate());
 
+      rd.setUrl(record.getUrl());
+
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);
       return rd;

@@ -475,7 +475,6 @@ public class AddressBookFormData extends ALAbstractFormData {
       comp_fax_number3.setCharacterType(ALStringField.TYPE_NUMBER);
       comp_fax_number3.limitMaxLength(4);
       // 会社URL
-      comp_url.setCharacterType(ALStringField.TYPE_ASCII);
       comp_url.limitMaxLength(90);
     }
   }

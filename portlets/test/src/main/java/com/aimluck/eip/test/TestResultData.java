@@ -18,7 +18,7 @@
  */
 
 package com.aimluck.eip.test;
-
+import java.net.URI;
 import java.util.Date;
 
 import com.aimluck.commons.field.ALDateTimeField;
@@ -212,4 +212,9 @@ public class TestResultData implements ALData {
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
+  public String getUrlDomain() throws Exception{
+      URI url = new URI(getUrl()); //constructor
+      return url.getScheme()+"://"+url.getHost();
+  }
 }
+

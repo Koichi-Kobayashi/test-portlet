@@ -90,6 +90,9 @@ public class TestFormData extends ALAbstractFormData {
   /** URL */
   private ALStringField url;
 
+  /** ドメイン */
+  private ALStringField domain;
+
 
   /** 現在の年 */
   private int currentYear;
@@ -187,6 +190,10 @@ public class TestFormData extends ALAbstractFormData {
     url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
     url.setTrim(false);
 
+    // ドメイン
+    domain = new ALStringField();
+    domain.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_DOMAIN"));
+    domain.setTrim(false);
   }
 
 
@@ -203,9 +210,12 @@ public class TestFormData extends ALAbstractFormData {
     note.limitMaxLength(1000);
     // URLの文字数制限
     url.limitMaxLength(2000);
-
+    // URLの文字タイプ制限
+    url.setCharacterType(ALStringField.TYPE_ASCII );
     // 担当者ID必須項目
     user_id.setNotNull(true);
+
+
   }
 
   /**

@@ -29,6 +29,11 @@
 #ALtditemheader()
 $!result.Detail.TestName
 #ALtditemfooter()
+#ALtditemheader()
+
+<a href="$!result.Detail.Url"><img title="$!result.Detail.Url" src="http://capture.heartrails.com/free?$!result.Detail.Url" alt="$!result.Detail.Url" width="100" height="150" /></a>
+
+#ALtditemfooter()
 #ALtdcaption($l10n.COMMON_CREATE_DATE)
 #ALtditem($!result.Detail.CreateDate)
 #ALtdcaption($l10n.COMMON_UPDATE_DATE)
@@ -36,7 +41,9 @@ $!result.Detail.TestName
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
 #ALtdcaption($l10n.TODO_URL)
-#ALtditem($!result.Detail.URL)
+#ALtditem($!result.Detail.getUrl())
+#ALtdcaption($l10n.TODO_DOMAIN)
+#ALtditem($!result.Detail.getUrlDomain())
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
