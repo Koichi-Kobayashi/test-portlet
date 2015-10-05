@@ -88,7 +88,7 @@ public class TestFormData extends ALAbstractFormData {
   private ALStringField note;
 
 
-  /** url **/
+  /** URL **/
   private ALStringField url;
 
 
@@ -185,8 +185,8 @@ public class TestFormData extends ALAbstractFormData {
 
     // url
     url = new ALStringField();
-    url.setFieldName(ALLocalizationUtils.getl10n("REGISTRY_EDITOR_PORTLET_URL"));
-//    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
+//    url.setFieldName(ALLocalizationUtils.getl10n("REGISTRY_EDITOR_PORTLET_URL"));
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
     url.setTrim(false);
   }
 
@@ -202,6 +202,10 @@ public class TestFormData extends ALAbstractFormData {
     test_name.limitMaxLength(50);
     // メモの文字数制限
     note.limitMaxLength(1000);
+    // URLの文字制限
+    url.limitMaxLength(10); //1000文字に制限
+    url.setCharacterType(ALStringField.TYPE_ASCII); //半角英数記号に制限
+//    url.setCharacterType(ALStringField.TYPE_ALPHABET_NUMBER);
 
     // 担当者ID必須項目
     user_id.setNotNull(true);
@@ -229,6 +233,8 @@ public class TestFormData extends ALAbstractFormData {
     test_name.validate(msgList);
     // メモ
     note.validate(msgList);
+    // URL
+    url.validate(msgList);
 
     return (msgList.size() == 0);
 
