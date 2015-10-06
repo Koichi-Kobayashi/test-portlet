@@ -210,6 +210,8 @@ public class TestFormData extends ALAbstractFormData {
 
     // 担当者ID必須項目
     user_id.setNotNull(true);
+
+    url.setCharacterType(ALStringField.TYPE_ASCII);
   }
 
   /**
@@ -264,6 +266,9 @@ public class TestFormData extends ALAbstractFormData {
       test_name.setValue(test.getTestName());
       // メモ
       note.setValue(test.getNote());
+
+//      URL
+      url.setValue(test.getUrl());
 
 
       // 担当者

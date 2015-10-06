@@ -70,6 +70,8 @@ public class TestResultData implements ALData {
 
   private boolean hasAclDeleteTestOther;
 
+//  private String domain = new Url(url.getUrl);
+
   /**
    *
    *
@@ -119,6 +121,11 @@ public class TestResultData implements ALData {
    */
   public String getNote() {
     return ALEipUtils.getMessageList(note.getValue());
+  }
+
+  public String getUrl() {
+	return url.getValue();
+
   }
 
   /**
@@ -200,4 +207,6 @@ public class TestResultData implements ALData {
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
+
+//  URLを取得する
 }
