@@ -343,7 +343,7 @@ public class TestFormData extends ALAbstractFormData {
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
-   // url
+      // url
       test.setUrl(url.getValue());
 
 
