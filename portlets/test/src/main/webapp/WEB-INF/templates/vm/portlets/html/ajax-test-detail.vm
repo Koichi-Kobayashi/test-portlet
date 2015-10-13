@@ -36,9 +36,13 @@ $!result.Detail.TestName
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
 #ALtdcaption($l10n.TODO_URL)
-## #ALtditem($!result.Detail.UrlDomain)
 #ALtditemheader()
-<a href = "$!result.Detail.UrlThum"><img title="$!result.Detail.UrlThum" src="http://capture.heartrails.com/free?$!result.Detail.UrlThum" alt="$!result.Detail.UrlThum" width="300" height="200" /><a>
+<a href = "$!result.Detail.UrlThum"><img title="$!result.Detail.UrlThum" src="http://capture.heartrails.com/free?$!result.Detail.UrlThum" alt="$!result.Detail.UrlThum" width="300" height="200"/><a>
+#ALtditemfooter()
+#ALtditemheader()
+<div>
+#ALtditem($!result.Detail.UrlDomain)
+</div>
 #ALtditemfooter()
 #ALtablefooter()
 #ALbuttonheader()
