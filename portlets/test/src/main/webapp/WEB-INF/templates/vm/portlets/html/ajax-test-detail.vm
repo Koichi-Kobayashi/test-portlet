@@ -35,10 +35,12 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.UpdateDate)
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
-#ALtablefooter()
+#ALtdcaption($l10n.TODO_URL)
+## #ALtditem($!result.Detail.UrlDomain)
 #ALtditemheader()
 <a href = "$!result.Detail.UrlThum"><img title="$!result.Detail.UrlThum" src="http://capture.heartrails.com/free?$!result.Detail.UrlThum" alt="$!result.Detail.UrlThum" width="300" height="200" /><a>
 #ALtditemfooter()
+#ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
 #ALajaxbuttonEditCallback("$!jslink.getPortletById($!portlet.ID).addQueryData('template','TestFormScreen').addQueryData('entityid',$entityid)" "$!portlet.ID" "aipo.todo.onLoadTodoDialog")
