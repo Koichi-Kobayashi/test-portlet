@@ -129,13 +129,20 @@ public class TestResultData implements ALData {
   public void setNote(String string) {
     note.setValue(string);
   }
-
+  public String getUrl(){
+	  return url.getValue();
+  }
+  public void setUrl(String string) {
+	  url.setValue(string);
+  }
   /**
    * @return
    */
   public ALStringField getCreateDate() {
     return create_date;
   }
+
+
 
   /**
    * @return

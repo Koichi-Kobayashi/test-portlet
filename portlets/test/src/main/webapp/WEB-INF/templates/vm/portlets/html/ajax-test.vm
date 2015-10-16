@@ -73,7 +73,7 @@
 ##	<div>
 ##		<p class="caption">$l10n.TODO_CATEGORY</p>
 ##		<ul class="filtertype_$!portlet.ID"data-type="category" data-defaultparam="0">
-##			<li #if (!$!result.issetFilter("category")) class="selected" #end data-param="0"><a href="javascript:void(0)"  #if (!$!result.issetFilter("category")) class="selected" #end onclick='aipo.test.filterClick("$!portlet.ID",this,event)'>$l10n.TODO_ALL_CATEGORY</a></li>
+##			<li #if (!$!result.issetFilter("category")) cFlass="selected" #end data-param="0"><a href="javascript:void(0)"  #if (!$!result.issetFilter("category")) class="selected" #end onclick='aipo.test.filterClick("$!portlet.ID",this,event)'>$l10n.TODO_ALL_CATEGORY</a></li>
 ##			#foreach( $record in $result.CategoryList )
 ##			<li #if ($!result.issetFilter("category",$!{record.CategoryId})) class="selected" #end  data-param="$!{record.CategoryId}" ><a href="javascript:void(0);" #if ($!result.issetFilter("category",$!{record.CategoryId})) class="selected" #end onclick='aipo.test.filterClick("$!portlet.ID",this,event)'>$!record.CategoryName</a></li>
 ##			#end
