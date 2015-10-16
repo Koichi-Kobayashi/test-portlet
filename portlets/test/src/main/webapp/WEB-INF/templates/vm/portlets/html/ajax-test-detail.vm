@@ -41,6 +41,9 @@ $!result.Detail.TestName
 #ALtdcaption($l10n.TODO_URL)
 #ALtditem($!result.Detail.url)
 
+#ALtdcaption($l10n.TODO_DOMAIN)
+#ALtditem($!result.Detail.domain)
+
 #ALtdcaption($l10n.TODO_THUMNAIL)
 
 #ALtditemheader()
