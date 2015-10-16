@@ -142,6 +142,9 @@ public class TestResultData implements ALData {
     return create_date;
   }
 
+  public String getUrl2() {
+	  return url.getValue();
+  }
 
 
   /**
