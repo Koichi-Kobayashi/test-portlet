@@ -487,7 +487,7 @@ public class TestFormData extends ALAbstractFormData {
   }
 
 //  URLを取得します
-  public ALStringField getTestURL() {
+  public ALStringField getTestUrl() {
 	  return url;
   }
 

@@ -56,11 +56,7 @@
 #ALtditemfooter()
 ## URLのフィールドを追加
 #ALtdcaption($!result.getFieldName("url"))
-##ALtditemheader()
-#ALtditem("#ALtextfieldw100('url' $!result.Url 50 'active')")
-##ALtditemfooter()
-##ALtableheader()
-##ALtablefooter()
+#ALtditem("#ALtextfieldw100('url' $!result.TestUrl 50 'active')")
 #ALtablefooter()
 #ALbuttonheader()
 #ALsubmit($event_submit $action_str)#ALajaxbuttonClose()
