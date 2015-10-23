@@ -42,7 +42,7 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.url)
 
 #ALtdcaption($l10n.TODO_DOMAIN)
-#ALtditem($!result.Detail.domain)
+#ALtditem($!result.Detail.UrlDmain)
 
 #ALtdcaption($l10n.TODO_THUMNAIL)
 
