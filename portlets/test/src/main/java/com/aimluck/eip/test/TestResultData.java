@@ -45,9 +45,9 @@ public class TestResultData implements ALData {
   /** メモ */
   private ALStringField note;
 
-<<<<<<< HEAD
   /** URL*/
   private ALStringField url;
+
 
 
 
@@ -137,87 +137,8 @@ public class TestResultData implements ALData {
     */
   public ALStringField getUrl(){
        return url;
-=======
+}
 
-  /** 登録日 */
-  private ALStringField create_date;
-
-  /** 更新日 */
-  private ALDateTimeField update_date;
-
-  /** ユーザID */
-  private ALStringField user_id;
-
-  /**
-   * 期限状態（期限前/期限当日/期限後）． <br>
-   * クラス TestUtils の変数 LIMIT_STATE_BEFORE，LIMIT_STATE_TODAY，LIMIT_STATE_AFTER
-   * を参照．
-   */
-  private ALNumberField limit_state;
-
-  private boolean is_self_test;
-
-  private boolean hasAclEditTestOther;
-
-  private boolean hasAclDeleteTestOther;
-
-  /**
-   *
-   *
-   */
-  @Override
-  public void initField() {
-    test_id = new ALNumberField();
-    test_name = new ALStringField();
-    note = new ALStringField();
-    note.setTrim(false);
-    create_date = new ALStringField();
-    update_date = new ALDateTimeField();
-    is_self_test = false;
-  }
-
-  /**
-   * @return
-   */
-  public ALNumberField getTestId() {
-    return test_id;
-  }
-
-  /**
-   * @return
-   */
-  public String getTestName() {
-    return ALCommonUtils.replaceToAutoCR(test_name.toString());
-  }
-
-  /**
-   * @param i
-   */
-  public void setTestId(long i) {
-    test_id.setValue(i);
-  }
-
-  /**
-   * @param string
-   */
-  public void setTestName(String string) {
-    test_name.setValue(string);
-  }
-
-  /**
-   * @return
-   */
-  public String getNote() {
-    return ALEipUtils.getMessageList(note.getValue());
-  }
-
-  /**
-   * @param string
-   */
-  public void setNote(String string) {
-    note.setValue(string);
->>>>>>> branch 'masanaga' of https://github.com/aipocom/test-portlet.git
-  }
 
   /**
    * @return
