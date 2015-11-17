@@ -21,12 +21,15 @@ package com.aimluck.eip.test;
 
 import java.util.Date;
 
+
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
+
+import java.net.URI;
 
 /**
  * TestのResultDataです。 <BR>
@@ -45,11 +48,9 @@ public class TestResultData implements ALData {
   /** メモ */
   private ALStringField note;
 
-  /** URL*/
+
+  /** URL　追加*/
   private ALStringField url;
-
-
-
 
   /** 登録日 */
   private ALStringField create_date;
@@ -81,7 +82,9 @@ public class TestResultData implements ALData {
   public void initField() {
     test_id = new ALNumberField();
     test_name = new ALStringField();
+
     url = new ALStringField();
+
     note = new ALStringField();
     note.setTrim(false);
     create_date = new ALStringField();
@@ -135,10 +138,22 @@ public class TestResultData implements ALData {
      *
      * @return
     */
-  public ALStringField getUrl(){
-       return url;
-}
+  public void setUrl(String string) {
+	    url.setValue(string);
+	  }
 
+  public String getUrl(){
+      return ALEipUtils.getMessageList(url.getValue());
+  }
+
+  public String getUrl2() {
+      return url.getValue();
+  }
+
+  public String getUrlDmain() throws Exception{
+      URI u = new URI(url.getValue());
+      return u.getScheme()+"://"+u.getHost();
+}
 
   /**
    * @return

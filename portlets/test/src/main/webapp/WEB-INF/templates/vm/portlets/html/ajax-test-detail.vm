@@ -34,8 +34,20 @@ $!result.Detail.TestName
 #ALtdcaption($l10n.COMMON_UPDATE_DATE)
 #ALtditem($!result.Detail.UpdateDate)
 
-#ALtdcaption('URL')
-#ALtditem($!result.Detail.Url)
+## URLの入力
+#ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
+##($!result.Detail.Url)
+#ALtdcellheaderAtt('class="auiMTCaption"')
+<div>
+<a href="$!result.Detail.UrlDmain">$!result.Detail.UrlDmain</a>
+</div>
+#ALtdcellfooter()
+
+## サムネイル画像の表示
+#ALtdcaption($l10n.TODO_THUMNAIL)
+#ALtditemheader()
+<a href = "$!result.Detail.Url2"><img title="$!result.Detail.Url2" src="http://capture.heartrails.com/free?$!result.Detail.Url2" alt="$!result.Detail.Url2" width="200" height="300" /><a>
+#ALtditemfooter()
 
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)

@@ -428,6 +428,8 @@ public class TestSelectData extends
       rd.setTestId(record.getTestId().longValue());
       rd.setNote(record.getNote());
 
+      rd.setUrl(record.getUrl());
+
       rd.setCreateDate(ALDateUtil
         .format(record.getCreateDate(), "yyyy年M月d日(E)"));
       rd.setUpdateDate(record.getUpdateDate());
