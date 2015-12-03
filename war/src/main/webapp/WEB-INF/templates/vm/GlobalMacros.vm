@@ -248,7 +248,7 @@ $theLink
       <td class="caption">$text</td>
 #end
 
-#macro(ALtditemheaderheader)
+#macro(ALtdcaptionheader)
     <tr>
       <td class="caption">
 #end

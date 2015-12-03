@@ -114,15 +114,23 @@ public class TestResultData implements ALData {
   /**
    * @return
    */
-  public String getNote() {
+  public String getNote(){
     return ALEipUtils.getMessageList(note.getValue());
   }
+
 
   /**
    * @param string
    */
   public void setNote(String string) {
     note.setValue(string);
+  }
+
+  /**
+   * @param string
+   */
+  public void setUrl(String string) {
+    url.setValue(string);
   }
 
   /**
@@ -193,4 +201,8 @@ public class TestResultData implements ALData {
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
+
+
+
+
 }
