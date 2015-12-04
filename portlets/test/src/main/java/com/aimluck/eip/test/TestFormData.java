@@ -73,8 +73,7 @@ import com.aimluck.eip.util.ALLocalizationUtils;
 public class TestFormData extends ALAbstractFormData {
 
   /** logger */
-  private static final JetspeedLogger logger = JetspeedLogFactoryService
-    .getLogger(TestFormData.class.getName());
+  private static final JetspeedLogger logger = JetspeedLogFactoryService.getLogger(TestFormData.class.getName());
 
   /** タイトル */
   private ALStringField test_name;
@@ -87,7 +86,7 @@ public class TestFormData extends ALAbstractFormData {
   /** メモ */
   private ALStringField note;
 
-  /** メモ */
+  /** URL */
   private ALStringField url;
 
 
@@ -200,8 +199,14 @@ public class TestFormData extends ALAbstractFormData {
     test_name.setNotNull(true);
     // タイトルの文字数制限
     test_name.limitMaxLength(50);
+
     // メモの文字数制限
     note.limitMaxLength(1000);
+
+    // URLの文字数制限
+    url.limitMaxLength(1000);
+    // URLの文字種類制限
+    url.setCharacterType(ALStringField.TYPE_ASCII);
 
     // 担当者ID必須項目
     user_id.setNotNull(true);
@@ -229,6 +234,8 @@ public class TestFormData extends ALAbstractFormData {
     test_name.validate(msgList);
     // メモ
     note.validate(msgList);
+    // URL
+    url.validate(msgList);
 
     return (msgList.size() == 0);
 
@@ -256,7 +263,8 @@ public class TestFormData extends ALAbstractFormData {
       test_name.setValue(test.getTestName());
       // メモ
       note.setValue(test.getNote());
-
+      // URL
+      url.setValue(test.getURL());
 
       // 担当者
       user_id.setValue(test.getTurbineUser().getUserId());
@@ -337,6 +345,8 @@ public class TestFormData extends ALAbstractFormData {
 
       // メモ
       test.setNote(note.getValue());
+      // URL
+      test.setURL(url.getValue());
       // 作成日
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
@@ -405,6 +415,9 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
       // メモ
       test.setNote(note.getValue());
+      // URL
+      test.setURL(url.getValue());
+
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
       // Test を更新
@@ -462,6 +475,17 @@ public class TestFormData extends ALAbstractFormData {
   public ALStringField getTestName() {
     return test_name;
   }
+
+
+  /**
+   * URLを取得します。 <BR>
+   *
+   * @return
+   */
+  public ALStringField getURL() {
+	    return url;
+	  }
+
 
 
   /**
