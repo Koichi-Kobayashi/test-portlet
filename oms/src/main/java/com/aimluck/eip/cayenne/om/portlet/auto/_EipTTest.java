@@ -40,14 +40,6 @@ public class _EipTTest extends org.apache.cayenne.CayenneDataObject {
         return (String)readProperty("testName");
     }
 
-    public void setURL(String url) {
-        writeProperty("nrl", url);
-    }
-    public String getURL() {
-        return (String)readProperty("url");
-    }
-
-
     public void setUpdateDate(java.util.Date updateDate) {
         writeProperty("updateDate", updateDate);
     }

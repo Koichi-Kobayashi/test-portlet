@@ -27,7 +27,8 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
-
+import java.net.URL;
+import java.net.MalformedURLException;
 /**
  * TestのResultDataです。 <BR>
  *
@@ -36,7 +37,6 @@ public class TestResultData implements ALData {
 
   /** Test ID */
   private ALNumberField test_id;
-
 
   /** タイトル */
   private ALStringField test_name;
@@ -130,13 +130,14 @@ public class TestResultData implements ALData {
   /**
    * @return
    */
-  public String getURL() {
-    return ALEipUtils.getMessageList(url.getValue());
+  public String getUrl() {
+    return url.getValue();
   }
+
   /**
    * @param string
    */
-  public void setURL(String string) {
+  public void setUrl(String string) {
     url.setValue(string);
   }
 
@@ -207,5 +208,12 @@ public class TestResultData implements ALData {
    */
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
+  }
+
+  public String getUrlDomain() throws MalformedURLException {
+
+   URL u = new URL(url.getValue());
+
+   return u.getProtocol() + "://" + u.getHost();
   }
 }
