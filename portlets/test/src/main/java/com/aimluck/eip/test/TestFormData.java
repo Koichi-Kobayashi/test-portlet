@@ -201,7 +201,7 @@ public class TestFormData extends ALAbstractFormData {
     test_name.limitMaxLength(50);
     // メモの文字数制限
     note.limitMaxLength(1000);
-    //URL
+    //URL 半角英数記号に制限
     url.setCharacterType(ALStringField.TYPE_ASCII);
 
     // 担当者ID必須項目

@@ -28,6 +28,8 @@ import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
 
+import java.net.URI;
+
 /**
  * TestのResultDataです。 <BR>
  *
@@ -44,6 +46,9 @@ public class TestResultData implements ALData {
 
   /** メモ */
   private ALStringField note;
+
+  /** URL **/
+  private ALStringField url;
 
 
   /** 登録日 */
@@ -81,6 +86,9 @@ public class TestResultData implements ALData {
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     is_self_test = false;
+    url = new ALStringField();
+    url.setTrim(false);
+
   }
 
   /**
@@ -126,12 +134,22 @@ public class TestResultData implements ALData {
     note.setValue(string);
   }
 
-  /**
-   * @param string
-   */
-  public void setUrl(String string) {
-    url.setValue(string);
+  public String getUrl() {
+      return ALEipUtils.getMessageList(url.getValue());
   }
+
+  public void setUrl(String string) {
+      url.setValue(string);
+  }
+
+  public String getUrlThum() {
+      return url.getValue();
+}
+
+  public String getUrlDmain() throws Exception{
+      URI u = new URI(url.getValue());
+      return u.getScheme()+"://"+u.getHost();
+}
 
   /**
    * @return

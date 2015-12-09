@@ -57,7 +57,7 @@
 
 #ALtdcaption($!result.getFieldName("url"))
 #ALtditemheader()
-#ALtextarea('url' $!result.Url 10 40)
+#ALtextarea('url' $!result.Url 3 40)
 
 
 #ALtditemfooter()
