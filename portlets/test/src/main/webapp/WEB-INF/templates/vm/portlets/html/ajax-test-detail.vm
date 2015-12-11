@@ -46,7 +46,7 @@ $!result.Detail.TestName
 ## サムネイル画像の表示
 #ALtdcaption($l10n.TODO_THUMNAIL)
 #ALtditemheader()
-<a href = "$!result.Detail.Url2"><img title="$!result.Detail.Url2" src="http://capture.heartrails.com/free?$!result.Detail.Url2" alt="$!result.Detail.Url2" width="200" height="300" /><a>
+<a href = "$!result.Detail.Url2"><img title="$!result.Detail.Url2" src="http://capture.heartrails.com/free?$!result.Detail.Url2" alt="$!result.Detail.Url2" width="300" height="400" /><a>
 #ALtditemfooter()
 
 #ALtdcaption($l10n.TODO_MEMO)
