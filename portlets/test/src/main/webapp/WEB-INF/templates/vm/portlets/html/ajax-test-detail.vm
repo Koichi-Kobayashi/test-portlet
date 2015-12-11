@@ -41,7 +41,8 @@ $!result.Detail.TestName
 #ALtditemfooter()
 #ALtdcaption($l10n.TODO_SETFIELDNAME_THUMNAIL)
 #ALtditemheader()
-<img src="http://capture.heartrails.com/?$!result.Detail.Url">
+<a href="$!result.Detail.Url">
+<img src="http://capture.heartrails.com/?$!result.Detail.Url"></a>
 #ALtditemfooter()
 
 #ALtablefooter()
