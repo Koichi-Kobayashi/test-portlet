@@ -84,10 +84,10 @@
 <tr>
 #ALtdheadAtt("#ALswitchCheckbox()" "class='thin center'")
 <th>#ALajaxsort('test_name' $l10n.TODO_TITLE $result 'TestListScreen')</th>
+<th>#ALajaxsort('url' $l10n.TODO_URL $result 'TestListScreen')</th>
 </tr>
 #foreach ($record in $result.List)
 <tr>
-
 #ALtdcellAtt("<input name='check$!record.TestId' type='checkbox' value='$!record.TestId'/>" 'align="center" class="auiMTCheck"')
 #ALtdcellheaderAtt('class="auiMTCaption"')
 <div>

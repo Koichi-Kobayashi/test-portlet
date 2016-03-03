@@ -365,6 +365,9 @@ public class TestSelectData extends
       rd.setTestName(ALCommonUtils.compressString(
         record.getTestName(),
         getStrLength()));
+      rd.setUrl(ALCommonUtils.compressString(
+    	record.getUrl(),
+    	getStrLength()));
       rd.setUpdateDate(record.getUpdateDate());
 
       rd.setAclEditTestOther(hasAclEditTestOther);
@@ -430,6 +433,7 @@ public class TestSelectData extends
       rd.setCreateDate(ALDateUtil
         .format(record.getCreateDate(), "yyyy年M月d日(E)"));
       rd.setUpdateDate(record.getUpdateDate());
+      rd.setUrl(record.getUrl());
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);
       return rd;
@@ -466,6 +470,7 @@ public class TestSelectData extends
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
     map.putValue("test_name", EipTTest.TEST_NAME_PROPERTY);
+    map.putValue("url", EipTTest.URL_PROPERTY);
     map.putValue(EipTTest.UPDATE_DATE_PROPERTY, EipTTest.UPDATE_DATE_PROPERTY);
     return map;
   }

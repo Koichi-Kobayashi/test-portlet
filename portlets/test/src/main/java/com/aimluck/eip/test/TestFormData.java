@@ -184,7 +184,7 @@ public class TestFormData extends ALAbstractFormData {
     // URL
     url = new ALStringField();
     url.setFieldName(ALLocalizationUtils.getl10n("TODO_URL"));
-    url.setTrim(false);
+    url.setTrim(true);
 
 
   }
@@ -205,7 +205,7 @@ public class TestFormData extends ALAbstractFormData {
     //urlの文字数制限
     url.limitMaxLength(1000);
     //urlのバリデート
-    url.setCharacterType(ALStringField.TYPE_ALPHABET_NUMBER);
+    url.setCharacterType(ALStringField.TYPE_ASCII);
 
     // 担当者ID必須項目
     user_id.setNotNull(true);
@@ -263,7 +263,7 @@ public class TestFormData extends ALAbstractFormData {
       // メモ
       note.setValue(test.getNote());
       //url
-      url.setValue(test.getNote());
+      url.setValue(test.getUrl());
 
 
       // 担当者
@@ -465,6 +465,11 @@ public class TestFormData extends ALAbstractFormData {
     return note;
   }
 
+  /**
+   * URLを取得します
+   *
+   * @return
+   */
   public ALStringField getUrl() {
 	  return url;
   }
