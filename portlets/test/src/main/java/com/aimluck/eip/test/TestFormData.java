@@ -204,6 +204,8 @@ public class TestFormData extends ALAbstractFormData {
 
     //urlの文字数制限
     url.limitMaxLength(1000);
+    //urlのバリデート
+    url.setCharacterType(ALStringField.TYPE_ALPHABET_NUMBER);
 
     // 担当者ID必須項目
     user_id.setNotNull(true);
