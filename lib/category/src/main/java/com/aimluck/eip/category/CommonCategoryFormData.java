@@ -46,7 +46,7 @@ import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * 共有カテゴリのフォームデータを管理するクラスです。 <br />
- * 
+ *
  */
 public class CommonCategoryFormData extends ALAbstractFormData {
 
@@ -63,8 +63,11 @@ public class CommonCategoryFormData extends ALAbstractFormData {
   /** メモ */
   private ALStringField note;
 
+  /** URL */
+  private ALStringField test_url;
+
   /**
-   * 
+   *
    * @param action
    * @param rundata
    * @param context
@@ -101,11 +104,15 @@ public class CommonCategoryFormData extends ALAbstractFormData {
     note = new ALStringField();
     note.setFieldName("メモ");
     note.setTrim(true);
+    //URL
+    test_url = new ALStringField();
+    test_url.setFieldName("URL");
+    test_url.setTrim(true);
   }
 
   /**
    * ToDoカテゴリの各フィールドに対する制約条件を設定します。 <BR>
-   * 
+   *
    */
   @Override
   protected void setValidator() {
@@ -119,7 +126,7 @@ public class CommonCategoryFormData extends ALAbstractFormData {
 
   /**
    * 共有カテゴリのフォームに入力されたデータの妥当性検証を行います。 <BR>
-   * 
+   *
    * @param msgList
    * @return
    */
@@ -160,7 +167,7 @@ public class CommonCategoryFormData extends ALAbstractFormData {
 
   /**
    * 共有カテゴリをデータベースから読み出します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -190,7 +197,7 @@ public class CommonCategoryFormData extends ALAbstractFormData {
 
   /**
    * 共有カテゴリをデータベースに格納します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -226,7 +233,7 @@ public class CommonCategoryFormData extends ALAbstractFormData {
 
   /**
    * データベースに格納されている共有カテゴリを更新します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -287,7 +294,7 @@ public class CommonCategoryFormData extends ALAbstractFormData {
 
   /**
    * 共有カテゴリを削除します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -348,7 +355,7 @@ public class CommonCategoryFormData extends ALAbstractFormData {
 
   /**
    * 共有カテゴリIDを取得します。 <BR>
-   * 
+   *
    * @return
    */
   public Integer getCategoryId() {
@@ -357,7 +364,7 @@ public class CommonCategoryFormData extends ALAbstractFormData {
 
   /**
    * 共有カテゴリ名を取得します。 <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getName() {
@@ -366,7 +373,7 @@ public class CommonCategoryFormData extends ALAbstractFormData {
 
   /**
    * メモを取得します。 <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getNote() {
@@ -376,7 +383,7 @@ public class CommonCategoryFormData extends ALAbstractFormData {
   /**
    * アクセス権限チェック用メソッド。<br />
    * アクセス権限の機能名を返します。
-   * 
+   *
    * @return
    */
   @Override
