@@ -201,7 +201,8 @@ public class TestFormData extends ALAbstractFormData {
     test_name.limitMaxLength(50);
     // メモの文字数制限
     note.limitMaxLength(1000);
-
+    // URLは半角英数字記号のみ
+    url.setCharacterType(ALStringField.TYPE_ASCII);
     // 担当者ID必須項目
     user_id.setNotNull(true);
   }
@@ -225,7 +226,7 @@ public class TestFormData extends ALAbstractFormData {
 
     boolean isStartDate = false;
     // タイトル
-    test_name.validate(msgList);
+    test_name.validate(msgList);	//返り値はboolean
     // メモ
     note.validate(msgList);
     // URL
@@ -340,7 +341,7 @@ public class TestFormData extends ALAbstractFormData {
       // メモ
       test.setNote(note.getValue());
       // URL
-      test.setNote(url.getValue());
+      test.setUrl(url.getValue());
       // 作成日
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
@@ -474,7 +475,7 @@ public class TestFormData extends ALAbstractFormData {
    *
    * @return
    */
-  public ALStringField getURL(){
+  public ALStringField getUrl(){
 	  return url;
   }
 
