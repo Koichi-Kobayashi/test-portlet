@@ -102,6 +102,7 @@
 #ALtdcellAtt("<div>$!record.CategoryNameHtml</div>" '')
 #ALtdcellAtt("<div>$!record.userNameHtml</div>" '')
 #ALtdcellAtt("<div>$!record.UpdateDate</div>" 'class="right" nowrap="nowrap"')
+#ALtdcaption($l10n.TODO_THUMNAIL)
 </tr>
 #end
 </tbody>

@@ -136,6 +136,9 @@ public class TestResultData implements ALData {
   public String getUrl() {
 	  return ALCommonUtils.replaceToAutoCR(url.toString());
   }
+  public String getUrl2() {
+	  return url.getValue();
+  }
 
   /**
    * @param
