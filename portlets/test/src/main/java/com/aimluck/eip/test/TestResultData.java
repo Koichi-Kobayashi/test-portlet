@@ -20,6 +20,7 @@
 package com.aimluck.eip.test;
 
 import java.util.Date;
+import java.net.URI;
 
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALNumberField;
@@ -136,8 +137,14 @@ public class TestResultData implements ALData {
   public String getUrl() {
 	  return ALCommonUtils.replaceToAutoCR(url.toString());
   }
+
   public String getUrl2() {
 	  return url.getValue();
+  }
+
+  public String getUrlDmain() throws Exception {
+	  URI u = new URI(url.getValue());
+	  return u.getScheme()+"://"+u.getHost();
   }
 
   /**
