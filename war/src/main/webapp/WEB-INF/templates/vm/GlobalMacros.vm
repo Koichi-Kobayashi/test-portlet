@@ -267,6 +267,18 @@ $theLink
     </tr>
 #end
 
+#macro(ALtdlinkitem $text)
+		<td><a href="$text">$text</a></td>
+	</tr>
+#end
+
+#*
+#macro(Altdthumbnail $text)
+		<td><a href="$text"><img title="thumbnail_of_$text" src="http://capture.heartrails.com/free?$text" alt="$text" width="200" height="300"></a></td>
+	</tr>
+#end
+*#
+
 #macro(ALtdcell $text)
       <td>$text</td>
 #end
@@ -1891,8 +1903,8 @@ $item.get(0)
 #end
 
 #macro(AuiAlert $title $text $id $js $flag)
-#if (${flag})
-<div class="alert bgGray" id="$!{id}">
+	#if (${flag})
+	<div class="alert bgGray" id="$!{id}">
 <div class="alertTool"><a href="javascript:void(0)" onclick="document.getElementById('$!{id}').style.display='none';$js"><i class="icon-remove"></i></a></div>
 #if($!title != "")
 <div class="alertHead">

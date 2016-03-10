@@ -165,6 +165,25 @@ public class TestResultData implements ALData {
 	  return url;
   }
 
+  public String extractDomain(ALStringField u){
+	  String domain = "";
+	  String url = u.getValue();
+	  int len = url.length();
+	  int end = 0;
+	  int slashCount = 0;
+	  for(int i = 0; i<len; i++){
+		  if(url.charAt(i)=='/'){
+			  slashCount++;
+			  if(slashCount == 3){
+				  end = i;
+				  break;
+			  }
+		  }
+	  }
+	  domain = url.substring(0, end);
+	  return domain;
+  }
+
   public void setUrl(String string) {
 	  url.setValue(string);
   }
