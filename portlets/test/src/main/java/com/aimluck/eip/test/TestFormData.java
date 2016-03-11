@@ -206,6 +206,10 @@ public class TestFormData extends ALAbstractFormData {
 
     // 担当者ID必須項目
     user_id.setNotNull(true);
+
+    //here,追加した箇所
+    url.setCharacterType(ALStringField.TYPE_ASCII);
+
   }
 
   /**
@@ -217,6 +221,9 @@ public class TestFormData extends ALAbstractFormData {
    */
   @Override
   protected boolean validate(List<String> msgList) {
+
+
+	  url.validate(msgList);
 
     try {
 

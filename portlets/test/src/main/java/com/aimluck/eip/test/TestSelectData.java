@@ -436,7 +436,6 @@ public class TestSelectData extends
 
       rd.setUrl(record.getUrl());
 
-
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);
       return rd;

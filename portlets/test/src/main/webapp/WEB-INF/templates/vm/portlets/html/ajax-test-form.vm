@@ -64,5 +64,6 @@
 #ALformfooter()
 #ALdialogfooter()
 
-#ALtdcaption($!result.getFieldName('url'))
-#ALtditem("#ALtextfieldw100('url' $!result.TestName 1000 'active')")
+
++#ALtdcaption($!result.getFieldName("url"))
++#ALtditem("#ALtextfieldw100('url' $!result.Url 50 'active')")

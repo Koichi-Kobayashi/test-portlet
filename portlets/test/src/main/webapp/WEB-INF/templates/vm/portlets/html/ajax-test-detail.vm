@@ -55,3 +55,11 @@ $!result.Detail.TestName
 #ALbuttonfooter()
 #ALformfooter()
 #ALdialogfooter()
+
+#ALtdcellheaderAtt('class="auiMTCaption"')
+<div>
+<a href="$!result.Detail.UrlDmain">$!result.Detail.UrlDmain</a>
+</div>
+#ALtdcellfooter()
+
+#ALtdcaption($l10n.TODO_THUMNAIL)
