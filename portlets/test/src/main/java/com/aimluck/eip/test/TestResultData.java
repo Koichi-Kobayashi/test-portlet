@@ -150,6 +150,7 @@ public class TestResultData implements ALData {
 
 
 
+
   /**
    * @param string
    */
@@ -171,6 +172,9 @@ public class TestResultData implements ALData {
       URI u = new URI(url.getValue());
       return u.getScheme()+"://"+u.getHost();
 }
+
+
+
   /**
    * @return
    */

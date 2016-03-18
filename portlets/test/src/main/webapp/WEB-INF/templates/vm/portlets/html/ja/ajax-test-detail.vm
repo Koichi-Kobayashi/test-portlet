@@ -35,10 +35,11 @@
 
 #ALtdcaption("サムネイル")
 
-<td><a href="$!result.Detail.Url"><img src="http://capture.heartrails.com/free?$!result.Detail.Url"   width="300" height="150" /></a></td>
+<td><a href="$!result.Detail.Url2"><img src="http://capture.heartrails.com/free?$!result.Detail.Url2"></a></td>
 
+<!--   <a href="$!result.Detail.Url2"><img src="http://capture.heartrails.com/free?$!result.Detail.Url2"></a>  -->
 
-
+#ALtditemfooter()
 
 #ALtdcaption($l10n.TODO_CREATE_DATE)
 #ALtditem($!result.Detail.CreateDate)
@@ -48,7 +49,8 @@
 #ALtditem($!result.Detail.Note)
 #ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
 #ALtditem($!result.Detail.Url)
-
+#ALtdcaption($l10n.TODO_URL)
+#ALtditem($!result.Detail.UrlDmain)
 
 #ALtablefooter()
 #ALbuttonheader()
