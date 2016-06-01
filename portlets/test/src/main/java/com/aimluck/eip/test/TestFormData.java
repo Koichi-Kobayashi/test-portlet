@@ -76,6 +76,9 @@ public class TestFormData extends ALAbstractFormData {
   private static final JetspeedLogger logger = JetspeedLogFactoryService
     .getLogger(TestFormData.class.getName());
 
+  /** URL**/
+  private ALStringField test_URL;
+  
   /** タイトル */
   private ALStringField test_name;
 
@@ -168,6 +171,10 @@ public class TestFormData extends ALAbstractFormData {
     test_name.setFieldName(ALLocalizationUtils
       .getl10n("TODO_SETFIELDNAME_TITLE"));
     test_name.setTrim(true);
+    //URL
+    test_URL = new ALStringField();
+    test_URL.setFieldName(ALLocalizationUtils
+    		.getl10n("TODO_SETFIELDNAME_PREPARED"));
 
     // 担当者ID
     user_id = new ALNumberField();
@@ -185,6 +192,7 @@ public class TestFormData extends ALAbstractFormData {
   /**
    * Testの各フィールドに対する制約条件を設定します。 <BR>
    */
+  
   @Override
   protected void setValidator() {
     // Tタイトル必須項目
@@ -218,6 +226,8 @@ public class TestFormData extends ALAbstractFormData {
     boolean isStartDate = false;
     // タイトル
     test_name.validate(msgList);
+    //URL
+    test_URL.validate(msgList);
     // メモ
     note.validate(msgList);
 
@@ -245,6 +255,8 @@ public class TestFormData extends ALAbstractFormData {
       }
       // タイトル
       test_name.setValue(test.getTestName());
+      //URL
+      test_URL.setValue(test.getTestURL());
       // メモ
       note.setValue(test.getNote());
 
@@ -322,6 +334,8 @@ public class TestFormData extends ALAbstractFormData {
 
       // タイトル
       test.setTestName(test_name.getValue());
+      //URL
+      test.setTestURl(test_URL.getValue());
       // ユーザーID
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
@@ -390,6 +404,8 @@ public class TestFormData extends ALAbstractFormData {
 
       // タイトル
       test.setTestName(test_name.getValue());
+      //URL
+      test.setTestURL(test_URL.getValue());
 
       // ユーザーID
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
@@ -453,7 +469,13 @@ public class TestFormData extends ALAbstractFormData {
   public ALStringField getTestName() {
     return test_name;
   }
-
+/**
+ * URLを取得します。
+ * @return
+ */
+  public ALStinngField getTestURL(){
+	  return test_URL;
+  }
 
   /**
    * アクセス権限チェック用メソッド。<br />

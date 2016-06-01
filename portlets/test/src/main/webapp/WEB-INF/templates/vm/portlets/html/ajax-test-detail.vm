@@ -52,3 +52,5 @@ $!result.Detail.TestName
 #ALbuttonfooter()
 #ALformfooter()
 #ALdialogfooter()
+#ALtdcaption($l10n.Test_URL)
+#ALtditem($!result.Detail.URL)
