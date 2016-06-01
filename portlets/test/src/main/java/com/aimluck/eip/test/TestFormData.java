@@ -88,6 +88,9 @@ public class TestFormData extends ALAbstractFormData {
   private ALStringField note;
 
 
+  /** URL */
+  private ALStringField user_url;
+
   /** 現在の年 */
   private int currentYear;
 
@@ -179,6 +182,11 @@ public class TestFormData extends ALAbstractFormData {
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
 
+    // URL
+    user_url = new ALStringField();
+    user_url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
+    user_url.setTrim(false);
+
   }
 
 
@@ -193,6 +201,11 @@ public class TestFormData extends ALAbstractFormData {
     test_name.limitMaxLength(50);
     // メモの文字数制限
     note.limitMaxLength(1000);
+
+    // URLのValidation
+    user_url.setCharacterType(ALStringField.TYPE_ALPHABET_NUMBER);
+
+    //note.limitMaxLength(1000);
 
     // 担当者ID必須項目
     user_id.setNotNull(true);
@@ -220,6 +233,9 @@ public class TestFormData extends ALAbstractFormData {
     test_name.validate(msgList);
     // メモ
     note.validate(msgList);
+    // URL
+    user_url.validate(msgList);
+
 
     return (msgList.size() == 0);
 
@@ -247,8 +263,8 @@ public class TestFormData extends ALAbstractFormData {
       test_name.setValue(test.getTestName());
       // メモ
       note.setValue(test.getNote());
-
-
+      // URL
+      user_url.setValue(user_url.getURLEncodedValue());
       // 担当者
       user_id.setValue(test.getTurbineUser().getUserId());
 
@@ -328,8 +344,13 @@ public class TestFormData extends ALAbstractFormData {
 
       // メモ
       test.setNote(note.getValue());
+
+      // URL
+      test.setUrl(user_url.getValue());
+
       // 作成日
       test.setCreateDate(Calendar.getInstance().getTime());
+
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
 
@@ -396,6 +417,8 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
       // メモ
       test.setNote(note.getValue());
+      //URL
+      test.setUrl(user_url.getValue());
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
       // Test を更新
@@ -452,6 +475,15 @@ public class TestFormData extends ALAbstractFormData {
    */
   public ALStringField getTestName() {
     return test_name;
+  }
+
+  /**
+   * URLを取得します。 <BR>
+   *
+   * @return
+   */
+  public ALStringField getURLEncodedValue() {
+    return user_url;
   }
 
 
