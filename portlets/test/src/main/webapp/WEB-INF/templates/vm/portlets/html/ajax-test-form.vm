@@ -48,12 +48,20 @@
 <input type="hidden" name="user_id" value="$!result.loginUserId"/>
 #end
 #ALtableheaderWide()
+
 #ALtdcaption("#ALrequired($!result.getFieldName('test_name'))")
 #ALtditem("#ALtextfieldw100('test_name' $!result.TestName 50 'active')")
+
 #ALtdcaption($!result.getFieldName("note"))
 #ALtditemheader()
 #ALtextarea('note' $!result.Note 10 40)
 #ALtditemfooter()
+
+#ALtdcaption($!result.getFieldName("user_url"))
+#ALtditemheader()
+#ALtextarea('user_url' $!result.getURLEncodedValue() 1 40)
+#ALtditemfooter()
+
 #ALtablefooter()
 #ALbuttonheader()
 #ALsubmit($event_submit $action_str)#ALajaxbuttonClose()
