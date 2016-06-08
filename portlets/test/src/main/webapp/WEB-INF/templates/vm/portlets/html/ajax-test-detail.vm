@@ -24,25 +24,35 @@
 #ALajaxIndicator("$indicator_id" "$!portlet.ID" "")
 <div id="messageDiv"></div>
 #ALajaxdetailformheader("ToDo")
+
 #ALtableheaderWide()
+
 #ALtdcaption("タイトル")
 #ALtditemheader()
 $!result.Detail.TestName
-
 #ALtditemfooter()
+
 #ALtdcaption($l10n.COMMON_CREATE_DATE)
 #ALtditem($!result.Detail.CreateDate)
+
 #ALtdcaption($l10n.COMMON_UPDATE_DATE)
-#ALtditem($!result.Detail.UpdateDate)
+
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
 
-#ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
+#ALtdcaption($l10n.TODO_THUMBNAIL)
+    <td><a href="$!result.Detail.Url"><img title="thumbnail_of_$!result.Detail.Url" src="http://capture.heartrails.com/free?$!result.Detail.Url" alt="$!result.Detail.Url" width="200" height="300"></a></td>
+</tr>
+
+#ALtdcaption($l10n.TODO_URL)
 #ALtdcellNowrapheader()
-  <a href="$!result.Detail.Url">$!result.Detail.Url</a>
+<div>
+  <a href="$!result.Detail.Url">$!result.Detail.Domain</a>
+</div>
 #ALtdcellNowrapfooter()
 
 #ALtablefooter()
+
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
 #ALajaxbuttonEditCallback("$!jslink.getPortletById($!portlet.ID).addQueryData('template','TestFormScreen').addQueryData('entityid',$entityid)" "$!portlet.ID" "aipo.todo.onLoadTodoDialog")

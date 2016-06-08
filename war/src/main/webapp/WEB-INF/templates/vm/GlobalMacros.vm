@@ -1987,3 +1987,8 @@ $utils.getl10nFormat1("NOTIFICATION_RECOMMEND_MESSAGE",${alias})<span style="dis
 </div>
 </div>
 #end
+
+#macro(ALtdlinkitem $text)
+        <td><a href="$text">$text</a></td>
+    </tr>
+#end

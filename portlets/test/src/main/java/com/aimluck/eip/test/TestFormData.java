@@ -203,7 +203,7 @@ public class TestFormData extends ALAbstractFormData {
     note.limitMaxLength(1000);
 
     // URLのValidation
-    user_url.setCharacterType(ALStringField.TYPE_ALPHABET_NUMBER);
+    user_url.setCharacterType(ALStringField.TYPE_ASCII);
 
     //note.limitMaxLength(1000);
 
