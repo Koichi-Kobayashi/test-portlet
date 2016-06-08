@@ -20,6 +20,9 @@
 package com.aimluck.eip.test;
 
 import java.util.Date;
+import java.util.*;
+import java.lang.*;
+import java.io.*;
 
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALNumberField;
@@ -142,6 +145,10 @@ public class TestResultData implements ALData {
     user_url.setValue(string);
   }
 
+  public String getDomain(){
+	  String domain = user_url.toString().replaceAll("https?://([^:/]+).*", "$1");
+	  return domain;
+  }
 
   /**
    * @return
@@ -211,4 +218,25 @@ public class TestResultData implements ALData {
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
+
+  public String extractDomain(ALStringField u){
+      String domain = "";
+      String url = u.getValue();
+      int len = url.length();
+      int end = 0;
+      int slashCount = 0;
+      for(int i = 0; i<len; i++){
+          if(url.charAt(i)=='/'){
+              slashCount++;
+              if(slashCount == 3){
+                  end = i;
+                  break;
+              }
+          }
+      }
+      domain = url.substring(0, end);
+      return domain;
+  }
 }
+
+

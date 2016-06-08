@@ -81,11 +81,10 @@
 #end
 
 #AUIrowMTableWide()
+
 <tr>
 #ALtdheadAtt("#ALswitchCheckbox()" "class='thin center'")
 <th>#ALajaxsort('test_name' $l10n.TODO_TITLE $result 'TestListScreen')</th>
-
-<th>#ALajaxsort('test_name' $l10n.TODO_URL $result 'TestListScreen')
 #ALtdcellNowrapheader()
   <a href="$!result.Detail.Url">$!result.Detail.Url</a>
 #ALtdcellNowrapfooter()
@@ -94,17 +93,16 @@
 </tr>
 #foreach ($record in $result.List)
 <tr>
-
 #ALtdcellAtt("<input name='check$!record.TestId' type='checkbox' value='$!record.TestId'/>" 'align="center" class="auiMTCheck"')
 #ALtdcellheaderAtt('class="auiMTCaption"')
 <div>
 <a href="javascript:void(0);" onclick="aipo.common.showDialog('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","TestDetailScreen").addQueryData("entityid",$record.TestId))');">$!record.TestName</a>
 </div>
 #ALtdcellfooter()
-
 </tr>
 
 #end
+
 #AUItablefooter()
 <div class="auiSummaryMeta clearfix">
 	<div class="floatLeft">
@@ -119,11 +117,14 @@
 <div class="menubar multi" id="menubar_auiFilter_$!portlet.ID" style="display:none; top:85px; left:276px;">
 <div>
 <p class="caption">$l10n.COMMON_GROUP</p>
+
 <ul class="filtertype filtertype_$!portlet.ID" data-type="post" data-defaultparam="0">
 <li data-param="0" #if(!$!result.issetFilter("post")) class="selected" #end><a href="javascript:void(0)" #if(!$!result.issetFilter("post")) class="selected" #end onclick="aipo.test.filterClick('$!portlet.ID',this,event)">$l10n.TODO_ALL_GLOUP</a></li>
 #foreach($record in $result.postList)
 <li data-param="$!record.Name" #if($!result.issetFilter("post",$!{record.Name})) class="selected" #end><a href="javascript:void(0)" #if($!result.issetFilter("post",$!{record.Name})) class="selected" #end onclick="aipo.test.filterClick('$!portlet.ID',this,event)">$!record.AliasName</a></li>
+
 #end
+
 #foreach($record in $result.PostMap)
 <li data-param="$!record.GroupName" #if($!result.issetFilter("post",$!{record.GroupName})) class="selected" #end><a href="javascript:void(0)" #if($!result.issetFilter("post",$!{record.GroupName})) class="selected" #end onclick="aipo.test.filterClick('$!portlet.ID',this,event)">$!record.PostName</a></li>
 #end
