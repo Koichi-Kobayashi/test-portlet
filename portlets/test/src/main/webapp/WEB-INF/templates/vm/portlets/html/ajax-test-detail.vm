@@ -36,6 +36,7 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.CreateDate)
 
 #ALtdcaption($l10n.COMMON_UPDATE_DATE)
+#ALtditem($!result.Detail.UpdateDate)
 
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
