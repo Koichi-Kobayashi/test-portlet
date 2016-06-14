@@ -52,5 +52,11 @@ $!result.Detail.TestName
 #ALbuttonfooter()
 #ALformfooter()
 #ALdialogfooter()
-#ALtdcaption($l10n.Test_URL)
-#ALtditem($!result.Detail.URL)
+#ALtdcaption($l10n.TEST_URL)
+#ALtditem($!result.Detail.Url)
+#ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL)
+#ALtditemheader()
+<a href="$result.Detail.Url">
+	<img title="$result.Detail.Url"
+	src="http://hacknote.jp/wp-content/plugins/lazy-load/images/1x1.trans.gif"       data-lazy-src="http://capture.heartrails.com/free/1429681233221?$result.Detail.Url"  alt="$result.Detail.Url" width="200" height="300" /><noscript><img title="$result.Detail.Url" src="http://capture.heartrails.com/free/1429681233221?$result.Detail.Url"  alt="$result.Detail.Url" width="200" height="300" /></noscript></a>
++#ALtditemfooter()

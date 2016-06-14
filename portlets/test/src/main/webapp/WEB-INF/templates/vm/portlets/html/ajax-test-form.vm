@@ -63,5 +63,5 @@
 <input type="hidden" id="testUser$!portlet.ID" name="testUser$!portlet.ID" value="$!result.userId.value" />
 #ALformfooter()
 #ALdialogfooter()
-#ALtdcaption($!result.getFieldName("URL"))
-#ALtditem("ALtextfieldw100('URL'$!result.URL 50 'active')")
+#ALtdcaption($!result.getFieldName("url"))
+#ALtditem("#ALtextfieldw100('url' $!result.Url 50 'active')")
