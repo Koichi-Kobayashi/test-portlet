@@ -28,7 +28,8 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
-import java.net.URI;
+import java.net.MalformedURLException;
+import java.net.URL;
 /**
  * TestのResultDataです。 <BR>
  *
@@ -110,10 +111,10 @@ public class TestResultData implements ALData {
 	  return url.getValue();
   }
 
-  public String getUrlDmain() throws Exception{
-      URI u = new URI(url.getValue());
-      return u.getScheme()+"://"+u.getHost();
-}
+  public String getDomain(){
+      String domain = url.toString().replaceAll("(https?://+[^:/]+).*", "$1");
+      return domain;
+  }
 
   /**
    * @param i

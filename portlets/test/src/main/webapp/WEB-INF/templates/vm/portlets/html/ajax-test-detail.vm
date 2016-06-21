@@ -34,9 +34,9 @@ $!result.Detail.TestName
 #ALtdcaption($l10n.COMMON_UPDATE_DATE)
 #ALtditem($!result.Detail.UpdateDate)
 #ALtdcaption($l10n.TEST_URL)
-#ALtdcellheaderAtt('class="auiMTCaption"')
+#ALtdcellheader()
 <div>
-<a href="$!result.Detail.Url">$!result.Detail.Url</a>
+<a href="$!result.Detail.Url">$!result.Detail.Domain</a>
 </div>
 #ALtdcellfooter()
 #ALtdcaption($l10n.TODO_MEMO)
