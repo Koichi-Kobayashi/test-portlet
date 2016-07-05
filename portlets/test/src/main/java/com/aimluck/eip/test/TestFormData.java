@@ -182,10 +182,10 @@ public class TestFormData extends ALAbstractFormData {
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
 
-    
+
     // URL
     url = new ALStringField();
-    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
     url.setTrim(false);
 
   }
@@ -202,6 +202,9 @@ public class TestFormData extends ALAbstractFormData {
     test_name.limitMaxLength(50);
     // メモの文字数制限
     note.limitMaxLength(1000);
+    // URLを半角英数記号に制限
+    url.setCharacterType(ALStringField.TYPE_ASCII);
+    
 
     // 担当者ID必須項目
     user_id.setNotNull(true);
@@ -256,6 +259,8 @@ public class TestFormData extends ALAbstractFormData {
       test_name.setValue(test.getTestName());
       // メモ
       note.setValue(test.getNote());
+      // URL
+      url.setValue(test.getUrl());
 
 
       // 担当者
@@ -405,6 +410,8 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
       // メモ
       test.setNote(note.getValue());
+      //URL
+      test.setUrl(url.getValue());
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
       // Test を更新
@@ -461,6 +468,15 @@ public class TestFormData extends ALAbstractFormData {
    */
   public ALStringField getTestName() {
     return test_name;
+  }
+
+  /**
+   * urlを取得します。 <BR>
+   *
+   * @return
+   */
+  public ALStringField getUrl(){
+	  return url;
   }
 
 
