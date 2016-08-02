@@ -89,6 +89,7 @@
   <a href="$!result.Detail.Url">$!result.Detail.Url</a>
 #ALtdcellNowrapfooter()
 </th>
+<th>#ALajaxsort('test_name' $l10n.TODO_URL $result 'TestListScreen')</th>
 
 </tr>
 #foreach ($record in $result.List)
@@ -99,6 +100,16 @@
 <a href="javascript:void(0);" onclick="aipo.common.showDialog('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","TestDetailScreen").addQueryData("entityid",$record.TestId))');">$!record.TestName</a>
 </div>
 #ALtdcellfooter()
+<<<<<<< HEAD
+=======
+
+#ALtdcellheaderAtt('class="auiMTCaption"')
+<div>
+	<a href="$!record.Url">$!record.Url</a>
+</div>
+#ALtdcellfooter()
+
+>>>>>>> branch 'kisyaman' of https://github.com/aipocom/test-portlet.git
 </tr>
 
 #end

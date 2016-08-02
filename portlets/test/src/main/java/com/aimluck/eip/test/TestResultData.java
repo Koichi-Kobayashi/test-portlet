@@ -145,6 +145,7 @@ public class TestResultData implements ALData {
     user_url.setValue(string);
   }
 
+
   public String getDomain(){
 	  String domain = user_url.toString().replaceAll("https?://([^:/]+).*", "$1");
 	  return domain;
