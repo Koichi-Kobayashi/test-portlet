@@ -103,6 +103,9 @@ public class TestFormData extends ALAbstractFormData {
   /** 他人のTest編集権限を持つかどうか */
   private boolean hasAclInsertTestOther;
 
+  /** url **/
+  private ALStringField url;
+
   /**
    *
    * @param action
@@ -179,6 +182,12 @@ public class TestFormData extends ALAbstractFormData {
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
 
+
+    // url
+    url = new ALStringField();
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
+    url.setTrim(false);
+
   }
 
 
@@ -252,6 +261,9 @@ public class TestFormData extends ALAbstractFormData {
       // 担当者
       user_id.setValue(test.getTurbineUser().getUserId());
 
+      // url
+      url.setValue(test.getUrl());
+
     } catch (Exception ex) {
       logger.error("test", ex);
       return false;
@@ -284,6 +296,10 @@ public class TestFormData extends ALAbstractFormData {
 
       // Testを削除
       Database.delete(test);
+
+      // url
+      test.setUrl(url.getValue());
+
       Database.commit();
 
       TimelineUtils.deleteTimelineActivity(rundata, context, "test", test
@@ -400,6 +416,8 @@ public class TestFormData extends ALAbstractFormData {
       test.setUpdateDate(Calendar.getInstance().getTime());
       // Test を更新
       Database.commit();
+      //URL
+      test.setUrl(url.getValue());
 
 
       // イベントログに保存
@@ -453,7 +471,14 @@ public class TestFormData extends ALAbstractFormData {
   public ALStringField getTestName() {
     return test_name;
   }
-
+  /**
+   * URLを取得します。 <BR>
+   *
+   * @return
+   */
+  public ALStringField getUrl(){
+    return url;
+  }
 
   /**
    * アクセス権限チェック用メソッド。<br />

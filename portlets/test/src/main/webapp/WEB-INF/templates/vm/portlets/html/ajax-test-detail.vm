@@ -52,3 +52,6 @@ $!result.Detail.TestName
 #ALbuttonfooter()
 #ALformfooter()
 #ALdialogfooter()
+Altdcaption($110n.TODO_SETFIELDNAME_URL)
+ALtditem($!result.detail.url)
+
