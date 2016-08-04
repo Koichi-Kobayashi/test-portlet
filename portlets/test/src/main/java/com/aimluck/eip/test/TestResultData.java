@@ -27,6 +27,7 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
+import com.sun.org.apache.xerces.internal.util.URI;
 
 /**
  * TestのResultDataです。 <BR>
@@ -45,6 +46,8 @@ public class TestResultData implements ALData {
   /** メモ */
   private ALStringField note;
 
+  /** URL*/
+  private ALStringField url;
 
   /** 登録日 */
   private ALStringField create_date;
@@ -81,6 +84,8 @@ public class TestResultData implements ALData {
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     is_self_test = false;
+    url = new ALStringField();
+    url.setTrim(false);
   }
 
   /**
@@ -138,6 +143,22 @@ public class TestResultData implements ALData {
   public ALDateTimeField getUpdateDate() {
     return ALEipUtils.getFormattedTime(update_date);
   }
+  /**
+   * @return
+    */
+  public String getUrl(){
+	  return ALEipUtils.getMessageList(url.getValue());
+  }
+  /**
+   * @param string
+   */
+  public void setUrl(String string){
+	  url.setValue(string);
+  }
+
+public String getUrl2() {
+      return url.getValue();
+  }
 
   /**
    * @param string
@@ -192,5 +213,6 @@ public class TestResultData implements ALData {
    */
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
-  }
+
+}
 }

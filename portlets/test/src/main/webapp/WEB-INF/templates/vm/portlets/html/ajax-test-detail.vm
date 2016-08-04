@@ -37,6 +37,11 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.Note)
 #ALtablefooter()
 #ALbuttonheader()
+
+#ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
+#ALtditem($!result.Detail.Url)
+#ALtdcaption($l10n.TODO_SETFIELDNAME_THUMNAIL)
+<a href = "$!result.Detail.Url2"><img title="$!result.Detail.Url2" src="http://capture.heartrails.com/free?$!result.Detail.Url2" alt="$!result.Detail.Url2" width="200" height="300" /><a>#ALtdcellfooter()
 #if($result.Detail.isSelfTest())
 #ALajaxbuttonEditCallback("$!jslink.getPortletById($!portlet.ID).addQueryData('template','TestFormScreen').addQueryData('entityid',$entityid)" "$!portlet.ID" "aipo.todo.onLoadTodoDialog")
 #ALajaxbuttonDelete("$!jslink.getPortletById($!portlet.ID).addQueryData('template','TestFormJSONScreen').addQueryData('entityid',$entityid).addQueryData('mode', 'delete')" "$indicator_id" "$!portlet.ID" "aipo.todo.onReceiveMessage")
