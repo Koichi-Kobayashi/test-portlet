@@ -202,10 +202,9 @@ public class TestFormData extends ALAbstractFormData {
     // メモの文字数制限
     note.limitMaxLength(1000);
     // URL 必須項目、文字数制限、入力制限
-    url.setNotNull(true);
-    url.limitMaxLength(1000);//1000文字に制限
-      url.setCharacterType(ALStringField.TYPE_ASCII);//半角英数記号に制限
 
+    url.limitMaxLength(1000);//1000文字に制限
+    url.setCharacterType(ALStringField.TYPE_ASCII);//半角英数記号に制限
     // 担当者ID必須項目
     user_id.setNotNull(true);
   }
@@ -232,8 +231,7 @@ public class TestFormData extends ALAbstractFormData {
     test_name.validate(msgList);
     // メモ
     note.validate(msgList);
-    //URL
-    url.validate(msgList);
+
 
     return (msgList.size() == 0);
 

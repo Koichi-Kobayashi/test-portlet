@@ -28,7 +28,6 @@ import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
 import com.sun.org.apache.xerces.internal.util.URI;
-
 /**
  * TestのResultDataです。 <BR>
  *
@@ -155,10 +154,14 @@ public class TestResultData implements ALData {
   public void setUrl(String string){
 	  url.setValue(string);
   }
+  public String getUrlThum(){
+	  return url.getValue();
+  }
 
-public String getUrl2() {
+public String getUrl2() {//返り値がそのままになる？
       return url.getValue();
   }
+
 
   /**
    * @param string
@@ -215,4 +218,8 @@ public String getUrl2() {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
 
 }
+  public String getUrlDomain() throws Exception{
+	  URI u = new URI(url.getValue());
+	  return u.getScheme()+"://"+u.getHost();
+  }
 }
