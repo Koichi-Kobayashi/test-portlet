@@ -93,7 +93,7 @@
 <colgroup style="width:6em;" />
 <tbody>
 #foreach ($record in $result.List)
-<tr>
+#ALtdcell($!record.Url)<tr>
 #ALtdcellheader()
 <div>
 <a href="javascript:void(0);" onclick="aipo.common.showDialog('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","TestDetailScreen").addQueryData("entityid",$record.TestId))');">$!record.TestName</a>
@@ -121,7 +121,7 @@
 </div>
 #ALtdcellfooter()
 #ALtdcellAtt("<div>$!record.UpdateDate</div>" 'class="right" nowrap="nowrap"')
-</tr>
+#ALtdcell($!record.Url)</tr>
 #end
 </tbody>
 </table>

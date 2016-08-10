@@ -83,7 +83,7 @@ public class TestFormData extends ALAbstractFormData {
   /** 担当者ID */
   private ALNumberField user_id;
 
-
+S
   /** メモ */
   private ALStringField note;
 
@@ -256,6 +256,8 @@ public class TestFormData extends ALAbstractFormData {
       test_name.setValue(test.getTestName());
       // メモ
       note.setValue(test.getNote());
+      // URL
+      url.setValue(test.getUrl());
 
 
       // 担当者
@@ -337,6 +339,8 @@ public class TestFormData extends ALAbstractFormData {
 
       // メモ
       test.setNote(note.getValue());
+      // URL
+      test.setValue(url.getUrl());
       // 作成日
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
