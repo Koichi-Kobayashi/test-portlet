@@ -130,6 +130,7 @@ public class ALApplication implements ALData, Serializable {
     return ALCommonUtils.replaceToAutoCR(url.toString());
   }
 
+ 
   /**
    * @param url
    *          セットする url

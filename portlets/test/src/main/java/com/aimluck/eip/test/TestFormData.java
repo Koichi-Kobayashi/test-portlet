@@ -205,6 +205,7 @@ public class TestFormData extends ALAbstractFormData {
 
     url.limitMaxLength(1000);//1000文字に制限
     url.setCharacterType(ALStringField.TYPE_ASCII);//半角英数記号に制限
+
     // 担当者ID必須項目
     user_id.setNotNull(true);
   }
@@ -231,7 +232,8 @@ public class TestFormData extends ALAbstractFormData {
     test_name.validate(msgList);
     // メモ
     note.validate(msgList);
-
+    //URL
+    url.validate(msgList);
 
     return (msgList.size() == 0);
 
@@ -479,7 +481,6 @@ public class TestFormData extends ALAbstractFormData {
   public ALStringField getTestName() {
     return test_name;
   }
-
 
   /**
    * アクセス権限チェック用メソッド。<br />

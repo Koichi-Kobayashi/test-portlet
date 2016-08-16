@@ -28,6 +28,8 @@ import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
 import com.sun.org.apache.xerces.internal.util.URI;
+import java.net.URL;
+import java.net.MalformedURLException;
 /**
  * TestのResultDataです。 <BR>
  *
@@ -161,7 +163,10 @@ public class TestResultData implements ALData {
 public String getUrl2() {//返り値がそのままになる？
       return url.getValue();
   }
-
+public String getUrlDmain() throws Exception{
+    URI u = new URI(url.getValue());
+    return u.getScheme()+"://"+u.getHost();
+}
 
   /**
    * @param string
@@ -218,8 +223,4 @@ public String getUrl2() {//返り値がそのままになる？
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
 
 }
-  public String getUrlDomain() throws Exception{
-	  URI u = new URI(url.getValue());
-	  return u.getScheme()+"://"+u.getHost();
-  }
 }
