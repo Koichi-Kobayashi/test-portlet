@@ -45,6 +45,16 @@ public class TestResultData implements ALData {
   private ALStringField url;
 
 
+ /**
+  * @param string   */
+public void setUrl(String string) {
+url.setValue(string);
+}
+/**
+* @return
+*/
+
+
   /** メモ */
   private ALStringField note;
 
