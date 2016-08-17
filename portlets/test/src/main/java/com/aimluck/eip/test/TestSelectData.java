@@ -426,8 +426,8 @@ public class TestSelectData extends
       rd.setTestName(record.getTestName());
       rd.setTestId(record.getTestId().longValue());
       rd.setNote(record.getNote());
-      rd.setCreateDate("ALDateUtil");
-      rd.format(record.identifer("getCreate","AssignmentOperatorExpression"));
+      rd.setCreateDate(ALDateUtil
+    	        .format(record.getCreateDate(), "AssignmentOperatorExpression"));
       rd.setUpdateDate(record.getUpdateDate());
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);

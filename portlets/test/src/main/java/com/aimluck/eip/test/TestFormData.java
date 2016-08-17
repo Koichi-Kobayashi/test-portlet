@@ -88,6 +88,10 @@ public class TestFormData extends ALAbstractFormData {
   private ALStringField note;
 
 
+  /** URL */
+  private ALStringField url;
+
+
   /** 現在の年 */
   private int currentYear;
 
@@ -179,6 +183,11 @@ public class TestFormData extends ALAbstractFormData {
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
 
+    // URL
+    url = new ALStringField();
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
+    url.setTrim(false);
+
   }
 
 
@@ -247,8 +256,8 @@ public class TestFormData extends ALAbstractFormData {
       test_name.setValue(test.getTestName());
       // メモ
       note.setValue(test.getNote());
-
-
+      // URL
+      url.setValue(test.getUrl());
       // 担当者
       user_id.setValue(test.getTurbineUser().getUserId());
 
@@ -397,6 +406,8 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
       // メモ
       test.setNote(note.getValue());
+      //URL
+      test.setUrl(url.getValue());
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
       // Test を更新
