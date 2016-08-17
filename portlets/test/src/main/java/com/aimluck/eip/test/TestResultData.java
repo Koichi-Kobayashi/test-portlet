@@ -139,9 +139,7 @@ url.setValue(string);
   public void setNote(String string) {
     note.setValue(string);
   }
-  public String getUrlThum() {
-      return url.getValue();
-}
+ 
 
   /**
    * @return

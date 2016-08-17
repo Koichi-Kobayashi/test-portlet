@@ -27,6 +27,8 @@
 #ALtableheaderWide()
 #ALtdcaption("タイトル")
 #ALtditemheader()
+#ALtdcaption($l10n.TODO_SETFIELDNAME_URL)
+#ALtditem($!result.Detail.Url)
 $!result.Detail.TestName
 #ALtditemfooter()
 #ALtdcaption($l10n.COMMON_CREATE_DATE)

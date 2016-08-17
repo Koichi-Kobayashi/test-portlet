@@ -334,7 +334,8 @@ public class TestFormData extends ALAbstractFormData {
       // ユーザーID
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
-
+      // URL
+      test.setUrl(url.getValue());
       // メモ
       test.setNote(note.getValue());
       // 作成日
