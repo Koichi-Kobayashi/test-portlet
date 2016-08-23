@@ -154,6 +154,8 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 文字の種類を設定します。
+   * url.setCharacterType(ALStringField.TYPE_ALPHABET_NUMBER);
+   *
    *
    * @param i
    */
@@ -201,7 +203,6 @@ public class ALStringField extends ALAbstractField {
   }
 
   /**
-   url.setCharacterType(ALStringField.TYPE_ALPHABET_NUMBER);
    * 文字列の長さ制限（最小値）を設定します。
    *
    * @param min
