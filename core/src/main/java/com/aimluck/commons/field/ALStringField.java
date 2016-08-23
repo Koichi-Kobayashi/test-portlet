@@ -154,7 +154,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 文字の種類を設定します。
-   *
+   * url.setCharacterType(ALStringField.TYPE_ALPHABET_NUMBER);
    *
    *
    * @param i
