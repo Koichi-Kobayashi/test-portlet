@@ -42,18 +42,14 @@ public class TestResultData implements ALData {
   private ALStringField test_name;
 
   /** URL */
-  private ALStringField url;
+  private ALStringField url;{
 
 
- /**
-  * @param string   */
-public void setUrl(String string) {
-url.setValue(string);
-}
-/**
-* @return
-*/
-
+    url = new ALStringField();
+    url.setTrim(false);}
+    public String getUrl() {
+    return ALEipUtils.getMessageList(url.getValue());
+  }
 
   /** メモ */
   private ALStringField note;
@@ -98,6 +94,15 @@ url.setValue(string);
     url.setTrim(false);
   }
 
+
+/**
+ +   * @return
+ +   */
+/**
+ * @param string   */
+public void setUrl(String string) {
+url.setValue(string);
+}
   /**
    * @return
    */
@@ -139,7 +144,7 @@ url.setValue(string);
   public void setNote(String string) {
     note.setValue(string);
   }
- 
+
 
   /**
    * @return

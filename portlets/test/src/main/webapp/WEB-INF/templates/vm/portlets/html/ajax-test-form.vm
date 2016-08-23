@@ -48,8 +48,8 @@
 <input type="hidden" name="user_id" value="$!result.loginUserId"/>
 #end
 #ALtableheaderWide()
-#ALtdcaption("#ALrequired($!result.getFieldName('url'))")
-#ALtditem("#ALtextfieldw100('url' $!result.Url 50 'active')")
+#A#ALtdcaption("#ALrequired($!result.getFieldName('url'))")
+#A#ALtditem("#ALtextfieldw100('url' 50 'active')")
 #ALtdcaption($!result.getFieldName("note"))
 #ALtditemheader()
 #ALtextarea('note' $!result.Note 10 40)
