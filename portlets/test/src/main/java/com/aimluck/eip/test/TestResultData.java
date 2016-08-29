@@ -148,6 +148,21 @@ public class TestResultData implements ALData {
   /**
    * @return
    */
+  public String getDomain() {
+	  String str = url.getValue();
+	  int b, e;
+	  if ((b = str.indexOf("//")) != -1) {
+		  b += 2;
+		  if ((e = str.indexOf("/", b)) != -1) {
+			str = str.substring(0, e);
+		  }
+	  }
+    return ALEipUtils.getMessageList(str);
+  }
+
+  /**
+   * @return
+   */
   public ALStringField getCreateDate() {
     return create_date;
   }
