@@ -19,6 +19,8 @@
 
 package com.aimluck.eip.test;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 
 import com.aimluck.commons.field.ALDateTimeField;
@@ -148,7 +150,7 @@ public class TestResultData implements ALData {
   /**
    * @return
    */
-  public String getDomain() {
+/*  public String getDomain() {
 	  String str = url.getValue();
 	  int b, e;
 	  if ((b = str.indexOf("//")) != -1) {
@@ -158,6 +160,17 @@ public class TestResultData implements ALData {
 		  }
 	  }
     return ALEipUtils.getMessageList(str);
+  }*/
+
+  public String getDomain() {
+	  URI u = null;
+	  try {
+		u = new URI(url.getValue());
+	} catch (URISyntaxException e1) {
+		// TODO 自動生成された catch ブロック
+		e1.printStackTrace();
+	}
+    return ALEipUtils.getMessageList(u.getScheme() + "://" + u.getHost());
   }
 
   /**
