@@ -170,7 +170,11 @@ public class TestResultData implements ALData {
 		// TODO 自動生成された catch ブロック
 		e1.printStackTrace();
 	}
-    return ALEipUtils.getMessageList(u.getScheme() + "://" + u.getHost());
+	  String scheme = u.getScheme(), host = u.getHost();
+	  if (scheme != null && host != null) {
+		  return ALEipUtils.getMessageList(u.getScheme() + "://" + u.getHost());
+	  }
+    return url.getValue();
   }
 
   /**
