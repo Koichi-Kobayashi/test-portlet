@@ -37,6 +37,8 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.Note)
 #ALtdcaption($l10n.TODO_URL)
 #ALtditem($!result.Detail.getDomain())
+#ALtdcaption($l10n.TODO_TN)
+#ALtditem($!result.Detail.getThumbnail())
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
