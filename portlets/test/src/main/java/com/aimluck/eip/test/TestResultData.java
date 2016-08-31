@@ -180,12 +180,19 @@ public class TestResultData implements ALData {
   /**
    * @return
    */
-  public String getThumbnail() {
+  /*public String getThumbnail() {
 	  String str = "<a href=\"" + url.getValue() + "\" target=\"_blank\">"
 	  		+ "<img src=\"http://capture.heartrails.com/free?" + url.getValue() + "\""
 	  		+ " alt=\"" + url.getValue() + "\""
 	  		+ "width=\"160\" height=\"120\" /></a>";
 	  return str;
+  }*/
+
+  /**
+   * @return
+   */
+  public String get() {
+	  return url.getValue();
   }
 
   /**
