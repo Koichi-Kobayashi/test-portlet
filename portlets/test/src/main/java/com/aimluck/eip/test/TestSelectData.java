@@ -367,6 +367,9 @@ public class TestSelectData extends
         getStrLength()));
       rd.setUpdateDate(record.getUpdateDate());
 
+      //URL
+      rd.setUrl(record.getUrl());
+
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);
       return rd;
@@ -432,6 +435,10 @@ public class TestSelectData extends
       rd.setUpdateDate(record.getUpdateDate());
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);
+
+      //URL
+      rd.setUrl(record.getUrl());
+
       return rd;
     } catch (Exception ex) {
       logger.error("test", ex);

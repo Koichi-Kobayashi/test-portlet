@@ -87,6 +87,8 @@ public class TestFormData extends ALAbstractFormData {
   /** メモ */
   private ALStringField note;
 
+  /** URL */
+  private ALStringField url;
 
   /** 現在の年 */
   private int currentYear;
@@ -179,6 +181,10 @@ public class TestFormData extends ALAbstractFormData {
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
 
+    // URLフォームの追加
+    url = new ALStringField();
+    url.setFieldName(ALLocalizationUtils.getl10n("TEST_URL"));
+    url.setTrim(false);
   }
 
 
@@ -196,6 +202,11 @@ public class TestFormData extends ALAbstractFormData {
 
     // 担当者ID必須項目
     user_id.setNotNull(true);
+
+    //URL文字制限
+    url.limitMaxLength(1000);
+    //URL半角英数記号制限
+    url.setCharacterType(ALStringField.TYPE_ASCII);
   }
 
   /**
@@ -220,6 +231,8 @@ public class TestFormData extends ALAbstractFormData {
     test_name.validate(msgList);
     // メモ
     note.validate(msgList);
+    //URL
+    url.validate(msgList);
 
     return (msgList.size() == 0);
 
@@ -247,6 +260,9 @@ public class TestFormData extends ALAbstractFormData {
       test_name.setValue(test.getTestName());
       // メモ
       note.setValue(test.getNote());
+
+      //URL
+      url.setValue(test.getUrl());
 
 
       // 担当者
@@ -326,6 +342,9 @@ public class TestFormData extends ALAbstractFormData {
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
 
+      //URL
+      test.setUrl(url.getValue());
+
       // メモ
       test.setNote(note.getValue());
       // 作成日
@@ -396,6 +415,10 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
       // メモ
       test.setNote(note.getValue());
+
+      //URLの追加
+      test.setUrl(url.getValue());
+
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
       // Test を更新
@@ -454,6 +477,14 @@ public class TestFormData extends ALAbstractFormData {
     return test_name;
   }
 
+  /**
+   * URLを取得します（追加部分）<BR>
+   *
+   * @return
+   */
+  public ALStringField getUrl(){
+	  return url;
+  }
 
   /**
    * アクセス権限チェック用メソッド。<br />
