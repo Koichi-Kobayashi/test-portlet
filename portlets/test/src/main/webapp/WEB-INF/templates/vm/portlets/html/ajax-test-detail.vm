@@ -36,7 +36,18 @@ $!result.Detail.TestName
 
 ##URL欄追加
 #ALtdcaption($l10n.TEST_URL)
-#ALtditem($!result.Detail.Url)
+#ALtditem($!result.Detail.UrlDomain)
+## #ALtditem($!result.Detail.Url)
+
+##サムネイル追加
+#ALtdcaption($l10n.TEST_NAIL)
+#ALtditemheader()
+<a href="$!result.Detail.Url"><img title="$!result.Detail.Url" src="http://capture.heartrails.com/free?$!result.Detail.Url" alt="$!result.Detail.Url" width="200" height="300"></a>
+## #ALtditemfooter()
+## #ALtditemheader()
+<a href="$!result.Detail.Url">$!result.Detail.Url</a>
+#ALtditemfooter()
+
 
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)

@@ -28,6 +28,10 @@ import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
 
+//ドメインのためURLクラスをインポート
+import java.net.URL;
+import java.net.MalformedURLException;
+
 /**
  * TestのResultDataです。 <BR>
  *
@@ -121,8 +125,12 @@ public class TestResultData implements ALData {
   /**
    * @return
    */
+//  public String getUrl(){
+//	  return ALEipUtils.getMessageList(url.getValue());
+//  }
+
   public String getUrl(){
-	  return ALEipUtils.getMessageList(url.getValue());
+	  return url.getValue();
   }
 
   /**
@@ -146,6 +154,13 @@ public class TestResultData implements ALData {
   public void setNote(String string) {
     note.setValue(string);
   }
+
+  //ドメイン生成
+  public String getUrlDomain() throws MalformedURLException{
+	  URL u=new URL(url.getValue());
+	  return u.getProtocol()+"://"+u.getHost();
+  }
+
 
   /**
    * @return
