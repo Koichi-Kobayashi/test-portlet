@@ -79,6 +79,9 @@ public class TestFormData extends ALAbstractFormData {
   /** タイトル */
   private ALStringField test_name;
 
+  /** URL */
+  private ALStringField url;
+
 
   /** 担当者ID */
   private ALNumberField user_id;
@@ -174,6 +177,9 @@ public class TestFormData extends ALAbstractFormData {
     user_id.setFieldName(ALLocalizationUtils
       .getl10n("TODO_SETFIELDNAME_PREPARED"));
 
+    //URL
+    url = new ALStringField();
+    url.setFieldName("URL");
     // メモ
     note = new ALStringField();
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
