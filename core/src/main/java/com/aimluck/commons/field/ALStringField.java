@@ -30,7 +30,7 @@ import com.aimluck.eip.util.ALLocalizationUtils;
 
 /**
  * 入力フィールドを表すクラス（文字列用）です。 <br />
- * 
+ *
  */
 public class ALStringField extends ALAbstractField {
 
@@ -48,6 +48,9 @@ public class ALStringField extends ALAbstractField {
   /** 文字の種類（半角数字） */
   public static final int TYPE_NUMBER = 2;
 
+  /** 文字の種類（半角記号） */
+  public static final int TYPE_SYMBOL = 16;
+
   /** 文字の種類（半角英数字） */
   public static final int TYPE_ALPHABET_NUMBER = TYPE_ALPHABET | TYPE_NUMBER;
 
@@ -61,8 +64,6 @@ public class ALStringField extends ALAbstractField {
   /** 文字の種類（全角文字） */
   public static final int TYPE_MULTIBYTE = 8;
 
-  /** 文字の種類（半角記号） */
-  public static final int TYPE_SYMBOL = 16;
 
   /** 文字の種類（半角英数字記号） */
   public static final int TYPE_ASCII = TYPE_ALPHABET_NUMBER | TYPE_SYMBOL;
@@ -89,7 +90,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * コンストラクタ
-   * 
+   *
    */
   public ALStringField() {
     this(null);
@@ -97,7 +98,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * コンストラクタ
-   * 
+   *
    * @param str
    */
   public ALStringField(String str) {
@@ -106,7 +107,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 文字列の種類を取得します。
-   * 
+   *
    * @return
    */
   public int getCharacterType() {
@@ -115,7 +116,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 文字列の長さ（最小値）を取得します。
-   * 
+   *
    * @return
    */
   public int getMinLength() {
@@ -124,7 +125,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 文字列の長さ（最大値）を取得します。
-   * 
+   *
    * @return
    */
   public int getMaxLength() {
@@ -133,7 +134,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 入力フィールド値を取得します。
-   * 
+   *
    * @return
    */
   public String getValue() {
@@ -154,7 +155,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 文字の種類を設定します。
-   * 
+   *
    * @param i
    */
   public void setCharacterType(int i) {
@@ -163,7 +164,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 文字列の長さ制限の有無を判定します。
-   * 
+   *
    * @return
    */
   public boolean isLimitLength() {
@@ -172,7 +173,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 入力フィールド値を設定します。
-   * 
+   *
    * @param str
    */
   @Override
@@ -186,7 +187,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 文字列の長さ制限（最小値と最大値）を設定します。
-   * 
+   *
    * @param min
    * @param max
    */
@@ -202,7 +203,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 文字列の長さ制限（最小値）を設定します。
-   * 
+   *
    * @param min
    */
   public void limitMinLength(int min) {
@@ -216,7 +217,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 文字列の長さ制限（最大値）を設定します。
-   * 
+   *
    * @param max
    */
   public void limitMaxLength(int max) {
@@ -230,7 +231,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 入力フィールド値の左右の空白を取り除くかのフラグを設定します。
-   * 
+   *
    * @param bool
    */
   public void setTrim(boolean bool) {
@@ -239,7 +240,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 入力フィールド値の左右の空白を取り除くかどうかを判定します。
-   * 
+   *
    * @return
    */
   public boolean isTrim() {
@@ -248,7 +249,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 入力フィールド値を検証します。
-   * 
+   *
    * @param msgList
    * @return
    */
@@ -310,7 +311,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 文字の種類が正しいかを判定します。
-   * 
+   *
    * @return
    */
   protected boolean isValidCharacterType() {
@@ -334,7 +335,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 指定したchar型文字の種類を取得します。
-   * 
+   *
    * @param ch
    * @return
    */
@@ -369,7 +370,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 入力フィールド値の文字列の長さを取得します。
-   * 
+   *
    * @return
    */
   protected int valueByteLength() {
@@ -389,7 +390,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 入力フィールド値がNullではないかどうかを判定します。
-   * 
+   *
    * @return
    */
   protected boolean isNotNullValue() {
@@ -407,7 +408,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 文字の種類の表示名を取得します。
-   * 
+   *
    * @return
    */
   protected String getCharTypeByName() {
@@ -437,7 +438,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 入力フィールド値の左右の全角スペースを削除します。
-   * 
+   *
    * @param str
    * @return
    */
@@ -457,7 +458,7 @@ public class ALStringField extends ALAbstractField {
 
   /**
    * 入力フィールド値の文字列表現を取得します。
-   * 
+   *
    */
   @Override
   public String toString() {

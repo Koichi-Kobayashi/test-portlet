@@ -180,6 +180,7 @@ public class TestFormData extends ALAbstractFormData {
     //URL
     url = new ALStringField();
     url.setFieldName("URL");
+    url.setTrim(false);
     // メモ
     note = new ALStringField();
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
@@ -197,6 +198,8 @@ public class TestFormData extends ALAbstractFormData {
     test_name.setNotNull(true);
     // タイトルの文字数制限
     test_name.limitMaxLength(50);
+    //URLの半角英数字のみの制限
+    url.setCharacterType(ALStringField.TYPE_ASCII);
     // メモの文字数制限
     note.limitMaxLength(1000);
 
@@ -224,6 +227,8 @@ public class TestFormData extends ALAbstractFormData {
     boolean isStartDate = false;
     // タイトル
     test_name.validate(msgList);
+    //URL
+    url.validate(msgList);
     // メモ
     note.validate(msgList);
 
@@ -251,6 +256,9 @@ public class TestFormData extends ALAbstractFormData {
       }
       // タイトル
       test_name.setValue(test.getTestName());
+
+      //URL
+      url.setValue(test.getUrl());
       // メモ
       note.setValue(test.getNote());
 
@@ -332,6 +340,9 @@ public class TestFormData extends ALAbstractFormData {
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
 
+      //URL
+      test.setUrl(url.getValue());
+
       // メモ
       test.setNote(note.getValue());
       // 作成日
@@ -400,6 +411,9 @@ public class TestFormData extends ALAbstractFormData {
       // ユーザーID
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
+
+      //URL
+      test.setUrl(url.getValue());
       // メモ
       test.setNote(note.getValue());
       // 更新日
@@ -459,6 +473,11 @@ public class TestFormData extends ALAbstractFormData {
   public ALStringField getTestName() {
     return test_name;
   }
+
+  //URLの取得
+  public ALStringField getUrl() {
+	    return url;
+	  }
 
 
   /**
