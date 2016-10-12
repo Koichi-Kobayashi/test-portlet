@@ -19,6 +19,8 @@
 
 package com.aimluck.eip.test;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 
 import com.aimluck.commons.field.ALDateTimeField;
@@ -119,10 +121,19 @@ public class TestResultData implements ALData {
   /**
    * @return
    */
-
+//リンク付きURLを返す
   public String getUrl() {
-	    return ALEipUtils.getMessageList(url.getValue());
+	    return ALEipUtils.getMessageList(url.getValue()); //ここでリンク付きにする
 	  }
+//プレーンなURLを返す
+  public String getUrlplain(){
+	  return url.getValue();
+  }
+//URLからドメインを抽出して返す
+  public String getDomain() throws MalformedURLException{
+	  URL domain = new URL(url.getValue());
+	  return domain.getProtocol() + "://" +domain.getHost();
+  }
 
   public String getUrltext(){
 	  return url.getValue();

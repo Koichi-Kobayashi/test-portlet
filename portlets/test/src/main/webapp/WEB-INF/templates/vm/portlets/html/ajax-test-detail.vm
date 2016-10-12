@@ -34,7 +34,11 @@ $!result.Detail.TestName
 #ALtdcaption($l10n.COMMON_UPDATE_DATE)
 #ALtditem($!result.Detail.UpdateDate)
 #ALtdcaption($l10n.URL)
-#ALtditem($!result.Detail.Url)
+#ALtditemheader()
+<div>
+<a href="$!result.Detail.Urlplain">$!result.Detail.Domain</a>
+</div>
+#ALtditemfooter()
 #ALtdcaption($l10n.PIC)
 #ALtditemheader()
 <img src="http://capture.heartrails.com/200×200?$!result.Detail.Urltext">
