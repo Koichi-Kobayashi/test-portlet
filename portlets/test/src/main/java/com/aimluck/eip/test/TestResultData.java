@@ -81,7 +81,7 @@ public class TestResultData implements ALData {
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     is_self_test = false;
-    //初期化
+    //初期化確認
   }
 
   /**
