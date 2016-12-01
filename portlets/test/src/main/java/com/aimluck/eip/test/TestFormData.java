@@ -103,6 +103,9 @@ public class TestFormData extends ALAbstractFormData {
   /** 他人のTest編集権限を持つかどうか */
   private boolean hasAclInsertTestOther;
 
+  /*url */
+  private ALStringField url;
+
   /**
    *
    * @param action
@@ -179,6 +182,11 @@ public class TestFormData extends ALAbstractFormData {
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
 
+    //url
+    url= new ALStringField();
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
+    url.setTrim(false);
+
   }
 
 
@@ -247,6 +255,9 @@ public class TestFormData extends ALAbstractFormData {
       test_name.setValue(test.getTestName());
       // メモ
       note.setValue(test.getNote());
+
+	//url
+      url.setValue(test.getUrl());
 
 
       // 担当者
@@ -328,6 +339,9 @@ public class TestFormData extends ALAbstractFormData {
 
       // メモ
       test.setNote(note.getValue());
+      //url
+      test.setUrl(url.getValue());
+
       // 作成日
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
@@ -335,6 +349,7 @@ public class TestFormData extends ALAbstractFormData {
 
       // Testを登録
       Database.commit();
+
 
 
       // イベントログに保存
@@ -396,6 +411,8 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
       // メモ
       test.setNote(note.getValue());
+      //url
+      test.setUrl(url.getValue());
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
       // Test を更新
@@ -453,7 +470,14 @@ public class TestFormData extends ALAbstractFormData {
   public ALStringField getTestName() {
     return test_name;
   }
-
+  /**
+  URLを取得します。 <BR>
+  *
+  * @return
+  */
+ public ALStringField getUrl(){
+   return url;
+ }
 
   /**
    * アクセス権限チェック用メソッド。<br />
