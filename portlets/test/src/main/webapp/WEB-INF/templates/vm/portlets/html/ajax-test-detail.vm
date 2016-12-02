@@ -41,6 +41,8 @@ $!result.Detail.TestName
 ##ALtdcaption($l10n.TODO_SETFIELDNAME_THUMBNAIL) サムネイルの欄も作りたい
 <br>
 <a target="_blank" href=$!{result.Detail.UrlOriginal}><img src="http://capture.heartrails.com/free/1440556126970?$!result.Detail.UrlOriginal" alt="$!result.Detail.UrlOriginal" width="200" height="300" /></a>
+##ALtdcaption("") ドメイン部分抜き出しtest
+##ALtdlinkitem($!result.Detail.extractDomain($!result.Detail.Url))  ドメイン部分抜き出しtest
 #ALtdcellNowrapfooter()
 #ALtablefooter()
 #ALbuttonheader()

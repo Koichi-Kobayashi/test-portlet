@@ -28,6 +28,7 @@ import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
 import com.aimluck.eip.util.ALLocalizationUtils;
+import java.net.URI;
 
 /**
  * TestのResultDataです。 <BR>
@@ -214,4 +215,40 @@ public class TestResultData implements ALData {
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
+
+
+public String getUrlDmain() throws Exception{
+    URI u = new URI(url.getValue());
+    return u.getScheme()+"://"+u.getHost();
+}
+ /* public String getUrlDomain() {
+	     Matcher m = Pattern.compile("(https?://[^/]+/)").matcher(url.getValue());
+	     if(m.find()){
+	       return m.group(1);
+	     }else{
+	         return null;
+	     }
+	    }
+*/
+
+/*public String extractDomain(ALStringField u){
+    String domain = "";
+    String url = u.getValue();
+    int len = url.length();
+    int end = 0;
+    int slashCount = 0;
+    for(int i = 0; i<len; i++){
+        if(url.charAt(i)=='/'){
+            slashCount++;
+            if(slashCount == 3){
+                end = i;
+                break;
+            }
+        }
+    }
+    domain = url.substring(0, end);
+    return domain;
+    }*/
+//ドメイン抜き出しtest
+
 }
