@@ -93,6 +93,9 @@
 <div>
 <a href="javascript:void(0);" onclick="aipo.common.showDialog('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","TestDetailScreen").addQueryData("entityid",$record.TestId))');">$!record.TestName</a>
 </div>
+<div>
+<a href="$record.Url">$!record.Url</a>
+</div>
 #ALtdcellfooter()
 
 </tr>

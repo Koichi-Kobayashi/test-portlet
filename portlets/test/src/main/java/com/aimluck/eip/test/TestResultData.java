@@ -81,9 +81,10 @@ public class TestResultData implements ALData {
   public void initField() {
     test_id = new ALNumberField();
     test_name = new ALStringField();
-
     note = new ALStringField();
     note.setTrim(false);
+    url= new ALStringField();//変更箇所
+    url.setTrim(false);//変更箇所
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     is_self_test = false;
@@ -118,6 +119,16 @@ public class TestResultData implements ALData {
   public void setTestName(String string) {
     test_name.setValue(string);
   }
+
+
+ public void setUrl(String string) {
+	   url.setValue(string);
+	  }
+
+  public String getUrl() {
+	   return  (url.getValue());
+	  }
+
 
   /**
    * @return
