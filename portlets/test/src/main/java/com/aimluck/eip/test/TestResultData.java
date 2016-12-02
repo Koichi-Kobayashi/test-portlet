@@ -128,7 +128,9 @@ public class TestResultData implements ALData {
   public String getUrl() {
 	   return  (url.getValue());
 	  }
-
+  public String getUrlOriginal() {
+	        return url.getValue();
+     }
 
   /**
    * @return
