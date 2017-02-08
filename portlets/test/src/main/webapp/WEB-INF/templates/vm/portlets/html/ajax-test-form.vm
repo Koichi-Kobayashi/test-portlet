@@ -55,9 +55,14 @@
 #ALtextarea('note' $!result.Note 10 40)
 #ALtditemfooter()
 #ALtablefooter()
+
+#ALtdcaption($!result.getFieldName("url"))
+#ALtditem("#ALtextfieldw100('url' $!result.Url 50 'active')")
+
 #ALbuttonheader()
 #ALsubmit($event_submit $action_str)#ALajaxbuttonClose()
 #ALbuttonfooter()
+
 <input type="hidden" id="urlUserlist$!portlet.ID" name="urlUserlist$!portlet.ID" value="$screenlink" />
 <input type="hidden" id="loginUser$!portlet.ID" name="loginUser$!portlet.ID" value="$!result.loginUserId" />
 <input type="hidden" id="testUser$!portlet.ID" name="testUser$!portlet.ID" value="$!result.userId.value" />

@@ -44,7 +44,7 @@ import com.aimluck.eip.util.ALLocalizationUtils;
 
 /**
  * フォームデータを管理するための抽象クラスです。 <br />
- * 
+ *
  */
 public abstract class ALAbstractFormData implements ALData {
 
@@ -64,7 +64,7 @@ public abstract class ALAbstractFormData implements ALData {
    * 初期化処理を行います。 <br />
    * <code>doViewForm/doInsert/doUpdate/doDelete</code> 実行時に呼ばれます。 <br />
    * 下位クラスで初期化処理を追記する場合は、このメソッドをオーバーライドしてください。
-   * 
+   *
    * @param action
    * @param rundata
    * @param context
@@ -96,7 +96,7 @@ public abstract class ALAbstractFormData implements ALData {
   /**
    * 指定されたフィールドのフィールド名を取得します。 <br />
    * フィールド名が取得できない場合はNULLを返します。
-   * 
+   *
    * @param argString
    * @return フィールド名
    */
@@ -115,7 +115,7 @@ public abstract class ALAbstractFormData implements ALData {
 
   /**
    * フォームを表示します。
-   * 
+   *
    * @param action
    * @param rundata
    * @param context
@@ -169,7 +169,7 @@ public abstract class ALAbstractFormData implements ALData {
 
   /**
    * データを新規登録します。
-   * 
+   *
    * @param action
    * @param rundata
    * @param context
@@ -237,7 +237,7 @@ public abstract class ALAbstractFormData implements ALData {
 
   /**
    * データを更新します。
-   * 
+   *
    * @param action
    * @param rundata
    * @param context
@@ -306,7 +306,7 @@ public abstract class ALAbstractFormData implements ALData {
 
   /**
    * データを削除します。
-   * 
+   *
    * @param action
    * @param rundata
    * @param context
@@ -356,7 +356,7 @@ public abstract class ALAbstractFormData implements ALData {
 
   /**
    * データに値を設定します。
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -481,14 +481,14 @@ public abstract class ALAbstractFormData implements ALData {
 
   /**
    * 各フィールドに対する制約条件を設定する抽象メソッドです。
-   * 
+   *
    */
   protected abstract void setValidator() throws ALPageNotFoundException,
       ALDBErrorException;
 
   /**
    * フォームに入力されたデータの妥当性検証を行う抽象メソッドです。
-   * 
+   *
    * @param msgList
    *          エラーメッセージのリスト
    */
@@ -497,7 +497,7 @@ public abstract class ALAbstractFormData implements ALData {
 
   /**
    * データを読み込む抽象メソッドです。
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -509,7 +509,7 @@ public abstract class ALAbstractFormData implements ALData {
 
   /**
    * データを新規登録する抽象メソッドです。
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -521,7 +521,7 @@ public abstract class ALAbstractFormData implements ALData {
 
   /**
    * データを更新する抽象メソッドです。
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -533,7 +533,7 @@ public abstract class ALAbstractFormData implements ALData {
 
   /**
    * データを削除する抽象メソッドです。
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -545,7 +545,7 @@ public abstract class ALAbstractFormData implements ALData {
 
   /**
    * セキュリティをチェックします。
-   * 
+   *
    * @return
    */
   protected boolean doCheckSecurity(RunData rundata, Context context) {
@@ -562,7 +562,7 @@ public abstract class ALAbstractFormData implements ALData {
 
   /**
    * アクセス権限をチェックします。
-   * 
+   *
    * @return
    */
   protected boolean doCheckAclPermission(RunData rundata, Context context,
@@ -598,7 +598,7 @@ public abstract class ALAbstractFormData implements ALData {
   /**
    * アクセス権限用メソッド。<br />
    * アクセス権限の有無を返します。
-   * 
+   *
    * @return
    */
   public boolean hasAuthority() {
@@ -608,7 +608,7 @@ public abstract class ALAbstractFormData implements ALData {
   /**
    * アクセス権限チェック用メソッド。<br />
    * アクセス権限の機能名を返します。
-   * 
+   *
    * @return
    */
   public String getAclPortletFeature() {
@@ -616,7 +616,7 @@ public abstract class ALAbstractFormData implements ALData {
   }
 
   /**
-   * 
+   *
    * @return
    */
   public String getMode() {
@@ -624,7 +624,7 @@ public abstract class ALAbstractFormData implements ALData {
   }
 
   /**
-   * 
+   *
    * @param string
    */
   public void setMode(String string) {
