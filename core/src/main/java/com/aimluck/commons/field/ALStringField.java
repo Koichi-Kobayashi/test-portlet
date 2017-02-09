@@ -173,14 +173,7 @@ public class ALStringField extends ALAbstractField {
     return limitLength;
   }
 
-  /**
-   * 半角英数字制限の有無を判定します。
-   *
-   * @return
-   */
-  public boolean isHalfsize(){
-	  return false;
-  }
+
 
   /**
    * 入力フィールド値を設定します。
@@ -314,12 +307,7 @@ public class ALStringField extends ALAbstractField {
             fieldName));
           return false;
         }
-        if(isHalfsize()){
-        	// 半角英数字制限がある場合
 
-
-
-        }
 
       }
     }
