@@ -35,7 +35,7 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.UpdateDate)
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
-#ALtdcaption($l10n.TEST_URL)
+#ALtdcaption($l10n.TODO_URL)
 #ALtditem($!result.Detail.Url)
 #ALtablefooter()
 #ALbuttonheader()
