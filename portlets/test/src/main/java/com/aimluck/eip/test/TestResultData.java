@@ -27,6 +27,7 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
+import java.net.URI;
 
 /**
  * TestのResultDataです。 <BR>
@@ -146,6 +147,15 @@ public class TestResultData implements ALData {
   public void setUrl(String string) {
     url.setValue(string);
   }
+  /**
+   * URIからドメインを抽出する
+   * @return
+   */
+  public String getUrlDmain() throws Exception{
+    URI u = new URI(url.getValue());
+    return u.getScheme()+"://"+u.getHost();
+ }
+
 
 
   /**

@@ -39,6 +39,8 @@ $!result.Detail.TestName
 <td><a target="_blank" href=$!{result.Detail.UrlOriginal}><img src="http://capture.heartrails.com/free/1440556126970?$!result.Detail.UrlOriginal" alt="$!result.Detail.UrlOriginal" width="200" height="300" /></a></td>
 #ALtdcaption($l10n.TODO_URL)
 #ALtditem($!result.Detail.Url)
+#ALtdcaption($l10n.TODO_DOMAIN)
+#ALtditem($!result.Detail.UrlDmain)
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
