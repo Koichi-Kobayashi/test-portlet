@@ -1384,6 +1384,7 @@ public class ALEipUtils {
     return sb.substring(0, index).replaceAll("<wbr/><br/>", "<br/>");
   }
 
+
   /**
    * 左端の半角空文字を「&nbsp;」に変換する。
    *

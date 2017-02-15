@@ -27,6 +27,8 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
+import java.util.regex.*;
+import java.util.regex.*;
 
 /**
  * TestのResultDataです。 <BR>
@@ -81,6 +83,7 @@ public class TestResultData implements ALData {
     note = new ALStringField();
     note.setTrim(false);
     url = new ALStringField();
+    url.setTrim(false);
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
     is_self_test = false;
@@ -132,8 +135,25 @@ public class TestResultData implements ALData {
    * @return
    */
   public String getUrl() {
-    return ALEipUtils.getMessageList(url.getValue());
+    return url.getValue();
   }
+
+  /**
+   * @return
+   */
+
+  public String getUrlLink(){
+	  return ALEipUtils.getMessageList(url.getValue());
+  }
+
+  /**
+   * @return
+   */
+  public String getUrlDomain(){
+	  Matcher m = Pattern.compile("(https?://[^/]+/)").matcher(url.getValue());
+	  return null;
+  }
+
 
   /**
    * @param string

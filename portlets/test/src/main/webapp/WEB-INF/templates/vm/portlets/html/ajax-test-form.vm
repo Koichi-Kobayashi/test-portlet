@@ -54,10 +54,11 @@
 #ALtditemheader()
 #ALtextarea('note' $!result.Note 10 40)
 #ALtditemfooter()
-#ALtablefooter()
 
 #ALtdcaption($!result.getFieldName("url"))
 #ALtditem("#ALtextfieldw100('url' $!result.Url 50 'active')")
+
+#ALtablefooter()
 
 #ALbuttonheader()
 #ALsubmit($event_submit $action_str)#ALajaxbuttonClose()

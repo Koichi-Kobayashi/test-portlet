@@ -37,17 +37,17 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.Note)
 
 #ALtdcaption($!l10n.TODO_THUMNAIL)
+
 #ALtditemheader()
-<a href = "$!result.Detail.Url"><img title="$!result.Detail.Url"
- src="http://capture.heartrails.com/free?$!result.Detail.Url"
+<a target="_blank" href = $!{result.Detail.Url}>
+<img src="http://capture.heartrails.com/free?$!result.Detail.Url"
  alt="$!result.Detail.Url" width="200" height="300" /></a>
 #ALtditemfooter()
 
-##URL追加
-#ALtdcaption($l10n.REGISTRY_EDITOR_PORTLET_URL)
-#ALtditemheader()
-$!result.Detail.Url
-#ALtditemfooter()
+#####URL追加
+#ALtdcaption($!l10n.TODO_SETFIELDNAME_URL)
+#ALtditem($!result.Detail.UrlLink)
+
 
 #ALtablefooter()
 #ALbuttonheader()
