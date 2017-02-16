@@ -150,8 +150,14 @@ public class TestResultData implements ALData {
    * @return
    */
   public String getUrlDomain(){
-	  Matcher m = Pattern.compile("(https?://[^/]+/)").matcher(url.getValue());
-	  return null;
+	  String str = url.getValue();
+	  Pattern p = Pattern.compile("https?://[^/]+/");
+	  Matcher m = p.matcher(str);
+	  if(m.find()){
+		  return m.group();
+	  }else{
+		  return "";
+	  }
   }
 
 

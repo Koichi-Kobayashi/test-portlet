@@ -44,9 +44,8 @@ $!result.Detail.TestName
  alt="$!result.Detail.Url" width="200" height="300" /></a>
 #ALtditemfooter()
 
-#####URL追加
 #ALtdcaption($!l10n.TODO_SETFIELDNAME_URL)
-#ALtditem($!result.Detail.UrlLink)
+#ALtditem($!result.Detail.UrlDomain)
 
 
 #ALtablefooter()
