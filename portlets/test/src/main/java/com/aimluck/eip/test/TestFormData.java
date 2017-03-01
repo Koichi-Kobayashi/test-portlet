@@ -95,6 +95,9 @@ public class TestFormData extends ALAbstractFormData {
   /** ログインユーザーのID * */
   private int login_user_id;
 
+  /** URL **/
+  private ALStringField url;
+
   /** ACL用の変数 * */
   private String aclPortletFeature;
 
@@ -179,6 +182,11 @@ public class TestFormData extends ALAbstractFormData {
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
 
+    // URL
+    url = new ALStringField();
+    url.setFieldName(ALLocalizationUtils.getl10n("TEST_SETFIELDNAME_URL"));
+    url.setTrim(false);
+
   }
 
 
@@ -193,6 +201,9 @@ public class TestFormData extends ALAbstractFormData {
     test_name.limitMaxLength(50);
     // メモの文字数制限
     note.limitMaxLength(1000);
+
+    // URLの文字種制限（半角英数字）
+    url.setCharacterType(ALStringField.TYPE_ALPHABET_NUMBER);
 
     // 担当者ID必須項目
     user_id.setNotNull(true);
@@ -220,6 +231,8 @@ public class TestFormData extends ALAbstractFormData {
     test_name.validate(msgList);
     // メモ
     note.validate(msgList);
+    // URL
+    url.validate(msgList);
 
     return (msgList.size() == 0);
 
@@ -247,6 +260,8 @@ public class TestFormData extends ALAbstractFormData {
       test_name.setValue(test.getTestName());
       // メモ
       note.setValue(test.getNote());
+      // URL
+      url.setValue(test.getUrl());
 
 
       // 担当者
@@ -332,6 +347,8 @@ public class TestFormData extends ALAbstractFormData {
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
+      // URL
+      test.setUrl(url.getValue());
 
       // Testを登録
       Database.commit();
@@ -398,6 +415,8 @@ public class TestFormData extends ALAbstractFormData {
       test.setNote(note.getValue());
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
+      // URL
+      test.setUrl(url.getValue());
       // Test を更新
       Database.commit();
 
@@ -452,6 +471,15 @@ public class TestFormData extends ALAbstractFormData {
    */
   public ALStringField getTestName() {
     return test_name;
+  }
+
+  /**
+   * URLを取得します。 <BR>
+   *
+   * @return
+   */
+  public ALStringField getUrl() {
+    return url;
   }
 
 

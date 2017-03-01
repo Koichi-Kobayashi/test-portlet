@@ -52,6 +52,9 @@ public class TestResultData implements ALData {
   /** 更新日 */
   private ALDateTimeField update_date;
 
+  /** URL */
+  private ALStringField url;
+
   /** ユーザID */
   private ALStringField user_id;
 
@@ -80,6 +83,12 @@ public class TestResultData implements ALData {
     note.setTrim(false);
     create_date = new ALStringField();
     update_date = new ALDateTimeField();
+
+    // add URL
+    url = new ALStringField();
+    url.setTrim(false);
+    //
+
     is_self_test = false;
   }
 
@@ -155,6 +164,23 @@ public class TestResultData implements ALData {
     }
     this.update_date.setValue(date);
   }
+
+  /**
+   * @return
+   */
+  public String getUrl() {
+	  //return ALEipUtils.getMessageList(url.getValue());
+	  return url.getValue();
+  }
+
+  /**
+   * @param string
+   */
+  public void setUrl(String string) {
+    url.setValue(string);
+  }
+
+
 
   /**
    * hasAclEditTestOtherを取得します。
