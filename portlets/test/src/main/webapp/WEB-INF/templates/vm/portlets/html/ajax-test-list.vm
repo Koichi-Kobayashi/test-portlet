@@ -116,6 +116,7 @@
 <li data-param="0" #if(!$!result.issetFilter("post")) class="selected" #end><a href="javascript:void(0)" #if(!$!result.issetFilter("post")) class="selected" #end onclick="aipo.test.filterClick('$!portlet.ID',this,event)">$l10n.TODO_ALL_GLOUP</a></li>
 #foreach($record in $result.postList)
 <li data-param="$!record.Name" #if($!result.issetFilter("post",$!{record.Name})) class="selected" #end><a href="javascript:void(0)" #if($!result.issetFilter("post",$!{record.Name})) class="selected" #end onclick="aipo.test.filterClick('$!portlet.ID',this,event)">$!record.AliasName</a></li>
+## <li data-param="げんき？" #if($!result.issetFilter("post",$!{record.Name})) class="selected" #end><a href="javascript:void(0)" #if($!result.issetFilter("post",$!{record.Name})) class="selected" #end onclick="aipo.test.filterClick('$!portlet.ID',this,event)">$!record.AliasName</a></li>
 #end
 #foreach($record in $result.PostMap)
 <li data-param="$!record.GroupName" #if($!result.issetFilter("post",$!{record.GroupName})) class="selected" #end><a href="javascript:void(0)" #if($!result.issetFilter("post",$!{record.GroupName})) class="selected" #end onclick="aipo.test.filterClick('$!portlet.ID',this,event)">$!record.PostName</a></li>
