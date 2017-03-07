@@ -203,7 +203,7 @@ public class TestFormData extends ALAbstractFormData {
     note.limitMaxLength(1000);
 
     // URLの文字種制限（半角英数字）
-    url.setCharacterType(ALStringField.TYPE_ALPHABET_NUMBER);
+    url.setCharacterType(ALStringField.TYPE_ASCII);
 
     // 担当者ID必須項目
     user_id.setNotNull(true);

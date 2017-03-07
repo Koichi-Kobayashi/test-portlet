@@ -57,7 +57,7 @@
 
 ## for url
  #ALtdcaption($!result.getFieldName("url"))
- #ALtditem("#ALtextfieldw100('url' $!result.Url 50 'active')")
+ #ALtditem("#ALtextfieldw100('url' $!result.Url 500 'active')")
 ## end
 
 #ALtablefooter()

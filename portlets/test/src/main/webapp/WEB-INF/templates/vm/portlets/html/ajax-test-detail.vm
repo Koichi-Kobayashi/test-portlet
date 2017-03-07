@@ -44,9 +44,14 @@ $!result.Detail.TestName
 ## for thumbnail
 #ALtdcaption($l10n.TEST_THUMBNAIL)
 #ALtditemheader()
-<a target="_blank" href="$!{result.Detail.Url}"><img src="http://capture.heartrails.com/?$!{result.Detail.Url}" alt="$!{result.Detail.Url}" width="200" height="300" /></a>
+<a target="_blank" href="$!{result.Detail.Url}"><img src="http://capture.heartrails.com/200x300/shadow?$!{result.Detail.Url}" alt="$!{result.Detail.Url}" width="200" height="300" /></a>
 #ALtditemfooter()
 ##ALtditem($!result.Detail.Url)
+## end
+
+## for URL domain name
+#ALtdcaption($l10n.TEST_DOMAINNAME)
+#ALtditem($!result.Detail.UrlDomain)
 ## end
 
 

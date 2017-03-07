@@ -20,6 +20,8 @@
 package com.aimluck.eip.test;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALNumberField;
@@ -171,6 +173,15 @@ public class TestResultData implements ALData {
   public String getUrl() {
 	  //return ALEipUtils.getMessageList(url.getValue());
 	  return url.getValue();
+  }
+
+  public String getUrlDomain() {
+	  Matcher m = Pattern.compile("(https?://[^/]+/)").matcher(getUrl());
+	  if (m.find()) {
+		  return m.group(1);
+	  } else {
+		  return null;
+	  }
   }
 
   /**
