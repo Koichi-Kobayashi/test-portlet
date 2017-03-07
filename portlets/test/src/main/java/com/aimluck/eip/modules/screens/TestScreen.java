@@ -80,6 +80,7 @@ public class TestScreen extends ALVelocityScreen {
       listData.doViewList(this, rundata, context);
 
       String layout_template = "portlets/html/ajax-test.vm";
+
       setTemplate(rundata, context, layout_template);
 
     } catch (Exception ex) {
