@@ -41,6 +41,15 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.Url)
 ## end
 
+## for thumbnail
+#ALtdcaption($l10n.TEST_THUMBNAIL)
+#ALtditemheader()
+<a target="_blank" href="$!{result.Detail.Url}"><img src="http://capture.heartrails.com/?$!{result.Detail.Url}" alt="$!{result.Detail.Url}" width="200" height="300" /></a>
+#ALtditemfooter()
+##ALtditem($!result.Detail.Url)
+## end
+
+
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
