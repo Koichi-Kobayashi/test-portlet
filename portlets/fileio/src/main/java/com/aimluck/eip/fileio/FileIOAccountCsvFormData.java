@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -62,7 +62,7 @@ import com.aimluck.eip.util.ALLocalizationUtils;
 
 /**
  * 『アカウント』のフォームデータを管理するクラスです。 <BR>
- * 
+ *
  */
 public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
@@ -115,6 +115,9 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
   /** 役職 */
   private ALStringField position_name;
 
+  /** 社員コード */
+  private ALStringField code;
+
   /** 部署がデータベースに存在するか否か */
   private boolean post_not_found;
 
@@ -125,8 +128,8 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 各フィールドを初期化します。 <BR>
-   * 
-   * 
+   *
+   *
    */
   @Override
   public void initField() {
@@ -194,14 +197,19 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
     position_name.setFieldName(ALLocalizationUtils.getl10n("FILEIO_POST"));
     position_name.setTrim(true);
 
+    // 社員コード
+    code = new ALStringField();
+    code.setFieldName(ALLocalizationUtils.getl10n("FILEIO_CODE"));
+    code.setTrim(true);
+
     setPostNotFound(false);
     setPositionNotFound(false);
   }
 
   /**
    * 各フィールドに対する制約条件を設定します。 <BR>
-   * 
-   * 
+   *
+   *
    */
   @Override
   protected void setValidator() {
@@ -249,15 +257,17 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
     post_name.limitMaxLength(50);
     // 役職
     position_name.limitMaxLength(50);
+    // 社員コード
+    code.limitMaxLength(100);
 
   }
 
   /**
    * フォームに入力されたデータの妥当性検証を行います。 <BR>
-   * 
+   *
    * @param msgList
    * @return
-   * 
+   *
    */
   @Override
   protected boolean validate(List<String> msgList) {
@@ -487,6 +497,14 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
       position_name.setValue("");
     }
 
+    if (!code.validate(msgList)) {
+      code.setValue(null);
+    } else {
+      if ((!"".equals(code.toString())) && (isDuplicateCode())) {
+        msgList.add(ALLocalizationUtils.getl10n("FILEIO_EXIST_SAME_NAME_CODE"));
+      }
+    }
+
     return (msgList.size() == 0);
   }
 
@@ -498,7 +516,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 『ユーザー』を読み込みます。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -512,7 +530,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 『ユーザー』を追加します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -533,6 +551,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
     boolean res = true;
     try {
+      Date now = new Date();
       boolean isNewUser = false;
       ALBaseUser user = null;
       try {
@@ -552,23 +571,22 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
           .getValue()));
         // JetspeedSecurity.forcePassword(user, password.getValue());
         user.setPassword(password.getValue());
+        user.setPasswordChanged(now);
         isNewUser = true;
+        user.setCreated(now);
+        user.setLastLogin(now);
       }
 
-      Date now = new Date();
       // 作成日
       // 以下のメソッドは動作しないため、ALBaseUserにてオーバーライド
       // user.setCreateDate(now);
       // JetspeedSecurity.forcePassword(user, password.getValue());
-      user.setCreated(now);
       user.setModified(now);
-      user.setLastLogin(now);
       user.setCreatedUserId(ALEipUtils.getUserId(rundata));
       user.setUpdatedUserId(ALEipUtils.getUserId(rundata));
       user.setConfirmed(JetspeedResources.CONFIRM_VALUE);
       user.setDisabled("F");
       // user.setPassword(password.getValue());
-      user.setPasswordChanged(now);
       user.setInTelephone(in_telephone.getValue());
       user.setOutTelephone(out_telephone.getValue());
       user.setCellularPhone(cellular_phone.getValue());
@@ -582,6 +600,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
       user.setLastNameKana(last_name_kana.getValue());
       user.setEmail(getEmail().getValue());
       user.setMigrateVersion(0);
+      user.setCode(code.getValue());
 
       if (!position_name.getValue().equals("")) {
         EipMPosition position = getEipMPosition();
@@ -740,7 +759,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 『ユーザー』を更新します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -754,7 +773,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 『ユーザー』を削除します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -768,7 +787,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 携帯メールアドレスを取得します。 <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getCellularMail() {
@@ -777,7 +796,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * メールアドレスを取得します。 <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getEmail() {
@@ -786,7 +805,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * フリガナ（名）を取得します。 <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getFirstNameKana() {
@@ -795,7 +814,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 名前（名）を取得します。 <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getFirstName() {
@@ -804,7 +823,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 電話番号（内線）を取得します。 <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getInTelephone() {
@@ -813,7 +832,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * フリガナ（姓）を取得します。 <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getLastNameKana() {
@@ -822,7 +841,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 名前（姓）を取得します。 <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getLastName() {
@@ -831,7 +850,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 携帯電話番号を取得します。 <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getCellularPhone() {
@@ -840,7 +859,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 電話番号を取得します。 <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getOutTelephone() {
@@ -849,7 +868,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * パスワードを取得します。 <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getPassword() {
@@ -858,7 +877,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * ユーザー名を取得します。 <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getUserName() {
@@ -867,7 +886,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 部署名を取得します <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getPostName() {
@@ -880,7 +899,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 役職名を取得します <BR>
-   * 
+   *
    * @return
    */
   public ALStringField getPositionName() {
@@ -888,8 +907,17 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
   }
 
   /**
+   * 社員コードを取得します <BR>
+   *
+   * @return
+   */
+  public ALStringField getCode() {
+    return code;
+  }
+
+  /**
    * 部署がデータベースに存在するかを示すフラグを取得します <BR>
-   * 
+   *
    * @return
    */
   public boolean getPostNotFound() {
@@ -898,7 +926,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 役職がデータベースに存在するかを示すフラグを取得します <BR>
-   * 
+   *
    * @return
    */
   public boolean getPositionNotFound() {
@@ -907,7 +935,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 携帯メールアドレスを入力します <BR>
-   * 
+   *
    * @param str
    */
   public void setCellularMail(String str) {
@@ -916,7 +944,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * メールアドレスを入力します <BR>
-   * 
+   *
    * @param str
    */
   public void setEmail(String str) {
@@ -925,7 +953,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * フリガナ（名）を入力します <BR>
-   * 
+   *
    * @param str
    */
   public void setFirstNameKana(String str) {
@@ -934,7 +962,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 名前（名）を入力します <BR>
-   * 
+   *
    * @param str
    */
   public void setFirstName(String str) {
@@ -943,7 +971,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * フリガナ（氏）を入力します <BR>
-   * 
+   *
    * @param str
    */
   public void setLastNameKana(String str) {
@@ -952,7 +980,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 名前（氏）を入力します <BR>
-   * 
+   *
    * @param str
    */
   public void setLastName(String str) {
@@ -961,7 +989,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 携帯電話番号を入力します <BR>
-   * 
+   *
    * @param str
    */
   public void setCellularPhone(String str) {
@@ -970,7 +998,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * パスワードを入力します <BR>
-   * 
+   *
    * @param str
    */
   public void setPassword(String str) {
@@ -979,7 +1007,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * ユーザー名を入力します <BR>
-   * 
+   *
    * @param str
    */
   public void setUserName(String str) {
@@ -988,7 +1016,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 部署名を入力します <BR>
-   * 
+   *
    * @param str
    */
   public void setPostName(String str) {
@@ -1001,7 +1029,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 役職名を入力します <BR>
-   * 
+   *
    * @param str
    */
   public void setPositionName(String str) {
@@ -1009,8 +1037,17 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
   }
 
   /**
+   * 社員コードを入力します <BR>
+   *
+   * @param str
+   */
+  public void setCode(String str) {
+    code.setValue(str);
+  }
+
+  /**
    * 電話番号を入力します（部署） <BR>
-   * 
+   *
    * @param str
    */
   public void setOutTelephone(String str) {
@@ -1019,7 +1056,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 内線番号を入力します（部署） <BR>
-   * 
+   *
    * @param str
    */
   public void setInTelephone(String str) {
@@ -1028,7 +1065,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 部署がデータベースに存在するかを示すフラグを入力します <BR>
-   * 
+   *
    * @param flg
    */
   public void setPostNotFound(boolean flg) {
@@ -1037,7 +1074,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 役職がデータベースに存在するかを示すフラグを入力します <BR>
-   * 
+   *
    * @param flg
    */
   public void setPositionNotFound(boolean flg) {
@@ -1046,7 +1083,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 部署名から部署IDを取得 <BR>
-   * 
+   *
    * @return
    */
   private EipMPost getEipMPost(ALStringField post_name) {
@@ -1064,7 +1101,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * Myグループが部署かどうか判定 <BR>
-   * 
+   *
    * @return
    */
   private boolean isPost(String group_name) {
@@ -1083,7 +1120,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 役職名から役職IDを取得 <BR>
-   * 
+   *
    * @return
    */
   private EipMPosition getEipMPosition() {
@@ -1103,7 +1140,7 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
 
   /**
    * 読み取った単語を指定されたフィールドに格納します。 <BR>
-   * 
+   *
    * @param token
    * @param i
    */
@@ -1154,13 +1191,16 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
       case 12:
         setPositionName(token);
         break;
+      case 13:
+        setCode(token);
+        break;
       default:
         break;
     }
   }
 
   /**
-   * 
+   *
    * @return
    */
   private Map<String, TurbineUser> getAllUsersFromDB() {
@@ -1181,6 +1221,43 @@ public class FileIOAccountCsvFormData extends ALAbstractFormData {
       // throw new ALDBErrorException();
     }
     return map;
+  }
+
+  /**
+   * 社員コードが重複しているかどうか
+   *
+   * @return
+   */
+  private boolean isDuplicateCode() {
+    if (code.getValue() == null || code.getValue().equals("")) {
+      // 設定する社員コードがない場合は重複していない
+      return false;
+    }
+    SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
+    Expression exp =
+      ExpressionFactory.matchExp(TurbineUser.CODE_PROPERTY, code);
+    query.setQualifier(exp);
+    List<TurbineUser> list = query.fetchList();
+
+    if (list == null || list.size() == 0) {
+      // 社員コードがなければ重複していない
+      return false;
+    }
+
+    if (username.getValue() == null) {
+      return false;
+    }
+
+    for (TurbineUser user : list) {
+      if (!user.getDisabled().equals("T")
+        && !user.getLoginName().equals(username.getValue())) {
+        // 削除済みでなく、かつ同じユーザーでもない場合は重複している
+        return true;
+      }
+    }
+
+    return false;
+
   }
 
   public boolean isSkipUsernameValidation() {

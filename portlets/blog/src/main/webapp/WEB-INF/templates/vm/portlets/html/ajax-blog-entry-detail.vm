@@ -1,6 +1,6 @@
 #*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,14 +24,18 @@
 <span id="blog_val_confirm1" style="display:none">$l10n.BLOG_CONFIRM_DELETE_COMMENT</span>
 <span id="blog_val_confirm2" style="display:none">$l10n.BLOG_CONFIRM_DELETE_ENTRY</span>
 ## ---------------------------------------------------------------------------
-#ALdialogheader($l10n.BLOG_DETAIL_ENTRY)
+#if (${client}!= "IPHONE")
+#ALdialogheaderPrintBlog("$l10n.BLOG_DETAIL_ENTRY" "$!portlet.ID" "BlogDetailScreenPrint" "$entityid")
+#else
+#ALdialogheaderDetailSmartPhone("$l10n.BLOG_DETAIL_ENTRY")
+#end
 #ALajaxIndicator("$indicator_id" "$!portlet.ID" "")
 <div id="messageDiv"></div>
 #ALajaxscreenformheader("blogEntryForm" $jslink $portlet "BlogEntryFormJSONScreen" "aimluck.io.disableForm(this, true)")
-<table class="listTable wide">
+<table class="listTable wide detail">
 <caption>
-<span class="subCaption">$!{result.Detail.ThemaNameHtml}</span>
 $!{result.Detail.TitleHtml}
+<span class="subCaption">$!{result.Detail.ThemaNameHtml}</span>
 </cation>
 <tr>
 <td>
@@ -41,7 +45,7 @@ $!{result.Detail.TitleHtml}
 #if(${result.Detail.hasPhoto()})
 <img src="$!utils.escapeXML($jslink.getTemplate("FileuploadFacePhotoScreen").addQueryData("uid", ${result.Detail.OwnerId}).addQueryData("t", ${result.Detail.PhotoModified}))" alt="${result.Detail.OwnerName}" width="32" height="32" />
 #else
-<img src="images/common/avatar_default3.png" alt="${result.Detail.OwnerName}" width="32" height="32" />
+<img src="themes/default/images/common/icon_user100.png" alt="${result.Detail.OwnerName}" width="32" height="32" />
 #end
 </a>
 </div>
@@ -71,7 +75,7 @@ $!{result.Detail.CreateDateAlternative.Year}$l10n.BLOG_YEAR$!{result.Detail.Crea
     <div style="padding-top:15px;">
     <ul>
     #foreach( $attachmentFile in $!result.Detail.AttachmentFileList )
-      <li><a #if("$!{client}"=="IPHONE")target="_blank"#end href="$jslink.getTemplate("BlogFileRawScreen").addPathInfo("ownerid", $!{result.Detail.OwnerId}).addPathInfo("entityid", $!result.Detail.EntryId).addPathInfo("attachmentIndex", $attachmentFile.FileId).addPathInfo("f", ${attachmentFile.getURLEncodedValue()})">$result.getStringCR($attachmentFile.FileNameField)</a>
+      <li><a #if("$!{client}"=="IPHONE" || $!attachmentFile.AcceptInline)target="_blank"#end href="$jslink.getTemplate("BlogFileRawScreen").addPathInfo("ownerid", $!{result.Detail.OwnerId}).addPathInfo("entityid", $!result.Detail.EntryId).addPathInfo("attachmentIndex", $attachmentFile.FileId).addPathInfo("f", ${attachmentFile.getURLEncodedValue()})">$result.getStringCR($attachmentFile.FileNameField)</a>
       #if($attachmentFile.isImage())
         <div class="thumbBlock">
         <div id='popc' style='position:absolute'></div>
@@ -93,7 +97,7 @@ $!{result.Detail.CreateDateAlternative.Year}$l10n.BLOG_YEAR$!{result.Detail.Crea
 
 
 #if($!result.CommentList && $!result.CommentList.size() > 0 || ("$!{client}"!="IPHONE" && $!result.CommentList.size() == 0))
-<table class="listTable wide mb0">
+<table class="listTable wide detail mb10">
 <caption>$l10n.BLOG_COMMENT</cation>
 #foreach ($record in $result.CommentList)
   <tr>
@@ -104,7 +108,7 @@ $!{result.Detail.CreateDateAlternative.Year}$l10n.BLOG_YEAR$!{result.Detail.Crea
   #if(${record.Owner.hasPhoto()})
     <img src="$!utils.escapeXML($jslink.getTemplate("FileuploadFacePhotoScreen").addQueryData("uid", ${record.OwnerId}).addQueryData("t", ${record.Owner.PhotoModified}))" alt="${record.OwnerName}" width="32" height="32" />
   #else
-    <img src="images/common/avatar_default3.png" alt="${result.Detail.OwnerName}" width="32" height="32" />
+    <img src="themes/default/images/common/icon_user100.png" alt="${result.Detail.OwnerName}" width="32" height="32" />
   #end
   </a>
   </div>

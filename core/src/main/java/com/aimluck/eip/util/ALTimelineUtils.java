@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.util;
 
 import java.io.ByteArrayInputStream;
@@ -60,6 +59,7 @@ public class ALTimelineUtils {
     timeline.setNote(ALLocalizationUtils.getl10n("TIMELINE_GUIDE_MESSAGE"));
     timeline.setTimelineType("T");
     timeline.setParams(null);
+    timeline.setPinned("F");
     timeline.setCreateDate(now);
     timeline.setUpdateDate(now);
 

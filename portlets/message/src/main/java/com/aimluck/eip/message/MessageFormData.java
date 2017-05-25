@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,6 +37,7 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
+import com.aimluck.commons.utils.ALDeleteFileUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipTMessage;
 import com.aimluck.eip.cayenne.om.portlet.EipTMessageFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTMessageRead;
@@ -44,6 +45,7 @@ import com.aimluck.eip.cayenne.om.portlet.EipTMessageRoom;
 import com.aimluck.eip.cayenne.om.portlet.EipTMessageRoomMember;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
+import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.common.ALEipUser;
 import com.aimluck.eip.common.ALPageNotFoundException;
 import com.aimluck.eip.fileupload.beans.FileuploadLiteBean;
@@ -52,6 +54,7 @@ import com.aimluck.eip.fileupload.util.FileuploadUtils.ShrinkImageSet;
 import com.aimluck.eip.message.util.MessageUtils;
 import com.aimluck.eip.modules.actions.common.ALAction;
 import com.aimluck.eip.orm.Database;
+import com.aimluck.eip.orm.query.ResultList;
 import com.aimluck.eip.services.push.ALPushService;
 import com.aimluck.eip.services.storage.ALStorageService;
 import com.aimluck.eip.util.ALCommonUtils;
@@ -84,6 +87,8 @@ public class MessageFormData extends ALAbstractFormData {
 
   private String folderName = null;
 
+  private String transactionId = null;
+
   @Override
   public void init(ALAction action, RunData rundata, Context context)
       throws ALPageNotFoundException, ALDBErrorException {
@@ -92,6 +97,7 @@ public class MessageFormData extends ALAbstractFormData {
     login_user = ALEipUtils.getALEipUser(rundata);
     orgId = Database.getDomainName();
     folderName = rundata.getParameters().getString("folderName");
+    transactionId = rundata.getParameters().getString("transactionId");
 
   }
 
@@ -110,7 +116,7 @@ public class MessageFormData extends ALAbstractFormData {
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -212,6 +218,9 @@ public class MessageFormData extends ALAbstractFormData {
           map1.setUserId((int) login_user.getUserId().getValue());
           map1.setTargetUserId((int) targetUser.getUserId().getValue());
           map1.setLoginName(login_user.getName().getValue());
+          map1.setAuthority("A");
+          map1.setDesktopNotification("A");
+          map1.setMobileNotification("A");
 
           EipTMessageRoomMember map2 =
             Database.create(EipTMessageRoomMember.class);
@@ -219,6 +228,9 @@ public class MessageFormData extends ALAbstractFormData {
           map2.setTargetUserId((int) login_user.getUserId().getValue());
           map2.setUserId((int) targetUser.getUserId().getValue());
           map2.setLoginName(targetUser.getName().getValue());
+          map2.setAuthority("A");
+          map2.setDesktopNotification("A");
+          map2.setMobileNotification("A");
 
           room.setAutoName("T");
           room.setRoomType("O");
@@ -241,7 +253,9 @@ public class MessageFormData extends ALAbstractFormData {
       model.setMessage(message.getValue());
       model.setCreateDate(now);
       model.setUpdateDate(now);
-      model.setMemberCount(members.size());
+      model.setMemberCount(containsAdmin(members)
+        ? members.size() - 1
+        : members.size());
       model.setUserId((int) login_user.getUserId().getValue());
 
       List<String> recipients = new ArrayList<String>();
@@ -254,8 +268,8 @@ public class MessageFormData extends ALAbstractFormData {
           record.setIsRead("F");
           record.setUserId(member.getUserId());
           record.setRoomId(room.getRoomId());
-          recipients.add(member.getLoginName());
         }
+        recipients.add(member.getLoginName());
       }
 
       room
@@ -273,6 +287,10 @@ public class MessageFormData extends ALAbstractFormData {
       Map<String, String> params = new HashMap<String, String>();
       params.put("roomId", String.valueOf(room.getRoomId()));
       params.put("messageId", String.valueOf(model.getMessageId()));
+      if (transactionId != null && !"".equals(transactionId)) {
+        params.put("transactionId", transactionId);
+      }
+      params.put("userId", login_user.getName().getValue());
 
       ALPushService.pushAsync("messagev2", params, recipients);
 
@@ -283,6 +301,21 @@ public class MessageFormData extends ALAbstractFormData {
     }
 
     return true;
+  }
+
+  /**
+   * @param members
+   * @return
+   */
+  private static boolean containsAdmin(List<EipTMessageRoomMember> members) {
+    boolean containsAdmin = false;
+    for (EipTMessageRoomMember member : members) {
+      if (member.getUserId() == 1) {
+        containsAdmin = true;
+        break;
+      }
+    }
+    return containsAdmin;
   }
 
   /**
@@ -310,7 +343,88 @@ public class MessageFormData extends ALAbstractFormData {
   @Override
   protected boolean deleteFormData(RunData rundata, Context context,
       List<String> msgList) throws ALPageNotFoundException, ALDBErrorException {
-    return false;
+    try {
+      // messageIdの取得
+      int messageId = rundata.getParameters().getInt(ALEipConstants.ENTITY_ID);
+
+      EipTMessage message = MessageUtils.getMessage(messageId);
+      if (message == null) {
+        return false;
+      }
+      // messageがuserのものか判定
+      Integer user = ALEipUtils.getUserId(rundata);
+      Integer messageOwner = message.getUserId();
+      if (!(messageOwner.equals(user))) {
+        EipTMessageRoom messageRoom = message.getEipTMessageRoom();
+        // 管理者権限を持っているか判定（ダイレクトメッセージ以外）
+        // 管理者権限が持っていれシステム投稿は削除可能
+        if (!MessageUtils.hasAuthorityRoom(messageRoom, user)
+          || ("O".equals(messageRoom.getRoomType()) && messageOwner.intValue() > 3)) {
+          return false;
+        }
+      }
+
+      List<String> recipients = new ArrayList<String>();
+      EipTMessageRoom room = message.getEipTMessageRoom();
+      if (room != null) {
+        @SuppressWarnings("unchecked")
+        List<EipTMessageRoomMember> members = room.getEipTMessageRoomMember();
+        if (members != null) {
+          for (EipTMessageRoomMember member : members) {
+            recipients.add(member.getLoginName());
+          }
+        }
+      }
+
+      // lastMessageが削除される場合、lastMessageの更新フラグを立てる
+      if (room != null && room.getRoomId() != null) {
+        ResultList<EipTMessage> last2Messages =
+          MessageUtils.getLast2Messages(room.getRoomId());
+        if (last2Messages != null && last2Messages.size() > 0) {
+          Integer lastMessageId = last2Messages.get(0).getMessageId();
+          // lastMessageが削除された場合、新しいlastMessageに更新する
+          if (message.getMessageId().equals(lastMessageId)) {
+            if (last2Messages.size() == 2) {
+              room.setLastMessage(ALCommonUtils.compressString(last2Messages
+                .get(1)
+                .getMessage(), 100));
+            } else {
+              room.setLastMessage(ALCommonUtils.compressString(null, 100));
+            }
+            Date now = new Date();
+            room.setLastUpdateDate(now);
+          }
+        }
+      }
+
+      // messageの添付ファイルを削除
+      List<EipTMessageFile> files =
+        MessageUtils.getEipTMessageFilesByMessage(messageId);
+
+      ALDeleteFileUtil.deleteFiles(
+        MessageUtils.FOLDER_FILEDIR_MESSAGE,
+        MessageUtils.CATEGORY_KEY,
+        files);
+
+      // messageを削除
+      Database.delete(message);
+      Database.commit();
+
+      if (room != null && room.getRoomId() != null) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("roomId", String.valueOf(room.getRoomId()));
+        params.put("messageId", String.valueOf(messageId));
+
+        ALPushService.pushAsync("messagev2_delete", params, recipients);
+      }
+
+    } catch (Exception ex) {
+      Database.rollback();
+      logger.error("[MessageFormData]", ex);
+      return false;
+    }
+
+    return true;
   }
 
   public ALStringField getMessage() {
@@ -410,5 +524,23 @@ public class MessageFormData extends ALAbstractFormData {
 
   public int getRoomId() {
     return (int) roomId.getValue();
+  }
+
+  /**
+   * 添付ファイルに関する権限チェック
+   *
+   * @param msgList
+   * @return
+   */
+  @Override
+  protected boolean extValidate(RunData rundata, Context context,
+      List<String> msgList) {
+    if (ALEipConstants.MODE_INSERT.equals(getMode())) {
+      return FileuploadUtils.insertValidate(
+        msgList,
+        fileuploadList,
+        hasAttachmentInsertAuthority());
+    }
+    return true;
   }
 }

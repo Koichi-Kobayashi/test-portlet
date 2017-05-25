@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,6 +28,7 @@ import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardCategory;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardCategoryMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTMsgboardTopic;
+import com.aimluck.eip.common.ALPageNotFoundException;
 import com.aimluck.eip.common.ALPermissionException;
 import com.aimluck.eip.msgboard.util.MsgboardUtils;
 import com.aimluck.eip.orm.Database;
@@ -43,8 +44,23 @@ public class MsgboardTopicFileRawScreen extends FileuploadRawScreen {
   private static final JetspeedLogger logger = JetspeedLogFactoryService
     .getLogger(MsgboardTopicFileRawScreen.class.getName());
 
+  @Override
+  protected void init(RunData rundata) throws Exception {
+    EipTMsgboardFile file = MsgboardUtils.getEipTMsgboardFile(rundata);
+    if (null == file) {
+      throw new ALPageNotFoundException();
+    }
+    doFileCheckView(rundata, file);
+
+    setFilePath(MsgboardUtils.getSaveDirPath(Database.getDomainName(), file
+      .getOwnerId()
+      .intValue())
+      + file.getFilePath());
+    setFileName(file.getFileName());
+  }
+
   /**
-   * 
+   *
    * @param rundata
    * @throws Exception
    */
@@ -66,16 +82,6 @@ public class MsgboardTopicFileRawScreen extends FileuploadRawScreen {
       }
     }
     try {
-      EipTMsgboardFile msgboardfile =
-        MsgboardUtils.getEipTMsgboardFile(rundata);
-
-      doFileCheckView(rundata, msgboardfile);
-
-      super.setFilePath(MsgboardUtils.getSaveDirPath(
-        Database.getDomainName(),
-        msgboardfile.getOwnerId().intValue())
-        + msgboardfile.getFilePath());
-      super.setFileName(msgboardfile.getFileName());
       super.doOutput(rundata);
     } catch (ALPermissionException e) {
       throw new Exception();

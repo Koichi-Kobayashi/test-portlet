@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -36,7 +36,7 @@ import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * タイムカード集計の検索データを管理するためのクラスです。 <br />
- * 
+ *
  */
 public class ExtTimecardSystemSelectData extends
     ALAbstractSelectData<EipTExtTimecardSystem, EipTExtTimecardSystem> {
@@ -54,7 +54,7 @@ public class ExtTimecardSystemSelectData extends
   private String portletName;
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -81,7 +81,7 @@ public class ExtTimecardSystemSelectData extends
 
   /**
    * 検索条件を設定した SelectQuery を返します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -95,7 +95,7 @@ public class ExtTimecardSystemSelectData extends
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -132,6 +132,31 @@ public class ExtTimecardSystemSelectData extends
       rd.setRestTimeOut(record.getResttimeOut());
       rd.setChangeHour(record.getChangeHour());
       rd.setOutgoingAddFlag(record.getOutgoingAddFlag());
+      if (isNewRule()) {
+        rd.setOvertimeTypeMinuteByDay(ExtTimecardUtils
+          .getOvertimeMinuteByDay(record.getOvertimeType()));
+        rd.setOvertimeTypeHourByWeek(ExtTimecardUtils
+          .getOvertimeHourByWeek(record.getOvertimeType()));
+        rd.setOvertypeWeek(ExtTimecardUtils.isOvertimeHourByWeek(record
+          .getOvertimeType()));
+      }
+
+      rd.setDefaultHolidayFlag(String.valueOf(record.getHolidayOfWeek().charAt(
+        0)));
+      if (!"A".equals(rd.getDefaultHolidayFlag().toString())) {
+        rd.setWeek1(record.getHolidayOfWeek().charAt(1) != '0' ? "1" : null);
+        rd.setWeek2(record.getHolidayOfWeek().charAt(2) != '0' ? "1" : null);
+        rd.setWeek3(record.getHolidayOfWeek().charAt(3) != '0' ? "1" : null);
+        rd.setWeek4(record.getHolidayOfWeek().charAt(4) != '0' ? "1" : null);
+        rd.setWeek5(record.getHolidayOfWeek().charAt(5) != '0' ? "1" : null);
+        rd.setWeek6(record.getHolidayOfWeek().charAt(6) != '0' ? "1" : null);
+        rd.setWeek7(record.getHolidayOfWeek().charAt(7) != '0' ? "1" : null);
+        rd
+          .setHasHoliday(record.getHolidayOfWeek().substring(1, 8).indexOf("1") != -1);
+        rd.setStatutoryHoliday(String.valueOf(record.getHolidayOfWeek().charAt(
+          8)));
+        rd.setHoliday(record.getHolidayOfWeek().charAt(9) != '0' ? "1" : null);
+      }
 
       return rd;
     } catch (Exception ex) {
@@ -141,7 +166,7 @@ public class ExtTimecardSystemSelectData extends
   }
 
   /**
-   * 
+   *
    * @param record
    * @return
    */
@@ -167,6 +192,31 @@ public class ExtTimecardSystemSelectData extends
       rd.setOutgoingAddFlag(record.getOutgoingAddFlag());
       rd.setCreateDate(record.getCreateDate().toString());
       rd.setUpdateDate(record.getUpdateDate().toString());
+      if (isNewRule()) {
+        rd.setOvertimeTypeMinuteByDay(ExtTimecardUtils
+          .getOvertimeMinuteByDay(record.getOvertimeType()));
+        rd.setOvertimeTypeHourByWeek(ExtTimecardUtils
+          .getOvertimeHourByWeek(record.getOvertimeType()));
+        rd.setOvertypeWeek(ExtTimecardUtils.isOvertimeHourByWeek(record
+          .getOvertimeType()));
+      }
+
+      rd.setDefaultHolidayFlag(String.valueOf(record.getHolidayOfWeek().charAt(
+        0)));
+      if (!"A".equals(rd.getDefaultHolidayFlag().toString())) {
+        rd.setWeek1(record.getHolidayOfWeek().charAt(1) != '0' ? "1" : null);
+        rd.setWeek2(record.getHolidayOfWeek().charAt(2) != '0' ? "1" : null);
+        rd.setWeek3(record.getHolidayOfWeek().charAt(3) != '0' ? "1" : null);
+        rd.setWeek4(record.getHolidayOfWeek().charAt(4) != '0' ? "1" : null);
+        rd.setWeek5(record.getHolidayOfWeek().charAt(5) != '0' ? "1" : null);
+        rd.setWeek6(record.getHolidayOfWeek().charAt(6) != '0' ? "1" : null);
+        rd.setWeek7(record.getHolidayOfWeek().charAt(7) != '0' ? "1" : null);
+        rd
+          .setHasHoliday(record.getHolidayOfWeek().substring(1, 8).indexOf("1") != -1);
+        rd.setStatutoryHoliday(String.valueOf(record.getHolidayOfWeek().charAt(
+          8)));
+        rd.setHoliday(record.getHolidayOfWeek().charAt(9) != '0' ? "1" : null);
+      }
 
       return rd;
     } catch (Exception ex) {
@@ -177,7 +227,7 @@ public class ExtTimecardSystemSelectData extends
 
   /**
    * @return
-   * 
+   *
    */
   @Override
   protected Attributes getColumnMap() {
@@ -193,7 +243,7 @@ public class ExtTimecardSystemSelectData extends
 
   /**
    * 表示タイプを取得します。
-   * 
+   *
    * @return
    */
   public String getViewtype() {
@@ -202,7 +252,7 @@ public class ExtTimecardSystemSelectData extends
 
   /**
    * ポートレット名を取得します。
-   * 
+   *
    * @return portletName
    */
   public String getPortletName() {
@@ -211,9 +261,13 @@ public class ExtTimecardSystemSelectData extends
 
   /**
    * @param portletName
-   * 
+   *
    */
   public void setPortletName(String portletName) {
     this.portletName = portletName;
+  }
+
+  public boolean isNewRule() {
+    return ExtTimecardUtils.isNewRule();
   }
 }

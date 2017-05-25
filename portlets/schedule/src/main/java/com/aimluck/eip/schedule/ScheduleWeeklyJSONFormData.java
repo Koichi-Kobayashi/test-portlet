@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -55,6 +55,9 @@ import com.aimluck.eip.services.eventlog.ALEventlogConstants;
 import com.aimluck.eip.services.eventlog.ALEventlogFactoryService;
 import com.aimluck.eip.services.orgutils.ALOrgUtilsService;
 import com.aimluck.eip.services.quota.ALQuotaService;
+import com.aimluck.eip.services.reminder.ALReminderHandler.ReminderCategory;
+import com.aimluck.eip.services.reminder.ALReminderService;
+import com.aimluck.eip.services.reminder.model.ALReminderItem;
 import com.aimluck.eip.util.ALEipUtils;
 import com.aimluck.eip.util.ALLocalizationUtils;
 
@@ -107,6 +110,14 @@ public class ScheduleWeeklyJSONFormData {
 
   private boolean ignore_duplicate_facility;
 
+  private boolean isDayOffHoliday; // 祝日を休日にするかどうか
+
+  /** 添付ファイル追加へのアクセス権限の有無 */
+  private boolean hasAttachmentInsertAuthority;
+
+  /** 添付ファイル削除へのアクセス権限の有無 */
+  private boolean hasAttachmentDeleteAuthority;
+
   public void initField() {
     aclPortletFeature = ALAccessControlConstants.POERTLET_FEATURE_SCHEDULE_SELF;
   }
@@ -146,6 +157,10 @@ public class ScheduleWeeklyJSONFormData {
         rundata,
         context,
         ALAccessControlConstants.VALUE_ACL_LIST);
+      doCheckAttachmentAclPermission(
+        rundata,
+        context,
+        ALAccessControlConstants.VALUE_ACL_EXPORT);
 
       AjaxScheduleResultData rd;
       ScheduleBean bean;
@@ -232,11 +247,15 @@ public class ScheduleWeeklyJSONFormData {
         dateList.add(container.getDate().toString());
         dayOfWeekList.add(container.getDate().getDayOfWeek());
         _scheduleList = container.getScheduleList();
+
         if (container.isHoliday()) {
           holidayList.add(container.getHoliday().getName().getValue());
+        } else if (container.isUserHoliday()) {
+          holidayList.add("set");
         } else {
           holidayList.add("");
         }
+
         if (i == 0) {
           json.put("startDate", container.getDate().toString());
         } else if (i == dayListSize - 1) {
@@ -270,6 +289,8 @@ public class ScheduleWeeklyJSONFormData {
       json.put("holiday", holidayList);
       json.put("date", dateList);
       json.put("dayOfWeek", dayOfWeekList);
+      isDayOffHoliday = ScheduleUtils.isDayOffHoliday();
+      json.put("dayoff", isDayOffHoliday);
       if ((msgList != null) && (msgList.size() > 0)) {
         json.put("errList", msgList);
       }
@@ -301,6 +322,9 @@ public class ScheduleWeeklyJSONFormData {
         rundata,
         context,
         ALAccessControlConstants.VALUE_ACL_UPDATE);
+
+      doCheckAttachmentInsertAclPermission(rundata, context);
+      doCheckAttachmentDeleteAclPermission(rundata, context);
       boolean res = false;
       if (isOverQuota()) {
         msgList.add(ALLocalizationUtils
@@ -338,6 +362,9 @@ public class ScheduleWeeklyJSONFormData {
         rundata,
         context,
         ALAccessControlConstants.VALUE_ACL_INSERT);
+
+      doCheckAttachmentInsertAclPermission(rundata, context);
+      doCheckAttachmentDeleteAclPermission(rundata, context);
       boolean res = false;
       if (isOverQuota()) {
         msgList.add(ALLocalizationUtils
@@ -517,6 +544,9 @@ public class ScheduleWeeklyJSONFormData {
 
         Database.commit();
         res = true;
+        // アラーム
+        updateReminder(schedule, schedule.getScheduleId().intValue());
+
         // イベントログに保存
         sendEventLog(rundata, context);
         /* メンバー全員に新着ポートレット登録 */
@@ -541,17 +571,18 @@ public class ScheduleWeeklyJSONFormData {
                 ALAdminMailMessage message = new ALAdminMailMessage(destMember);
                 message.setPcSubject(subject);
                 message.setCellularSubject(subject);
-                message.setPcBody(ScheduleUtils.createMsgForPc(
+                message.setPcBody(ScheduleUtils.createMsg(
                   rundata,
                   schedule,
                   memberList,
-                  false));
-                message.setCellularBody(ScheduleUtils.createMsgForCellPhone(
+                  null,
+                  "edit"));
+                message.setCellularBody(ScheduleUtils.createMsg(
                   rundata,
                   schedule,
                   memberList,
                   destMember.getUserId(),
-                  false));
+                  "edit"));
                 messageList.add(message);
               }
 
@@ -687,6 +718,8 @@ public class ScheduleWeeklyJSONFormData {
 
         Database.commit();
         res = true;
+        // アラーム
+        updateReminder(newSchedule, schedule.getScheduleId().intValue());
 
         // イベントログに保存
         sendEventLog(rundata, context);
@@ -713,17 +746,18 @@ public class ScheduleWeeklyJSONFormData {
                 ALAdminMailMessage message = new ALAdminMailMessage(destMember);
                 message.setPcSubject(subject);
                 message.setCellularSubject(subject);
-                message.setPcBody(ScheduleUtils.createMsgForPc(
+                message.setPcBody(ScheduleUtils.createMsg(
                   rundata,
                   newSchedule,
                   memberList,
-                  false));
-                message.setCellularBody(ScheduleUtils.createMsgForCellPhone(
+                  null,
+                  "edit"));
+                message.setCellularBody(ScheduleUtils.createMsg(
                   rundata,
                   newSchedule,
                   memberList,
                   destMember.getUserId(),
-                  false));
+                  "edit"));
                 messageList.add(message);
               }
 
@@ -753,7 +787,79 @@ public class ScheduleWeeklyJSONFormData {
   }
 
   /**
-   * 
+   *
+   * @param schedule2
+   * @param oldItemId
+   */
+  private void updateReminder(EipTSchedule schedule2, int oldItemId) {
+    if (ALReminderService.isEnabled() || ALReminderService.isPastEnabled()) {
+
+      String ptn = schedule2.getRepeatPattern();
+      int count = 0;
+      boolean isRepeat = false;
+      boolean isSpan = false;
+      boolean isLimit = false;
+      if (ptn.charAt(0) == 'D') {
+        count = 1;
+        isRepeat = true;
+        isSpan = false;
+      } else if (ptn.charAt(0) == 'W') {
+        if (ptn.length() == 9) {
+          count = 8;
+        } else {
+          count = 9;
+        }
+        isRepeat = true;
+        isSpan = false;
+      } else if (ptn.charAt(0) == 'M') {
+        count = 3;
+        isRepeat = true;
+        isSpan = false;
+      } else if (ptn.charAt(0) == 'Y') {
+        count = 5;
+        isRepeat = true;
+        isSpan = false;
+      } else if (ptn.charAt(0) == 'S') {
+        isRepeat = false;
+        isSpan = true;
+      } else {
+        isRepeat = false;
+        isSpan = false;
+      }
+
+      if (isRepeat) {
+        if (ptn.charAt(count) == 'N') {
+          isLimit = false;
+        } else {
+          isLimit = true;
+        }
+      }
+
+      for (ALEipUser user : memberList) {
+        ALReminderItem item =
+          ALReminderService.getJob(
+            orgId,
+            user.getUserId().getValueAsString(),
+            ReminderCategory.SCHEDULE,
+            oldItemId);
+        if (item != null) {
+          ScheduleUtils.setupReminderJob(
+            Database.getDomainName(),
+            user.getUserId().toString(),
+            schedule2,
+            item.getNotifyTiming(),
+            item.hasNotifyTypeMail(),
+            item.hasNotifyTypeMessage(),
+            isRepeat,
+            isLimit,
+            isSpan);
+        }
+      }
+    }
+  }
+
+  /**
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -853,6 +959,7 @@ public class ScheduleWeeklyJSONFormData {
 
         Database.commit();
         res = true;
+        updateReminder(newSchedule, schedule.getScheduleId().intValue());
         // イベントログに保存
         sendEventLog(rundata, context);
         /* メンバー全員に新着ポートレット登録 */
@@ -875,17 +982,18 @@ public class ScheduleWeeklyJSONFormData {
               ALAdminMailMessage message = new ALAdminMailMessage(destMember);
               message.setPcSubject(subject);
               message.setCellularSubject(subject);
-              message.setPcBody(ScheduleUtils.createMsgForPc(
+              message.setPcBody(ScheduleUtils.createMsg(
                 rundata,
                 schedule,
                 memberList,
-                true));
-              message.setCellularBody(ScheduleUtils.createMsgForCellPhone(
+                null,
+                "new"));
+              message.setCellularBody(ScheduleUtils.createMsg(
                 rundata,
                 schedule,
                 memberList,
                 destMember.getUserId(),
-                true));
+                "new"));
               messageList.add(message);
             }
 
@@ -1014,6 +1122,7 @@ public class ScheduleWeeklyJSONFormData {
 
         Database.commit();
         res = true;
+        updateReminder(newSchedule, schedule.getScheduleId().intValue());
 
         // イベントログに保存
         sendEventLog(rundata, context);
@@ -1037,17 +1146,18 @@ public class ScheduleWeeklyJSONFormData {
               ALAdminMailMessage message = new ALAdminMailMessage(destMember);
               message.setPcSubject(subject);
               message.setCellularSubject(subject);
-              message.setPcBody(ScheduleUtils.createMsgForPc(
+              message.setPcBody(ScheduleUtils.createMsg(
                 rundata,
                 newSchedule,
                 memberList,
-                true));
-              message.setCellularBody(ScheduleUtils.createMsgForCellPhone(
+                null,
+                "new"));
+              message.setCellularBody(ScheduleUtils.createMsg(
                 rundata,
                 newSchedule,
                 memberList,
                 destMember.getUserId(),
-                true));
+                "new"));
               messageList.add(message);
             }
 
@@ -1109,6 +1219,63 @@ public class ScheduleWeeklyJSONFormData {
     return true;
   }
 
+  /**
+   * ファイルアップロードのアクセス権限をチェックします。
+   *
+   * @return
+   */
+  private boolean doCheckAttachmentAclPermission(RunData rundata,
+      Context context, int defineAclType) {
+
+    if (defineAclType == 0) {
+      return true;
+    }
+
+    // アクセス権限のチェックをしない場合
+    boolean checkAttachmentAuthority = isCheckAttachmentAuthority();
+    if (!checkAttachmentAuthority) {
+      return true;
+    }
+
+    ALAccessControlFactoryService aclservice =
+      (ALAccessControlFactoryService) ((TurbineServices) TurbineServices
+        .getInstance()).getService(ALAccessControlFactoryService.SERVICE_NAME);
+    ALAccessControlHandler aclhandler = aclservice.getAccessControlHandler();
+
+    return aclhandler.hasAuthority(
+      ALEipUtils.getUserId(rundata),
+      ALAccessControlConstants.POERTLET_FEATURE_ATTACHMENT,
+      defineAclType);
+  }
+
+  /**
+   * ファイルアップロードのアクセス権限をチェックします。
+   *
+   * @return
+   */
+  private void doCheckAttachmentInsertAclPermission(RunData rundata,
+      Context context) { // ファイル追加権限の有無
+    hasAttachmentInsertAuthority =
+      doCheckAttachmentAclPermission(
+        rundata,
+        context,
+        ALAccessControlConstants.VALUE_ACL_INSERT);
+  }
+
+  /**
+   * ファイルアップロードのアクセス権限をチェックします。
+   *
+   * @return
+   */
+  private void doCheckAttachmentDeleteAclPermission(RunData rundata,
+      Context context) { // ファイル削除権限の有無
+    hasAttachmentDeleteAuthority =
+      doCheckAttachmentAclPermission(
+        rundata,
+        context,
+        ALAccessControlConstants.VALUE_ACL_DELETE);
+  }
+
   private void sendEventLog(RunData rundata, Context context) {
     ALEipUtils.setTemp(
       rundata,
@@ -1142,7 +1309,7 @@ public class ScheduleWeeklyJSONFormData {
         schedule,
         loginName,
         recipients,
-        false,
+        "edit",
         userId);
 
       // アクティビティが公開スケジュールである場合、「更新情報」に表示させる。
@@ -1150,7 +1317,7 @@ public class ScheduleWeeklyJSONFormData {
         ScheduleUtils.createNewScheduleActivity(
           schedule,
           loginName,
-          false,
+          "edit",
           userId);
       }
     }
@@ -1200,7 +1367,7 @@ public class ScheduleWeeklyJSONFormData {
 
   /**
    * セキュリティをチェックします。
-   * 
+   *
    * @return
    */
   private boolean doCheckSecurity(RunData rundata, Context context) {
@@ -1213,6 +1380,24 @@ public class ScheduleWeeklyJSONFormData {
     }
 
     return true;
+  }
+
+  /**
+   * ファイルアップロードアクセス権限チェック用メソッド。<br />
+   * ファイルアップのアクセス権限をチェックするかどうかを判定します。
+   *
+   * @return
+   */
+  private boolean isCheckAttachmentAuthority() {
+    return true;
+  }
+
+  private boolean hasAttachmentInsertAuthority() {
+    return hasAttachmentInsertAuthority;
+  }
+
+  private boolean hasAttachmentDeleteAuthority() {
+    return hasAttachmentDeleteAuthority;
   }
 
 }

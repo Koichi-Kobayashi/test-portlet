@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -75,4 +75,22 @@ aipo.exttimecardsystem.onLoadExtTimecardSystemDialog = function(portlet_id){
   if(obj){
      obj.focus();
   }
+}
+
+aipo.exttimecardsystem.changeTypeNew = function(){
+    dojo.byId("timecard-type-new").style.display = "";
+    dojo.byId("timecard-type-old").style.display = "none";
+}
+
+aipo.exttimecardsystem.changeTypeOld = function(){
+    dojo.byId("timecard-type-new").style.display = "none";
+    dojo.byId("timecard-type-old").style.display = "";
+}
+
+aipo.exttimecardsystem.originalHolidayFieldON = function(){
+    dojo.byId('originalHolidayField').style.display = "";
+}
+
+aipo.exttimecardsystem.originalHolidayFieldOFF = function(){
+    dojo.byId('originalHolidayField').style.display = "none";
 }

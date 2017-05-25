@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,6 +25,8 @@ import com.aimluck.eip.cayenne.om.portlet.auto._EipTProjectTask;
 public class EipTProjectTask extends _EipTProjectTask {
 
   int indent = 0;
+
+  String projectName;
 
   public Integer getTaskId() {
     if (getObjectId() != null && !getObjectId().isTemporary()) {
@@ -51,5 +53,19 @@ public class EipTProjectTask extends _EipTProjectTask {
 
   public void setIndent(int i) {
     indent = i;
+  }
+
+  /**
+   * @param string
+   */
+  public void setProjectName(String project_name) {
+    projectName = project_name;
+  }
+
+  /**
+   * @return
+   */
+  public String getProjectName() {
+    return projectName;
   }
 }

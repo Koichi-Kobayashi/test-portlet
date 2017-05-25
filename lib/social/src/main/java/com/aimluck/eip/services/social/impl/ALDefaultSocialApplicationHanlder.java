@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.services.social.impl;
 
 import java.text.SimpleDateFormat;
@@ -958,6 +957,7 @@ public class ALDefaultSocialApplicationHanlder extends
           timeline.setTimelineType(EipTTimeline.TIMELINE_TYPE_ACTIVITY);
           timeline.setParams(new SimpleDateFormat("yyyyMMdd").format(cal
             .getTime()));
+          timeline.setPinned("F");
           // 作成日
           timeline.setCreateDate(tCal.getTime());
           // 更新日
@@ -985,11 +985,6 @@ public class ALDefaultSocialApplicationHanlder extends
           Calendar cal2 = Calendar.getInstance();
           cal2.add(Calendar.DAY_OF_MONTH, -limit2);
 
-          Database.query(EipTTimelineMap.class).where(
-            Operations.lt(EipTTimelineMap.EIP_TTIMELINE_PROPERTY
-              + "."
-              + EipTTimeline.UPDATE_DATE_PROPERTY, cal2.getTime())).deleteAll();
-
           // 親データ再検索
           tQuery = Database.query(EipTTimeline.class);
           tQuery.andQualifier(exp1.andExp(exp2.andExp(exp3.andExp(exp4.andExp(
@@ -1015,7 +1010,8 @@ public class ALDefaultSocialApplicationHanlder extends
             .getAppId());
         exp4 =
           ExpressionFactory.matchExp(EipTTimeline.EXTERNAL_ID_PROPERTY, request
-            .getExternalId());
+            .getExternalId()
+            .toString());
         tQuery = Database.query(EipTTimeline.class);
         tQuery.andQualifier(exp1.andExp(exp2.andExp(exp3.andExp(exp4))));
         // tQuery.andQualifier(exp3);
@@ -1053,6 +1049,7 @@ public class ALDefaultSocialApplicationHanlder extends
           timeline.setNote(request.getTitle());
           timeline.setTimelineType(EipTTimeline.TIMELINE_TYPE_ACTIVITY);
           timeline.setParams(request.getPortletParams());
+          timeline.setPinned("F");
           // 作成日
           timeline.setCreateDate(tCal.getTime());
           // 更新日

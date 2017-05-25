@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2011 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -75,9 +75,6 @@ public class TestFormData extends ALAbstractFormData {
   /** logger */
   private static final JetspeedLogger logger = JetspeedLogFactoryService
     .getLogger(TestFormData.class.getName());
-
-  /** URL**/
-  private ALStringField url;
 
   /** タイトル */
   private ALStringField test_name;
@@ -181,11 +178,6 @@ public class TestFormData extends ALAbstractFormData {
     note = new ALStringField();
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
-
-    //URL
-    url = new ALStringField();
-    url.setFieldName(ALLocalizationUtils.getl10n("TEST_URL"));
-    url.setTrim(false);
   }
 
 
@@ -201,9 +193,6 @@ public class TestFormData extends ALAbstractFormData {
     test_name.limitMaxLength(50);
     // メモの文字数制限
     note.limitMaxLength(1000);
-
-    //URLの半角のみ受付
-    url.setCharacterType(ALStringField.TYPE_ASCII);
     // 担当者ID必須項目
     user_id.setNotNull(true);
   }
@@ -228,8 +217,6 @@ public class TestFormData extends ALAbstractFormData {
     boolean isStartDate = false;
     // タイトル
     test_name.validate(msgList);
-    //URL
-    url.validate(msgList);
     // メモ
     note.validate(msgList);
 
@@ -260,9 +247,6 @@ public class TestFormData extends ALAbstractFormData {
 
       // メモ
       note.setValue(test.getNote());
-
-      //URL
-      url.setValue(test.getUrl());
 
       // 担当者
       user_id.setValue(test.getTurbineUser().getUserId());
@@ -345,9 +329,6 @@ public class TestFormData extends ALAbstractFormData {
       // メモ
       test.setNote(note.getValue());
 
-      //URL
-      test.setUrl(url.getValue());
-
       // 作成日
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
@@ -416,8 +397,6 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
       // メモ
       test.setNote(note.getValue());
-      //URL
-      test.setUrl(url.getValue());
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
       // Test を更新
@@ -464,14 +443,6 @@ public class TestFormData extends ALAbstractFormData {
    */
   public ALStringField getNote() {
     return note;
-  }
-
-  /**
-   * URLを取得します。
-   * @return
-   */
-  public ALStringField getUrl(){
-	  return url;
   }
 
 

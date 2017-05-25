@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,6 +28,7 @@ import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.fileupload.beans.FileuploadBean;
+import com.aimluck.eip.services.orgutils.ALOrgUtilsService;
 import com.aimluck.eip.util.ALEipUtils;
 
 /**
@@ -52,6 +53,8 @@ public class MessageResultData implements ALData, Serializable {
   private ALNumberField memberCount;
 
   private ALStringField message;
+
+  private ALStringField keyword;
 
   private ALDateTimeField createDate;
 
@@ -79,6 +82,7 @@ public class MessageResultData implements ALData, Serializable {
     message.setTrim(false);
     createDate = new ALDateTimeField();
     attachmentFileList = new ArrayList<FileuploadBean>();
+    keyword = new ALStringField();
   }
 
   /**
@@ -200,6 +204,13 @@ public class MessageResultData implements ALData, Serializable {
   }
 
   /**
+   * @return isOneMember
+   */
+  public boolean isOneMember() {
+    return memberCount.getValue() == 1;
+  }
+
+  /**
    * @param message
    *          セットする message
    */
@@ -215,7 +226,7 @@ public class MessageResultData implements ALData, Serializable {
   }
 
   public String getMessageHtml() {
-    return ALEipUtils.getMessageList(message.getValue());
+    return ALEipUtils.getMessageList(message.getValue(), keyword.getValue());
   }
 
   /**
@@ -276,6 +287,21 @@ public class MessageResultData implements ALData, Serializable {
   }
 
   /**
+   * @return keyword
+   */
+  public ALStringField getKeyword() {
+    return keyword;
+  }
+
+  /**
+   * @param keyword
+   *          セットする keyword
+   */
+  public void setKeyword(String keyword) {
+    this.keyword.setValue(keyword);
+  }
+
+  /**
    * @param attachmentFileList
    *          セットする attachmentFileList
    */
@@ -284,5 +310,20 @@ public class MessageResultData implements ALData, Serializable {
       attachmentFileList == null
         ? new ArrayList<FileuploadBean>(0)
         : attachmentFileList;
+  }
+
+  public ALStringField getDisplayName() {
+    ALStringField displayName = new ALStringField();
+
+    if (userId.getValue() < 4) {
+      displayName.setValue(ALOrgUtilsService.getAlias());
+    } else {
+      displayName.setValue(lastName.getValue() + " " + firstName.getValue());
+    }
+    return displayName;
+  }
+
+  public boolean isSystemUser() {
+    return userId.getValue() < 4;
   }
 }

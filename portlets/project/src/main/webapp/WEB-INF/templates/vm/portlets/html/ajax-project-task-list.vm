@@ -1,6 +1,6 @@
 #*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -96,6 +96,7 @@
         #AUIrowMTableWide()
         	<tr>
         		#ALtdhead("#ALajaxsort('task_name' $l10n.PROJECT_TASK_NAME $result 'ProjectTaskListScreen')")
+        		#ALtdheadAtt("#ALajaxsort('project_name' $l10n.PROJECT_NAME $result 'ProjectTaskListScreen')" "class='thin'")
         		#ALtdheadAtt("$l10n.PROJECT_CATEGORY" "class='thin'")
         		#ALtdheadAtt("#ALajaxsort('status' $l10n.PROJECT_STATUS $result 'ProjectTaskListScreen')" "class='thin'")
         		#ALtdheadAtt("$l10n.PROJECT_MEMBER" "class='wName'")
@@ -110,6 +111,11 @@
         		#ALtdcellheaderAtt('class="auiMTCaption"')
         		<div>
         			$!record.IndentString<a href="javascript:void(0);" onclick="aipo.common.showDialog('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","ProjectTaskDetailScreen").addQueryData("entityid",$record.TaskId))');" style="display:inline;">$!record.TaskNameHtml</a>
+        		</div>
+        		#ALtdcellfooter()
+        		#ALtdcellheader()
+        		<div>
+        			$!record.IndentString<a href="javascript:void(0);" onclick="aipo.common.showDialog('$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","ProjectDetailScreen").addQueryData("entityid",$record.ProjectId))');" style="display:inline;">$!record.ProjectNameHtml</a>
         		</div>
         		#ALtdcellfooter()
         		#ALtdcellAtt("$!record.TrackerString" 'nowrap="nowrap" class="mb_hide"')
@@ -160,7 +166,7 @@
 #AUIcontentsAreaFooter()
 #if($result.AllProject && $result.AllProject.size() > 0)
 <img src="images/common/dot.gif" width="1" height="1" alt="" onload='if(dojo.byId("filters_$!{portlet.ID}").offsetWidth != 0) {dojo.byId("q$!{portlet.ID}").style.paddingLeft=dojo.byId("filters_$!{portlet.ID}").offsetWidth+"px";} if(dojo.isIE){ dojo.byId("q$!{portlet.ID}").style.width=480-dojo.byId("filters_$!{portlet.ID}").offsetWidth+"px"; }' />
-<div class="menubar multi" id="menubar_auiFilter_$!portlet.ID" style="width:520px; display:none;">
+<div class="menubar multi column4" id="menubar_auiFilter_$!portlet.ID" style="display:none;">
   <div>
 	<p class="caption">$l10n.PROJECT_MEMBER</p>
     <ul class="filtertype filtertype_$!portlet.ID" data-type="target_user_id" data-defaultparam="">

@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,9 @@ import static com.aimluck.eip.util.ALLocalizationUtils.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -42,10 +44,11 @@ import com.aimluck.eip.cayenne.om.portlet.EipTMessageRoomMember;
 import com.aimluck.eip.cayenne.om.security.TurbineUser;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
+import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.common.ALEipUser;
 import com.aimluck.eip.common.ALPageNotFoundException;
-import com.aimluck.eip.common.ALPermissionException;
 import com.aimluck.eip.fileupload.beans.FileuploadLiteBean;
+import com.aimluck.eip.fileupload.util.FileuploadMinSizeException;
 import com.aimluck.eip.fileupload.util.FileuploadUtils;
 import com.aimluck.eip.fileupload.util.FileuploadUtils.ShrinkImageSet;
 import com.aimluck.eip.message.util.MessageUtils;
@@ -64,6 +67,12 @@ public class MessageRoomFormData extends ALAbstractFormData {
   private static final JetspeedLogger logger = JetspeedLogFactoryService
     .getLogger(MessageRoomFormData.class.getName());
 
+  /** プロフィール画像バリデートのサイズ(横幅) */
+  public static final int DEF_PHOTO_VALIDATE_WIDTH = 200;
+
+  /** プロフィール画像バリデートのサイズ(縦幅) */
+  public static final int DEF_PHOTO_VALIDATE_HEIGHT = 200;
+
   private ALStringField members;
 
   private ALStringField name;
@@ -71,6 +80,12 @@ public class MessageRoomFormData extends ALAbstractFormData {
   private List<ALEipUser> memberList;
 
   private ALEipUser login_user;
+
+  private boolean login_user_room_auth = true;
+
+  private boolean isDesktopNotification = true;
+
+  private boolean isMobileNotification = true;
 
   private FileuploadLiteBean filebean = null;
 
@@ -80,7 +95,14 @@ public class MessageRoomFormData extends ALAbstractFormData {
 
   private byte[] facePhoto_smartphone;
 
+  private boolean photo_vali_flag = false;
+
   private int roomId;
+
+  private boolean isGroup = true;
+
+  /** 1ルームの最大人数 **/
+  private final int MAX_ROOM_MEMBER = 300;
 
   @Override
   public void init(ALAction action, RunData rundata, Context context)
@@ -99,13 +121,14 @@ public class MessageRoomFormData extends ALAbstractFormData {
   @Override
   public void initField() {
     name = new ALStringField();
+    name.setFieldName(getl10n("MESSAGE_ROOM_NAME"));
     members = new ALStringField();
     members.setTrim(true);
     memberList = new ArrayList<ALEipUser>();
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -121,8 +144,19 @@ public class MessageRoomFormData extends ALAbstractFormData {
       try {
 
         String memberNames[] = rundata.getParameters().getStrings("member_to");
+        String memberAuthorities[] =
+          rundata.getParameters().getStrings("member_authority_to");
+        String desktopNotification =
+          rundata.getParameters().getString("desktop_notification");
+        String mobileNotification =
+          rundata.getParameters().getString("mobile_notification");
+
+        EipTMessageRoom room = MessageUtils.getRoom(rundata, context);
         memberList.clear();
-        if (memberNames != null && memberNames.length > 0) {
+        if (memberNames != null
+          && memberNames.length > 0
+          && memberAuthorities != null
+          && memberNames.length == memberAuthorities.length) {
           SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
           Expression exp =
             ExpressionFactory.inExp(
@@ -130,10 +164,65 @@ public class MessageRoomFormData extends ALAbstractFormData {
               memberNames);
           query.setQualifier(exp);
           memberList.addAll(ALEipUtils.getUsersFromSelectQuery(query));
+          Map<String, String> authMap = new HashMap<String, String>();
+          Map<String, String> desktopNotificationMap =
+            new HashMap<String, String>();
+          Map<String, String> mobileNotificationMap =
+            new HashMap<String, String>();
+
+          for (int i = 0; i < memberNames.length; i++) {
+            authMap.put(memberNames[i], memberAuthorities[i]);
+          }
+          for (ALEipUser member : memberList) {
+            member.setAuthority(authMap.get(member.getName().getValue()));
+          }
+
+          if (room != null) {
+            @SuppressWarnings("unchecked")
+            List<EipTMessageRoomMember> roomMemberList =
+              room.getEipTMessageRoomMember();
+
+            // ルームメンバーの通知設定をセット
+            for (EipTMessageRoomMember member : roomMemberList) {
+              desktopNotificationMap.put(member.getLoginName(), member
+                .getDesktopNotification());
+              mobileNotificationMap.put(member.getLoginName(), member
+                .getMobileNotification());
+            }
+            for (ALEipUser member : memberList) {
+              if (desktopNotificationMap.containsKey(member
+                .getName()
+                .getValue())) {
+                member.setDesktopNotification(desktopNotificationMap.get(member
+                  .getName()
+                  .getValue()));
+              }
+              if (mobileNotificationMap
+                .containsKey(member.getName().getValue())) {
+                member.setMobileNotification(mobileNotificationMap.get(member
+                  .getName()
+                  .getValue()));
+              }
+            }
+          }
+
+          // ログインユーザーの通知設定をセット
+          for (ALEipUser member : memberList) {
+            if (member.getUserId().getValueWithInt() == login_user
+              .getUserId()
+              .getValueWithInt()) {
+              if (desktopNotification != null
+                && !"".equals(desktopNotification)) {
+                member.setDesktopNotification(desktopNotification);
+              }
+              if (mobileNotification != null && !"".equals(mobileNotification)) {
+                member.setMobileNotification(mobileNotification);
+              }
+            }
+          }
+
         }
-        if (memberList.size() == 0) {
-          memberList.add(login_user);
-        }
+        roomId = rundata.getParameters().getInteger(ALEipConstants.ENTITY_ID);
 
         List<FileuploadLiteBean> fileBeanList =
           FileuploadUtils.getFileuploadList(rundata);
@@ -149,10 +238,12 @@ public class MessageRoomFormData extends ALAbstractFormData {
                 ALEipUtils.getUserId(rundata),
                 filebean,
                 acceptExts,
-                FileuploadUtils.DEF_THUMBNAIL_WIDTH,
-                FileuploadUtils.DEF_THUMBNAIL_HEIGHT,
+                FileuploadUtils.DEF_LARGE_THUMBNAIL_WIDTH,
+                FileuploadUtils.DEF_LARGE_THUMBNAIL_HEIGHT,
                 msgList,
-                false);
+                false,
+                DEF_PHOTO_VALIDATE_WIDTH,
+                DEF_PHOTO_VALIDATE_HEIGHT);
             if (bytesShrinkFilebean != null) {
               facePhoto = bytesShrinkFilebean.getShrinkImage();
             }
@@ -164,10 +255,12 @@ public class MessageRoomFormData extends ALAbstractFormData {
                 ALEipUtils.getUserId(rundata),
                 filebean,
                 acceptExts,
-                FileuploadUtils.DEF_THUMBNAIL_WIDTH_SMARTPHONE,
-                FileuploadUtils.DEF_THUMBNAIL_HEIGHT_SMARTPHONE,
+                FileuploadUtils.DEF_NORMAL_THUMBNAIL_WIDTH,
+                FileuploadUtils.DEF_NORMAL_THUMBNAIL_HEIGHT,
                 msgList,
-                false);
+                false,
+                DEF_PHOTO_VALIDATE_WIDTH,
+                DEF_PHOTO_VALIDATE_HEIGHT);
             if (bytesShrinkFilebean2 != null) {
               facePhoto_smartphone = bytesShrinkFilebean2.getShrinkImage();
             }
@@ -176,6 +269,21 @@ public class MessageRoomFormData extends ALAbstractFormData {
             facePhoto_smartphone = null;
           }
         }
+
+        if (room != null) {
+          login_user_room_auth =
+            MessageUtils.hasAuthorityRoom(room, (int) login_user
+              .getUserId()
+              .getValue());
+          if ("O".equals(room.getRoomType())) {
+            login_user_room_auth = true;
+            isGroup = false;
+          }
+        }
+
+      } catch (FileuploadMinSizeException ex) {
+        // ignore
+        photo_vali_flag = true;
       } catch (Exception ex) {
         logger.error("MessageRoomFormData.setFormData", ex);
       }
@@ -190,6 +298,8 @@ public class MessageRoomFormData extends ALAbstractFormData {
   @Override
   protected void setValidator() throws ALPageNotFoundException,
       ALDBErrorException {
+    name.limitMaxLength(50);
+
   }
 
   /**
@@ -201,18 +311,38 @@ public class MessageRoomFormData extends ALAbstractFormData {
   @Override
   protected boolean validate(List<String> msgList)
       throws ALPageNotFoundException, ALDBErrorException {
-    if (memberList.size() < 2) {
-      msgList.add(getl10n("MESSAGE_VALIDATE_ROOM_MEMBER1"));
+
+    // ログインユーザーに権限がない場合、またRoomTypeがOの場合、通知設定以外の値の検証は不要
+    if (!login_user_room_auth || !isGroup) {
+      return true;
     }
-    boolean hasOwn = false;
+
+    boolean hasAuthority = false;
+
     for (ALEipUser user : memberList) {
       if (user.getUserId().getValue() == login_user.getUserId().getValue()) {
-        hasOwn = true;
+        if ("A".equals(user.getAuthority().getValue())) {
+          hasAuthority = true;
+        }
       }
     }
-    if (!hasOwn) {
-      msgList.add(getl10n("MESSAGE_VALIDATE_ROOM_MEMBER2"));
+
+    if (memberList.size() < 1) {
+      msgList.add(getl10n("MESSAGE_VALIDATE_ROOM_MEMBER1"));
     }
+    if (!hasAuthority) {
+      msgList.add(getl10n("MESSAGE_VALIDATE_ROOM_MEMBER3"));
+    }
+    if (memberList.size() > MAX_ROOM_MEMBER) {
+      msgList.add(ALLocalizationUtils.getl10nFormat(
+        "MESSAGE_VALIDATE_ROOM_MEMBER5",
+        MAX_ROOM_MEMBER));
+    }
+    if (photo_vali_flag) {
+      msgList.add(ALLocalizationUtils
+        .getl10nFormat("MESSAGE_VALIDATE_ROOM_PHOTO_SIZE"));
+    }
+    name.validate(msgList);
     return msgList.size() == 0;
   }
 
@@ -229,14 +359,21 @@ public class MessageRoomFormData extends ALAbstractFormData {
       List<String> msgList) throws ALPageNotFoundException, ALDBErrorException {
     try {
       EipTMessageRoom room = MessageUtils.getRoom(rundata, context);
-      if (room == null || "O".equals(room.getRoomType())) {
+
+      if (room == null) {
         throw new ALPageNotFoundException();
       }
-      if (!MessageUtils.isJoinRoom(room, (int) login_user
-        .getUserId()
-        .getValue())) {
-        throw new ALPermissionException();
+
+      login_user_room_auth =
+        MessageUtils.hasAuthorityRoom(room, (int) login_user
+          .getUserId()
+          .getValue());
+
+      if ("O".equals(room.getRoomType())) {
+        login_user_room_auth = true;
+        isGroup = false;
       }
+
       if ("F".equals(room.getAutoName())) {
         name.setValue(room.getName());
       }
@@ -245,12 +382,34 @@ public class MessageRoomFormData extends ALAbstractFormData {
       List<String> memberNames = new ArrayList<String>();
       for (EipTMessageRoomMember member : members) {
         memberNames.add(member.getLoginName());
+
+        if (member.getUserId().intValue() == login_user
+          .getUserId()
+          .getValueWithInt()) {
+          if (member.getDesktopNotification() != null
+            && member.getMobileNotification() != null) {
+            isDesktopNotification = member.getDesktopNotification().equals("A");
+            isMobileNotification = member.getMobileNotification().equals("A");
+          }
+        }
       }
       SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
       Expression exp =
         ExpressionFactory.inExp(TurbineUser.LOGIN_NAME_PROPERTY, memberNames);
       query.setQualifier(exp);
       memberList.addAll(ALEipUtils.getUsersFromSelectQuery(query));
+
+      List<String> membersHasAuthority = new ArrayList<String>();
+      for (EipTMessageRoomMember member : members) {
+        if ("A".equals(member.getAuthority())) {
+          membersHasAuthority.add(member.getLoginName());
+        }
+      }
+      for (ALEipUser member : memberList) {
+        if (membersHasAuthority.contains(member.getName().getValue())) {
+          member.setAuthority("A");
+        }
+      }
 
       if (room.getPhoto() != null) {
         filebean = new FileuploadLiteBean();
@@ -302,6 +461,9 @@ public class MessageRoomFormData extends ALAbstractFormData {
         map.setTargetUserId(1);
         map.setUserId(Integer.valueOf(userid));
         map.setLoginName(user.getName().getValue());
+        map.setAuthority(user.getAuthority().getValue());
+        map.setDesktopNotification(user.getDesktopNotification().getValue());
+        map.setMobileNotification(user.getMobileNotification().getValue());
         if (!isFirst) {
           autoName.append(",");
         }
@@ -327,7 +489,7 @@ public class MessageRoomFormData extends ALAbstractFormData {
         model.setPhotoSmartphone(facePhoto_smartphone);
         model.setPhoto(facePhoto);
         model.setPhotoModified(new Date());
-        model.setHasPhoto("T");
+        model.setHasPhoto("N");
       } else {
         model.setHasPhoto("F");
       }
@@ -358,68 +520,88 @@ public class MessageRoomFormData extends ALAbstractFormData {
       List<String> msgList) throws ALPageNotFoundException, ALDBErrorException {
 
     try {
+
       EipTMessageRoom model = MessageUtils.getRoom(rundata, context);
+
       if (model == null) {
         return false;
       }
-      if (!MessageUtils.isJoinRoom(model, (int) login_user
-        .getUserId()
-        .getValue())) {
-        msgList.add(getl10n("MESSAGE_VALIDATE_ROOM_ACCESS_DENIED"));
-        return false;
-      }
 
-      Date now = new Date();
-
-      Database.deleteAll(model.getEipTMessageRoomMember());
-
-      boolean isFirst = true;
-      StringBuilder autoName = new StringBuilder();
-      for (ALEipUser user : memberList) {
-        EipTMessageRoomMember map =
-          Database.create(EipTMessageRoomMember.class);
-        int userid = (int) user.getUserId().getValue();
-        map.setEipTMessageRoom(model);
-        map.setTargetUserId(1);
-        map.setUserId(Integer.valueOf(userid));
-        map.setLoginName(user.getName().getValue());
-        if (!isFirst) {
-          autoName.append(",");
+      // ログインユーザーに権限がない場合、またRoomTypeがOの場合、通知設定のみ更新
+      if (!login_user_room_auth || !isGroup) {
+        EipTMessageRoomMember currentMember =
+          MessageUtils.getRoomMember(roomId, login_user
+            .getUserId()
+            .getValueWithInt());
+        for (ALEipUser user : memberList) {
+          if (user.getUserId().getValueWithInt() == login_user
+            .getUserId()
+            .getValueWithInt()) {
+            currentMember.setDesktopNotification(user
+              .getDesktopNotification()
+              .getValue());
+            currentMember.setMobileNotification(user
+              .getMobileNotification()
+              .getValue());
+          }
         }
-        autoName.append(user.getAliasName().getValue());
-        isFirst = false;
-      }
-
-      if (StringUtils.isEmpty(name.getValue())) {
-        model.setAutoName("T");
-        model.setName(autoName.toString());
       } else {
-        model.setAutoName("F");
-        model.setName(name.getValue());
-      }
 
-      model.setRoomType("G");
-      model.setUpdateDate(now);
+        Date now = new Date();
 
-      if (filebean != null && filebean.getFileId() != 0) {
-        model.setPhotoSmartphone(facePhoto_smartphone);
-        model.setPhoto(facePhoto);
-        model.setPhotoModified(new Date());
-        model.setHasPhoto("T");
-      }
+        Database.deleteAll(model.getEipTMessageRoomMember());
 
-      if (filebean != null) {
-        if (filebean.getFileId() != 0) {
-          model.setPhoto(facePhoto);
+        boolean isFirst = true;
+        StringBuilder autoName = new StringBuilder();
+        for (ALEipUser user : memberList) {
+          EipTMessageRoomMember map =
+            Database.create(EipTMessageRoomMember.class);
+          int userid = (int) user.getUserId().getValue();
+          map.setEipTMessageRoom(model);
+          map.setTargetUserId(1);
+          map.setUserId(Integer.valueOf(userid));
+          map.setLoginName(user.getName().getValue());
+          map.setAuthority(user.getAuthority().getValue());
+          map.setDesktopNotification(user.getDesktopNotification().getValue());
+          map.setMobileNotification(user.getMobileNotification().getValue());
+          if (!isFirst) {
+            autoName.append(",");
+          }
+          autoName.append(user.getAliasName().getValue());
+          isFirst = false;
+        }
+
+        if (StringUtils.isEmpty(name.getValue())) {
+          model.setAutoName("T");
+          model.setName(autoName.toString());
+        } else {
+          model.setAutoName("F");
+          model.setName(name.getValue());
+        }
+
+        model.setRoomType("G");
+        model.setUpdateDate(now);
+
+        if (filebean != null && filebean.getFileId() != 0) {
           model.setPhotoSmartphone(facePhoto_smartphone);
+          model.setPhoto(facePhoto);
           model.setPhotoModified(new Date());
-          model.setHasPhoto("T");
+          model.setHasPhoto("N");
         }
-      } else {
-        model.setPhoto(null);
-        model.setPhotoSmartphone(null);
-        model.setPhotoModified(null);
-        model.setHasPhoto("F");
+
+        if (filebean != null) {
+          if (filebean.getFileId() != 0) {
+            model.setPhoto(facePhoto);
+            model.setPhotoSmartphone(facePhoto_smartphone);
+            model.setPhotoModified(new Date());
+            model.setHasPhoto("N");
+          }
+        } else {
+          model.setPhoto(null);
+          model.setPhotoSmartphone(null);
+          model.setPhotoModified(null);
+          model.setHasPhoto("F");
+        }
       }
 
       Database.commit();
@@ -450,6 +632,12 @@ public class MessageRoomFormData extends ALAbstractFormData {
       if (model == null) {
         return false;
       }
+      if (!MessageUtils.hasAuthorityRoom(model, (int) login_user
+        .getUserId()
+        .getValue())) {
+        msgList.add(getl10n("MESSAGE_VALIDATE_ROOM_AUTHORITY_DENIED"));
+        return false;
+      }
       List<EipTMessageFile> files =
         MessageUtils.getEipTMessageFilesByRoom(model.getRoomId());
 
@@ -459,7 +647,6 @@ public class MessageRoomFormData extends ALAbstractFormData {
         files);
 
       Database.delete(model);
-
       Database.commit();
     } catch (Throwable t) {
       Database.rollback();
@@ -485,6 +672,22 @@ public class MessageRoomFormData extends ALAbstractFormData {
     return filebean;
   }
 
+  public boolean hasAuth() {
+    return login_user_room_auth;
+  }
+
+  public boolean isDesktopNotification() {
+    return isDesktopNotification;
+  }
+
+  public boolean isMobileNotification() {
+    return isMobileNotification;
+  }
+
+  public boolean isGroup() {
+    return isGroup;
+  }
+
   public List<FileuploadLiteBean> getAttachmentFileNameList() {
     if (filebean == null) {
       return null;
@@ -492,6 +695,17 @@ public class MessageRoomFormData extends ALAbstractFormData {
     ArrayList<FileuploadLiteBean> list = new ArrayList<FileuploadLiteBean>();
     list.add(filebean);
     return list;
+  }
+
+  /**
+   * ファイルアップロードアクセス権限チェック用メソッド。<br />
+   * ファイルアップのアクセス権限をチェックするかどうかを判定します。
+   *
+   * @return
+   */
+  @Override
+  public boolean isCheckAttachmentAuthority() {
+    return false;
   }
 
 }

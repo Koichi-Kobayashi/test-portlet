@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ import com.aimluck.eip.timeline.TimelineLikeFormData;
 
 /**
  * タイムラインをJSONデータとして出力するクラスです。
- * 
+ *
  */
 public class TimelineJSONScreen extends ALJSONScreen {
 
@@ -98,6 +98,17 @@ public class TimelineJSONScreen extends ALJSONScreen {
         formData.setTimeline_id(entityId);
 
         if (formData.doDelete(this, rundata, context)) {
+        } else {
+          JSONArray json =
+            JSONArray
+              .fromObject(context.get(ALEipConstants.ERROR_MESSAGE_LIST));
+          result = json.toString();
+        }
+      } else if (mode.equals("dispin") || mode.equals("setpin")) {
+        TimelineFormData formData = new TimelineFormData();
+        formData.initField();
+        formData.setParentId(entityId);
+        if (formData.doPin(this, rundata, context, mode)) {
         } else {
           JSONArray json =
             JSONArray

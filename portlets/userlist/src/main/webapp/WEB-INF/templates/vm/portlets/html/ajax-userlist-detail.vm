@@ -1,6 +1,6 @@
 #*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@
 ## ---------------------------------------------------------------------------
 #ALajaxIndicator("$indicator_id" "$!portlet.ID" "")
 <div id="messageDiv"></div>
+
+#ALphotoheader()
+#AUIPooupHasPhoto($!result false)
+#ALPooupName($!result $!portlet false)
+#ALphotofooter()
+
 #ALtableheaderWide()
-#ALtdcaption($l10n.USERLIST_NAME)
-#ALtditemheader()
-<a href="javascript: void(0)" onclick="aipo.message.popupProfile(${result.Detail.UserId},arguments[0])">$!result.Detail.Name</a>
-#ALtditemfooter()
-#ALtdcaption($l10n.USERLIST_NAME_KANA)
-#ALtditem($result.getStringCR($!result.Detail.NameKana))
 #ALtdcaption($l10n.USERLIST_EMAIL)
 #ALtditem($result.getStringCR($!result.Detail.Email))
 #ALtdcaption($l10n.USERLIST_OUT_TELEPHONE)
@@ -39,14 +39,6 @@
 #ALtditem("#ALtelLink($!result.Detail.CellularPhone $!utils.replaceToTelLink($!result.Detail.CellularPhone.toString()))")
 #ALtdcaption($l10n.USERLIST_CELLULAR_MAIL)
 #ALtditem($result.getStringCR($!result.Detail.CellularMail))
-#ALtdcaption($l10n.USERLIST_PHOTO)
-#ALtditemheader()
-#if($!{result.Detail.hasPhoto()})
-<img class="avatar" src="?template=FileuploadFacePhotoScreen&uid=$!{result.Detail.UserId}&t=$!{result.Detail.PhotoModified}" alt="$l10n.USERLIST_PHOTO" align="absmiddle" />
-#else
-$l10n.USERLIST_NOT_CREATE
-#end
-#ALtditemfooter()
 #ALtdcaption($l10n.USERLIST_POST_NAME)
 #ALtditemheader()
 #foreach($record in $!result.Detail.getPostNameList())
@@ -55,6 +47,8 @@ $!record <br />
 #ALtditemfooter()
 #ALtdcaption($l10n.USERLIST_POSITION_NAME)
 #ALtditem($result.getStringCR($!result.Detail.PositionName))
+#ALtdcaption($l10n.USERLIST_CODE)
+#ALtditem($result.getStringCR($!result.Detail.Code))
 #ALtablefooter()
 #ALbuttonheader()
 #ALajaxbuttonClose()

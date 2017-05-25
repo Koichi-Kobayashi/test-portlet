@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -362,6 +362,9 @@ aipo.webmail.createSelect = function(selectid, divid, url, keyname, keymail, sel
                 html += '';
             } else {
                 html += pre;
+            }
+            if (aipo.userAgent.isIphone9or10()){
+            	html += '<optgroup disabled class="dummy" style="display: none;"></optgroup>';
             }
             dojo.forEach(respodatanse, function(p) {
                 if(typeof p[keyname] == "undefined" || typeof p[keymail] == "undefined") {

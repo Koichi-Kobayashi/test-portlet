@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -84,7 +84,7 @@ import com.aimluck.eip.util.ALLocalizationUtils;
 
 /**
  * 報告書のユーティリティクラスです。 <BR>
- * 
+ *
  */
 public class ReportUtils {
 
@@ -128,7 +128,7 @@ public class ReportUtils {
 
   /**
    * トピックオブジェクトモデルを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param isJoin
@@ -180,7 +180,7 @@ public class ReportUtils {
 
   /**
    * 返信記事オブジェクトモデルを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param isSuperUser
@@ -337,8 +337,28 @@ public class ReportUtils {
   }
 
   /**
+   * Report オブジェクトモデルのIDを取得します。 <BR>
+   *
+   * @param rundata
+   * @param context
+   * @return
+   */
+  public static Integer getEipTReportId(RunData rundata, Context context) {
+    String requestid =
+      ALEipUtils.getTemp(rundata, context, ALEipConstants.ENTITY_ID);
+    Integer id = null;
+    if (requestid == null || (id = Integer.valueOf(requestid)) == null) {
+      // Request IDが空の場合
+      logger.debug("[ReportUtils] Empty ID...");
+      return null;
+    } else {
+      return id;
+    }
+  }
+
+  /**
    * Report オブジェクトモデルを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param mode_update
@@ -380,7 +400,7 @@ public class ReportUtils {
 
   /**
    * Report オブジェクトモデルを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param mode_update
@@ -406,7 +426,7 @@ public class ReportUtils {
 
   /**
    * ファイルオブジェクトモデルを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -443,7 +463,7 @@ public class ReportUtils {
 
   /**
    * マップオブジェクトモデルを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -473,7 +493,7 @@ public class ReportUtils {
 
   /**
    * マップオブジェクトモデルを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -503,7 +523,7 @@ public class ReportUtils {
 
   /**
    * マップオブジェクトモデルを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -535,7 +555,7 @@ public class ReportUtils {
 
   /**
    * ユーザ毎のルート保存先（絶対パス）を取得します。
-   * 
+   *
    * @param uid
    * @return
    */
@@ -547,7 +567,7 @@ public class ReportUtils {
 
   /**
    * ユーザ毎の保存先（相対パス）を取得します。
-   * 
+   *
    * @param uid
    * @return
    */
@@ -594,7 +614,7 @@ public class ReportUtils {
 
   /**
    * 表示切り替えのリセットフラグがあるかを返す．
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -608,10 +628,11 @@ public class ReportUtils {
     List<String> list = new ArrayList<String>();
     list.add("entityid");
     list.add("submenu");
-    list.add("com.aimluck.eip.report.ReportSelectDatasort");
-    list.add("com.aimluck.eip.report.ReportSelectDatasorttype");
-    list.add("com.aimluck.eip.report.ReportSelectDatafiltertype");
-    list.add("com.aimluck.eip.report.ReportSelectDatafilter");
+    list.add("ReportSelectDatasort");
+    list.add("ReportSelectDatasorttype");
+    list.add("ReportSelectDatafiltertype");
+    list.add("ReportSelectDatafilter");
+    list.add(TARGET_KEYWORD);
     ALEipUtils.removeTemp(rundata, context, list);
   }
 
@@ -635,7 +656,7 @@ public class ReportUtils {
 
   /**
    * ファイル検索のクエリを返します
-   * 
+   *
    * @param requestid
    *          ファイルを検索するリクエストのid
    * @return query
@@ -653,7 +674,7 @@ public class ReportUtils {
 
   /**
    * 子のレポート検索のクエリを返します
-   * 
+   *
    * @param requestid
    *          レポートを検索するリクエストのid
    * @return query
@@ -669,7 +690,7 @@ public class ReportUtils {
 
   /**
    * 添付ファイルを取得します。
-   * 
+   *
    * @param uid
    * @return
    */
@@ -798,7 +819,7 @@ public class ReportUtils {
 
   /**
    * Date のオブジェクトを指定した形式の文字列に変換する．
-   * 
+   *
    * @param date
    * @param dateFormat
    * @return
@@ -816,7 +837,7 @@ public class ReportUtils {
 
   /**
    * 返信記事オブジェクトモデルを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param isSuperUser
@@ -862,7 +883,7 @@ public class ReportUtils {
 
   /**
    * アクティビティを通知先・社内参加者の「あなた宛のお知らせ」に表示させる
-   * 
+   *
    * @param report
    * @param loginName
    * @param recipients
@@ -907,7 +928,7 @@ public class ReportUtils {
 
   /**
    * アクティビティを通知先・社内参加者の「あなた宛のお知らせ」に表示させる（返信用）
-   * 
+   *
    * @param report
    * @param loginName
    * @param recipients
@@ -951,7 +972,7 @@ public class ReportUtils {
 
   /**
    * パソコンへ送信するメールの内容を作成する．
-   * 
+   *
    * @return
    */
   public static String createMsgForPc(RunData rundata, EipTReport report,
@@ -1057,7 +1078,7 @@ public class ReportUtils {
 
   /**
    * 携帯電話へ送信するメールの内容を作成する．
-   * 
+   *
    * @return
    */
   public static String createMsgForCellPhone(RunData rundata,
@@ -1163,7 +1184,7 @@ public class ReportUtils {
 
   /**
    * パソコンへ送信するメールの内容を作成する（返信用）．
-   * 
+   *
    * @return
    */
   public static String createReplyMsgForPc(RunData rundata, EipTReport report,
@@ -1236,7 +1257,7 @@ public class ReportUtils {
 
   /**
    * 携帯電話へ送信するメールの内容を作成する（返信用）．
-   * 
+   *
    * @return
    */
   public static String createReplyMsgForCellPhone(RunData rundata,
@@ -1294,7 +1315,7 @@ public class ReportUtils {
 
   /**
    * フィルターを初期化する．
-   * 
+   *
    * @param rundata
    * @param context
    * @param className
@@ -1306,7 +1327,7 @@ public class ReportUtils {
 
   /**
    * 表示切り替えで指定した検索キーワードを取得する．
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -1328,7 +1349,7 @@ public class ReportUtils {
 
   /**
    * 報告書の通知メンバーに入っているか.
-   * 
+   *
    * @param rundata
    * @param context
    * @return

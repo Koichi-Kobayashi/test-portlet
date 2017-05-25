@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ import com.aimluck.eip.orm.query.Operations;
 import com.aimluck.eip.services.config.ALConfigHandler;
 
 /**
- * 
+ *
  */
 public class ALDefaultConfigHanlder extends ALConfigHandler {
 
@@ -47,7 +47,7 @@ public class ALDefaultConfigHanlder extends ALConfigHandler {
   }
 
   /**
-   * 
+   *
    * @param property
    * @return
    */
@@ -57,7 +57,7 @@ public class ALDefaultConfigHanlder extends ALConfigHandler {
   }
 
   /**
-   * 
+   *
    * @param property
    * @param value
    */
@@ -120,6 +120,7 @@ public class ALDefaultConfigHanlder extends ALConfigHandler {
       config.setValue(value);
       Database.commit();
     } catch (Throwable t) {
+      logger.error("ALDefaultConfigHanlder", t);
       Database.rollback();
       if (t instanceof CayenneRuntimeException) {
         throw (CayenneRuntimeException) t;

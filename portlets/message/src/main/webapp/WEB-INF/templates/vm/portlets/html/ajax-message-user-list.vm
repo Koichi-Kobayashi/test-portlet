@@ -1,6 +1,6 @@
 #*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -71,7 +71,7 @@
 		#if($!record.isHasPhoto())
 			<img src="$!utils.escapeXML($jslink.getTemplate("FileuploadFacePhotoScreen").addQueryData("uid", $!record.UserId).addQueryData("t", "$!record.PhotoModified"))" alt="$!record.LastName $!record.FirstName" class="avatar_s"/>
 		#else
-			<img src="images/common/avatar_default3.png" alt="$!record.LastName $!record.FirstName" class="avatar_s"/>
+			<img src="themes/default/images/common/icon_user100.png" alt="$!record.LastName $!record.FirstName" class="avatar_s"/>
 		#end
 		</span>
 		<span class="name">$!record.LastName $!record.FirstName</span>

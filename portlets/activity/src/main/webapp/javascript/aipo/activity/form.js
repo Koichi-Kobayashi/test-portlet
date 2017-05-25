@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -198,4 +198,26 @@ aipo.activity.setPostFilter = function(baseuri,filter,filtertype,portlet_id) {
 	var qs = [ [ "filter", params.join(",") ],
 			[ "filtertype", types.join(",") ], [ "keyword", q ? q.value : "" ] ];
 	aipo.viewPage(baseuri, portlet_id, qs);
+}
+
+
+aipo.activity.reminderoff = function(){
+    dojo.byId('remindernotifytype').style.display = "none";
+    dojo.byId('remindernotifytiming').style.display = "none";
+
+    aipo.activity.setWrapperHeight();
+}
+aipo.activity.reminderon = function(){
+	dojo.byId('remindernotifytype').style.display = "";
+	dojo.byId('remindernotifytiming').style.display = "";
+
+    aipo.activity.setWrapperHeight();
+}
+
+aipo.activity.setWrapperHeight = function() {
+	var modalDialog = document.getElementById('modalDialog');
+    if(modalDialog) {
+    	var wrapper = document.getElementById('wrapper');
+    	wrapper.style.minHeight = modalDialog.clientHeight + 'px';
+    }
 }

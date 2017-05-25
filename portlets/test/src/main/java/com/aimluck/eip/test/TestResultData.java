@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2011 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2011 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -42,10 +42,6 @@ public class TestResultData implements ALData {
   /** タイトル */
   private ALStringField test_name;
 
-  /**URL*/
-  private ALStringField url;
-
-
   /** メモ */
   private ALStringField note;
 
@@ -80,8 +76,6 @@ public class TestResultData implements ALData {
   public void initField() {
     test_id = new ALNumberField();
     test_name = new ALStringField();
-    url = new ALStringField();
-    url.setTrim(false);
     note = new ALStringField();
     note.setTrim(false);
     create_date = new ALStringField();
@@ -103,18 +97,6 @@ public class TestResultData implements ALData {
     return ALCommonUtils.replaceToAutoCR(test_name.toString());
   }
 
-  public String getUrl() {
-	  return url.getValue();
-  }
-  public String getUrl2(){
-	  return url.getValue();
-  }
-
-  public String getUrlDmain() throws Exception{
-      URI u = new URI(url.getValue());
-      return u.getScheme()+"://"+u.getHost();
-}
-
   /**
    * @param i
    */
@@ -127,10 +109,6 @@ public class TestResultData implements ALData {
    */
   public void setTestName(String string) {
     test_name.setValue(string);
-  }
-
-  public void setUrl(String string){
-	  url.setValue(string);
   }
 
   /**

@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ import com.aimluck.eip.schedule.util.ScheduleUtils;
 
 /**
  * 期間スケジュール用の月間スケジュールコンテナを取得します。
- * 
+ *
  */
 public class ScheduleTermMonthContainer implements ALData {
 
@@ -39,18 +39,19 @@ public class ScheduleTermMonthContainer implements ALData {
   private Calendar viewStartCal;
 
   /*
-   * 
+   *
    */
+  @Override
   public void initField() {
     map = new LinkedHashMap<Integer, List<ScheduleTermWeekContainer>>();
   }
 
   /**
    * 表示する月を設定します。
-   * 
+   *
    * @param cal
    */
-  public void setViewMonth(Calendar cal, Calendar vcal) {
+  public void setViewMonth(Calendar cal) {
     List<ScheduleTermWeekContainer> weekList;
     viewStartCal = Calendar.getInstance();
     viewStartCal.setTime(cal.getTime());
@@ -68,7 +69,7 @@ public class ScheduleTermMonthContainer implements ALData {
 
   /**
    * 期間スケジュールを追加します。
-   * 
+   *
    * @param count
    * @param rd
    */
@@ -92,7 +93,7 @@ public class ScheduleTermMonthContainer implements ALData {
 
   /**
    * 期間スケジュールコンテナを取得します。
-   * 
+   *
    * @param id
    * @return
    */

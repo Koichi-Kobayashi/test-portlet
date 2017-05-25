@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,8 +26,10 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.cayenne.om.portlet.EipTMessage;
+import com.aimluck.eip.cayenne.om.portlet.EipTMessageRoom;
 import com.aimluck.eip.common.ALEipUser;
 import com.aimluck.eip.message.util.MessageUtils;
+import com.aimluck.eip.services.orgutils.ALOrgUtilsService;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
 
@@ -68,13 +70,30 @@ public class MessageCheckJSONScreen extends ALJSONScreen {
         return json.toString();
       }
       if (MessageUtils.isJoinRoom(message, ALEipUtils.getUserId(rundata))) {
+        EipTMessageRoom room = message.getEipTMessageRoom();
+        ALEipUser login_user = ALEipUtils.getALEipUser(rundata);
+
+        boolean isDesktopNotification =
+          MessageUtils.isDesktopNotification(room, login_user
+            .getUserId()
+            .getValueWithInt());
+
         Integer userId = message.getUserId();
         ALEipUser user = ALEipUtils.getALEipUser(userId);
         json.put("messageId", messageId);
         json.put("userId", userId);
-        json.put("displayName", user.getAliasName().getValue());
-        json.put("text", ALCommonUtils
-          .compressString(message.getMessage(), 100));
+        if (isDesktopNotification) {
+          String displayName = "";
+          if (userId < 4) {
+            displayName = ALOrgUtilsService.getAlias();
+          } else {
+            displayName = user.getAliasName().getValue();
+          }
+          json.put("displayName", displayName);
+          json.put("text", ALCommonUtils.compressString(
+            message.getMessage(),
+            100));
+        }
         json.put("hasPhoto", user.hasPhoto());
         json.put("photoModified", user.getPhotoModified());
       }

@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -300,11 +300,11 @@ input[type=password] {
   line-height: 18px;
 }
 .auiMbTable .auiMTCaption {
-  display: block;
-  width: 100%;
-  margin: 0;
-  color: #1b1b1b;
-}
+   display: block;
+   width: 100%;
+   margin: 0;
+   color: #1b1b1b;
+ }
 .auiMbTable .auiMTCaption div {
   display: inline;
   margin: 0;
@@ -317,6 +317,22 @@ input[type=password] {
   line-height: 18px !important;
   margin: 0;
   color: #1b1b1b;
+  overflow: hidden;
+}
+.auiMbTable .auiSTCaption {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+.auiMbTable .auiSTCaption div {
+  display: inline;
+  margin: 0;
+  height: auto;
+  line-height: 1;
+}
+.auiMbTable .auiSTCaption a {
+  display: block;
+  margin: 0;
   overflow: hidden;
 }
 .auiMbTable .auiMTCheck ~ .auiMTCaption .auiIcon {
@@ -1569,6 +1585,10 @@ ul.hdCommunications .num {
 .modalDialog .subTable .caption {
   width: auto !important;
 }
+.modalDialog .listTable.detail td {
+  padding: 10px 0;
+  border-top: solid 1px #d2d2d2;
+}
 
 .memberlistToTop,
 .memberlistToBody,
@@ -1615,11 +1635,44 @@ ul.hdCommunications .num {
 .imgPopup img {
   width: 100%;
   height: auto;
+  max-width: none;
+  max-height: none;
 }
 
 .auiPopup iframe {
   max-width: 100% !important;
 }
+
+.auiPooupThumbnail {
+  position: relative;
+  padding-left: 110px;
+  margin-bottom: 10px;
+}
+.auiPooupThumbnail .avatar {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100px;
+  width: 100px;
+  border-radius: 3px;
+}
+.auiPooupThumbnail .auiPooupName {
+  min-height: 100px;
+  padding-top: 5px;
+}
+.auiPooupThumbnail .auiPooupName strong {
+  font-size: 18px;
+  display: block;
+}
+.auiPooupThumbnail .auiPooupName span {
+  display: block;
+  margin-top: 3px;
+  padding-left: 1px;
+}
+.auiPooupThumbnail .auiPooupName .auiButton {
+  margin-top: 15px;
+}
+
 /***************************************************
 	login
 --------------------------------------------------*/
@@ -2047,8 +2100,10 @@ table tr.caption {
 
 .filterTip {
   padding: 0 4px;
-  height: 26px !important;
-  line-height: 26px !important;
+  /*height: 26px !important;*/
+  /*line-height: 26px !important;*/
+  height: 32px !important;
+  line-height: 33px !important;
 }
 
 .filterTip > a {
@@ -2196,6 +2251,43 @@ div.weeklyTermRights div.weeklyTermRightR {
 }
 
 /***************************************************
+	memberPopupDiv_ver3　　20150715
+--------------------------------------------------*/
+.memberPopupDiv_ver3 {
+  margin: 10px 0px;
+}
+.memberPopupDiv_ver3 .memberPopupList {
+  height: auto;
+  overflow-y: inherit;
+}
+.memberPopupDiv_ver3 .memberPopupList li label {
+  padding: 5px 10px 5px 70px;
+  position: relative;
+}
+.memberPopupDiv_ver3 .memberPopupList li label input[type="checkbox"] {
+  position: absolute;
+  left: 7px;
+  top: 5px;
+}
+.memberPopupDiv_ver3 .memberPopupList li label .avatar {
+  position: absolute;
+  left: 25px;
+  top: 5px;
+}
+.memberPopupDiv_ver3 .memberPopupList li label select {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+.memberPopupDiv_ver3 .memberPopupList li label .name {
+  min-width: 0;
+  width: inherit;
+  float: none;
+  margin: 0;
+  white-space: normal;
+}
+
+/***************************************************
 	profilePopup
 --------------------------------------------------*/
 .profilePopupWrap {
@@ -2214,6 +2306,16 @@ div.weeklyTermRights div.weeklyTermRightR {
 }
 
 /***************************************************
+	scheduleBlock
+--------------------------------------------------*/
+table.scheduleBlock thead td{
+  padding-bottom: 5px;
+}
+table.weeklyTableHead {
+  border-right: none;
+}
+
+/***************************************************
 	message
 --------------------------------------------------*/
 body.messageRoomList {
@@ -2227,7 +2329,7 @@ body.messageRoomList .auiPortletBody {
   background-color: transparent !important;
 }
 body.messageRoomList .dijitContentPane {
-	overflow:hidden;
+	/*overflow:hidden;*/
 }
 body.messageRoomList .messageSummary .date,
 body.messageRoomList .messageSummary .name,

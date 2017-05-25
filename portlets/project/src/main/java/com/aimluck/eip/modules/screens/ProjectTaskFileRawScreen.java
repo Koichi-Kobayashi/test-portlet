@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -42,8 +42,20 @@ public class ProjectTaskFileRawScreen extends FileuploadRawScreen {
     new ProjectFile<EipTProjectTaskFile, EipTProjectTask>(
       EipTProjectTaskFile.class);
 
+  @Override
+  protected void init(RunData rundata) throws Exception {
+    EipTProjectTaskFile projectTaskfile =
+      pfile.getEipTFile(rundata, EipTProjectTaskFile.FILE_ID_PK_COLUMN);
+
+    setFilePath(ProjectFile.getSaveDirPath(projectTaskfile
+      .getOwnerId()
+      .intValue())
+      + projectTaskfile.getFilePath());
+    setFileName(projectTaskfile.getFileName());
+  }
+
   /**
-   * 
+   *
    * @param rundata
    *          RunData
    * @throws Exception

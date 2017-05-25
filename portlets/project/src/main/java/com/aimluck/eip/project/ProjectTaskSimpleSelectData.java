@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -556,14 +556,18 @@ public class ProjectTaskSimpleSelectData extends
   protected Object getResultDataDetail(EipTProjectTask record) {
     ProjectTaskResultData data = ProjectUtils.getProjectTaskResultData(record);
     int taskId = (int) data.getTaskId().getValue();
-    // ファイルリスト
-    List<EipTProjectTaskFile> list =
-      pfile
-        .getSelectQueryForFiles(EipTProjectTask.TASK_ID_PK_COLUMN, taskId)
-        .fetchList();
-    data.setAttachmentFiles(pfile.getFileList(list));
+    if (hasAttachmentAuthority()) {
+      // ファイルリスト
+      List<EipTProjectTaskFile> list =
+        pfile
+          .getSelectQueryForFiles(EipTProjectTask.TASK_ID_PK_COLUMN, taskId)
+          .fetchList();
+      data.setAttachmentFiles(pfile.getFileList(list));
+    }
     // コメントリスト
-    data.setCommentList(ProjectUtils.getProjectTaskCommentList("" + taskId));
+    data.setCommentList(ProjectUtils.getProjectTaskCommentList(
+      "" + taskId,
+      hasAttachmentAuthority()));
     // パンくずリスト
     data.setTopicPath(ProjectUtils.getTaskTopicPath(record.getProjectId()));
     return data;

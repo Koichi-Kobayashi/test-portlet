@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,6 @@ dojo._hasResource["aipo.widget.DropdownGrouppicker"] = true;
 dojo.provide("aipo.widget.DropdownGrouppicker");
 
 dojo.require("aimluck.widget.Dropdown");
-dojo.require("aipo.widget.GroupSelectList");
 
 /**
  * ex)
@@ -90,8 +89,6 @@ dojo.declare("aipo.widget.DropdownGrouppicker", [aimluck.widget.Dropdown], {
         this.removeAllOptions(select);
         select = dojo.byId(listWidget.memberToId);
         this.removeAllOptions(select);
-      }else{
-        this.dropDown = new aipo.widget.GroupSelectList(fparams, this.listWidgetId);
       }
 
       this.inherited(arguments);

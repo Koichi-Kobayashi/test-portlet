@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -48,6 +48,7 @@ import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
 import com.aimluck.eip.common.ALPageNotFoundException;
 import com.aimluck.eip.common.ALPermissionException;
+import com.aimluck.eip.exttimecard.util.ExtTimecardAdminUtils;
 import com.aimluck.eip.exttimecard.util.ExtTimecardUtils;
 import com.aimluck.eip.modules.actions.common.ALAction;
 import com.aimluck.eip.orm.Database;
@@ -55,6 +56,8 @@ import com.aimluck.eip.orm.query.SelectQuery;
 import com.aimluck.eip.services.accessctl.ALAccessControlConstants;
 import com.aimluck.eip.services.accessctl.ALAccessControlFactoryService;
 import com.aimluck.eip.services.accessctl.ALAccessControlHandler;
+import com.aimluck.eip.services.config.ALConfigHandler;
+import com.aimluck.eip.services.config.ALConfigService;
 import com.aimluck.eip.services.eventlog.ALEventlogConstants;
 import com.aimluck.eip.services.eventlog.ALEventlogFactoryService;
 import com.aimluck.eip.util.ALEipUtils;
@@ -62,7 +65,7 @@ import com.aimluck.eip.util.ALLocalizationUtils;
 
 /**
  * タイムカードのフォームデータを管理するクラスです。 <BR>
- * 
+ *
  */
 public class ExtTimecardFormData extends ALAbstractFormData {
 
@@ -139,19 +142,22 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   private int current_clock_out_time_minute;
 
-  /** アクセス権限の機能名 */
+  /** 他人アクセス権限の機能名 */
   private final String aclPortletFeatureOther =
     ALAccessControlConstants.POERTLET_FEATURE_TIMECARD_TIMECARD_OTHER;
 
   private ALAccessControlHandler aclHandler;
 
+  /** アクセス権限の機能名 */
+  private String aclPortletFeature = null;
+
   /**
-   * 
+   *
    * @param action
    * @param rundata
    * @param context
-   * 
-   * 
+   *
+   *
    */
   @Override
   public void init(ALAction action, RunData rundata, Context context)
@@ -182,8 +188,8 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 各フィールドを初期化します。 <BR>
-   * 
-   * 
+   *
+   *
    */
   @Override
   public void initField() {
@@ -251,7 +257,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * フォームを表示します。
-   * 
+   *
    * @param action
    * @param rundata
    * @param context
@@ -277,8 +283,21 @@ public class ExtTimecardFormData extends ALAbstractFormData {
           msgList);
 
       int aclType = ALAccessControlConstants.VALUE_ACL_INSERT;
-      if (isedit || (getIsPast() || getIsToday())) {
+      if (isedit) {
         aclType = ALAccessControlConstants.VALUE_ACL_UPDATE;
+      }
+      String userId = selectedUserId;
+      EipTExtTimecard timecard =
+        ExtTimecardUtils.getEipTExtTimecard(rundata, context);
+      if (!(timecard == null)) {
+        userId = String.valueOf(timecard.getUserId());
+      }
+      if (String.valueOf(login_uid).equals(userId) || "".equals(userId)) {
+        aclPortletFeature =
+          ALAccessControlConstants.POERTLET_FEATURE_TIMECARD_TIMECARD_SELF;
+      } else {
+        aclPortletFeature =
+          ALAccessControlConstants.POERTLET_FEATURE_TIMECARD_TIMECARD_OTHER;
       }
       doCheckAclPermission(rundata, context, aclType);
 
@@ -303,8 +322,8 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * タイムカードの各フィールドに対する制約条件を設定します。 <BR>
-   * 
-   * 
+   *
+   *
    */
   @Override
   protected void setValidator() {
@@ -316,10 +335,10 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * タイムカードのフォームに入力されたデータの妥当性検証を行います。 <BR>
-   * 
+   *
    * @param msgList
    * @return TRUE 成功 FALSE 失敗
-   * 
+   *
    */
   @Override
   protected boolean validate(List<String> msgList) {
@@ -696,7 +715,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
         current_date.setValue(new Date());
 
         // 種類＝出勤を入れる
-        this.type.setValue("P");
+        this.type.setValue(EipTExtTimecard.TYPE_WORK);
         this.punch_date.setValue(current_date.toString());
       }
 
@@ -710,7 +729,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * タイムカードをデータベースから読み出します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -777,7 +796,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * タイムカードをデータベースから削除します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -797,7 +816,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * タイムカードをデータベースに格納します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -840,13 +859,14 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
       // タイプ
       timecard.setType(type.getValue());
-      if ("D".equals(type.getValue())) {
-        timecard.setType("D");
+      if (EipTExtTimecard.TYPE_NO_SELECT.equals(type.getValue())) {
+        timecard.setType(EipTExtTimecard.TYPE_NO_SELECT);
       }
 
       if (edit_mode.equals("punchin")) {
         // 出勤
         timecard.setClockInTime(cal.getTime());
+        timecard.setType(EipTExtTimecard.TYPE_WORK);
       } else if (edit_mode.equals("punchout")) {
         // 退勤
         timecard.setClockOutTime(cal.getTime());
@@ -936,7 +956,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * データベースに格納されているタイムカードを更新します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -973,6 +993,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
       if (edit_mode.equals("punchin")) {
         // 出勤
         timecard.setClockInTime(cal.getTime());
+        timecard.setType(EipTExtTimecard.TYPE_WORK);
       } else if (edit_mode.equals("punchout")) {
         // 退勤
         timecard.setClockOutTime(cal.getTime());
@@ -987,8 +1008,8 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
         // タイプ
         timecard.setType(type.getValue());
-        if ("D".equals(type.getValue())) {
-          timecard.setType("D");
+        if (EipTExtTimecard.TYPE_NO_SELECT.equals(type.getValue())) {
+          timecard.setType(EipTExtTimecard.TYPE_NO_SELECT);
         }
         // 修正理由
         timecard.setReason(reason.getValue());
@@ -1066,9 +1087,40 @@ public class ExtTimecardFormData extends ALAbstractFormData {
     return true;
   }
 
+  public boolean doIpCheck(ALAction action, RunData rundata, Context context) {
+
+    List<String> msgList = new ArrayList<String>();
+
+    // ここから「打刻のIPアドレス制限」
+    boolean is_enabled =
+      "T".equals(ALConfigService
+        .get(ALConfigHandler.Property.EXTTIMECARD_IP_ENABLED));
+    String[] ip_addresses = ExtTimecardAdminUtils.getIpAddresses();
+
+    String ip = rundata.getRemoteAddr();
+
+    boolean containFlag = false;
+    for (String ip_address : ip_addresses) {
+      if (!(ip == null || ip.length() == 0) && ip.equals(ip_address)) {
+        containFlag = true;
+        break;
+      }
+    }
+
+    if (is_enabled && !containFlag) {
+      msgList.add(ALLocalizationUtils.getl10n("EXTTIMECARD_IP_RESTRICTED"));
+      action.addErrorMessages(msgList);
+      action.putData(rundata, context);
+      return false;
+    } else {
+      return true;
+    }
+    // ここまで「打刻のIPアドレス制限」
+  }
+
   /**
    * 各ボタンを押したときの動作 <BR>
-   * 
+   *
    * @param action
    * @param rundata
    * @param context
@@ -1076,6 +1128,33 @@ public class ExtTimecardFormData extends ALAbstractFormData {
    */
   public boolean doPunch(ALAction action, RunData rundata, Context context,
       String mode) {
+
+    List<String> msgList = new ArrayList<String>();
+
+    {// ここから「打刻のIPアドレス制限」
+      boolean is_enabled =
+        "T".equals(ALConfigService
+          .get(ALConfigHandler.Property.EXTTIMECARD_IP_ENABLED));
+      String[] ip_addresses = ExtTimecardAdminUtils.getIpAddresses();
+
+      String ip = rundata.getRemoteAddr();
+
+      boolean containFlag = false;
+      for (String ip_address : ip_addresses) {
+        if (!(ip == null || ip.length() == 0) && ip.equals(ip_address)) {
+          containFlag = true;
+          break;
+        }
+      }
+
+      if (is_enabled && !containFlag) {
+        msgList.add(ALLocalizationUtils.getl10n("EXTTIMECARD_IP_RESTRICTED"));
+        action.addErrorMessages(msgList);
+        action.putData(rundata, context);
+        return false;
+      }
+    }// ここまで「打刻のIPアドレス制限」
+
     try {
       edit_mode = mode;
       EipTExtTimecard timecard =
@@ -1102,7 +1181,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * アクセス権限をチェックします。
-   * 
+   *
    * @return
    */
   @Override
@@ -1123,7 +1202,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 日付
-   * 
+   *
    * @return
    */
   public ALDateTimeField getPunchDate() {
@@ -1132,7 +1211,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 日付を取得します。
-   * 
+   *
    * @return
    */
   public String getDateStr() {
@@ -1147,7 +1226,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 日付が過去かどうか
-   * 
+   *
    * @return
    */
   public boolean getIsPast() {
@@ -1158,7 +1237,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 日付が現在かどうか
-   * 
+   *
    * @return
    */
   public boolean getIsToday() {
@@ -1182,7 +1261,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 種類
-   * 
+   *
    * @return
    */
   public ALStringField getType() {
@@ -1191,7 +1270,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 出勤時間
-   * 
+   *
    * @return
    */
   public ALDateTimeField getClockInTime() {
@@ -1207,7 +1286,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 退勤時間
-   * 
+   *
    * @return
    */
   public ALDateTimeField getClockOutTime() {
@@ -1223,7 +1302,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 外出時間
-   * 
+   *
    * @return
    */
   public ALDateTimeField getOutgoingTime(int n) {
@@ -1247,7 +1326,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 復帰時間
-   * 
+   *
    * @return
    */
   public ALDateTimeField getComebackTime(int n) {
@@ -1275,7 +1354,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 修正理由
-   * 
+   *
    * @return
    */
   public ALStringField getReason() {
@@ -1284,7 +1363,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 備考
-   * 
+   *
    * @return
    */
   public ALStringField getRemarks() {
@@ -1293,7 +1372,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * タイムカード設定
-   * 
+   *
    * @return
    */
   public EipTExtTimecardSystem getTimecardSystem() {
@@ -1302,7 +1381,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 指定した2つの日付を比較する．
-   * 
+   *
    * @param date1
    * @param date2
    * @param checkTime
@@ -1346,7 +1425,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 日付がずれていたら、強制的に直します。
-   * 
+   *
    * @param datetime
    * @param ajustto
    * @return
@@ -1374,12 +1453,12 @@ public class ExtTimecardFormData extends ALAbstractFormData {
   /**
    * アクセス権限チェック用メソッド。<br />
    * アクセス権限の機能名を返します。
-   * 
+   *
    * @return
    */
   @Override
   public String getAclPortletFeature() {
-    return ALAccessControlConstants.POERTLET_FEATURE_TIMECARD_TIMECARD_SELF;
+    return aclPortletFeature;
   }
 
   /**
@@ -1405,7 +1484,7 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   /**
    * 編集のとき、フォームに入力されている退勤時間を取得します。
-   * */
+   */
   public void setClockOutTime(RunData rundata) {
     try {
       Field[] fields = this.getClass().getDeclaredFields();
@@ -1452,6 +1531,10 @@ public class ExtTimecardFormData extends ALAbstractFormData {
 
   private boolean isNotAtWork() {
     return !"P".equals(type.getValue());
+  }
+
+  public boolean isNewRule() {
+    return ExtTimecardUtils.isNewRule();
   }
 
 }
