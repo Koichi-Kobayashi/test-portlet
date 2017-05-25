@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -50,6 +50,7 @@ import com.aimluck.eip.orm.query.SQLTemplate;
 import com.aimluck.eip.project.util.ProjectFile;
 import com.aimluck.eip.project.util.ProjectFormUtils;
 import com.aimluck.eip.project.util.ProjectUtils;
+import com.aimluck.eip.services.accessctl.ALAccessControlConstants;
 import com.aimluck.eip.util.ALEipUtils;
 
 /**
@@ -131,6 +132,9 @@ public class ProjectTaskSelectData extends
 
   private boolean isFileUploadable;
 
+  /** 添付ファイル追加へのアクセス権限の有無 */
+  private boolean hasAttachmentInsertAuthority;
+
   /**
    * 初期設定
    *
@@ -144,6 +148,8 @@ public class ProjectTaskSelectData extends
   @Override
   public void init(ALAction action, RunData rundata, Context context)
       throws ALPageNotFoundException, ALDBErrorException {
+
+    doCheckAttachmentInsertAclPermission(rundata, context);
 
     // 検索条件・ソートリセット（プロジェクト選択時）
     String resetCondition = rundata.getParameters().get("reset_condition");
@@ -187,6 +193,7 @@ public class ProjectTaskSelectData extends
     loginUserId = ALEipUtils.getUserId(rundata);
 
     isFileUploadable = ALEipUtils.isFileUploadable(rundata);
+
   }
 
   /**
@@ -244,6 +251,8 @@ public class ProjectTaskSelectData extends
       }
       // プロジェクトID
       task.setProjectId(Integer.valueOf(row.get("project_id").toString()));
+      // プロジェクト名
+      task.setProjectName(row.get("project_name").toString());
       // 分類
       task.setTracker(row.get("tracker").toString());
       // 説明
@@ -370,10 +379,11 @@ public class ProjectTaskSelectData extends
     // -------------------------
     StringBuilder sb = new StringBuilder();
     sb.append("    FROM");
-    sb.append("      eip_t_project_task AS task");
+    sb.append("      eip_t_project_task AS task, eip_t_project AS project");
     sb.append("    WHERE ");
+    sb.append("      task.project_id = project.project_id AND ");
     if (0 != selectedProjectId) {
-      sb.append("task.project_id = #bind($project_id) AND ");
+      sb.append(" task.project_id = #bind($project_id) AND ");
     }
     sb.append("       task.parent_task_id IS NULL");
     return sb.toString();
@@ -388,6 +398,7 @@ public class ProjectTaskSelectData extends
     sb.append(", task.task_name"); // タスク名
     sb.append(", task.parent_task_id");// 親タスクID
     sb.append(", task.project_id");// プロジェクトID
+    sb.append(", project.project_name");
     sb.append(", task.tracker");// 分類
     sb.append(", task.explanation"); // 説明
     sb.append(", task.status"); // ステータス
@@ -433,7 +444,13 @@ public class ProjectTaskSelectData extends
     List<String> whereList = new ArrayList<String>();
     // キーワード
     if (target_keyword != null && target_keyword.trim().length() > 0) {
-      whereList.add(" task.task_name LIKE #bind($target_keyword)");
+      if (0 == selectedProjectId) {
+        whereList
+          .add(" (task.task_name LIKE #bind($target_keyword) OR project.project_name LIKE #bind($target_keyword))");
+      } else {
+        whereList.add(" task.task_name LIKE #bind($target_keyword)");
+      }
+
     }
     // 担当者
     if (StringUtils.isNotEmpty(target_user_id) && !target_user_id.equals("all")) {
@@ -510,7 +527,7 @@ public class ProjectTaskSelectData extends
       sb.append(" ( " + lapsed_days + " ) ");
       sb.append(" * 100 / ");
       sb.append(" ( " + task_days + " ) ");
-      sb.append(" > progress_rate ");
+      sb.append(" > task.progress_rate ");
       sb.append(" ) ");
       sb.append(" ) ");
       whereList.add(sb.toString());
@@ -703,14 +720,18 @@ public class ProjectTaskSelectData extends
   protected Object getResultDataDetail(EipTProjectTask record) {
     ProjectTaskResultData data = ProjectUtils.getProjectTaskResultData(record);
     int taskId = (int) data.getTaskId().getValue();
-    // ファイルリスト
-    List<EipTProjectTaskFile> list =
-      pfile
-        .getSelectQueryForFiles(EipTProjectTask.TASK_ID_PK_COLUMN, taskId)
-        .fetchList();
-    data.setAttachmentFiles(pfile.getFileList(list));
+    if (hasAttachmentAuthority()) {
+      // ファイルリスト
+      List<EipTProjectTaskFile> list =
+        pfile
+          .getSelectQueryForFiles(EipTProjectTask.TASK_ID_PK_COLUMN, taskId)
+          .fetchList();
+      data.setAttachmentFiles(pfile.getFileList(list));
+    }
     // コメントリスト
-    data.setCommentList(ProjectUtils.getProjectTaskCommentList("" + taskId));
+    data.setCommentList(ProjectUtils.getProjectTaskCommentList(
+      "" + taskId,
+      hasAttachmentAuthority()));
     // パンくずリスト
     data.setTopicPath(ProjectUtils.getTaskTopicPath(record.getProjectId()));
     // ログインユーザーID
@@ -727,6 +748,7 @@ public class ProjectTaskSelectData extends
   protected Attributes getColumnMap() {
     Attributes map = new Attributes();
     map.putValue("task_name", "task_name");
+    map.putValue("project_name", "project_name");
     map.putValue("tracker", "tracker");
     map.putValue("status", "status");
     map.putValue("workload", "workload");
@@ -1170,4 +1192,21 @@ public class ProjectTaskSelectData extends
     return isFileUploadable;
   }
 
+  /**
+   * ファイルアップロードのアクセス権限をチェックします。
+   *
+   * @return
+   */
+  protected void doCheckAttachmentInsertAclPermission(RunData rundata,
+      Context context) { // ファイル追加権限の有無
+    hasAttachmentInsertAuthority =
+      doCheckAttachmentAclPermission(
+        rundata,
+        context,
+        ALAccessControlConstants.VALUE_ACL_INSERT);
+  }
+
+  public boolean hasAttachmentInsertAuthority() {
+    return hasAttachmentInsertAuthority;
+  }
 }

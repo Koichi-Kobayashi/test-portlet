@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * ファイルのアップロードを処理するクラスです。 <br />
- * 
+ *
  */
 public class FileuploadFormScreen extends ALVelocityScreen {
 
@@ -41,7 +41,7 @@ public class FileuploadFormScreen extends ALVelocityScreen {
     .getLogger(FileuploadFormScreen.class.getName());
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -64,7 +64,7 @@ public class FileuploadFormScreen extends ALVelocityScreen {
 
   /**
    * 添付ファイルの入力フォームを開く．
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -96,13 +96,15 @@ public class FileuploadFormScreen extends ALVelocityScreen {
     } else {
       layout_template = "layouts/html/fileupload-mini.vm";
       context.put("contentTemplate", getContentTemplateMini());
+      boolean isFirefox = ALEipUtils.isFirefoxBrowser(rundata);
+      context.put("isFirefox", Boolean.valueOf(isFirefox));
     }
     setTemplate(rundata, context, layout_template);
   }
 
   /**
    * 添付ファイルのアップロードを受け付ける．
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception

@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -528,12 +528,12 @@ public class ToDoAction extends ALBaseAction {
     list.add("keyword");
     list.add("target_user_id");
     list.add("target_group_name");
-    list.add("com.aimluck.eip.todo.ToDoSelectDatafilter");
-    list.add("com.aimluck.eip.todo.ToDoSelectDatafiltertype");
-    list.add("com.aimluck.eip.todo.ToDoCategorySelectDatasort");
-    list.add("com.aimluck.eip.todo.ToDoCategorySelectDatasorttype");
-    list.add("com.aimluck.eip.todo.ToDoPublicSelectDatasort");
-    list.add("com.aimluck.eip.todo.ToDoPublicSelectDatasorttype");
+    list.add("ToDoSelectDatafilter");
+    list.add("ToDoSelectDatafiltertype");
+    list.add("ToDoCategorySelectDatasort");
+    list.add("ToDoCategorySelectDatasorttype");
+    list.add("ToDoPublicSelectDatasort");
+    list.add("ToDoPublicSelectDatasorttype");
     ALEipUtils.removeTemp(rundata, context, list);
   }
 

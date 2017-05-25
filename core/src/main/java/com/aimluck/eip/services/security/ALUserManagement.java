@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,12 +19,15 @@
 package com.aimluck.eip.services.security;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -64,6 +67,7 @@ import org.apache.turbine.services.TurbineServices;
 import org.apache.turbine.services.localization.Localization;
 import org.apache.turbine.services.resources.ResourceService;
 import org.apache.turbine.services.rundata.RunDataService;
+import org.apache.turbine.util.ObjectUtils;
 import org.apache.turbine.util.RunData;
 
 import com.aimluck.eip.cayenne.om.account.EipMUserPosition;
@@ -78,7 +82,7 @@ import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * ユーザーを管理するクラスです。 <br />
- * 
+ *
  */
 public class ALUserManagement extends TurbineBaseService implements
     UserManagement, CredentialsManagement {
@@ -92,6 +96,8 @@ public class ALUserManagement extends TurbineBaseService implements
     "secure.passwords.algorithm";
 
   private final static String CONFIG_SYSTEM_USERS = "system.users";
+
+  private final static String LOGIN_COOKIE_NAME = "logincookie";
 
   boolean securePasswords = false;
 
@@ -115,6 +121,7 @@ public class ALUserManagement extends TurbineBaseService implements
 
   private JetspeedRunDataService runDataService = null;
 
+  @SuppressWarnings("rawtypes")
   protected JetspeedUser row2UserObject(TurbineUser tuser) throws UserException {
     try {
       JetspeedUser user = JetspeedUserFactory.getInstance(false);
@@ -131,7 +138,14 @@ public class ALUserManagement extends TurbineBaseService implements
       baseuser.setLastLogin(tuser.getLastLogin());
       // baseuser.setDisabled("T".equals(tuser.getDisabled()));
       baseuser.setDisabled(tuser.getDisabled());
-      // baseuser.setObjectdata(null);
+      // auto login
+      byte[] objectData = tuser.getObjectdata();
+      if (objectData != null) {
+        Hashtable tempHash = (Hashtable) ObjectUtils.deserialize(objectData);
+        if (tempHash != null && tempHash.containsKey(LOGIN_COOKIE_NAME)) {
+          baseuser.setPerm(LOGIN_COOKIE_NAME, tempHash.get(LOGIN_COOKIE_NAME));
+        }
+      }
       baseuser.setPasswordChanged(tuser.getPasswordChanged());
       baseuser.setCompanyId((tuser.getCompanyId() != null) ? tuser
         .getCompanyId()
@@ -156,8 +170,9 @@ public class ALUserManagement extends TurbineBaseService implements
         .intValue() : 0);
       baseuser.setPhotoModified(tuser.getPhotoModified());
       baseuser.setPhotoModifiedSmartphone(tuser.getPhotoModifiedSmartphone());
-      baseuser.setHasPhoto("T".equals(tuser.getHasPhoto()));
-      baseuser.setHasPhotoSmartphone("T".equals(tuser.getHasPhotoSmartphone()));
+      baseuser.setCode(tuser.getCode());
+      baseuser.setHasPhoto(tuser.getHasPhoto());
+      baseuser.setHasPhotoSmartphone(tuser.getHasPhotoSmartphone());
       baseuser.setMigrateVersion((tuser.getMigrateVersion() != null) ? tuser
         .getMigrateVersion()
         .intValue() : 0);
@@ -259,6 +274,7 @@ public class ALUserManagement extends TurbineBaseService implements
   /**
    *
    */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public void saveUser(JetspeedUser user) throws JetspeedSecurityException {
     if (!accountExists(user, true)) {
@@ -303,6 +319,15 @@ public class ALUserManagement extends TurbineBaseService implements
 
       tuser.setDisabled(baseuser.getDisabled());
       tuser.setObjectdata(null);
+      // auto login
+      String logincookie = (String) user.getPerm(LOGIN_COOKIE_NAME, "");
+      if (!"".equals(logincookie)) {
+        Hashtable permData = new Hashtable();
+        permData.put(LOGIN_COOKIE_NAME, logincookie);
+        byte[] serialize = serialize(permData);
+        tuser.setObjectdata(serialize);
+      }
+
       tuser.setPasswordChanged(baseuser.getPasswordChanged());
       tuser.setCompanyId(Integer.valueOf(baseuser.getCompanyId()));
       tuser.setPositionId(Integer.valueOf(baseuser.getPositionId()));
@@ -317,9 +342,9 @@ public class ALUserManagement extends TurbineBaseService implements
       tuser.setPhotoSmartphone(baseuser.getPhotoSmartphone());
       tuser.setCreatedUserId(Integer.valueOf(baseuser.getCreatedUserId()));
       tuser.setUpdatedUserId(Integer.valueOf(baseuser.getUpdatedUserId()));
-      tuser.setHasPhoto(baseuser.hasPhoto() ? "T" : "F");
+      tuser.setHasPhoto(baseuser.hasPhotoString());
       tuser.setPhotoModified(baseuser.getPhotoModified());
-      tuser.setHasPhotoSmartphone(baseuser.hasPhotoSmartphone() ? "T" : "F");
+      tuser.setHasPhotoSmartphone(baseuser.hasPhotoSmartphoneString());
       tuser.setPhotoModifiedSmartphone(baseuser.getPhotoModifiedSmartphone());
       tuser.setMigrateVersion(baseuser.getMigrateVersion());
 
@@ -334,6 +359,8 @@ public class ALUserManagement extends TurbineBaseService implements
         grantRoles(user, hasAdminCredential);
       }
 
+      tuser.setCode(baseuser.getCode());
+
       // ユーザを更新する．
       Database.commit();
     } catch (Exception e) {
@@ -347,6 +374,7 @@ public class ALUserManagement extends TurbineBaseService implements
   /**
    *
    */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public void addUser(JetspeedUser user) throws JetspeedSecurityException {
     if (accountExists(user)) {
@@ -376,6 +404,14 @@ public class ALUserManagement extends TurbineBaseService implements
     // tuser.setDisabled((baseuser.getDisabled() ? "T" : "F"));
     tuser.setDisabled(baseuser.getDisabled());
     tuser.setObjectdata(null);
+    // auto login
+    String logincookie = (String) user.getPerm(LOGIN_COOKIE_NAME, "");
+    if (!"".equals(logincookie)) {
+      Hashtable permData = new Hashtable();
+      permData.put(LOGIN_COOKIE_NAME, logincookie);
+      byte[] serialize = serialize(permData);
+      tuser.setObjectdata(serialize);
+    }
     tuser.setPasswordChanged(baseuser.getPasswordChanged());
     tuser.setCompanyId(Integer.valueOf(baseuser.getCompanyId()));
     tuser.setPositionId(Integer.valueOf(baseuser.getPositionId()));
@@ -390,11 +426,12 @@ public class ALUserManagement extends TurbineBaseService implements
     tuser.setPhotoSmartphone(baseuser.getPhotoSmartphone());
     tuser.setCreatedUserId(Integer.valueOf(baseuser.getCreatedUserId()));
     tuser.setUpdatedUserId(Integer.valueOf(baseuser.getUpdatedUserId()));
-    tuser.setHasPhoto(baseuser.hasPhoto() ? "T" : "F");
+    tuser.setHasPhoto(baseuser.hasPhotoString());
     tuser.setPhotoModified(new Date());
-    tuser.setHasPhotoSmartphone(baseuser.hasPhotoSmartphone() ? "T" : "F");
+    tuser.setHasPhotoSmartphone(baseuser.hasPhotoSmartphoneString());
     tuser.setPhotoModifiedSmartphone(baseuser.getPhotoModifiedSmartphone());
     tuser.setMigrateVersion(baseuser.getMigrateVersion());
+    tuser.setCode(baseuser.getCode());
     // Database.commit();
 
     // ログインユーザーにはグループ LoginUser に所属させる
@@ -450,7 +487,7 @@ public class ALUserManagement extends TurbineBaseService implements
 
   /**
    * 指定したユーザーにデフォルトのPSMLを設定します。
-   * 
+   *
    * @param user
    * @throws JetspeedSecurityException
    */
@@ -482,7 +519,7 @@ public class ALUserManagement extends TurbineBaseService implements
 
   /**
    * ユーザーのロールを承認します
-   * 
+   *
    * @param user
    * @param hasAdminCredential
    */
@@ -510,7 +547,7 @@ public class ALUserManagement extends TurbineBaseService implements
 
   /**
    * 指定したユーザのPSMLにシステム管理のページを追加します。
-   * 
+   *
    * @param user
    * @throws Exception
    */
@@ -520,7 +557,7 @@ public class ALUserManagement extends TurbineBaseService implements
 
   /**
    * 指定したユーザのPSMLからシステム管理のページを取り除きます。
-   * 
+   *
    * @param user
    * @throws Exception
    */
@@ -548,7 +585,7 @@ public class ALUserManagement extends TurbineBaseService implements
 
   /**
    * 指定したユーザに管理者権限を付与します。
-   * 
+   *
    * @param tuser
    * @throws JetspeedSecurityException
    */
@@ -565,7 +602,7 @@ public class ALUserManagement extends TurbineBaseService implements
 
   /**
    * 指定したユーザの管理者権限を取り除きます。
-   * 
+   *
    * @param tuser
    * @throws JetspeedSecurityException
    */
@@ -637,6 +674,8 @@ public class ALUserManagement extends TurbineBaseService implements
     user.setPassword(JetspeedSecurity.encryptPassword(newPassword));
 
     user.setPasswordChanged(new Date());
+    // パスワード変更時に自動ログインを解除する
+    user.setPerm(LOGIN_COOKIE_NAME, "");
 
     saveUser(user);
   }
@@ -653,6 +692,9 @@ public class ALUserManagement extends TurbineBaseService implements
         + "' does not exist");
     }
     user.setPassword(JetspeedSecurity.encryptPassword(password));
+    user.setPasswordChanged(new Date());
+    // パスワード変更時に自動ログインを解除する
+    user.setPerm(LOGIN_COOKIE_NAME, "");
     saveUser(user);
   }
 
@@ -754,7 +796,7 @@ public class ALUserManagement extends TurbineBaseService implements
   }
 
   /**
-   * 
+   *
    * @param user
    * @return
    * @throws UserException
@@ -793,4 +835,28 @@ public class ALUserManagement extends TurbineBaseService implements
     return rundata;
   }
 
+  private byte[] serialize(Object object) {
+    byte[] byteArray = null;
+    if (object != null) {
+      ObjectOutputStream outputStream = null;
+      ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+      try {
+        outputStream = new ObjectOutputStream(byteStream);
+        outputStream.writeObject(object);
+        byteArray = byteStream.toByteArray();
+      } catch (Exception e) {
+      } finally {
+        try {
+          if (outputStream != null) {
+            outputStream.close();
+          }
+          if (byteStream != null) {
+            byteStream.close();
+          }
+        } catch (IOException e) {
+        }
+      }
+    }
+    return byteArray;
+  }
 }

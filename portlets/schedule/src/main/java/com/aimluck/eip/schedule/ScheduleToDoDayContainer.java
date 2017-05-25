@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@ import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.common.ALEipHolidaysManager;
 import com.aimluck.eip.common.ALHoliday;
+import com.aimluck.eip.schedule.util.ScheduleUtils;
 
 /**
  * スケジュールに表示されるTodo コンテナです。
@@ -121,5 +122,28 @@ public class ScheduleToDoDayContainer implements ALData {
    */
   public boolean isHoliday() {
     return (holiday == null) ? false : true;
+  }
+
+  /**
+   * 祝日情報を取得する．
+   *
+   * @return
+   */
+  public ALHoliday getHoliday() {
+    return holiday;
+  }
+
+  /**
+   * 祝日を休日にするかどうかを検証する. 休日にする場合 ture
+   */
+  public boolean isDayOffHoliday() {
+    return ScheduleUtils.isDayOffHoliday();
+  }
+
+  /**
+   * 休日かどうかを判定する 休日の場合 ture
+   */
+  public boolean isUserHoliday(int DayOfWeek) {
+    return ScheduleUtils.isUserHoliday(DayOfWeek);
   }
 }

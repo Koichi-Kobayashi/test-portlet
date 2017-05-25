@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,7 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLHandshakeException;
+import javax.net.ssl.SSLProtocolException;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -47,23 +48,22 @@ public class ALURLConnectionUtils {
 
   /**
    * HttpURLConnectionまたはHttpsURLConnectionを返す
-   * 
+   *
    * @param url
-   * @return　HttpURLConnectionまたはHttpsURLConnection
+   * @return HttpURLConnectionまたはHttpsURLConnection
    * @throws NoSuchAlgorithmException
    * @throws KeyManagementException
    * @throws IOException
    */
   public static HttpURLConnection openUrlConnection(URL connectURL)
       throws NoSuchAlgorithmException, KeyManagementException, IOException {
-
     HttpURLConnection urlconnection = null;
 
     // SSLHandshakeExceptionが発生しないか調べる
     urlconnection = (HttpURLConnection) connectURL.openConnection();
     try {
       urlconnection.getResponseMessage();
-    } catch (SSLHandshakeException ex) {
+    } catch (SSLHandshakeException | SSLProtocolException ex) {
       // SSLHandshakeExceptionの場合には証明書をチェックしないhttps接続に切り替える
       if ("https".equals(connectURL.getProtocol())) {
         TrustManager[] tm = { new X509TrustManager() {
@@ -85,17 +85,17 @@ public class ALURLConnectionUtils {
         SSLContext sslcontext = SSLContext.getInstance("SSL");
         sslcontext.init(null, tm, null);
 
-        HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
-          @Override
-          public boolean verify(String hostname, SSLSession session) {
-            return true;
-          }
-        });
-
         urlconnection = (HttpsURLConnection) connectURL.openConnection();
 
         ((HttpsURLConnection) urlconnection).setSSLSocketFactory(sslcontext
           .getSocketFactory());
+        ((HttpsURLConnection) urlconnection)
+          .setHostnameVerifier(new HostnameVerifier() {
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+              return true;
+            }
+          });
 
         return urlconnection;
       }

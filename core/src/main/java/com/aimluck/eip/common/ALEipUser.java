@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ import com.aimluck.eip.util.ALCommonUtils;
 
 /**
  * ユーザー情報を表すクラスです。 <br />
- * 
+ *
  */
 public class ALEipUser implements ALData {
 
@@ -43,6 +43,12 @@ public class ALEipUser implements ALData {
 
   private long photoModified;
 
+  private ALStringField authority;
+
+  private ALStringField desktopNotification;
+
+  private ALStringField mobileNotification;
+
   private Date created;
 
   /**
@@ -54,12 +60,18 @@ public class ALEipUser implements ALData {
     name = new ALStringField();
     alias_name = new ALStringField();
     hasPhoto = false;
+    authority = new ALStringField();
+    authority.setValue("M");
+    desktopNotification = new ALStringField();
+    desktopNotification.setValue("A");
+    mobileNotification = new ALStringField();
+    mobileNotification.setValue("A");
     photoModified = 0L;
     created = null;
   }
 
   /**
-   * 
+   *
    * @param string
    */
   public void setName(String string) {
@@ -67,7 +79,7 @@ public class ALEipUser implements ALData {
   }
 
   /**
-   * 
+   *
    * @param firstName
    * @param lastName
    */
@@ -77,7 +89,7 @@ public class ALEipUser implements ALData {
   }
 
   /**
-   * 
+   *
    * @return
    */
   public ALStringField getName() {
@@ -85,7 +97,7 @@ public class ALEipUser implements ALData {
   }
 
   /**
-   * 
+   *
    * @return
    */
   public ALStringField getAliasName() {
@@ -138,6 +150,51 @@ public class ALEipUser implements ALData {
    */
   public void setPhotoModified(long photoModified) {
     this.photoModified = photoModified;
+  }
+
+  /**
+   * @return authority
+   */
+  public ALStringField getAuthority() {
+    return authority;
+  }
+
+  /**
+   * @param authority
+   *          セットする authority
+   */
+  public void setAuthority(String string) {
+    authority.setValue(string);
+  }
+
+  /**
+   * @return desktopNotification
+   */
+  public ALStringField getDesktopNotification() {
+    return desktopNotification;
+  }
+
+  /**
+   * @param desktopNotification
+   *          セットする desktopNotification
+   */
+  public void setDesktopNotification(String string) {
+    desktopNotification.setValue(string);
+  }
+
+  /**
+   * @return desktopNotification
+   */
+  public ALStringField getMobileNotification() {
+    return mobileNotification;
+  }
+
+  /**
+   * @param mobileNotification
+   *          セットする mobileNotification
+   */
+  public void setMobileNotification(String string) {
+    mobileNotification.setValue(string);
   }
 
   /**

@@ -57,4 +57,10 @@
     <Match class="com.aimluck.eip.services.psmlmanager.db.CayenneDatabasePsmlManagerService">
     	<Bug pattern="BC_VACUOUS_INSTANCEOF" />
     </Match>
+    <Match class="com.aimluck.eip.http.ALCometServlet$MessageSender">
+        <Bug category="MT_CORRECTNESS" />
+    </Match>
+    <Match class="com.aimluck.eip.util.ALJetspeedLink">
+        <Bug pattern="BC_VACUOUS_INSTANCEOF,SF_SWITCH_NO_DEFAULT,NP_TOSTRING_COULD_RETURN_NULL" />
+    </Match>
 </FindBugsFilter>

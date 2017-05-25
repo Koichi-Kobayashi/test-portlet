@@ -1,6 +1,6 @@
 #*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@
 #set($currentDate = "")
 #set($currentMessageId = "")
 #set($currentDateKey = "")
+#set($indicator_id = "indicator-list-$!{portlet.ID}" )
 #foreach ($record in $result.List)
 ##if("$currentDate" != "" && "$!record.CreateDateLine.toString()" != "$currentDate")
 ##<div id="messageLine$!record.MessageId" class="date_line messageLine$!currentDateKey"><span>$!currentDate</span></div>
@@ -32,27 +33,44 @@
 #set($currentMessageId = $!record.MessageId)
 #set($currentDateKey = $!record.CreateDateKey.toString())
 <div id="message$!record.MessageId" class="message">
+
 	<div class="avatar">
 		<a href="javascript: void(0)" onclick="aipo.message.popupProfile(${record.UserId.Value},arguments[0])">
 		#if($!record.isHasPhoto())
-			<img src="$!utils.escapeXML($jslink.getTemplate("FileuploadFacePhotoScreen").addQueryData("uid", $!record.UserId).addQueryData("t", "$!record.PhotoModified"))" alt="$!record.LastName $!record.FirstName" width="50" height="50" class="avatar_l"/>
-		#else
-			<img src="images/common/avatar_default3.png" alt="$!record.LastName $!record.FirstName" width="50" height="50"/>
+			<img src="$!utils.escapeXML($jslink.getTemplate("FileuploadFacePhotoScreen").addQueryData("uid", $!record.UserId).addQueryData("t", "$!record.PhotoModified"))" alt="$!record.DisplayName" width="50" height="50" class="avatar_l"/>
+		#elseif("${record.UserId.Value}" == "1")
+			<img src="themes/default/images/common/icon_aipo100.png" alt="$!record.DisplayName" width="50" height="50"/>
+		#elseif("${record.UserId.Value}" == "2")
+			<img src="themes/default/images/common/icon_aipo100.png" alt="$!record.DisplayName" width="50" height="50"/>
+        #elseif("${record.UserId.Value}" == "3")
+			<img src="themes/default/images/common/icon_message100.png" alt="$!record.DisplayName" width="50" height="50"/>
+        #else
+			<img src="themes/default/images/common/icon_user100.png" alt="$!record.DisplayName" width="50" height="50"/>
 		#end
 		</a>
 	</div>
 	<div class="messageContents">
-		<div class="name"><a href="javascript: void(0)" onclick="aipo.message.popupProfile(${record.UserId.Value},arguments[0])">$!record.LastName $!record.FirstName</a></div>
+		<div class="name"><a href="javascript: void(0)" onclick="aipo.message.popupProfile(${record.UserId.Value},arguments[0])">$!record.DisplayName</a></div>
 		<div class="body">$!record.MessageHtml
 		#if($!record.AttachmentFileList.size() != 0)
 				<div class="tlImageBlock clearfix">
-		#foreach( $attachmentFile in $!record.AttachmentFileList )#if($attachmentFile.isImage())<a href="javascript:aipo.fileupload.showImageDialog('?template=FileuploadViewScreen&screen=MessageFileRawScreen&entryid=$!{record.MessageId}&attachmentIndex=$!{attachmentFile.FileId}')"><img border="0" alt="$attachmentFile.FileName" title="$attachmentFile.FileName" src="?template=MessageFileThumbnailScreen&entityid=${record.MessageId}&attachmentIndex=${attachmentFile.FileId}"/></a>#else<a #if("$!{client}"=="IPHONE")target="_blank"#end href="?template=MessageFileRawScreen&entityid=$!record.MessageId&attachmentIndex=$attachmentFile.FileId&f=${attachmentFile.getURLEncodedValue()}">$result.getStringCR($attachmentFile.FileNameField)</a>
+		#foreach( $attachmentFile in $!record.AttachmentFileList )#if($attachmentFile.isImage())<a href="javascript:aipo.fileupload.showImageDialog('?template=FileuploadViewScreen&screen=MessageFileRawScreen&entryid=$!{record.MessageId}&attachmentIndex=$!{attachmentFile.FileId}')"><img border="0" alt="$attachmentFile.FileName" title="$attachmentFile.FileName" src="?template=MessageFileThumbnailScreen&entityid=${record.MessageId}&attachmentIndex=${attachmentFile.FileId}"/></a>#else<a #if("$!{client}"=="IPHONE" || $!attachmentFile.AcceptInline)target="_blank"#end href="?template=MessageFileRawScreen&entityid=$!record.MessageId&attachmentIndex=$attachmentFile.FileId&f=${attachmentFile.getURLEncodedValue()}">$result.getStringCR($attachmentFile.FileNameField)</a>
 		#end#end
 				</div>#end
 		</div>
 		<div class="time">
 			$!record.CreateDate&nbsp;
-			#if($!record.isOwner())<a href="javascript:void(0)" onclick="aipo.common.showDialog('$!jslink.getPortletById($!portlet.ID).addQueryData("template","MessageReadUserListScreen").addQueryData("m",$!record.MessageId)','$!portlet.ID',aipo.message.onLoadMessageReadUserList);" id="messageReadCount$!record.MessageId">#if($!record.isAllRead())$l10n.MESSAGE_ALL_READ#else$!{record.ReadCount}${l10n.MESSAGE_READ_COUNT}#end</a>#end
+			#if($!record.isOwner() && !$!record.isOneMember())<a href="javascript:void(0)" onclick="aipo.common.showDialog('$!jslink.getPortletById($!portlet.ID).addQueryData("template","MessageReadUserListScreen").addQueryData("m",$!record.MessageId)','$!portlet.ID',aipo.message.onLoadMessageReadUserList);" id="messageReadCount$!record.MessageId">#if($!record.isAllRead())$l10n.MESSAGE_ALL_READ#else$!{record.ReadCount}${l10n.MESSAGE_READ_COUNT}#end</a>#end
+			#if($!record.isOwner() || ((!$!result.isDirect() || $!record.isSystemUser()) && $!result.isAdmin()))
+					<form style="display:inline" name="deleteForm_$!{portlet.ID}_$!{record.MessageId}" id="deleteForm_$!{portlet.ID}_$!{record.MessageId}" action="$!jslink.getPortletById($!portlet.ID).addQueryData('template','MessageFormJSONScreen')" method="post" onsubmit="aimluck.io.disableForm(this, true);return false;">
+					<input type="hidden" name="_name" value="$l10n.MESSAGE_MESSAGE" />
+					<input type="hidden" name="secid" value="$secid" />
+					#set ($deleteSubmit = "$!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData('template','MessageFormJSONScreen').addQueryData('entityid',$record.MessageId).addQueryData('mode', 'delete'))")
+					&nbsp;
+					<a href="javascript:void(0)" onclick="aipo.message.tmpMessageId='$!{record.MessageId}';aimluck.io.ajaxDeleteSubmit(dojo.byId('dummy_$!{portlet.ID}_$!{record.MessageId}'), '$deleteSubmit', '$indicator_id', '$!portlet.ID', aipo.message.onReceiveMessageDelete);">$l10n.COMMON_DELETE</a>
+					<input type="hidden" id="dummy_$!{portlet.ID}_$!{record.MessageId}" value="" />
+					</form>
+		    #end
 		</div>
 	</div>
 </div>

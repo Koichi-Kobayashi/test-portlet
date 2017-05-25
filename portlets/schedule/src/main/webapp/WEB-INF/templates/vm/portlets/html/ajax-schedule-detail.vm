@@ -1,6 +1,6 @@
 #*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #set ($indicator_id = "indicator-dlg-")
 ## ---------------------------------------------------------------------------
 #if (${client}!= "IPHONE")
-	#ALdialogheaderPrintSchedule($l10n.SCHEDULE_SCHEDULE_DETAIL "$!portlet.ID" "ScheduleDetailScreenPrint" "$!{result.getViewDate().toString()})" "$!{result.Detail.User.UserId.toString()}")
+	#ALdialogheaderPrintSchedule($l10n.SCHEDULE_SCHEDULE_DETAIL "$!portlet.ID" "ScheduleDetailScreenPrint" "$!{result.getViewDate().toString()})" "$!{result.Detail.User.UserId.toString()}" "$entityid")
 #else
 	#ALdialogheaderDetailSmartPhone("$l10n.SCHEDULE_SCHEDULE_DETAIL")
 #end
@@ -36,6 +36,7 @@
 <input type="hidden" name="view_date" value="$!{result.ViewDate.toString()}"/>
 <input type="hidden" name="type" value="$!{result.Detail.Type}"/>
 <input type="hidden" name="userid" value="$!{result.Detail.User.UserId.toString()}"/>
+<input type="hidden" name="entityid" value="$entityid" />
 #if($afterbehavior)
 <input type="hidden" name="afterbehavior" value="1" />
 #end
@@ -80,8 +81,16 @@ $!{result.Detail.Date}
 #end
 #* 共有カテゴリ連携（ここまで）  *#
 
+#*以下詳細画面の場所表示*#
 #ALtdcaption($l10n.SCHEDULE_PLACE)
+#if($result.enabledMapsFlag())
+#ALtditemheader()
+<a href="https://maps.apple.com/maps?q=$!{result.Detail.PlaceEncode} " target="_blank">$!{result.Detail.PlaceHtml} </a>
+#ALtditemfooter()
+#else
 #ALtditem($!{result.Detail.PlaceHtml})
+#end
+
 #ALtdcaption($l10n.SCHEDULE_NOTE)
 #ALtditem($!{result.Detail.Note})
 #ALtdcaption($l10n.SCHEDULE_PUBLIC)
@@ -116,7 +125,7 @@ $l10n.SCHEDULE_HIDDEN_PUBLIC
 
 #if($hasMember)
 <div style="padding:4px 0px 0px 0px">
-#if($!{result.Detail.isEditable()}) $l10n.SCHEDULE_MESSAGE_OF_EDIT_AND_DELETE#else #if($!{result.Detail.User.UserId.toString()}==$!{result.Detail.UpdateUser.UserId.toString()}) $l10n.SCHEDULE_ENTRY_USER#else $!{result.OutsideUser}#end#end
+#if($!{result.Detail.isEditable()}) $l10n.SCHEDULE_MESSAGE_OF_EDIT_AND_DELETE#else #if($!{result.Detail.User.UserId.toString()}==$!{result.Detail.UpdateUser.UserId.toString()}) $l10n.SCHEDULE_MESSAGE_OF_DISABLE_EDIT_AND_DELETE #else $!{result.OutsideUser}#end#end
 </div>
 
 <div>
@@ -139,6 +148,26 @@ ${record.FacilityNameHtml}<br/>
 #end
 #ALtditemfooter()
 
+#* 添付ファイル（ここから）  *#
+#if($!result.Detail.AttachmentFileList && $!result.Detail.AttachmentFileList.size() > 0)
+#ALtdcaption($l10n.SCHEDULE_FILE_ATTACH)
+#ALtditemheader()
+<ul>
+#foreach( $attachmentFile in $!result.Detail.AttachmentFileList )
+<li><a #if("$!{client}"=="IPHONE")target="_blank"#end href="$jslink.getTemplate("ScheduleFileRawScreen").addPathInfo("attachmentIndex", $attachmentFile.FileId).addPathInfo("ownerid", $attachmentFile.UserId).addPathInfo("entityid", $entityid).addPathInfo("f", $attachmentFile.getURLEncodedValue())">$attachmentFile.FileName</a></li>
+#if($attachmentFile.isImage())
+<div id='popc' style='position:absolute'></div>
+<div class="thumbBlock">
+	<a href="javascript:void(0);" onclick="aipo.fileupload.showImageDialog('$jslink.getTemplate('FileuploadViewScreen').addPathInfo('screen','ScheduleFileRawScreen').addPathInfo("ownerid", $attachmentFile.UserId).addPathInfo("entityid", $entityid).addPathInfo("attachmentIndex", $attachmentFile.FileId).addPathInfo("f", ${attachmentFile.getURLEncodedValue()})');">
+	<img class="width_thumbs" border="0" alt="$attachmentFile.FileName" title="$attachmentFile.FileName" src="$jslink.getTemplate("ScheduleFileThumbnailScreen").addQueryData("ownerid",  $attachmentFile.UserId).addQueryData("entityid", $entityid).addQueryData("attachmentIndex", $attachmentFile.FileId)"></a><br>
+</div>
+#end
+#end
+</ul>
+#ALtditemfooter()
+#end
+#* 添付ファイル（ここまで）  *#
+
 #ALtdcaption($l10n.COMMON_CREATE_USER)
 #ALtditemheader()
 <a href="javascript: void(0)" onclick="aipo.message.popupProfile($!{result.Detail.CreateUser.UserId.Value},arguments[0])">$!{result.Detail.CreateUser.AliasName}</a>
@@ -149,13 +178,38 @@ ${record.FacilityNameHtml}<br/>
 <a href="javascript: void(0)" onclick="aipo.message.popupProfile($!{result.Detail.UpdateUser.UserId.Value},arguments[0])">$!{result.Detail.UpdateUser.AliasName}</a>
  （$!{result.Detail.UpdateDate.toString($l10n.SCHEDULE_SIMPLE_DATE_FORMAT_MINUTE)}）
 #ALtditemfooter()
+
+#if($result.isReminderEnabled())
+#if(!$!{result.Detail.isSpan()} && !$!{result.Detail.isLastStarted()} && $!{result.Detail.isMember()})
+#ALtdcaption($l10n.SCHEDULE_ALARM)
+#ALtditemheader()
+#if($result.hasReminderItem())
+$!result.ReminderItem.NotifyTimingText
+$l10n.SCHEDULE_REMINDER_NOTIFY_DETAIL_TEXT
+#set($count = 0)
+#if ($!{result.ReminderItem.hasNotifyTypeMessage()}) #set ($dest_type_message_dist = $l10n.SCHEDULE_REMINDER_MESSAGE) #set($count = $count+1) #end
+#if ($!{result.ReminderItem.hasNotifyTypeMail()}) #set ($dest_type_mail_dist = $l10n.SCHEDULE_REMINDER_MAIL) #set($count = $count+1) #end
+#if($count == 0)
+-----
+#else
+ （ $!{dest_type_message_dist} #if($count == 2) と #end $!{dest_type_mail_dist} ）
+#end
+#else
+#if ($!{result.Detail.isLoginuser()})
+$l10n.SCHEDULE_REMINDER_OFF
+#end
+#end
+#ALtditemfooter()
+#end
+#end
+
 #ALtablefooter()
 
 #ALbuttonheader()
 #if( ($!{result.Detail.isOwner()} || $!{result.Detail.isCreateuser()} || ($!{result.Detail.isTmpreserve()} && $!{result.Detail.isLoginuser()}) || ($!{result.Detail.isConfirm()} && $!{result.Detail.isLoginuser()}) || (!$!{result.Detail.isOwner()} && $!{result.hasAuthorityOtherDelete()}) || (!$!{result.Detail.isLoginuser()} && $!{result.hasAuthorityOtherEdit()})))
     <div align="left" style="padding:0px 0px 2px 0px" class="radioBlock">
     #if($viewDateEnable == "true" && $!ignore_viewdate == "false")
-        #if($!{result.Detail.isOwner()} || $!{result.Detail.isCreateuser()} ||($!{result.Detail.isLoginuser()} && $!{result.Detail.isEditable()}&&$!{result.hasAuthoritySelfDelete()} &&($!{result.Detail.isTmpreserve()}||$!{result.Detail.isConfirm()}))|| (!$!{result.Detail.isLoginuser()} && $!{result.hasAuthorityOtherDelete()}))
+        #if($!{result.Detail.isOwner()} || $!{result.Detail.isCreateuser()} || ($!{result.Detail.isLoginuser()} && $!{result.Detail.isEditable()}&&$!{result.hasAuthoritySelfDelete()} &&($!{result.Detail.isTmpreserve()}||$!{result.Detail.isConfirm()}) )|| (!$!{result.Detail.isLoginuser()} && $!{result.hasAuthorityOtherDelete()}))
         <h3> $l10n.SCHEDULE_DELETE_CASE</h3>
         #set($prestr = "$!{result.Detail.User.AliasNameHtml} の")
 
@@ -197,7 +251,7 @@ ${record.FacilityNameHtml}<br/>
 		#end
 	#else
        #if($!{result.Detail.isOwner()} || $!{result.Detail.isCreateuser()} || ($!{result.Detail.isLoginuser()} && $!{result.Detail.isEditable()}) || (!$!{result.Detail.isLoginuser()} && $!{result.hasAuthorityOtherDelete()}))
-        <h3>削除する場合の条件</h3>
+        <h3>$l10n.SCHEDULE_DELETE_CASE</h3>
             #if(($hasMember || $!{result.Detail.Type}=="F") && $!{result.Detail.isRepeat()})
             <label for="$!{portlet.ID}del_flag_0_id" onclick="aipo.schedule.delFlag0(this.form)"><input name="del_flag" type="radio" value="0"  id="$!{portlet.ID}del_flag_0_id" checked="checked" onclick="aipo.schedule.delFlag0(this.form)"/>&nbsp;$l10n.SCHEDULE_DELETE_THE_ENTRY_USERS_SCHEDULE</label>
             <input type="hidden" name="del_member_flag" value="0"/>
@@ -256,11 +310,14 @@ ${record.FacilityNameHtml}<br/>
         #ALbutton('eventSubmit_doSchedule_change_status' $l10n.SCHEDULE_CHANGE_STATUS_TEMP_SCHEDULE "aipo.schedule.buttonChangeStatus(this.form, this.form.change_status_url.value, 'T', '$indicator_id', '$!portlet.ID')")
         #if($!{result.Detail.isEditable()})
             #if($!{result.hasAuthoritySelfEdit()} && (($viewDateEnable == "true") || ($!ignore_viewdate == "true")))
-            #ALajaxbuttonEditCallback("$!jslink.getPortletById($!portlet.ID).addQueryData('template','ScheduleFormScreen').addQueryData('entityid',$entityid).addQueryData('view_date',$!{result.getViewDate().toString()}).addQueryData('ignore_viewdate', $!ignore_viewdate)" "$!portlet.ID" "aipo.schedule.onLoadScheduleDialog")
-        #end
-        #if($!{result.hasAuthoritySelfDelete()} && (($viewDateEnable == "true") || ($!ignore_viewdate == "true")))
-            #ALajaxbuttonDelete("$!jslink.getPortletById($!portlet.ID).addQueryData('template','ScheduleFormJSONScreen').addQueryData('entityid',$entityid).addQueryData('mode', 'delete')" "$indicator_id" "$!portlet.ID" "aipo.schedule.onReceiveMessage")
-        #end
+            	#if(${client} == "IPHONE")
+            		<br/>
+            	#end
+            	#ALajaxbuttonEditCallback("$!jslink.getPortletById($!portlet.ID).addQueryData('template','ScheduleFormScreen').addQueryData('entityid',$entityid).addQueryData('view_date',$!{result.getViewDate().toString()}).addQueryData('ignore_viewdate', $!ignore_viewdate)" "$!portlet.ID" "aipo.schedule.onLoadScheduleDialog")
+        	#end
+        	#if($!{result.hasAuthoritySelfDelete()} && (($viewDateEnable == "true") || ($!ignore_viewdate == "true")))
+            	#ALajaxbuttonDelete("$!jslink.getPortletById($!portlet.ID).addQueryData('template','ScheduleFormJSONScreen').addQueryData('entityid',$entityid).addQueryData('mode', 'delete')" "$indicator_id" "$!portlet.ID" "aipo.schedule.onReceiveMessage")
+        	#end
         #end
     #end
     #if (${client} == "IPHONE")
@@ -270,6 +327,12 @@ ${record.FacilityNameHtml}<br/>
 
     #if($!{result.hasAuthoritySelfInsert()} && (($viewDateEnable == "true") || ($!ignore_viewdate == "true")))
     #ALajaxbuttonNameEditCallback("$!jslink.getPortletById($!portlet.ID).addQueryData('template','ScheduleFormScreen').addQueryData('entityid',$entityid).addQueryData('view_date',$!{result.getViewDate().toString()}).addQueryData('is_copy','true')" "$!portlet.ID" "aipo.schedule.onLoadScheduleDialog" $l10n.SCHEDULE_COPY)
+    #end
+
+    #if($result.isReminderEnabled() || $result.isReminderViewSetting())
+    #if(!$!{result.Detail.isSpan()} && !$!{result.Detail.isLastStarted()} && $!{result.Detail.isMember()})
+    #ALajaxbuttonNameEditCallback("$!jslink.getPortletById($!portlet.ID).addQueryData('template','ScheduleAlarmFormScreen').addQueryData('entityid',$entityid).addQueryData('view_date',$!{result.getViewDate().toString()})" "$!portlet.ID" "aipo.schedule.onLoadScheduleDialog" $l10n.SCHEDULE_ALARM_MESSAGE)
+    #end
     #end
 
     #ALajaxbuttonClose()

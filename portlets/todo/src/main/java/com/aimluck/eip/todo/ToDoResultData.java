@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
+import com.aimluck.eip.util.ALLocalizationUtils;
 
 /**
  * ToDoのResultDataです。 <BR>
@@ -139,7 +140,9 @@ public class ToDoResultData implements ALData {
     state_image = new ALStringField();
     state_string = new ALStringField();
     create_date = new ALStringField();
-    update_date = new ALDateTimeField();
+    update_date =
+      new ALDateTimeField(ALLocalizationUtils
+        .getl10n("COMMONS_DATE_WEEK_TIME_FORMAT"));
     login_user_id = new ALNumberField();
     limit_state = new ALNumberField();
     create_user_id = new ALNumberField();
@@ -456,6 +459,10 @@ public class ToDoResultData implements ALData {
 
   public ALNumberField getLoginUserId() {
     return login_user_id;
+  }
+
+  public ALDateTimeField getUpdateDateDetail() {
+    return update_date;
   }
 
   public boolean isSelfTodo() {

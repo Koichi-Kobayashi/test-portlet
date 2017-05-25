@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,12 @@ import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.exttimecard.ExtTimecardSummaryListSelectData;
+import com.aimluck.eip.exttimecard.util.ExtTimecardUtils;
 import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * タイムカード集計の一覧を処理するクラスです。 <br />
- * 
+ *
  */
 public class ExtTimecardSummaryListScreen extends ExtTimecardSystemScreen {
 
@@ -37,7 +38,7 @@ public class ExtTimecardSummaryListScreen extends ExtTimecardSystemScreen {
     .getLogger(ExtTimecardSummaryListScreen.class.getName());
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -52,10 +53,9 @@ public class ExtTimecardSummaryListScreen extends ExtTimecardSystemScreen {
       listData.setRowsNum(100);
       listData.doViewList(this, rundata, context);
 
-      setTemplate(
-        rundata,
-        context,
-        "portlets/html/ajax-exttimecard-summary-list.vm");
+      setTemplate(rundata, context, ExtTimecardUtils.isNewRule()
+        ? "portlets/html/ajax-exttimecard-summary-new-list.vm"
+        : "portlets/html/ajax-exttimecard-summary-list.vm");
     } catch (Exception ex) {
       logger.error("[ExtTimecardSummaryListScreen] Exception.", ex);
       ALEipUtils.redirectDBError(rundata);

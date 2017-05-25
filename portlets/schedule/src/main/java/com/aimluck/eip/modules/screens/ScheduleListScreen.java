@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -49,8 +49,8 @@ import com.aimluck.eip.util.ALEipUtils;
 public class ScheduleListScreen extends ScheduleScreen {
 
   /** logger */
-  private static final JetspeedLogger logger = JetspeedLogFactoryService
-    .getLogger(ScheduleListScreen.class.getName());
+  private static final JetspeedLogger logger =
+    JetspeedLogFactoryService.getLogger(ScheduleListScreen.class.getName());
 
   /**
    *
@@ -123,8 +123,8 @@ public class ScheduleListScreen extends ScheduleScreen {
           List<UserFacilityLiteBean> ulist;
           if ("F".equals(has_acl_other)) {
             ulist = ScheduleUtils.getALEipFacility(selected_users, rundata);
-            if (selected_user.contains(String.valueOf(ALEipUtils
-              .getUserId(rundata)))) {
+            if (selected_user.contains(
+              String.valueOf(ALEipUtils.getUserId(rundata)))) {
               UserFacilityLiteBean login_user =
                 UserFacilityUtils.getUserFacilityLiteBean(rundata);
               ulist.add(login_user);

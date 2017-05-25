@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -70,7 +70,7 @@ public class MessageListSelectData extends
 
   private EipTMessageRoom room;
 
-  private ALStringField keyword = null;
+  private ALStringField keyword;
 
   private boolean isSearch = false;
 
@@ -78,7 +78,6 @@ public class MessageListSelectData extends
   public void init(ALAction action, RunData rundata, Context context)
       throws ALPageNotFoundException, ALDBErrorException {
     super.init(action, rundata, context);
-
     userId = ALEipUtils.getUserId(rundata);
   }
 
@@ -174,11 +173,13 @@ public class MessageListSelectData extends
     rd.setUserId(model.getUserId());
     rd.setFirstName(model.getFirstName());
     rd.setLastName(model.getLastName());
-    rd.setHasPhoto("T".equals(model.getHasPhoto()));
+    rd.setHasPhoto("T".equals(model.getHasPhoto())
+      || "N".equals(model.getHasPhoto()));
     rd.setPhotoModified(model.getPhotoModified());
     rd.setMemberCount(model.getMemberCount());
     rd.setUnreadCount(model.getUnreadCount());
     rd.setMessage(model.getMessage());
+    rd.setKeyword(keyword.getValue());
     rd.setCreateDate(model.getCreateDate());
     rd.setOwner(model.getUserId().intValue() == userId);
     if (model.getMessageId().intValue() > lastMessageId) {
@@ -213,7 +214,7 @@ public class MessageListSelectData extends
   }
 
   protected Map<Integer, List<FileuploadBean>> getFiles(List<Integer> parentIds) {
-    if (parentIds == null || parentIds.size() == 0) {
+    if (parentIds == null || parentIds.size() == 0 || !hasAttachmentAuthority()) {
       return new HashMap<Integer, List<FileuploadBean>>();
     }
     SelectQuery<EipTMessageFile> query = Database.query(EipTMessageFile.class);
@@ -345,5 +346,19 @@ public class MessageListSelectData extends
     return a.getYear().equals(b.getYear())
       && a.getMonth().equals(b.getMonth())
       && a.getDay().equals(b.getDay());
+  }
+
+  public boolean isAdmin() {
+    if (room == null) {
+      return false;
+    }
+    return MessageUtils.hasAuthorityRoom(room, userId);
+  }
+
+  public boolean isDirect() {
+    if (room == null) {
+      return false;
+    }
+    return "O".equals(room.getRoomType());
   }
 }

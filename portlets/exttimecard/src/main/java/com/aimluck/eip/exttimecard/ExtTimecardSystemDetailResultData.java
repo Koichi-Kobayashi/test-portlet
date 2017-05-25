@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,8 +25,8 @@ import com.aimluck.eip.util.ALLocalizationUtils;
 
 /**
  * タイムカード管理の勤務形態の情報を保持する。
- * 
- * 
+ *
+ *
  */
 public class ExtTimecardSystemDetailResultData extends
     ExtTimecardSystemResultData {
@@ -59,6 +59,34 @@ public class ExtTimecardSystemDetailResultData extends
 
   private ALStringField update_date;
 
+  private ALNumberField overtime_type_minute_by_day;
+
+  private ALNumberField overtime_type_hour_by_week;
+
+  private boolean isOvertypeWeek;
+
+  private ALStringField default_holiday_flag;
+
+  private ALStringField week1;
+
+  private ALStringField week2;
+
+  private ALStringField week3;
+
+  private ALStringField week4;
+
+  private ALStringField week5;
+
+  private ALStringField week6;
+
+  private ALStringField week7;
+
+  private ALStringField statutoryHoliday;
+
+  private ALStringField holiday;
+
+  private boolean hasHoliday;
+
   /**
    *
    *
@@ -80,6 +108,18 @@ public class ExtTimecardSystemDetailResultData extends
     outgoing_add_flag = new ALStringField();
     create_date = new ALStringField();
     update_date = new ALStringField();
+    overtime_type_minute_by_day = new ALNumberField();
+    overtime_type_hour_by_week = new ALNumberField();
+    default_holiday_flag = new ALStringField();
+    week1 = new ALStringField();
+    week2 = new ALStringField();
+    week3 = new ALStringField();
+    week4 = new ALStringField();
+    week5 = new ALStringField();
+    week6 = new ALStringField();
+    week7 = new ALStringField();
+    statutoryHoliday = new ALStringField();
+    holiday = new ALStringField();
   }
 
   public String getUserId() {
@@ -157,8 +197,56 @@ public class ExtTimecardSystemDetailResultData extends
     return update_date;
   }
 
+  public ALNumberField getOvertimeTypeMinuteByDay() {
+    return overtime_type_minute_by_day;
+  }
+
+  public ALNumberField getOvertimeTypeHourByWeek() {
+    return overtime_type_hour_by_week;
+  }
+
   public ALNumberField getStartDay() {
     return start_day;
+  }
+
+  public ALStringField getDefaultHolidayFlag() {
+    return default_holiday_flag;
+  }
+
+  public ALStringField getWeek1() {
+    return week1;
+  }
+
+  public ALStringField getWeek2() {
+    return week2;
+  }
+
+  public ALStringField getWeek3() {
+    return week3;
+  }
+
+  public ALStringField getWeek4() {
+    return week4;
+  }
+
+  public ALStringField getWeek5() {
+    return week5;
+  }
+
+  public ALStringField getWeek6() {
+    return week6;
+  }
+
+  public ALStringField getWeek7() {
+    return week7;
+  }
+
+  public ALStringField getStatutoryHoliday() {
+    return statutoryHoliday;
+  }
+
+  public ALStringField getHoliday() {
+    return holiday;
   }
 
   public void setUserId(int i) {
@@ -215,6 +303,84 @@ public class ExtTimecardSystemDetailResultData extends
 
   public void setStartDay(int i) {
     start_day.setValue(i);
+  }
+
+  public void setOvertimeTypeMinuteByDay(int value) {
+    overtime_type_minute_by_day.setValue(value);
+  }
+
+  public void setOvertimeTypeHourByWeek(int value) {
+    overtime_type_hour_by_week.setValue(value);
+  }
+
+  public void setDefaultHolidayFlag(String str) {
+    default_holiday_flag.setValue(str);
+  }
+
+  public void setWeek1(String str) {
+    week1.setValue(str);
+  }
+
+  public void setWeek2(String str) {
+    week2.setValue(str);
+  }
+
+  public void setWeek3(String str) {
+    week3.setValue(str);
+  }
+
+  public void setWeek4(String str) {
+    week4.setValue(str);
+  }
+
+  public void setWeek5(String str) {
+    week5.setValue(str);
+  }
+
+  public void setWeek6(String str) {
+    week6.setValue(str);
+  }
+
+  public void setWeek7(String str) {
+    week7.setValue(str);
+  }
+
+  public void setStatutoryHoliday(String str) {
+    statutoryHoliday.setValue(str);
+  }
+
+  public void setHoliday(String str) {
+    holiday.setValue(str);
+  }
+
+  /**
+   * @return isOvertypeWeek
+   */
+  public boolean isOvertypeWeek() {
+    return isOvertypeWeek;
+  }
+
+  /**
+   * @param isOvertypeWeek
+   *          セットする isOvertypeWeek
+   */
+  public void setOvertypeWeek(boolean isOvertypeWeek) {
+    this.isOvertypeWeek = isOvertypeWeek;
+  }
+
+  /**
+   * @return hasHoliday
+   */
+  public boolean getHasHoliday() {
+    return hasHoliday;
+  }
+
+  /**
+   * @param hasHoliday
+   *          セットする hasHoliday
+   */
+  public void setHasHoliday(boolean hasHoliday) {
+    this.hasHoliday = hasHoliday;
   }
 
 }

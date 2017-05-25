@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -372,7 +372,7 @@ aipo.schedule.formSpanOn = function(form) {
     dojo.byId('allDayField').style.display = "none";
 
     dojo.byId('facilityField').style.display = "none";
-    dojo.byId('facilityFieldButton').style.display = "none";
+    dojo.byId('facilityFieldButton').style.display = "block";
 
     form.is_span.value = 'TRUE';
 
@@ -424,6 +424,7 @@ aipo.schedule.formEditRepeatOne = function(form) {
     dojo.byId('spanButtonField').style.display = "none";
     dojo.byId('repeatButtonField').style.display = "none";
     dojo.byId('allDayField').style.display = "none";
+    dojo.query(".isEditFile").style("display", "none");
 
     dojo.byId('normalField').style.display = "";
     dojo.byId('timeField').style.display = "";
@@ -442,6 +443,7 @@ aipo.schedule.formEditRepeatAll = function(form) {
     dojo.byId('repeatField').text = dojo.byId('schedule_val_repeat2').innerText;
     dojo.byId('repeatButtonField').style.display = "";
     dojo.byId('allDayField').style.display = "none";
+    dojo.query(".isEditFile").style("display", "");
 
     dojo.byId('timeLabelField').style.display = "";
     dojo.byId('timeField').style.display = "";
@@ -478,7 +480,7 @@ aipo.schedule.formAllDayOn = function(checkbox) {
     dojo.byId('timeField').style.display = "none";
     dojo.byId('spanButtonField').style.display = "none";
 
-    dojo.byId('facilityFieldButton').style.display = "none";
+    dojo.byId('facilityFieldButton').style.display = "block";
     aipo.schedule.shrinkFacility();
 
     checkbox.form.is_repeat.value = 'FALSE';
@@ -529,9 +531,29 @@ aipo.schedule.enablePerWeek = function(form){
     form.repeat_type[1].checked = true;
 }
 
+aipo.schedule.enableNthWeek = function(form){
+	form.repeat_type[1].checked = true;
+}
+
 aipo.schedule.enableMonth = function(form){
     if(! form.repeat_type[2].checked){
         form.repeat_type[2].checked = true;
+    }
+}
+aipo.schedule.repeatpickeroff = function(){
+    dojo.byId('repeatpickerfield').style.display = "none";
+
+    aipo.schedule.setWrapperHeight();
+}
+aipo.schedule.repeatpickeron = function(){
+	dojo.byId('repeatpickerfield').style.display = "";
+
+    aipo.schedule.setWrapperHeight();
+}
+
+aipo.schedule.enableYear = function(form){
+    if(! form.repeat_type[3].checked){
+        form.repeat_type[3].checked = true;
     }
 }
 
@@ -586,6 +608,9 @@ aipo.schedule.onSubmit = function(form) {
 }
 
 aipo.schedule.onReceiveMessage = function(msg){
+	var select=dojo.byId("attachments_select");
+	if(typeof select!="undefined"&& select!=null)
+		select.parentNode.removeChild(select);
     if(!msg) {
         var arrDialog = dijit.byId("modalDialog");
         if(arrDialog){
@@ -777,8 +802,10 @@ aipo.schedule.onSpanEndChange = function(){
 
 aipo.schedule.setIndicator = function(portlet_id) {
 
-    obj_content = dojo.byId('content-'+portlet_id);
-    dojo.style(obj_content, "visibility" , "hidden");
+	if (dojo.isIE != 8) {
+    	obj_content = dojo.byId('content-'+portlet_id);
+        dojo.style(obj_content, "visibility" , "hidden");
+    }
     var obj_garage = dojo.byId('scheduleGarage-'+portlet_id);
     if(obj_garage){
 	    var child_num = obj_garage.childNodes.length;
@@ -820,4 +847,17 @@ aipo.schedule.setWrapperHeight = function() {
     	var wrapper = document.getElementById('wrapper');
     	wrapper.style.minHeight = modalDialog.clientHeight + 'px';
     }
+}
+
+aipo.schedule.reminderoff = function(){
+    dojo.byId('remindernotifytype').style.display = "none";
+    dojo.byId('remindernotifytiming').style.display = "none";
+
+    aipo.schedule.setWrapperHeight();
+}
+aipo.schedule.reminderon = function(){
+	dojo.byId('remindernotifytype').style.display = "";
+	dojo.byId('remindernotifytiming').style.display = "";
+
+    aipo.schedule.setWrapperHeight();
 }

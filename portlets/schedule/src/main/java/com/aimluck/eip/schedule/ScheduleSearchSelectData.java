@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,6 +37,7 @@ import com.aimluck.eip.orm.Database;
 import com.aimluck.eip.orm.query.ResultList;
 import com.aimluck.eip.orm.query.SelectQuery;
 import com.aimluck.eip.schedule.util.ScheduleUtils;
+import com.aimluck.eip.services.accessctl.ALAccessControlConstants;
 import com.aimluck.eip.util.ALEipUtils;
 import com.aimluck.eip.util.ALLocalizationUtils;
 
@@ -114,6 +115,11 @@ public class ScheduleSearchSelectData extends ScheduleMonthlySelectData {
   protected ResultList<VEipTScheduleList> getScheduleList(RunData rundata,
       Context context) {
 
+    boolean hasAuthority =
+      ScheduleUtils.hasAuthorityForOtherSchedule(
+        rundata,
+        ALAccessControlConstants.VALUE_ACL_LIST);
+
     List<Integer> tmpUsers = new ArrayList<Integer>();
     List<Integer> tmpFacilities = new ArrayList<Integer>();
     if ("all".equals(target_user_id)) {
@@ -144,7 +150,8 @@ public class ScheduleSearchSelectData extends ScheduleMonthlySelectData {
       tmpFacilities,
       target_keyword.getValue(),
       getCurrentPage(),
-      getRowsNum());
+      getRowsNum(),
+      hasAuthority);
   }
 
   /**
@@ -167,6 +174,9 @@ public class ScheduleSearchSelectData extends ScheduleMonthlySelectData {
       boolean is_member = record.isMember();
 
       if ("C".equals(record.getPublicFlag())
+        && ("F".equals(record.getType()) || ("U".equals(record.getType()) && userid != record
+          .getUserId()
+          .intValue()))
         && (userid != record.getOwnerId().intValue())
         && !is_member) {
         rd.setName(ALLocalizationUtils.getl10n("SCHEDULE_CLOSE_PUBLIC_WORD"));

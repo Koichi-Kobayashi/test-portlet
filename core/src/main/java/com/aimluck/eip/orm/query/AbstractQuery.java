@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@ package com.aimluck.eip.orm.query;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.cayenne.CayenneDataObject;
@@ -74,11 +75,11 @@ public abstract class AbstractQuery<M> implements Query<M> {
   }
 
   protected Object getValueFromDataRow(DataRow dataRow, String key) {
-    String lowerKey = key.toLowerCase();
+    String lowerKey = key.toLowerCase(Locale.ENGLISH);
     if (dataRow.containsKey(lowerKey)) {
       return dataRow.get(lowerKey);
     } else {
-      return dataRow.get(key.toUpperCase());
+      return dataRow.get(key.toUpperCase(Locale.ENGLISH));
     }
   }
 

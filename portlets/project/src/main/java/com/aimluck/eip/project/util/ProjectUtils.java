@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -85,7 +85,7 @@ import com.aimluck.eip.util.ALLocalizationUtils;
 
 /**
  * プロジェクト管理のユーティリティクラスです。
- * 
+ *
  */
 public class ProjectUtils {
 
@@ -140,8 +140,30 @@ public class ProjectUtils {
   // ---------------------------------------------------
 
   /**
+   * プロジェクト情報オブジェクトモデルのIdを取得します。
+   *
+   * @param rundata
+   *          RunData
+   * @param context
+   *          Context
+   * @return プロジェクト情報オブジェクトモデル
+   */
+  public static Integer getEipTProjectId(RunData rundata, Context context) {
+    String projectId =
+      ALEipUtils.getTemp(rundata, context, ALEipConstants.ENTITY_ID);
+    Integer id = null;
+    if (projectId == null || (id = Integer.valueOf(projectId)) == null) {
+      // Todo IDが空の場合
+      logger.debug("ProjectUtils] Empty ID...");
+      return null;
+    } else {
+      return id;
+    }
+  }
+
+  /**
    * プロジェクト情報オブジェクトモデルを取得します。
-   * 
+   *
    * @param rundata
    *          RunData
    * @param context
@@ -149,17 +171,12 @@ public class ProjectUtils {
    * @return プロジェクト情報オブジェクトモデル
    */
   public static EipTProject getEipTProject(RunData rundata, Context context) {
-    Integer projectId =
-      Integer.valueOf(ALEipUtils.getTemp(
-        rundata,
-        context,
-        ALEipConstants.ENTITY_ID));
-    return getEipTProject(projectId);
+    return getEipTProject(getEipTProjectId(rundata, context));
   }
 
   /**
    * プロジェクト情報オブジェクトモデルを取得します。
-   * 
+   *
    * @param projectId
    *          プロジェクトID
    * @return プロジェクト情報 オブジェクトモデル
@@ -195,7 +212,7 @@ public class ProjectUtils {
 
   /**
    * 全プロジェクトを返す
-   * 
+   *
    * @return 全プロジェクトのリスト
    */
   public static List<ProjectResultData> getAllProject() {
@@ -222,7 +239,7 @@ public class ProjectUtils {
 
   /**
    * プロジェクトオブジェクトよりプロジェクトResult情報を返す
-   * 
+   *
    * @param model
    *          プロジェクトオブジェクト
    * @return プロジェクトResult情報
@@ -255,7 +272,7 @@ public class ProjectUtils {
 
   /**
    * プロジェクト進捗率を取得します。 最上位のタスクより進捗率を計算します。
-   * 
+   *
    * @param projectId
    *          プロジェクトID
    * @return 紐づく全タスク情報
@@ -286,7 +303,7 @@ public class ProjectUtils {
 
   /**
    * プロジェクトの進捗情報を取得します。
-   * 
+   *
    * @param projectId
    *          プロジェクトID
    * @return 進捗情報
@@ -446,7 +463,7 @@ public class ProjectUtils {
 
   /**
    * プロジェクトメンバーを返す
-   * 
+   *
    * @param projectId
    *          プロジェクトID
    * @return プロジェクトメンバーのリスト
@@ -475,7 +492,7 @@ public class ProjectUtils {
 
   /**
    * プロジェクトメンバーリストを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -505,7 +522,7 @@ public class ProjectUtils {
 
   /**
    * プロジェクトに紐づくメンバーを削除する
-   * 
+   *
    * @param project
    *          プロジェクトオブジェクト
    * @return TRUE 成功 FALSE 失敗
@@ -539,7 +556,7 @@ public class ProjectUtils {
 
   /**
    * プロジェクト作成時に参加メンバーへ通知メールを送る
-   * 
+   *
    * @param taskId
    *          タスクID
    * @return 成否
@@ -588,7 +605,7 @@ public class ProjectUtils {
 
   /**
    * 送信するメールの内容を作成する．
-   * 
+   *
    * @return
    */
   public static String createProjectMemberMsg(RunData rundata, String addr,
@@ -645,8 +662,30 @@ public class ProjectUtils {
   // ---------------------------------------------------
 
   /**
+   * タスクオブジェクトモデルのIdを取得します。
+   *
+   * @param rundata
+   *          RunData
+   * @param context
+   *          Context
+   * @return タスクオブジェクトモデル
+   */
+  public static Integer getEipTProjectTaskId(RunData rundata, Context context) {
+    String taskId =
+      ALEipUtils.getTemp(rundata, context, ALEipConstants.ENTITY_ID);
+    Integer id = null;
+    if (taskId == null || (id = Integer.valueOf(taskId)) == null) {
+      // Todo IDが空の場合
+      logger.debug("ProjectUtils] Empty ID...");
+      return null;
+    } else {
+      return id;
+    }
+  }
+
+  /**
    * タスクオブジェクトモデルを取得します。
-   * 
+   *
    * @param rundata
    *          RunData
    * @param context
@@ -662,7 +701,7 @@ public class ProjectUtils {
 
   /**
    * タスク一覧を返す
-   * 
+   *
    * @param taskId
    *          プロジェクトID
    * @return タスク一覧
@@ -700,7 +739,7 @@ public class ProjectUtils {
 
   /**
    * タスクの存在チェック
-   * 
+   *
    * @param projectId
    *          プロジェクトID
    * @return
@@ -730,7 +769,7 @@ public class ProjectUtils {
 
   /**
    * タスクオブジェクトリストより項目定義Result情報リストを返す
-   * 
+   *
    * @param taskList
    *          タスクオブジェクトリスト
    * @return タスクResult情報リスト
@@ -747,7 +786,7 @@ public class ProjectUtils {
 
   /**
    * タスクオブジェクトよりタスクResult情報を返す
-   * 
+   *
    * @param model
    *          タスクオブジェクト
    * @return タスクResult情報
@@ -759,7 +798,8 @@ public class ProjectUtils {
     data.setTaskId(model.getTaskId()); // タスクID
     data.setProjectId(model.getProjectId()); // プロジェクトID
     data.setTracker(model.getTracker()); // 分類
-    data.setTaskName(model.getTaskName()); // タスク名
+    data.setTaskName(model.getTaskName()); // タスク
+    data.setProjectName(model.getProjectName()); // プロジェクト名
     data.setExplanation(model.getExplanation()); // 説明
     data.setStatus(model.getStatus()); // ステータス
     data.setPriority(model.getPriority()); // 優先度
@@ -803,7 +843,7 @@ public class ProjectUtils {
 
   /**
    * 子タスクの件数を取得します。
-   * 
+   *
    * @param taskId
    *          タスクID
    * @return 子タスクの件数
@@ -842,7 +882,7 @@ public class ProjectUtils {
 
   /**
    * タスク担当者を返す
-   * 
+   *
    * @param taskId
    *          タスクID
    * @return タスク担当者のリスト
@@ -881,7 +921,7 @@ public class ProjectUtils {
 
   /**
    * タスクに紐づく担当者を削除する
-   * 
+   *
    * @param task
    *          タスクオブジェクト
    * @return TRUE 成功 FALSE 失敗
@@ -915,7 +955,7 @@ public class ProjectUtils {
 
   /**
    * タスク担当者へ通知メールを送る
-   * 
+   *
    * @param taskId
    *          タスクID
    * @return 成否
@@ -974,7 +1014,7 @@ public class ProjectUtils {
 
   /**
    * 送信するメールの内容を作成する．
-   * 
+   *
    * @return
    */
   public static String createTaskMemberMsg(RunData rundata, String addr,
@@ -1033,7 +1073,7 @@ public class ProjectUtils {
 
   /**
    * タスクコメントオブジェクトモデルを取得します。
-   * 
+   *
    * @param rundata
    *          RunData
    * @param context
@@ -1049,7 +1089,7 @@ public class ProjectUtils {
 
   /**
    * タスクコメント一覧を返す
-   * 
+   *
    * @param commentId
    *          コメントID
    * @return コメント一覧
@@ -1088,13 +1128,13 @@ public class ProjectUtils {
 
   /**
    * タスクコメントリストを返す
-   * 
+   *
    * @param taskId
    *          タスクID
    * @return タスクコメントのリスト
    */
   public static List<ProjectTaskCommentResultData> getProjectTaskCommentList(
-      String taskId) {
+      String taskId, boolean hasAttachmentAuthority) {
     List<ProjectTaskCommentResultData> commentList =
       new ArrayList<ProjectTaskCommentResultData>();
 
@@ -1126,12 +1166,14 @@ public class ProjectUtils {
         data.setUpdateDate(comment.getUpdateDate());
         data.setHasPhoto(user.hasPhoto());
 
-        // ファイルリスト
-        List<EipTProjectTaskCommentFile> filelist =
-          pfile.getSelectQueryForFiles(
-            EipTProjectTaskComment.COMMENT_ID_PK_COLUMN,
-            Integer.valueOf(comment.getCommentId())).fetchList();
-        data.setAttachmentFiles(pfile.getFileList(filelist));
+        if (hasAttachmentAuthority) {
+          // ファイルリスト
+          List<EipTProjectTaskCommentFile> filelist =
+            pfile.getSelectQueryForFiles(
+              EipTProjectTaskComment.COMMENT_ID_PK_COLUMN,
+              Integer.valueOf(comment.getCommentId())).fetchList();
+          data.setAttachmentFiles(pfile.getFileList(filelist));
+        }
 
         commentList.add(data);
       }
@@ -1144,7 +1186,7 @@ public class ProjectUtils {
 
   /**
    * タスクに紐づくコメントを削除する
-   * 
+   *
    * @param task
    *          タスクオブジェクト
    * @return TRUE 成功 FALSE 失敗
@@ -1196,7 +1238,7 @@ public class ProjectUtils {
 
   /**
    * ファイル検索のクエリを返します
-   * 
+   *
    * @param requestid
    *          ファイルを検索するリクエストのid
    * @return query
@@ -1213,7 +1255,7 @@ public class ProjectUtils {
 
   /**
    * ファイルオブジェクトモデルを取得します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -1254,7 +1296,7 @@ public class ProjectUtils {
   // ---------------------------------------------------
   /**
    * 指定区分の区分を取得します。
-   * 
+   *
    * @param key
    *          区分名
    * @return 区分
@@ -1279,8 +1321,8 @@ public class ProjectUtils {
 
   /**
    * 指定区分の区分値を取得します。
-   * 
-   * 
+   *
+   *
    * @param cd
    *          区分コード
    * @param valCd
@@ -1314,7 +1356,7 @@ public class ProjectUtils {
 
   /**
    * 指定区分の区分値マップを取得します。
-   * 
+   *
    * @param cd
    *          区分コード
    * @return 区分値マップ
@@ -1352,7 +1394,7 @@ public class ProjectUtils {
 
   /**
    * 区分値を取得する
-   * 
+   *
    * @param cd
    *          区分コード
    * @param valCd
@@ -1375,7 +1417,7 @@ public class ProjectUtils {
 
   /**
    * 空設定用日付を取得する
-   * 
+   *
    * @return 日付
    */
   public static Date getEmptyDate() {
@@ -1386,7 +1428,7 @@ public class ProjectUtils {
 
   /**
    * 空設定用日付かをチェックする
-   * 
+   *
    * @param date
    *          日付
    * @return TRUE:空設定日付 FALSE:通常の日付
@@ -1404,7 +1446,7 @@ public class ProjectUtils {
    * 経過日数を計算します。<br />
    * 差分日数ではなく当日も含めたものとなります。<br />
    * 例：from:2013/11/11 to:2013/11/11 → return:1
-   * 
+   *
    * @param from
    *          開始日
    * @param to
@@ -1419,7 +1461,7 @@ public class ProjectUtils {
    * 経過日数を計算します。<br />
    * 差分日数ではなく当日も含めたものとなります。<br />
    * 例：from:2013/11/11 to:2013/11/11 → return:1
-   * 
+   *
    * @param from
    *          開始日
    * @param to
@@ -1449,7 +1491,7 @@ public class ProjectUtils {
 
   /**
    * 文字列をDate型に変換します。
-   * 
+   *
    * @param str
    *          日付文字列
    * @return 日付
@@ -1464,7 +1506,7 @@ public class ProjectUtils {
 
   /**
    * Date型を文字列に変換します。
-   * 
+   *
    * @param date
    *          日付
    * @return 日付文字列
@@ -1478,7 +1520,7 @@ public class ProjectUtils {
 
   /**
    * 年月日フォームよりカレンダークラスを取得する（検索用）
-   * 
+   *
    * @param rundata
    *          Rundata
    * @param context
@@ -1517,7 +1559,7 @@ public class ProjectUtils {
 
   /**
    * 入力値を取得する。フォーム値、セッション値の順で取得する。
-   * 
+   *
    * @param rundata
    *          Rundata
    * @param context
@@ -1557,7 +1599,7 @@ public class ProjectUtils {
 
   /**
    * 予定進捗率を計算します。
-   * 
+   *
    * @param lapsedDays
    *          経過日数
    * @param taskDays
@@ -1579,7 +1621,7 @@ public class ProjectUtils {
 
   /**
    * ユーザ毎のルート保存先（絶対パス）を取得します。
-   * 
+   *
    * @param uid
    * @return
    */
@@ -1591,7 +1633,7 @@ public class ProjectUtils {
 
   /**
    * タスクのパンくずリストを取得します。
-   * 
+   *
    * @param taskId
    *          タスクID
    * @return パンくずリスト

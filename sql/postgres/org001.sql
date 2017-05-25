@@ -1,6 +1,6 @@
 --
--- Aipo is a groupware program developed by Aimluck,Inc.
--- Copyright (C) 2004-2015 Aimluck,Inc.
+-- Aipo is a groupware program developed by TOWN, Inc.
+-- Copyright (C) 2004-2015 TOWN, Inc.
 -- http://www.aipo.com
 --
 -- This program is free software: you can redistribute it and/or modify
@@ -122,8 +122,9 @@ CREATE TABLE TURBINE_USER
     PHOTO_SMARTPHONE bytea,
     HAS_PHOTO_SMARTPHONE VARCHAR (1) DEFAULT 'F',
     PHOTO_MODIFIED_SMARTPHONE TIMESTAMP,
-    TUTORIAL_FORBID VARCHAR (1) DEFAULT 'F',
+    TUTORIAL_FORBID VARCHAR (64) DEFAULT 'F',
     MIGRATE_VERSION INTEGER NOT NULL DEFAULT 0,
+    CODE VARCHAR (255) DEFAULT NULL,
     CREATED_USER_ID INTEGER,
     UPDATED_USER_ID INTEGER,
     PRIMARY KEY(USER_ID),
@@ -282,6 +283,26 @@ CREATE TABLE EIP_T_SCHEDULE_MAP
 
 CREATE INDEX eip_t_schedule_map_schedule_id_index ON EIP_T_SCHEDULE_MAP (SCHEDULE_ID);
 CREATE INDEX eip_t_schedule_map_schedule_id_user_id_index ON EIP_T_SCHEDULE_MAP (SCHEDULE_ID, USER_ID);
+
+-----------------------------------------------------------------------------
+-- EIP_T_SCHEDULE_FILE
+-----------------------------------------------------------------------------
+
+CREATE TABLE EIP_T_SCHEDULE_FILE
+(
+    FILE_ID INTEGER NOT NULL,
+    OWNER_ID INTEGER,
+    SCHEDULE_ID INTEGER,
+    FILE_NAME VARCHAR (128) NOT NULL,
+    FILE_PATH TEXT NOT NULL,
+    FILE_THUMBNAIL bytea,
+    CREATE_DATE DATE,
+    UPDATE_DATE TIMESTAMP,
+    FOREIGN KEY (SCHEDULE_ID) REFERENCES EIP_T_SCHEDULE (SCHEDULE_ID) ON DELETE CASCADE,
+    PRIMARY KEY (FILE_ID)
+);
+
+CREATE INDEX eip_t_file_schedule_id_index ON EIP_T_SCHEDULE_FILE (SCHEDULE_ID);
 
 -----------------------------------------------------------------------------
 -- EIP_T_TODO_CATEGORY
@@ -890,6 +911,8 @@ CREATE TABLE EIP_T_EXT_TIMECARD_SYSTEM
     RESTTIME_OUT INTEGER,
     CHANGE_HOUR INTEGER,
     OUTGOING_ADD_FLAG VARCHAR (1),
+    OVERTIME_TYPE VARCHAR (8) DEFAULT 'O',
+    HOLIDAY_OF_WEEK VARCHAR (32) DEFAULT 'A',
     CREATE_DATE DATE,
     UPDATE_DATE TIMESTAMP,
     PRIMARY KEY(SYSTEM_ID)
@@ -1365,6 +1388,7 @@ CREATE TABLE EIP_T_TIMELINE
     TIMELINE_TYPE VARCHAR (2),
     NUM_ON_DAY INTEGER DEFAULT 0,
     PARAMS VARCHAR (99),
+    PINNED VARCHAR(1) DEFAULT 'F',
     CREATE_DATE TIMESTAMP DEFAULT now(),
     UPDATE_DATE TIMESTAMP DEFAULT now(),
     FOREIGN KEY (TIMELINE_ID) REFERENCES EIP_T_TIMELINE (TIMELINE_ID) ON DELETE CASCADE,
@@ -1826,6 +1850,10 @@ CREATE TABLE EIP_T_MESSAGE_ROOM_MEMBER
     USER_ID INTEGER NOT NULL,
     LOGIN_NAME VARCHAR (32) NOT NULL,
     TARGET_USER_ID INTEGER NOT NULL,
+    AUTHORITY VARCHAR (1) DEFAULT 'A',
+    DESKTOP_NOTIFICATION VARCHAR (1) DEFAULT 'A',
+    MOBILE_NOTIFICATION VARCHAR (1) DEFAULT 'A',
+    HISTORY_LAST_MESSAGE_ID INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY (ROOM_ID) REFERENCES EIP_T_MESSAGE_ROOM (ROOM_ID) ON DELETE CASCADE,
     PRIMARY KEY (ID)
 );
@@ -1917,6 +1945,7 @@ CREATE SEQUENCE pk_eip_t_note INCREMENT 20;
 CREATE SEQUENCE pk_eip_t_note_map INCREMENT 20;
 CREATE SEQUENCE pk_eip_t_schedule INCREMENT 20;
 CREATE SEQUENCE pk_eip_t_schedule_map INCREMENT 20;
+CREATE SEQUENCE pk_eip_t_schedule_file INCREMENT 20;
 CREATE SEQUENCE pk_eip_t_timecard INCREMENT 20;
 CREATE SEQUENCE pk_eip_t_timecard_settings INCREMENT 20;
 CREATE SEQUENCE pk_eip_t_todo INCREMENT 20;
@@ -2000,6 +2029,7 @@ ALTER SEQUENCE pk_eip_m_user_position OWNED BY EIP_M_USER_POSITION.ID;
 ALTER SEQUENCE pk_eip_t_common_category OWNED BY EIP_T_COMMON_CATEGORY.COMMON_CATEGORY_ID;
 ALTER SEQUENCE pk_eip_t_schedule OWNED BY EIP_T_SCHEDULE.SCHEDULE_ID;
 ALTER SEQUENCE pk_eip_t_schedule_map OWNED BY EIP_T_SCHEDULE_MAP.ID;
+ALTER SEQUENCE pk_eip_t_schedule_file OWNED BY EIP_T_SCHEDULE_FILE.FILE_ID;
 ALTER SEQUENCE pk_eip_t_todo_category OWNED BY EIP_T_TODO_CATEGORY.CATEGORY_ID;
 ALTER SEQUENCE pk_eip_t_todo OWNED BY EIP_T_TODO.TODO_ID;
 ALTER SEQUENCE pk_eip_m_mail_account OWNED BY EIP_M_MAIL_ACCOUNT.ACCOUNT_ID;
@@ -2104,9 +2134,9 @@ INSERT INTO TURBINE_GROUP VALUES(2,'LoginUser',NULL,NULL,NULL,NULL);
 INSERT INTO TURBINE_GROUP VALUES(3,'Facility',NULL,NULL,NULL,NULL);
 SELECT setval('pk_turbine_group',3);
 
-INSERT INTO TURBINE_USER VALUES(1,'admin','0DPiKuNIrrVmD8IUCuw1hQxNqZc=',' ','Admin','','CONFIRMED',now(),now(),now(),'F',NULL,now(),0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'F',now(),NULL,'F',now(),'T',0,NULL);
-INSERT INTO TURBINE_USER VALUES(2,'template','MibsvmUCE6Sc0DrmcUB1Dk80AIM=','Aimluck','Template','','CONFIRMED',now(),now(),now(),'T',NULL, now(),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'F',now(),NULL,'F',now(),NULL,0,NULL);
-INSERT INTO TURBINE_USER VALUES(3,'anon','YVGPsXFatNaYrKMqeECsey5QfT4=','Anonymous','User','','CONFIRMED',now(),now(),now(),'F',NULL, now(),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'F',now(),NULL,'F',now(),NULL,0,NULL);
+INSERT INTO TURBINE_USER VALUES(1,'admin','0DPiKuNIrrVmD8IUCuw1hQxNqZc=',' ','Admin','','CONFIRMED',now(),now(),now(),'F',NULL,now(),0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'F',now(),NULL,'F',now(),'T',0,NULL,NULL,NULL);
+INSERT INTO TURBINE_USER VALUES(2,'template','MibsvmUCE6Sc0DrmcUB1Dk80AIM=','Aipo','Template','','CONFIRMED',now(),now(),now(),'T',NULL, now(),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'F',now(),NULL,'F',now(),NULL,0,NULL,NULL,NULL);
+INSERT INTO TURBINE_USER VALUES(3,'anon','YVGPsXFatNaYrKMqeECsey5QfT4=','Anonymous','User','','CONFIRMED',now(),now(),now(),'F',NULL, now(),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'F',now(),NULL,'F',now(),NULL,0,NULL,NULL,NULL);
 SELECT setval('pk_turbine_user',3);
 
 INSERT INTO TURBINE_ROLE_PERMISSION VALUES(1,1);
@@ -2180,7 +2210,7 @@ INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(142,'todo_todo_other','ToDo（他�
 INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(143,'todo_category_self','ToDo（カテゴリ）操作',31);
 INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(144,'todo_category_other','ToDo（他ユーザのカテゴリ）操作',31);
 INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(151,'workflow_request_self','ワークフロー（自分の依頼）操作',31);
-INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(152,'workflow_request_other','ワークフロー（他ユーザーの依頼）操作',3);
+INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(152,'workflow_request_other','ワークフロー（他ユーザーの依頼）操作',19);
 INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(161,'addressbook_address_inside','ユーザー名簿操作',3);
 INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(162,'addressbook_address_outside','アドレス帳（社外アドレス）操作',31);
 INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(163,'addressbook_company','アドレス帳（会社情報）操作',31);
@@ -2195,8 +2225,13 @@ INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(182,'cabinet_folder','共有フォ�
 -- INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(194,'manhour_common_category_other','プロジェクト管理（他ユーザーの共有カテゴリ）操作',27);
 INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(201,'portlet_customize','アプリ配置',29);
 INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(211,'report_self','報告書（自分の報告書）操作',31);
-INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(212,'report_other','報告書（他ユーザーの報告書）操作',3);
+INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(212,'report_other','報告書（他ユーザーの報告書）操作',27);
 INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(213,'report_reply','報告書（報告書への返信）操作',20);
+INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(221,'timeline_post','タイムライン（自分の投稿）操作',21);
+INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(222,'timeline_post_other','タイムライン（他ユーザーの投稿）操作',17);
+INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(223,'timeline_comment','タイムライン（コメント）操作',20);
+INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(224,'timeline_pin','タイムライン（固定化）操作',8);
+INSERT INTO EIP_T_ACL_PORTLET_FEATURE VALUES(231,'attachment','添付ファイル操作',52);
 
 
 SELECT setval('pk_eip_t_acl_portlet_feature',300);
@@ -2225,7 +2260,7 @@ INSERT INTO EIP_T_ACL_ROLE VALUES(30,'ToDo（他ユーザのカテゴリ）管�
 
 -- workflow
 INSERT INTO EIP_T_ACL_ROLE VALUES(15,'ワークフロー（自分の依頼）管理者',151,31,'＊詳細表示、追加、削除は一覧表示の権限を持っていないと使用できません ＊承認、再申請や差し戻しは編集の権限が必要です');
-INSERT INTO EIP_T_ACL_ROLE VALUES(16,'ワークフロー（他ユーザーの依頼）管理者',152,3,'＊詳細表示は一覧表示の権限を持っていないと使用できません');
+INSERT INTO EIP_T_ACL_ROLE VALUES(16,'ワークフロー（他ユーザーの依頼）管理者',152,19,'＊詳細表示は一覧表示の権限を持っていないと使用できません');
 
 -- addressbook
 INSERT INTO EIP_T_ACL_ROLE VALUES(17,'ユーザー名簿管理者',161,3,'＊詳細表示は一覧表示の権限を持っていないと使用できません');
@@ -2252,8 +2287,16 @@ INSERT INTO EIP_T_ACL_ROLE VALUES(29,'アプリ配置管理者',201,29,NULL);
 
 --report
 INSERT INTO EIP_T_ACL_ROLE VALUES(31, '報告書（自分の報告書）管理者',211,31,'＊追加、編集、削除は一覧表示と詳細表示の権限を持っていないと使用できません');
-INSERT INTO EIP_T_ACL_ROLE VALUES(32,'報告書（他ユーザーの報告書）管理者',212,3,'＊詳細表示は一覧表示の権限を持っていないと使用できません');
+INSERT INTO EIP_T_ACL_ROLE VALUES(32,'報告書（他ユーザーの報告書）管理者',212,27,'＊詳細表示は一覧表示の権限を持っていないと使用できません');
 INSERT INTO EIP_T_ACL_ROLE VALUES(33,'報告書（報告書への返信）管理者',213,20,NULL);
+
+--timeline
+INSERT INTO EIP_T_ACL_ROLE VALUES(34, 'タイムライン（自分の投稿）管理者',221,21,'＊追加、削除は一覧表示の権限を持っていないと使用できません');
+INSERT INTO EIP_T_ACL_ROLE VALUES(35,'タイムライン（他ユーザーの投稿）管理者',222,1,NULL);
+INSERT INTO EIP_T_ACL_ROLE VALUES(36,'タイムライン（コメント）管理者',223,20,NULL);
+INSERT INTO EIP_T_ACL_ROLE VALUES(38, 'タイムライン（固定化）管理者',224,8,NULL);
+-- attachment
+INSERT INTO EIP_T_ACL_ROLE VALUES(37,'添付ファイル操作管理者',231,52,NULL);
 
 SELECT setval('pk_eip_t_acl_role',10000);
 
@@ -2277,7 +2320,7 @@ INSERT INTO EIP_T_WORKFLOW_CATEGORY VALUES(8,0,'特別有給休暇届（業務�
 INSERT INTO EIP_T_WORKFLOW_CATEGORY VALUES(9,0,'忌引き休暇届','',NULL,NULL);
 SELECT setval('pk_eip_t_workflow_category',9);
 
-INSERT INTO EIP_T_EXT_TIMECARD_SYSTEM VALUES(1, 0, '通常', 9, 0, 18, 0, 1, 360, 60, 360, 60, 4, 'T',now(), now());
+INSERT INTO EIP_T_EXT_TIMECARD_SYSTEM VALUES(1, 0, '通常', 9, 0, 18, 0, 1, 360, 60, 360, 60, 4, 'T', 'L480', 'A', now(), now());
 SELECT setval('pk_eip_t_ext_timecard_system',1);
 
 INSERT INTO EIP_M_GPDB_KUBUN VALUES (1, '都道府県', now(), now());

@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -44,7 +44,7 @@ import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * スケジュールのフォームデータを管理するクラスです。
- * 
+ *
  */
 public class CellScheduleFormDateData extends AbstractCellScheduleFormData {
 
@@ -54,7 +54,7 @@ public class CellScheduleFormDateData extends AbstractCellScheduleFormData {
     .getLogger(CellScheduleFormDateData.class.getName());
 
   /**
-   * 
+   *
    * @param action
    * @param rundata
    * @param context
@@ -65,7 +65,7 @@ public class CellScheduleFormDateData extends AbstractCellScheduleFormData {
   public void init(ALAction action, RunData rundata, Context context)
       throws ALPageNotFoundException, ALDBErrorException {
     String entityId =
-      ALEipUtils.getParameter(rundata, context, ALEipConstants.ENTITY_ID);
+      rundata.getParameters().getString(ALEipConstants.ENTITY_ID);
     if (entityId == null) {
       ALEipUtils.removeTemp(rundata, context, ALEipConstants.ENTITY_ID);
     }
@@ -151,7 +151,7 @@ public class CellScheduleFormDateData extends AbstractCellScheduleFormData {
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -165,7 +165,7 @@ public class CellScheduleFormDateData extends AbstractCellScheduleFormData {
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -180,7 +180,7 @@ public class CellScheduleFormDateData extends AbstractCellScheduleFormData {
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList

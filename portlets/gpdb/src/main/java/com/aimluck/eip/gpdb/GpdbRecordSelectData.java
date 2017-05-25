@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,7 @@ import org.apache.jetspeed.services.logging.JetspeedLogger;
 import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
 
+import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.cayenne.om.portlet.EipTGpdb;
 import com.aimluck.eip.cayenne.om.portlet.EipTGpdbItem;
 import com.aimluck.eip.cayenne.om.portlet.EipTGpdbRecord;
@@ -47,7 +48,7 @@ import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * Webデータベースレコードの検索データを管理するクラスです。 <BR>
- * 
+ *
  */
 public class GpdbRecordSelectData extends
     ALAbstractSelectData<EipTGpdbRecord, EipTGpdbRecord> implements ALData {
@@ -74,9 +75,12 @@ public class GpdbRecordSelectData extends
   /** 区分値マップ。キー：区分値ID */
   private Map<String, List<GpdbKubunValueResultData>> mapGpdbKubunValue;
 
+  /** ターゲット　 */
+  private ALStringField searchWord;
+
   /**
    * 初期設定
-   * 
+   *
    * @param action
    *          ALAction
    * @param rundata
@@ -92,7 +96,7 @@ public class GpdbRecordSelectData extends
       ALEipUtils
         .setTemp(rundata, context, LIST_SORT_STR, GpdbUtils.SORT_STRING);
     }
-
+    searchWord = new ALStringField();
     super.init(action, rundata, context);
 
     // super.init()後にLIST_FILTER_STRに格納される
@@ -101,7 +105,7 @@ public class GpdbRecordSelectData extends
 
   /**
    * 一覧データを取得します。
-   * 
+   *
    * @param rundata
    *          RunData
    * @param context
@@ -182,12 +186,32 @@ public class GpdbRecordSelectData extends
           // 自動採番項目の場合は数値として扱う
           sortValue = Database.castToIntRawColumn("r2.value");
           nullSort = " IS NULL ";
+        } else if (item != null
+          && (GpdbUtils.ITEM_TYPE_CREATE_DATE.equals(item.getType()) || GpdbUtils.ITEM_TYPE_UPDATE_DATE
+            .equals(item.getType()))) {
+          // 作成日時、更新日時の場合はタイムスタンプとして扱う
+          sortValue = Database.castToDateTimeRawColumn("r2.value");
+          nullSort = " IS NULL ";
+        } else if (item != null
+          && GpdbUtils.ITEM_TYPE_DATE.equals(item.getType())) {
+          // 日付の場合は日付として扱う
+          sortValue = Database.castToDateRawColumn("r2.value");
+          nullSort = " IS NULL ";
         } else {
           sortValue = "r2.value";
           nullSort = " = '' ";
         }
       }
-
+      if (GpdbUtils.hasResetKeywordFlag(rundata, context)) {
+        GpdbUtils.resetKeyword(rundata, context, this.getClass().getName());
+      }
+      searchWord.setValue(GpdbUtils.getSearchword(rundata, context));
+      String searchValue;
+      if (!searchWord.getValue().equals("")) {
+        searchValue = "   AND r4.value LIKE #bind($keyword)";
+      } else {
+        searchValue = "";
+      }
       String ascDesc;
       if (current_sort_type == null) {
         ascDesc = "DESC";
@@ -198,8 +222,42 @@ public class GpdbRecordSelectData extends
       // -----------------------
       // レコード情報を取得
       // -----------------------
-      StringBuilder sql =
-        new StringBuilder()
+      StringBuilder sql = new StringBuilder();
+      if (searchValue != "") {
+
+        sql
+          .append("SELECT r.* FROM eip_t_gpdb_record r")
+          .append(" INNER JOIN eip_t_gpdb_item i")
+          .append("    ON i.gpdb_item_id = r.gpdb_item_id")
+          .append(" INNER JOIN eip_t_gpdb g")
+          .append("    ON g.gpdb_id = r.gpdb_id")
+          .append(" WHERE r.gpdb_id = #bind($gpdb_id)")
+          .append("   AND i.list_flg = #bind($list_flg)")
+          .append("   AND r.record_no IN (")
+          .append(" SELECT DISTINCT r4.record_no FROM eip_t_gpdb_record r4")
+          .append(" INNER JOIN eip_t_gpdb_item i2")
+          .append("    ON i2.gpdb_item_id = r4.gpdb_item_id")
+          .append(" WHERE r4.gpdb_id = #bind($gpdb_id)")
+          .append(searchValue)
+          .append(
+            "    AND i2.type IN (#bind($type1),#bind($type2),#bind($type3),#bind($type4))")
+          .append(" ) ")
+          .append(" ORDER BY (SELECT " + sortValue)
+          .append("             FROM eip_t_gpdb_record r2")
+          .append("            WHERE r2.record_no = r.record_no")
+          .append(sortWhere)
+          .append("          ) " + nullSort + ascDesc)
+          .append("        , (SELECT " + sortValue)
+          .append("             FROM eip_t_gpdb_record r2")
+          .append("            WHERE r2.record_no = r.record_no")
+          .append(sortWhere)
+          .append("          ) " + ascDesc)
+          .append("        , r.record_no")
+          .append("        , i.order_no");
+
+      } else {
+
+        sql
           .append("SELECT r.* FROM eip_t_gpdb_record r")
           .append(" INNER JOIN eip_t_gpdb_item i")
           .append("    ON i.gpdb_item_id = r.gpdb_item_id")
@@ -219,6 +277,7 @@ public class GpdbRecordSelectData extends
           .append("          ) " + ascDesc)
           .append("        , r.record_no")
           .append("        , i.order_no");
+      }
 
       SQLTemplate<EipTGpdbRecord> sqltemp =
         Database.sql(EipTGpdbRecord.class, String.valueOf(sql));
@@ -227,6 +286,13 @@ public class GpdbRecordSelectData extends
       if (sort != null) {
         sqltemp.param("sort", sort);
         sqltemp.param("sort", sort);
+      }
+      if (searchValue != "") {
+        sqltemp.param("keyword", "%" + searchWord + "%");
+        sqltemp.param("type1", GpdbUtils.ITEM_TYPE_TEXTAREA);
+        sqltemp.param("type2", GpdbUtils.ITEM_TYPE_TEXT);
+        sqltemp.param("type3", GpdbUtils.ITEM_TYPE_LINK);
+        sqltemp.param("type4", GpdbUtils.ITEM_TYPE_MAIL);
       }
 
       ResultList<EipTGpdbRecord> list =
@@ -245,7 +311,7 @@ public class GpdbRecordSelectData extends
 
   /**
    * フィルタ項目、ソート項目を保持する
-   * 
+   *
    * @param rundata
    *          RunData
    * @param context
@@ -265,7 +331,7 @@ public class GpdbRecordSelectData extends
 
   /**
    * ページング結果のリストを取得します。
-   * 
+   *
    * @param records
    *          検索結果
    */
@@ -300,7 +366,7 @@ public class GpdbRecordSelectData extends
 
   /**
    * 詳細データを取得します。
-   * 
+   *
    * @param rundata
    *          RunData
    * @param context
@@ -331,7 +397,7 @@ public class GpdbRecordSelectData extends
 
   /**
    * ResultDataを取得します。（一覧データ）
-   * 
+   *
    * @param record
    *          レコード
    * @return ResultData
@@ -343,7 +409,7 @@ public class GpdbRecordSelectData extends
 
   /**
    * ResultDataを取得します。（詳細データ）
-   * 
+   *
    * @param record
    *          レコード
    * @return ResultData
@@ -374,7 +440,7 @@ public class GpdbRecordSelectData extends
 
   /**
    * 項目情報を取得する
-   * 
+   *
    * @return 項目情報
    */
   @Override
@@ -386,7 +452,7 @@ public class GpdbRecordSelectData extends
 
   /**
    * WebデータベースIDを取得する
-   * 
+   *
    * @return WebデータベースID
    */
   public String getGpdbId() {
@@ -395,7 +461,7 @@ public class GpdbRecordSelectData extends
 
   /**
    * WebデータベースIDの設定
-   * 
+   *
    */
 
   public void setGpdbId(Context context, RunData rundata) {
@@ -436,7 +502,7 @@ public class GpdbRecordSelectData extends
 
   /**
    * Webデータベース全リストを取得する
-   * 
+   *
    * @return Webデータベース全リスト
    */
   public List<GpdbResultData> getGpdbAllList() {
@@ -445,7 +511,7 @@ public class GpdbRecordSelectData extends
 
   /**
    * 項目定義リストを取得します。
-   * 
+   *
    * @return 項目定義リスト
    */
   public List<GpdbItemResultData> getGpdbItemList() {
@@ -454,7 +520,7 @@ public class GpdbRecordSelectData extends
 
   /**
    * 項目定義リストを取得します。
-   * 
+   *
    * @return 項目定義リスト
    */
   public GpdbResultData getGpdb() {
@@ -463,7 +529,7 @@ public class GpdbRecordSelectData extends
 
   /**
    * 指定した項目定義IDのレコード情報を取得します。
-   * 
+   *
    * @param gpdbItemId
    *          項目定義ID
    * @return レコード情報
@@ -474,7 +540,7 @@ public class GpdbRecordSelectData extends
 
   /**
    * 指定区分の区分値リストを取得します。
-   * 
+   *
    * @param kubunId
    *          区分マスタID
    * @return 区分値リスト
@@ -490,5 +556,12 @@ public class GpdbRecordSelectData extends
       }
     }
     return false;
+  }
+
+  /**
+   * @return target_keyword
+   */
+  public ALStringField getSearchWord() {
+    return searchWord;
   }
 }

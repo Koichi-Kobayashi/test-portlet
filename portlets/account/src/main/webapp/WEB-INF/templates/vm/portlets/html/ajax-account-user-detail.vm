@@ -1,6 +1,6 @@
 #*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,13 +33,15 @@
 #ALajaxIndicator("$indicator_id" "$!portlet.ID" "")
 #ALajaxdetailformheader($l10n.ACCOUNT_USER)
 <div id="messageDiv"></div>
+
+#ALphotoheader()
+#AUIPooupHasPhoto($!result false)
+#ALPooupName($!result $!portlet false)
+#ALphotofooter()
+
 #ALtableheaderWide()
 #ALtdcaption($l10n.ACCOUNT_USER_ACCOUNT)
 #ALtditem($!result.Detail.UserName)
-#ALtdcaption($l10n.ACCOUNT_USER_NAME)
-#ALtditem($!result.Detail.Name)
-#ALtdcaption($l10n.ACCOUNT_USER_NAME_KANA)
-#ALtditem($!result.Detail.NameKana)
 #ALtdcaption($l10n.ACCOUNT_USER_EMAIL)
 #ALtditem($!result.Detail.Email)
 #ALtdcaption($l10n.ACCOUNT_OUT_TELEPHONE)
@@ -50,14 +52,6 @@
 #ALtditem($!result.Detail.CellularPhone)
 #ALtdcaption($l10n.ACCOUNT_USER_CELLULAR_MAIL)
 #ALtditem($!result.Detail.CellularMail)
-#ALtdcaption($l10n.ACCOUNT_USER_PHOTO)
-#ALtditemheader()
-#if($!{result.Detail.hasPhoto()})
-<img class="avatar" src="$jslink.getTemplate("FileuploadFacePhotoScreen").addQueryData("uid", $!{result.Detail.UserId}).addQueryData("t",$!{result.Detail.PhotoModified})" alt="$l10n.ACCOUNT_USER_PHOTO" align="absmiddle" />
-#else
-$l10n.ACCOUNT_USER_NOT_CREATE
-#end
-#ALtditemfooter()
 #ALtdcaption($l10n.ACCOUNT_POST)
 #ALtditemheader()
 #foreach($record in $!result.Detail.getPostNameList())
@@ -73,6 +67,8 @@ $!record <br />
 #elseif("$disabled_flg" == "F")
 #ALtdcell($l10n.ACCOUNT_VALID)
 #end
+#ALtdcaption($l10n.ACCOUNT_USER_CODE)
+#ALtdcell($!result.Detail.Code)
 #ALtdcaption($l10n.ACCOUNT_ADMIN_AUTH)
 #if($!result.Detail.Admin)
 #ALtdcell($l10n.ACCOUNT_IS_ADMIN)

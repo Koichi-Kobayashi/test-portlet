@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,10 @@
 	DW_STR:"${dw_del} ${dw_this} ${dw_name}?",
 	DW_DEL:"Delete",
 	DW_THIS:"this",
+	// 'この'+button.form._name.value+'を削除してよろしいですか？'+button.form._name.value+'を削除するとメッセージがすべて削除され、参加者は閲覧できなくなります。'
+	DWM_STR:"${dwm_del} ${dwm_this} ${dwm_name}?  If you ${dwm_del} the ${dwm_name}, all message will be deleted, and members will not be able to view messages.",
+	DWM_DEL:"Delete",
+	DWM_THIS:"this",
 	// '選択した'+button.form.name+'を削除してよろしいですか？'
 	DWS_STR:"${dws_del} ${dws_sel} ${dws_name}?",
 	DWS_DEL:"Delete",

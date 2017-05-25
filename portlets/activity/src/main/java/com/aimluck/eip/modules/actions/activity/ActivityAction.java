@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,7 @@ public class ActivityAction extends ALBaseAction {
     .getLogger(ActivityAction.class.getName());
 
   /**
-   * 
+   *
    * @param portlet
    * @param context
    * @param rundata
@@ -76,7 +76,7 @@ public class ActivityAction extends ALBaseAction {
 
   /**
    * 最大化表示の際の処理を記述します。 <BR>
-   * 
+   *
    * @param portlet
    * @param context
    * @param rundata
@@ -116,8 +116,8 @@ public class ActivityAction extends ALBaseAction {
     // 選択しているタブ情報の削除2
     list.add("category");
 
-    list.add("com.aimluck.eip.activity.ActivityAllSelectDatafiltertype");
-    list.add("com.aimluck.eip.activity.ActivityAllSelectDatafilter");
+    list.add("ActivityAllSelectDatafiltertype");
+    list.add("ActivityAllSelectDatafilter");
     ALEipUtils.removeTemp(rundata, context, list);
   }
 

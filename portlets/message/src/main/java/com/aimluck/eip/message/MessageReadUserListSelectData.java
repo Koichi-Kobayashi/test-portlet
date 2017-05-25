@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -87,7 +87,8 @@ public class MessageReadUserListSelectData extends
     rd.setUserId(model.getUserId());
     rd.setFirstName(model.getFirstName());
     rd.setLastName(model.getLastName());
-    rd.setHasPhoto("T".equals(model.getHasPhoto()));
+    rd.setHasPhoto("T".equals(model.getHasPhoto())
+      || "N".equals(model.getHasPhoto()));
     Date photoModified = model.getPhotoModified();
     if (photoModified != null) {
       rd.setPhotoModified(photoModified.getTime());

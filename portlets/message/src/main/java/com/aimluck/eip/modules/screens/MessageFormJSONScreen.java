@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -44,6 +44,7 @@ public class MessageFormJSONScreen extends ALJSONScreen {
   protected String getJSONString(RunData rundata, Context context)
       throws Exception {
     String result = new JSONArray().toString();
+    String mode = this.getMode();
     try {
 
       MessageFormData formData = new MessageFormData();
@@ -54,6 +55,14 @@ public class MessageFormJSONScreen extends ALJSONScreen {
         JSONObject obj = new JSONObject();
         obj.put("params", json);
         result = obj.toString();
+      } else if (ALEipConstants.MODE_DELETE.equals(mode)) {
+        if (formData.doDelete(this, rundata, context)) {
+        } else {
+          JSONArray json =
+            JSONArray
+              .fromObject(context.get(ALEipConstants.ERROR_MESSAGE_LIST));
+          result = json.toString();
+        }
       } else {
         JSONArray json =
           JSONArray.fromObject(context.get(ALEipConstants.ERROR_MESSAGE_LIST));

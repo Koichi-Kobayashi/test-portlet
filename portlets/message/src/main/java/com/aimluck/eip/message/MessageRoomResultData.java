@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,9 @@ import java.util.Date;
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
+import com.aimluck.eip.cayenne.om.portlet.EipTMessageRoom;
 import com.aimluck.eip.common.ALData;
+import com.aimluck.eip.message.util.MessageUtils;
 
 /**
  *
@@ -204,6 +206,39 @@ public class MessageRoomResultData implements ALData, Serializable {
    */
   public ALNumberField getUserId() {
     return userId;
+  }
+
+  /**
+   * @return authority
+   */
+  public String getAuthority(int userId) {
+    EipTMessageRoom room = MessageUtils.getRoom(roomId.getValueWithInt());
+    if (room == null) {
+      return "M";
+    }
+    return MessageUtils.hasAuthorityRoom(room, userId) ? "A" : "M";
+  }
+
+  /**
+   * @return desktopNotification
+   */
+  public String getDesktopNotification(int userId) {
+    EipTMessageRoom room = MessageUtils.getRoom(roomId.getValueWithInt());
+    if (room == null) {
+      return "F";
+    }
+    return MessageUtils.isDesktopNotification(room, userId) ? "A" : "F";
+  }
+
+  /**
+   * @return mobileNotification
+   */
+  public String getMobileNotification(int userId) {
+    EipTMessageRoom room = MessageUtils.getRoom(roomId.getValueWithInt());
+    if (room == null) {
+      return "M";
+    }
+    return MessageUtils.isMobileNotification(room, userId) ? "A" : "F";
   }
 
 }

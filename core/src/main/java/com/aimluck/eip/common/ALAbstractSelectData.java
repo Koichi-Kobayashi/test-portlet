@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -93,6 +93,9 @@ public abstract class ALAbstractSelectData<M1, M2> implements ALData {
 
   /** アクセス権限の有無 */
   protected boolean hasAuthority;
+
+  /** 添付ファイルアクセス権限の有無 */
+  private boolean hasAttachmentAuthority;
 
   protected final String LIST_SORT_STR = new StringBuffer()
     .append(this.getClass().getSimpleName())
@@ -199,6 +202,10 @@ public abstract class ALAbstractSelectData<M1, M2> implements ALData {
         rundata,
         context,
         ALAccessControlConstants.VALUE_ACL_LIST);
+      doCheckAttachmentAclPermission(
+        rundata,
+        context,
+        ALAccessControlConstants.VALUE_ACL_EXPORT);
       action.setMode(ALEipConstants.MODE_LIST);
       ResultList<M1> resultList = selectList(rundata, context);
       if (resultList != null) {
@@ -245,6 +252,10 @@ public abstract class ALAbstractSelectData<M1, M2> implements ALData {
         rundata,
         context,
         ALAccessControlConstants.VALUE_ACL_LIST);
+      doCheckAttachmentAclPermission(
+        rundata,
+        context,
+        ALAccessControlConstants.VALUE_ACL_EXPORT);
       ResultList<M1> resultList = selectList(rundata, context);
       if (resultList != null) {
         if (resultList.getTotalCount() > 0) {
@@ -286,6 +297,10 @@ public abstract class ALAbstractSelectData<M1, M2> implements ALData {
         rundata,
         context,
         ALAccessControlConstants.VALUE_ACL_DETAIL);
+      doCheckAttachmentAclPermission(
+        rundata,
+        context,
+        ALAccessControlConstants.VALUE_ACL_EXPORT);
       action.setMode(ALEipConstants.MODE_DETAIL);
       M2 obj = selectDetail(rundata, context);
       if (obj != null) {
@@ -647,6 +662,37 @@ public abstract class ALAbstractSelectData<M1, M2> implements ALData {
   }
 
   /**
+   * ファイルのアクセス権限をチェックします。
+   *
+   * @return
+   */
+  protected boolean doCheckAttachmentAclPermission(RunData rundata,
+      Context context, int defineAclType) {
+
+    if (defineAclType == 0) {
+      return true;
+    }
+
+    // アクセス権限のチェックをしない場合
+    boolean checkAttachmentAuthority = isCheckAttachmentAuthority();
+    if (!checkAttachmentAuthority) {
+      return true;
+    }
+
+    ALAccessControlFactoryService aclservice =
+      (ALAccessControlFactoryService) ((TurbineServices) TurbineServices
+        .getInstance()).getService(ALAccessControlFactoryService.SERVICE_NAME);
+    ALAccessControlHandler aclhandler = aclservice.getAccessControlHandler();
+
+    hasAttachmentAuthority =
+      aclhandler.hasAuthority(
+        ALEipUtils.getUserId(rundata),
+        ALAccessControlConstants.POERTLET_FEATURE_ATTACHMENT,
+        defineAclType);
+    return hasAttachmentAuthority;
+  }
+
+  /**
    * アクセス権限用メソッド。<br />
    * アクセス権限の有無を返します。
    *
@@ -684,6 +730,20 @@ public abstract class ALAbstractSelectData<M1, M2> implements ALData {
    */
   public String getTheme() {
     return ALOrgUtilsService.getTheme();
+  }
+
+  /**
+   * ファイルアクセス権限チェック用メソッド。<br />
+   * ファイルのアクセス権限をチェックするかどうかを判定します。
+   *
+   * @return
+   */
+  public boolean isCheckAttachmentAuthority() {
+    return true;
+  }
+
+  public boolean hasAttachmentAuthority() {
+    return hasAttachmentAuthority;
   }
 
 }

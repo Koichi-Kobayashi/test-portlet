@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
 
-    Aipo is a groupware program developed by Aimluck,Inc.
-    Copyright (C) 2004-2015 Aimluck,Inc.
+    Aipo is a groupware program developed by TOWN, Inc.
+    Copyright (C) 2004-2015 TOWN, Inc.
     http://www.aipo.com
 
     This program is free software: you can redistribute it and/or modify
@@ -58,6 +58,12 @@
         </servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
+    <filter>
+      <filter-name>proxyFilter</filter-name>
+      <filter-class>com.aimluck.eip.filter.ALReverseProxyFilter</filter-class>
+    </filter>
+
     <filter>
       <filter-name>baseFilter</filter-name>
       <filter-class>com.aimluck.eip.filter.ALBaseFilter</filter-class>
@@ -91,6 +97,15 @@
          /push/*
        </url-pattern>
     </servlet-mapping>
+
+   <filter-mapping>
+     <filter-name>proxyFilter</filter-name>
+     <url-pattern>/portal/*</url-pattern>
+     <url-pattern>/ical/*</url-pattern>
+     <url-pattern>/push/*</url-pattern>
+     <dispatcher>REQUEST</dispatcher>
+     <dispatcher>FORWARD</dispatcher>
+   </filter-mapping>
 
    <filter-mapping>
      <filter-name>baseFilter</filter-name>

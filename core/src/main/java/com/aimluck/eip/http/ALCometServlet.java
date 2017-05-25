@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,6 +37,7 @@ import org.apache.catalina.comet.CometProcessor;
 
 import com.aimluck.eip.common.ALBaseUser;
 import com.aimluck.eip.common.ALEipConstants;
+import com.aimluck.eip.orm.Database;
 
 /**
  *
@@ -229,7 +230,8 @@ public class ALCometServlet extends HttpServlet implements CometProcessor {
 
             while (iterator.hasNext()) {
               Entry<HttpServletResponse, String> next = iterator.next();
-              if (message.getRecipients().contains(next.getValue())) {
+              if (message.getRecipients().contains(next.getValue())
+                || message.getRecipients().contains(Database.DEFAULT_ORG)) {
                 HttpServletResponse response = next.getKey();
                 try {
                   if (!response.isCommitted()) {
