@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -119,7 +119,8 @@ public class MessageUserListSelectData extends
       rd.setLastName(model.getLastName());
       rd.setFirstNameKana(model.getFirstNameKana());
       rd.setLastNameKana(model.getLastNameKana());
-      rd.setHasPhoto("T".equals(model.getHasPhoto()));
+      rd.setHasPhoto("T".equals(model.getHasPhoto())
+        || "N".equals(model.getHasPhoto()));
       Date photoModified = model.getPhotoModified();
       if (photoModified != null) {
         rd.setPhotoModified(photoModified.getTime());
@@ -152,7 +153,7 @@ public class MessageUserListSelectData extends
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    */
@@ -184,7 +185,7 @@ public class MessageUserListSelectData extends
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -194,7 +195,7 @@ public class MessageUserListSelectData extends
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @param target_key
@@ -218,7 +219,7 @@ public class MessageUserListSelectData extends
   }
 
   /**
-   * 
+   *
    * @return
    */
   public String getTargetGroupName() {
@@ -226,7 +227,7 @@ public class MessageUserListSelectData extends
   }
 
   /**
-   * 
+   *
    * @return
    */
   public Map<Integer, ALEipPost> getPostMap() {
@@ -234,7 +235,7 @@ public class MessageUserListSelectData extends
   }
 
   /**
-   * 
+   *
    * @return
    */
   public List<ALEipGroup> getMyGroupList() {

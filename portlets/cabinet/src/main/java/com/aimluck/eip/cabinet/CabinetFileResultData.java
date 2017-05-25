@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,8 +24,10 @@ import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
+import com.aimluck.eip.fileupload.util.FileuploadUtils;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
+import com.aimluck.eip.util.ALLocalizationUtils;
 
 /**
  * 共有フォルダのファイルのResultDataです。 <BR>
@@ -99,7 +101,9 @@ public class CabinetFileResultData implements ALData {
     update_user_id = new ALNumberField();
     update_user = new ALStringField();
     create_date = new ALStringField();
-    update_date = new ALDateTimeField();
+    update_date =
+      new ALDateTimeField(ALLocalizationUtils
+        .getl10n("COMMONS_DATE_WEEK_TIME_FORMAT"));
     folder_id = new ALNumberField();
     folder_name = new ALStringField();
   }
@@ -295,6 +299,10 @@ public class CabinetFileResultData implements ALData {
     this.update_date.setValue(date);
   }
 
+  public ALDateTimeField getUpdateDateDetail() {
+    return update_date;
+  }
+
   public String getPosition() {
     return position;
   }
@@ -339,4 +347,7 @@ public class CabinetFileResultData implements ALData {
     return is_editable;
   }
 
+  public boolean isAcceptInline() {
+    return FileuploadUtils.isAcceptInline(getFileName().getValue());
+  }
 }

@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -425,8 +425,7 @@ public class CustomizeFormJSONScreen extends ALJSONScreen {
     setPageLayout(data, context, portlets);
     // String REFERENCES_REMOVED = "references-removed";
     // get the customization state for this page
-    SessionState customizationState =
-      ((JetspeedRunData) data).getPageSessionState();
+
     // update the changes made here to the profile being edited
     List<?>[] columns =
       CustomizeUtils.buildCustomizeColumns(data, context, portlets);
@@ -496,7 +495,6 @@ public class CustomizeFormJSONScreen extends ALJSONScreen {
 
   @SuppressWarnings("deprecation")
   private void setPageLayout(RunData rundata, Context context, Portlets portlets) {
-    JetspeedRunData jdata = (JetspeedRunData) rundata;
 
     HttpServletRequest request = HttpServletRequestLocator.get();
 

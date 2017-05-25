@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -44,6 +44,8 @@ import org.apache.velocity.context.Context;
 
 import com.aimluck.commons.utils.ALDeleteFileUtil;
 import com.aimluck.commons.utils.ALStringUtil;
+import com.aimluck.eip.account.AccountPositionResultData;
+import com.aimluck.eip.account.AccountPostResultData;
 import com.aimluck.eip.cayenne.om.account.EipMCompany;
 import com.aimluck.eip.cayenne.om.account.EipMPosition;
 import com.aimluck.eip.cayenne.om.account.EipMPost;
@@ -55,6 +57,7 @@ import com.aimluck.eip.cayenne.om.portlet.EipTBlogFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogFootmarkMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTMessage;
 import com.aimluck.eip.cayenne.om.portlet.EipTMessageFile;
+import com.aimluck.eip.cayenne.om.portlet.EipTMessageRoom;
 import com.aimluck.eip.cayenne.om.portlet.EipTMessageRoomMember;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimeline;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimelineFile;
@@ -112,6 +115,8 @@ public class AccountUtils {
 
   public static final String ACCOUNT_LOGIN_PORTLET_NAME = "AccountLogin";
 
+  public static final String ACCOUNT_POSITION_PORTLET_NAME = "AccountPosition";
+
   /** ユーザーの絞り込みに使用する項目 */
   private static final Map<Integer, FilterRole> roleMap =
     new HashMap<Integer, FilterRole>();
@@ -130,6 +135,13 @@ public class AccountUtils {
   /** 添付ファイルを保管するディレクトリの指定 */
   public static final String FOLDER_FILEDIR_ACCOUNT = JetspeedResources
     .getString("aipo.filedir", "");
+
+  /** メッセージの添付ファイルを保管するディレクトリの指定 */
+  public static final String FOLDER_FILEDIR_MESSAGE = JetspeedResources
+    .getString("aipo.filedir", "");
+
+  public static final String CATEGORY_KEY_MESSAGE = JetspeedResources
+    .getString("aipo.message.categorykey", "");
 
   /**
    * セッション中のエンティティIDで示されるユーザ情報を取得する。 論理削除されたユーザを取得した場合はnullを返す。
@@ -231,7 +243,9 @@ public class AccountUtils {
       Expression exp =
         ExpressionFactory.matchDbExp(EipMPost.POST_ID_PK_COLUMN, Integer
           .valueOf(id));
-      List<EipMPost> list = Database.query(EipMPost.class, exp).fetchList();
+      List<EipMPost> list =
+        Database.query(EipMPost.class, exp).orderAscending(
+          EipMPost.SORT_PROPERTY).fetchList();
       if (list == null || list.size() == 0) {
         logger.debug("Not found ID...");
         return result;
@@ -361,6 +375,49 @@ public class AccountUtils {
     }
 
     return resultList;
+  }
+
+  public static List<AccountPositionResultData> getAccountPositionAllList() {
+    List<AccountPositionResultData> AccountPositionAllList =
+      new ArrayList<AccountPositionResultData>();
+
+    try {
+      List<EipMPosition> aList =
+        Database.query(EipMPosition.class).orderAscending(
+          EipMPosition.SORT_PROPERTY).fetchList();
+
+      for (EipMPosition record : aList) {
+        AccountPositionResultData rd = new AccountPositionResultData();
+        rd.initField();
+        rd.setPositionId(record.getPositionId());
+        rd.setPositionName(record.getPositionName());
+        AccountPositionAllList.add(rd);
+      }
+    } catch (Exception ex) {
+      logger.error("accountposition", ex);
+    }
+    return AccountPositionAllList;
+  }
+
+  public static List<AccountPositionResultData> getAccountPositionResultList(
+      List<EipMPosition> result) {
+    List<AccountPositionResultData> list =
+      new ArrayList<AccountPositionResultData>();
+    for (EipMPosition model : result) {
+      list.add(getAccountPositionResultData(model));
+    }
+    return list;
+  }
+
+  public static AccountPositionResultData getAccountPositionResultData(
+      EipMPosition model) {
+    AccountPositionResultData data = new AccountPositionResultData();
+    data.initField();
+    data.setPositionId(model.getPositionId());
+    data.setPositionName(model.getPositionName());
+    data.setUpdate_date(model.getUpdateDate());
+    data.setCreateDate(model.getCreateDate());
+    return data;
   }
 
   /**
@@ -682,6 +739,44 @@ public class AccountUtils {
         }
       }
 
+      Expression exp011 =
+        ExpressionFactory.matchDbExp(EipTTimeline.OWNER_ID_COLUMN, user
+          .getUserId());
+
+      Expression exp021 =
+        ExpressionFactory.noMatchDbExp(EipTTimeline.PARENT_ID_COLUMN, 0);
+      Expression exp031 =
+        ExpressionFactory.matchDbExp(
+          "TIMELINE_TYPE",
+          EipTTimeline.TIMELINE_TYPE_TIMELINE);
+
+      SelectQuery<EipTTimeline> EipTTimelineSQL1 =
+        Database.query(EipTTimeline.class).andQualifier(
+          exp011.andExp(exp021.andExp(exp031)));
+      List<EipTTimeline> timelineList1 = EipTTimelineSQL1.fetchList();
+
+      if (!timelineList1.isEmpty()) {
+        SelectQuery<EipTTimelineLike> EipTTimelineLikeSQL2 =
+          Database.query(EipTTimelineLike.class);
+        EipTTimelineLikeSQL2.andQualifier(ExpressionFactory.inDbExp(
+          EipTTimelineLike.EIP_TTIMELINE_PROPERTY,
+          timelineList1));
+
+        EipTTimelineLikeSQL2.deleteAll();
+        EipTTimelineSQL1.deleteAll();
+
+      }
+
+      SelectQuery<EipTTimelineLike> EipTTimelineLikeSQL3 =
+        Database.query(EipTTimelineLike.class);
+      EipTTimelineLikeSQL3.andQualifier(ExpressionFactory.matchDbExp(
+        EipTTimelineLike.OWNER_ID_COLUMN,
+        user.getUserId()));
+      EipTTimelineLikeSQL3.deleteAll();
+
+      // メッセージルームの管理者権限移行
+      AccountUtils.shiftMessageroomAdmin(user.getUserId());
+
       // メッセージ
       List<EipTMessageFile> messageFileList =
         Database
@@ -699,6 +794,52 @@ public class AccountUtils {
         .query(EipTMessageRoomMember.class)
         .where(Operations.in(EipTMessageRoomMember.USER_ID_PROPERTY, userId))
         .deleteAll();
+
+      // 削除対象ユーザー以外にメンバーのいないメッセージルームを削除
+      StringBuilder sql = new StringBuilder();
+      sql.append("select * from eip_t_message_room ");
+      sql.append("where room_id in ");
+      sql.append("( ");
+      sql.append("select room_id from eip_t_message_room_member ");
+      sql.append("where room_id in ");
+      sql.append("( ");
+      sql.append("select room_id from eip_t_message_room_member ");
+      sql.append("group by room_id ");
+      sql.append("having COUNT(*) = 1 ");
+      sql.append(") ");
+      sql.append("and user_id = #bind($userId) ");
+      sql.append(")");
+
+      List<EipTMessageRoom> deleteRoomList =
+        Database.sql(EipTMessageRoom.class, sql.toString()).param(
+          "userId",
+          Integer.parseInt(userId)).fetchList();
+
+      List<Integer> deleteRoomIdList = new ArrayList<Integer>();
+      for (EipTMessageRoom room : deleteRoomList) {
+        deleteRoomIdList.add(room.getRoomId());
+      }
+
+      // 削除対象ユーザー以外にメンバーのいないメッセージルームの添付ファイルを削除
+      for (Integer roomId : deleteRoomIdList) {
+        List<EipTMessageFile> messageRoomfiles =
+          Database
+            .query(EipTMessageFile.class)
+            .where(Operations.eq(EipTMessageFile.ROOM_ID_PROPERTY, roomId))
+            .fetchList();
+
+        ALDeleteFileUtil.deleteFiles(
+          AccountUtils.FOLDER_FILEDIR_MESSAGE,
+          AccountUtils.CATEGORY_KEY_MESSAGE,
+          messageRoomfiles);
+      }
+
+      if (deleteRoomIdList.size() > 0) {
+        Database.query(EipTMessageRoom.class).andQualifier(
+          ExpressionFactory.inDbExp(
+            EipTMessageRoom.ROOM_ID_PK_COLUMN,
+            deleteRoomIdList)).deleteAll();
+      }
 
       Database.commit();
 
@@ -987,4 +1128,99 @@ public class AccountUtils {
     }
     return null;
   }
+
+  public static List<AccountPostResultData> getAccountPostResultList(
+      List<EipMPost> result) {
+    List<AccountPostResultData> list = new ArrayList<AccountPostResultData>();
+    for (EipMPost model : result) {
+      list.add(getAccountPostResultData(model));
+    }
+    return list;
+  }
+
+  public static AccountPostResultData getAccountPostResultData(EipMPost model) {
+    AccountPostResultData data = new AccountPostResultData();
+    data.initField();
+    data.setPostId(model.getPostId());
+    data.setCompanyId(model.getCompanyId());
+    data.setPostName(model.getPostName());
+    data.setZipcode(model.getZipcode());
+    data.setAddress(model.getAddress());
+    data.setInTelephone(model.getInTelephone());
+    data.setOutTelephone(model.getOutTelephone());
+    data.setFaxNumber(model.getFaxNumber());
+    data.setCreateDate(model.getCreateDate().toString());
+    data.setUpdateDate(model.getUpdateDate().toString());
+    data.setGroupName(model.getGroupName());
+    return data;
+  }
+
+  /**
+   * 指定されたユーザーが削除／無効化されたとき、メッセージルームの管理者権限を他のユーザーに移します。
+   *
+   * @param uid
+   */
+  public static boolean shiftMessageroomAdmin(int uid) {
+    try {
+      String userId = Integer.toString(uid);
+
+      // user_idが自分で、管理者であるデータを取得する(チェックする必要があるルームを取得)
+      SelectQuery<EipTMessageRoomMember> message_room_query =
+        Database.query(EipTMessageRoomMember.class);
+      Expression msgroom_exp =
+        ExpressionFactory.matchExp(
+          EipTMessageRoomMember.USER_ID_PROPERTY,
+          userId);
+      Expression msgroom_exp2 =
+        ExpressionFactory.matchExp(
+          EipTMessageRoomMember.AUTHORITY_PROPERTY,
+          "A");
+      message_room_query.setQualifier(msgroom_exp.andExp(msgroom_exp2));
+      List<EipTMessageRoomMember> message_room_list =
+        message_room_query.fetchList();
+
+      // ルーム一つずつについて、自分の他のメンバーを取り出す
+      for (EipTMessageRoomMember message_room : message_room_list) {
+        SelectQuery<EipTMessageRoomMember> message_room_query2 =
+          Database.query(EipTMessageRoomMember.class);
+        Expression msgroom_exp3 =
+          ExpressionFactory.matchExp(
+            EipTMessageRoomMember.EIP_TMESSAGE_ROOM_PROPERTY,
+            message_room.getEipTMessageRoom().getRoomId());
+        Expression msgroom_exp4 =
+          ExpressionFactory.noMatchExp(
+            EipTMessageRoomMember.USER_ID_PROPERTY,
+            message_room.getUserId());
+        message_room_query2.setQualifier(msgroom_exp3.andExp(msgroom_exp4));
+        List<EipTMessageRoomMember> message_room_member_list =
+          message_room_query2.fetchList();
+
+        boolean flag = false;
+        // 管理者権限を持つメンバーがいたら抜ける。一人もいなかったらflagをtrueにする
+        for (Iterator<EipTMessageRoomMember> iterator =
+          message_room_member_list.iterator(); iterator.hasNext();) {
+          EipTMessageRoomMember member = iterator.next();
+          if (member.getAuthority().equals("A")) {
+            break;
+          }
+          if (!iterator.hasNext()) {
+            flag = true;
+          }
+        }
+
+        // flagがtrueなら全員を管理者に設定する
+        if (flag) {
+          for (EipTMessageRoomMember member : message_room_member_list) {
+            member.setAuthority("A");
+          }
+        }
+      }
+      return true;
+
+    } catch (Exception e) {
+      logger.error(e.getMessage(), e);
+      return false;
+    }
+  }
+
 }

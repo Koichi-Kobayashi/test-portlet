@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * ユーザー名簿の一覧を処理するクラスです。 <br />
- * 
+ *
  */
 public class UserListScreen extends ALVelocityScreen {
 
@@ -39,7 +39,7 @@ public class UserListScreen extends ALVelocityScreen {
     .getLogger(UserListScreen.class.getName());
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -50,6 +50,7 @@ public class UserListScreen extends ALVelocityScreen {
     try {
       ALEipUtils.setTemp(rundata, context, "tab", "result");
       UserSelectData listData = new UserSelectData();
+      listData.clearFilter(rundata, context);
       listData.initField();
       listData.setRowsNum(Integer.parseInt(portlet
         .getPortletConfig()

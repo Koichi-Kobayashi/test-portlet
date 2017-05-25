@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -149,6 +149,8 @@ aipo.calendar.changeDisypayPeriod = function(period, pid) {
 	}
 }
 
+aipo.schedule.scrollNeeds = [];
+aipo.schedule.scrollPositions = {};
 aipo.calendar.populateWeeklySchedule = function(_portletId, params) {
     var _params;
     var member_to = dojo.byId('member_to-' + _portletId);
@@ -377,8 +379,15 @@ aipo.calendar.populateWeeklySchedule = function(_portletId, params) {
 	                }else{
 	                    tmpNode1_a.outerHTML = tmpNode1_a.outerHTML.toString().split(/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/).join(data.date[i].substring(0,10));
 	                }
-	                tmpNode2.innerHTML = data.holiday[i];
+
+	                if(data.holiday[i] != "set"){
+	                	tmpNode2.innerHTML = data.holiday[i];
+	                }else{
+	                	tmpNode2.innerHTML = "";
+	                }
+
 	                var temptoday = data.today + "-00-00";
+	                /*
 	                if (data.dayOfWeek[i] == "(土)") {
 	                    dojo.addClass(tmpNode1, "saturday");
 	                    dojo.addClass(tmpNode2, "saturday");
@@ -401,12 +410,18 @@ aipo.calendar.populateWeeklySchedule = function(_portletId, params) {
 	                    dojo.removeClass(tmpNode3, "sunday");
 	                    dojo.removeClass(tmpNode4, "sunday");
 	                }
-	                if (data.holiday[i]) {
+	                */
+	                if (data.holiday[i] == "set") {
 	                    dojo.addClass(tmpNode1, "holiday");
 	                    dojo.addClass(tmpNode2, "holiday");
 	                    dojo.addClass(tmpNode3, "holiday");
 	                    dojo.addClass(tmpNode4, "holiday");
-	                } else {
+	                } else if(data.holiday[i] && data.dayoff){
+	                    dojo.addClass(tmpNode1, "holiday");
+	                    dojo.addClass(tmpNode2, "holiday");
+	                    dojo.addClass(tmpNode3, "holiday");
+	                    dojo.addClass(tmpNode4, "holiday");
+	                }else {
 	                    dojo.removeClass(tmpNode1, "holiday");
 	                    dojo.removeClass(tmpNode2, "holiday");
 	                    dojo.removeClass(tmpNode3, "holiday");
@@ -424,6 +439,7 @@ aipo.calendar.populateWeeklySchedule = function(_portletId, params) {
 	                    dojo.removeClass(tmpNode4, "today");
 	                }
 	            }
+
 
 	            dojo.forEach(data.schedule, function(item) {
 	                var rowHeight = ptConfig[_portletId].rowHeight;
@@ -543,7 +559,7 @@ aipo.calendar.populateWeeklySchedule = function(_portletId, params) {
 	                termHtml = "";
 	                for(var i = 0;i < ptConfig[_portletId].scheduleDivDaySum; i++) {
 	                   tmpNode5 = dojo.byId('termDay' + i + '-' + l_count + '-' + _portletId);
-	                   if (data.dayOfWeek[i] == "(土)") {
+	                   /*if (data.dayOfWeek[i] == "(土)") {
 	                       dojo.addClass(tmpNode5, "saturday");
 	                   } else {
 	                       dojo.removeClass(tmpNode5, "saturday");
@@ -552,7 +568,7 @@ aipo.calendar.populateWeeklySchedule = function(_portletId, params) {
 	                       dojo.addClass(tmpNode5, "sunday");
 	                   } else {
 	                       dojo.removeClass(tmpNode5, "sunday");
-	                   }
+	                   }*/
 	                   if (data.holiday[i]) {
 	                       dojo.addClass(tmpNode5, "holiday");
 	                   } else {
@@ -604,6 +620,9 @@ aipo.calendar.populateWeeklySchedule = function(_portletId, params) {
 	                        if(item.userCount > 1){
 	                            str_tmpflgmb   =  "[共有]";
 	                        }
+		                    if(item.facilityCount > 0){
+			                    str_tmpflgmb   += "[設備]";
+			                }
 	                    }
 	                    name = str_tmpflgmb + name;
 
@@ -779,10 +798,10 @@ aipo.calendar.populateWeeklySchedule = function(_portletId, params) {
 	            }else{
 	            }
 
-	            dojo.byId("weeklyTableHead_" + _portletId).style.marginTop = "5px";
+	            dojo.byId("weeklyTableHead_" + _portletId).style.marginTop = "0px";
 	            var headHeight = dojo.byId("weeklyTableHead_" + _portletId).offsetHeight;
 	            var trHeight = dojo.byId("weeklyTermTr_" + _portletId).offsetHeight;
-	        	headHeight += 5;
+	        	headHeight += 0;
 	            headHeight -= trHeight;
 	            trHeight -= trHeight % 17;
 	            headHeight += trHeight;
@@ -799,8 +818,13 @@ aipo.calendar.populateWeeklySchedule = function(_portletId, params) {
 	            }
 
 	            if (!ptConfig[_portletId].isScroll) {
-	                dojo.byId('weeklyScrollPane_'+_portletId).scrollTop = ptConfig[_portletId].contentScrollTop;
-	                ptConfig[_portletId].isScroll = true;
+	            	if(dojo.byId("portletsBody").style.display == "none") {
+	            		aipo.schedule.scrollNeeds.push(_portletId);
+	            	} else {
+		                dojo.byId('weeklyScrollPane_'+_portletId).scrollTop = ptConfig[_portletId].contentScrollTop;
+		                ptConfig[_portletId].isScroll = true;
+	            	}
+            		aipo.schedule.scrollPositions[_portletId] = null;
 	            }
 	            ptConfig[_portletId].isTooltipEnable = true;
 
@@ -1201,7 +1225,7 @@ dojo.declare("aipo.calendar.WeeklyScheduleDragMoveObject", [aimluck.dnd.DragMove
 
         dojo.connect(this.node, "onmousedown", this, "onMouseDown");
 
-        if (dojo.isIE) {
+        if (dojo.isIE <= 8 && dojo.isIE > 0) {
             document.onkeydown = function(e) {
                 dojo.style(tmpDraggable, "opacity", 0.3);
             };
@@ -1211,6 +1235,7 @@ dojo.declare("aipo.calendar.WeeklyScheduleDragMoveObject", [aimluck.dnd.DragMove
         } else {
             dojo.connect(null, "onkeydown", this, "onKeyPress");
             dojo.connect(null, "onkeyup", this, "onKeyPress");
+            this.onKeyPress(e);
         }
 
         aimluck.dnd.DragMoveObject.prototype.onFirstMove.apply(this, arguments);
@@ -1236,7 +1261,7 @@ dojo.declare("aipo.calendar.WeeklyScheduleDragMoveObject", [aimluck.dnd.DragMove
         lastScroll = dojo.byId('weeklyScrollPane_'+this.portletId).scrollTop;
     },
     onKeyPress: function(e){
-        if(e.ctrlKey) {
+        if((e.ctrlKey && !e.metaKey) || (!e.ctrlKey && e.metaKey)) {
             dojo.style(this.tmpDraggable, "opacity", 0.3);
         } else {
             dojo.style(this.tmpDraggable, "opacity", 0.0);
@@ -1323,7 +1348,7 @@ dojo.declare("aipo.calendar.WeeklyScheduleDragMoveObject", [aimluck.dnd.DragMove
           this.dragSource.schedule.index = 0;
         }*/
 
-        if (dojo.isIE) {
+        if (dojo.isIE <= 8 && dojo.isIE > 0) {
             document.onkeydown = "";
             document.onkeyup = "";
         }
@@ -1343,7 +1368,7 @@ dojo.declare("aipo.calendar.WeeklyScheduleDragMoveObject", [aimluck.dnd.DragMove
         }
 
         var params = "";
-        if(e.ctrlKey) {
+        if((e.ctrlKey && !e.metaKey) || (!e.ctrlKey && e.metaKey)) {
             params += "&mode=insert";
         } else {
             params += "&mode=update";
@@ -1464,7 +1489,7 @@ dojo.declare("aipo.calendar.WeeklyTermScheduleDragMoveObject", [aimluck.dnd.Drag
 
        this.tmpDraggable = tmpDraggable;
 
-       if (dojo.isIE) {
+       if (dojo.isIE <= 8 && dojo.isIE > 0) {
            document.onkeydown = function(e) {
                dojo.style(tmpDraggable, "opacity", 0.3);
            };
@@ -1474,10 +1499,11 @@ dojo.declare("aipo.calendar.WeeklyTermScheduleDragMoveObject", [aimluck.dnd.Drag
        } else {
            dojo.connect(null, "onkeydown", this, "onKeyPress");
            dojo.connect(null, "onkeyup", this, "onKeyPress");
+           this.onKeyPress(e);
        }
     },
     onKeyPress: function(e){
-        if(e.ctrlKey) {
+        if((e.ctrlKey && !e.metaKey) || (!e.ctrlKey && e.metaKey)) {
             dojo.style(this.tmpDraggable, "opacity", 0.3);
         } else {
             dojo.style(this.tmpDraggable, "opacity", 0.0);
@@ -1574,7 +1600,7 @@ dojo.declare("aipo.calendar.WeeklyTermScheduleDragMoveObject", [aimluck.dnd.Drag
     onMouseUp: function (e) {
         ptConfig[this.portletId].isTooltipEnable = true;
 
-        if (dojo.isIE) {
+        if (dojo.isIE <= 8 && dojo.isIE > 0) {
             document.onkeydown = "";
             document.onkeyup = "";
         }
@@ -1625,7 +1651,7 @@ dojo.declare("aipo.calendar.WeeklyTermScheduleDragMoveObject", [aimluck.dnd.Drag
         this.tmpIndex = 0;
 
         var params = "";
-        if(e.ctrlKey) {
+        if((e.ctrlKey && !e.metaKey) || (!e.ctrlKey && e.metaKey)) {
             params += "&mode=insert";
         } else {
             params += "&mode=update";

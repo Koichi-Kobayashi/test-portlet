@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,6 +32,7 @@ import com.aimluck.eip.common.ALPageNotFoundException;
 import com.aimluck.eip.message.util.MessageUtils;
 import com.aimluck.eip.modules.actions.common.ALAction;
 import com.aimluck.eip.orm.query.ResultList;
+import com.aimluck.eip.services.orgutils.ALOrgUtilsService;
 import com.aimluck.eip.util.ALEipUtils;
 
 /**
@@ -103,11 +104,17 @@ public class MessageRoomListSelectData extends
       rd.setUserId(userId.longValue());
     }
     boolean isDirect = "O".equals(model.getRoomType());
-    rd.setName(isDirect
-      ? model.getLastName() + " " + model.getFirstName()
-      : model.getName());
-    rd.setHasPhoto(isDirect ? "T".equals(model.getUserHasPhoto()) : "T"
-      .equals(model.getHasPhoto()));
+    if (isDirect && model.getUserId().intValue() < 4) {
+      rd.setName(ALOrgUtilsService.getAlias());
+    } else {
+      rd.setName(isDirect
+        ? model.getLastName() + " " + model.getFirstName()
+        : model.getName());
+    }
+    rd.setHasPhoto(isDirect
+      ? ("T".equals(model.getUserHasPhoto()) || "N".equals(model
+        .getUserHasPhoto()))
+      : ("T".equals(model.getHasPhoto()) || "N".equals(model.getHasPhoto())));
     if (rd.isHasPhoto()) {
       rd.setPhotoModified(isDirect ? model.getUserPhotoModified() : model
         .getPhotoModified()
@@ -164,5 +171,20 @@ public class MessageRoomListSelectData extends
 
   public boolean hasKeyword() {
     return !StringUtils.isEmpty(keyword.getValue());
+  }
+
+  public int getLoginUserId() {
+    return userId;
+  }
+
+  /**
+   * ファイルアクセス権限チェック用メソッド。<br />
+   * ファイルのアクセス権限をチェックするかどうかを判定します。
+   *
+   * @return
+   */
+  @Override
+  public boolean isCheckAttachmentAuthority() {
+    return false;
   }
 }

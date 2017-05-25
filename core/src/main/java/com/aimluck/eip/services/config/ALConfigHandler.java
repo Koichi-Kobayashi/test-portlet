@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -101,6 +101,63 @@ public abstract class ALConfigHandler {
       @Override
       public String defaultValue() {
         return JetspeedResources.getString("check.activity.interval", "300");
+      }
+    },
+
+    EXTTIMECARD_VERTION("exttimecard.version") {
+      @Override
+      public String defaultValue() {
+        return JetspeedResources.getString("exttimecard.version", "1");
+      }
+    },
+
+    EXTTIMECARD_IP_ENABLED("config.exttimecard.ip.enabled") {
+      @Override
+      public String defaultValue() {
+        return JetspeedResources
+          .getString("config.exttimecard.ip.enabled", "F");
+      }
+    },
+
+    EXTTIMECARD_IP_ALLOWED("config.exttimecard.ip.allowed") {
+      @Override
+      public String defaultValue() {
+        return JetspeedResources.getString("config.exttimecard.ip.allowed", "");
+      }
+    },
+
+    EXTTIMECARD_IP_ALLOWED2("config.exttimecard.ip.allowed2") {
+      @Override
+      public String defaultValue() {
+        return JetspeedResources
+          .getString("config.exttimecard.ip.allowed2", "");
+      }
+    },
+
+    TIMELINE_ACTIVITY_ENABLED("config.timeline.activity.enabled") {
+      @Override
+      public String defaultValue() {
+        return JetspeedResources.getString(
+          "config.timeline.activity.enabled",
+          "T");
+      }
+    },
+
+    SCHEDULE_MAPS_ENABLED("config.schedule.maps.enabled") {
+      @Override
+      public String defaultValue() {
+        return JetspeedResources.getString("config.schedule.maps.enabled", "F");
+      }
+    },
+
+    HOLIDAY_OF_WEEK("holiday.of.week") {
+      @Override
+      public String defaultValue() {
+        // 7桁 週間の休日
+        // 1桁 法定休日の曜日
+        // 1桁 国民の祝日を休日にするかどうか
+        return JetspeedResources.getString("holiday.of.week", "100000111");
+
       }
     },
 

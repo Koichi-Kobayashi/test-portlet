@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -63,7 +63,7 @@ import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * ユーザーアカウントの検索データを管理するためのクラスです。 <br />
- * 
+ *
  */
 public class UserSelectData extends
     ALAbstractSelectData<TurbineUser, TurbineUser> {
@@ -88,9 +88,12 @@ public class UserSelectData extends
   /** 一覧データ */
   private List<Object> list;
 
+  /** <code>userid</code> ユーザーID */
+  private int userid;
+
   /**
    * 初期化します。
-   * 
+   *
    */
   @Override
   public void init(ALAction action, RunData rundata, Context context)
@@ -100,12 +103,15 @@ public class UserSelectData extends
 
     postList = ALEipUtils.getMyGroups(rundata);
 
+    // ログインユーザの ID を設定する．
+    userid = ALEipUtils.getUserId(rundata);
+
     super.init(action, rundata, context);
   }
 
   /**
    * アカウント一覧を取得します。 ただし、論理削除されているアカウントは取得しません。
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -130,7 +136,7 @@ public class UserSelectData extends
 
   /**
    * 検索条件を設定した SelectQuery を返します。 <BR>
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -265,10 +271,15 @@ public class UserSelectData extends
               + "."
               + TurbineGroup.GROUP_ALIAS_NAME_PROPERTY,
             "%" + transWords[i] + "%");
+        Expression exp36 =
+          ExpressionFactory.likeExp(TurbineUser.CODE_PROPERTY, "%"
+            + searchWordValue
+            + "%");
 
         query.andQualifier(exp11.orExp(exp12).orExp(exp13).orExp(exp14).orExp(
           exp15).orExp(exp16).orExp(exp21).orExp(exp22).orExp(exp23).orExp(
-          exp31).orExp(exp32).orExp(exp33).orExp(exp34).orExp(exp35));
+          exp31).orExp(exp32).orExp(exp33).orExp(exp34).orExp(exp35).orExp(
+          exp36));
 
         query.distinct();
       }
@@ -278,7 +289,7 @@ public class UserSelectData extends
 
   /**
    * フィルタ用の <code>Criteria</code> を構築します。
-   * 
+   *
    * @param crt
    * @param rundata
    * @param context
@@ -318,7 +329,7 @@ public class UserSelectData extends
   }
 
   /**
-   * 
+   *
    * @param id
    * @return
    */
@@ -336,7 +347,7 @@ public class UserSelectData extends
   }
 
   /**
-   * 
+   *
    * @param id
    * @return
    */
@@ -368,7 +379,7 @@ public class UserSelectData extends
   /**
    * @param obj
    * @return
-   * 
+   *
    */
   @Override
   protected Object getResultData(TurbineUser record) {
@@ -389,6 +400,7 @@ public class UserSelectData extends
       rd.initField();
       setResultData(record, rd);
       rd.setIsAdmin(ALEipUtils.isAdmin(Integer.valueOf(record.getUserId())));
+      rd.setIsOwner(userid == Integer.valueOf(record.getUserId()));
       return rd;
     } catch (Exception ex) {
       logger.error("userlist", ex);
@@ -410,8 +422,11 @@ public class UserSelectData extends
     data.setPostNameList(ALEipUtils.getPostNameList(model.getUserId()));
     data.setPositionName(ALEipUtils.getPositionName(model.getPositionId()));
     data.setDisabled(model.getDisabled());
-    data.setHasPhoto("T".equals(model.getHasPhoto()));
+    data.setHasPhoto("T".equals(model.getHasPhoto())
+      || "N".equals(model.getHasPhoto()));
+    data.setIsNewPhotoSpec("N".equals(model.getHasPhoto()));
     data.setPhotoModified(model.getPhotoModified().getTime());
+    data.setCode(model.getCode());
   }
 
   private String getAliasName(String firstName, String lastName) {
@@ -424,7 +439,7 @@ public class UserSelectData extends
 
   /**
    * 一覧表示します。
-   * 
+   *
    * @param action
    * @param rundata
    * @param context
@@ -513,7 +528,7 @@ public class UserSelectData extends
 
   /**
    * @return
-   * 
+   *
    */
   @Override
   protected Attributes getColumnMap() {
@@ -528,7 +543,7 @@ public class UserSelectData extends
   }
 
   /**
-   * 
+   *
    * @return
    */
   public String getCurrentPost() {
@@ -544,7 +559,7 @@ public class UserSelectData extends
 
   /**
    * 部署一覧を取得します
-   * 
+   *
    * @return postList
    */
   public List<ALEipGroup> getPostList() {
@@ -552,7 +567,7 @@ public class UserSelectData extends
   }
 
   /**
-   * 
+   *
    * @return
    */
   public Map<Integer, ALEipPost> getPostMap() {
@@ -561,7 +576,7 @@ public class UserSelectData extends
 
   /**
    * 登録ユーザー数を取得する．
-   * 
+   *
    * @return
    */
   public int getRegisteredUserNum() {
@@ -585,4 +600,7 @@ public class UserSelectData extends
     return ALAccessControlConstants.POERTLET_FEATURE_ADDRESSBOOK_ADDRESS_INSIDE;
   }
 
+  public void clearFilter(RunData rundata, Context context) {
+    ALEipUtils.removeTemp(rundata, context, LIST_FILTER_STR);
+  }
 }

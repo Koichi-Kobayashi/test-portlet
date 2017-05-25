@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -92,6 +92,7 @@ aipo.IfrGadgetService = function() {
     gadgets.rpc.register('requestCheckTimeline', this.requestCheckTimeline);
     gadgets.rpc.register('requestCheckMessage', this.requestCheckMessage);
     gadgets.rpc.register('requestCheckMessageRead', this.requestCheckMessageRead);
+    gadgets.rpc.register('requestCheckMessageDelete', this.requestCheckMessageDelete);
     // gadgets.rpc.register('requestSendMessage', this.requestSendMessage);
 };
 
@@ -310,31 +311,22 @@ aipo.IfrGadgetService.prototype.requestCheckActivity = function(activityId) {
     }
 };
 
-aipo.IfrGadgetService.prototype.requestCheckTimeline = function() {
-	var num = 0;
-
-	var submit = dojo.byId('getTimelineOnClick').innerHTML;
-	if(submit != 'true'){
-		dojo.query("#timelineOuter .elastic").forEach(function(item) {
-			if(item.value != item.defaultValue){
-				num++;
-			}
-		});
-		if(dojo.byId("modalDialog") != undefined && dojo.byId("modalDialog").style.display != "none") {
-			num++;
-		}
-	}
-	if(num == 0){
-		aipo.portletReload('timeline');
-	} else {
+aipo.IfrGadgetService.prototype.requestCheckTimeline = function(params) {
+	if(params.senderName != aipo.message.loginUserId){
 		dojo.query(".newMessage").style('display', '');
 	}
 }
 
 aipo.IfrGadgetService.prototype.requestCheckMessage = function(params) {
+	if(typeof(params.transactionId) !== 'undefined' && aipo.message.removeTransactionId(params.transactionId)){
+		return;
+	}
     var notify = true;
+    if(typeof(aipo.message.loginUserId) !== 'undefined' && aipo.message.loginUserId==params.userId){
+    	notify = false;
+    }
     if (aipo.message.isActive && aipo.message.isOpenWindow()
-            && aipo.message.currentRoomId) {
+            && aipo.message.currentRoomId && !aipo.message.moreMessageLock) {
         aipo.message.latestMessageList();
         notify = !(params.roomId == aipo.message.currentRoomId);
     } else {
@@ -366,7 +358,7 @@ aipo.IfrGadgetService.prototype.requestCheckMessage = function(params) {
                         var userId = data.userId;
                         var text = data.text;
                         var photoModified = data.photoModified;
-                        var icon = 'images/common/avatar_default3.png';
+                        var icon = 'themes/default/images/common/icon_user100.png';
                         if(data.hasPhoto) {
                             icon = '?template=FileuploadFacePhotoScreen&uid=' + userId + '&t=' + photoModified;
                         }
@@ -387,7 +379,7 @@ aipo.IfrGadgetService.prototype.requestCheckMessage = function(params) {
                         var userId = data.userId;
                         var text = data.text;
                         var photoModified = data.photoModified;
-                        var icon = 'images/common/avatar_default3.png';
+                        var icon = 'themes/default/images/common/icon_user100.png';
                         if(data.hasPhoto) {
                             icon = '?template=FileuploadFacePhotoScreen&uid=' + userId + '&t=' + photoModified;
                         }
@@ -417,6 +409,17 @@ aipo.IfrGadgetService.prototype.requestCheckMessage = function(params) {
 aipo.IfrGadgetService.prototype.requestCheckMessageRead = function(params) {
     if (params.roomId) {
         aipo.message.updateReadCount(params.roomId);
+    }
+}
+
+aipo.IfrGadgetService.prototype.requestCheckMessageDelete = function(params) {
+    if (params.roomId) {
+    	if(aipo.message.isInit) {
+            aipo.message.reloadRoomList();
+        } else {
+            aipo.message.updateUnreadCount();
+        }
+        aipo.message.removeNode(params.messageId);
     }
 }
 

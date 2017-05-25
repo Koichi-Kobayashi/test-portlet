@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -71,9 +71,10 @@ public class TimelineAction extends ALBaseAction {
     // PSMLからパラメータをロードする
     // 最大表示件数（最大化時）
     listData.setRowsNum(20);
-    listData.doViewList(this, rundata, context);
 
-    setTemplate(rundata, "timeline");
+    if (listData.doViewList(this, rundata, context)) {
+      setTemplate(rundata, "timeline");
+    }
   }
 
   /**

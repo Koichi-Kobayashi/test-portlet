@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * スケジュール詳細表示の検索結果を管理するクラスです。
- * 
+ *
  */
 public class CellScheduleSelectData extends ScheduleSelectData {
 
@@ -44,7 +44,7 @@ public class CellScheduleSelectData extends ScheduleSelectData {
   protected String entityid;
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -55,7 +55,7 @@ public class CellScheduleSelectData extends ScheduleSelectData {
   protected EipTSchedule selectDetail(RunData rundata, Context context)
       throws ALPageNotFoundException, ALDBErrorException {
 
-    entityid = ALEipUtils.getTemp(rundata, context, ALEipConstants.ENTITY_ID);
+    entityid = rundata.getParameters().getString(ALEipConstants.ENTITY_ID);
 
     return super.selectDetail(rundata, context);
   }
@@ -73,7 +73,6 @@ public class CellScheduleSelectData extends ScheduleSelectData {
       }
     }
   }
-
 
   public String getEntityId() {
     return entityid;

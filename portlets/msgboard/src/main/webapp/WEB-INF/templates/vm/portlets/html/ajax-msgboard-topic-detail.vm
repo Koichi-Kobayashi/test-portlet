@@ -1,6 +1,6 @@
 #*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,14 +22,19 @@
 #set ($event_submit = "eventSubmit_doMsgboard_update")
 #set ($indicator_id = "indicator-dlg-")
 ## ---------------------------------------------------------------------------
-#ALdialogheader($subtitle)
+#if (${client}!= "IPHONE")
+    #ALdialogheaderPrintMsgboard("$l10n.MSGBOARD_TOPIC_DETAIL" "$!portlet.ID" "MsgboardTopicScreenPrint" "$entityid")
+#else
+    #ALdialogheaderDetailSmartPhone("$l10n.MSGBOARD_TOPIC_DETAIL")
+#end
 #ALajaxIndicator("$indicator_id" "$!portlet.ID" "")
 <div id="messageDiv"></div>
 <div id="messageDiv_$!portlet.ID"></div>
 #ALajaxdetailformheader($l10n.MSGBOARD_WRITE)
 <table class="listTable wide">
 	<caption>
-	<span class="subCaption">$!result.ParentTopic.CategoryNameHtml&nbsp;#if(! $!{result.ParentTopic.isPublic()})#AUIiconSecretAtt("title='$l10n.MSGBOARD_CLOSE_PUBLIC'" "")#end</span>$!{result.ParentTopic.TopicNameHtml}
+	$!{result.ParentTopic.TopicNameHtml}
+	<span class="subCaption">$!result.ParentTopic.CategoryNameHtml&nbsp;#if(! $!{result.ParentTopic.isPublic()})#AUIiconSecretAtt("title='$l10n.MSGBOARD_CLOSE_PUBLIC'" "")#end</span>
 	</caption>
 		<tbody>
 			<tr>
@@ -47,7 +52,7 @@
 						#if($!{result.ParentTopic.OwnerHasPhoto})
 							<img src="$!utils.escapeXML($jslink.getTemplate("FileuploadFacePhotoScreen").addQueryData("uid", $!{result.ParentTopic.OwnerId}).addQueryData("t", $!{result.ParentTopic.OwnerId}))" alt="$!{result.ParentTopic.OwnerId}" width="32" height="32" />
 							#else
-							<img src="images/common/avatar_default3.png" alt="$!{result.ParentTopic.OwnerId}" width="32" height="32" />
+							<img src="themes/default/images/common/icon_user100.png" alt="$!{result.ParentTopic.OwnerId}" width="32" height="32" />
 						#end
 						</a>
 					</div>
@@ -64,7 +69,7 @@
 								<div style="padding-top:15px;">
 									<ul>
 									#foreach( $attachmentFile in $!result.ParentTopic.AttachmentFileList )
-										<li><a #if("$!{client}"=="IPHONE")target="_blank"#end href="$jslink.getTemplate("MsgboardTopicFileRawScreen").addPathInfo("ownerid", $!{result.ParentTopic.OwnerId}).addPathInfo("entityid", $!result.ParentTopic.TopicId).addPathInfo("attachmentIndex", $attachmentFile.FileId).addPathInfo("f", ${attachmentFile.getURLEncodedValue()})">$result.getStringCR($attachmentFile.FileNameField)</a>
+										<li><a #if("$!{client}"=="IPHONE" || $!attachmentFile.AcceptInline)target="_blank"#end href="$jslink.getTemplate("MsgboardTopicFileRawScreen").addPathInfo("ownerid", $!{result.ParentTopic.OwnerId}).addPathInfo("entityid", $!result.ParentTopic.TopicId).addPathInfo("attachmentIndex", $attachmentFile.FileId).addPathInfo("f", ${attachmentFile.getURLEncodedValue()})">$result.getStringCR($attachmentFile.FileNameField)</a>
 										#if($attachmentFile.isImage())
 											<div id='popc' style='position:absolute'></div>
 											<div class="thumbBlock">
@@ -105,7 +110,7 @@
 						#if($!{record.OwnerHasPhoto})
 						<img src="$!utils.escapeXML($jslink.getTemplate("FileuploadFacePhotoScreen").addQueryData("uid", $!{record.OwnerId}).addQueryData("t", $!{result.ParentTopic.OwnerId}))" alt="$!{result.ParentTopic.OwnerId}" width="32" height="32" />
 						#else
-						<img src="images/common/avatar_default3.png" alt="$!{result.ParentTopic.OwnerId}" width="32" height="32" />
+						<img src="themes/default/images/common/icon_user100.png" alt="$!{result.ParentTopic.OwnerId}" width="32" height="32" />
 						#end
 						</a>
 					</div>
@@ -120,7 +125,7 @@
 					<div style="padding-top:15px;">
 						<ul>
 						#foreach( $attachmentFile in $!record.AttachmentFileList )
-						<li><a #if(${client}=="IPHONE")target="_blank"#end href="$jslink.getTemplate("MsgboardTopicFileRawScreen").addQueryData("ownerid", ${record.OwnerId}).addQueryData("entityid", $record.TopicId).addQueryData("attachmentIndex", $attachmentFile.FileId).addPathInfo("f", ${attachmentFile.getURLEncodedValue()})">$result.getStringCR($attachmentFile.FileNameField)</a>
+						<li><a #if("$!{client}"=="IPHONE" || $!attachmentFile.AcceptInline)target="_blank"#end href="$jslink.getTemplate("MsgboardTopicFileRawScreen").addQueryData("ownerid", ${record.OwnerId}).addQueryData("entityid", $record.TopicId).addQueryData("attachmentIndex", $attachmentFile.FileId).addPathInfo("f", ${attachmentFile.getURLEncodedValue()})">$result.getStringCR($attachmentFile.FileNameField)</a>
 							#if($attachmentFile.isImage())
 								<div id='popc' style='position:absolute'></div>
 								<div class="thumbBlock">
@@ -154,14 +159,14 @@
 				<td class="caption"><span class="required">$!resultOnTopicDetail.getFieldName('note')</span></td>
 				<td>#ALtextarea('note' $!resultOnTopicDetail.Note 5 40)</td>
 			</tr>
-			<tr #if(!$result.isFileUploadable())class="mb_hide"#end>
+			<tr #if(!$result.isFileUploadable() || (!$result.hasAttachmentInsertAuthority() && !$result.hasAttachmentDeleteAuthority()))class="hide"#end>
 				<td class="caption">$l10n.MSGBOARD_FILE_ATTACH</td>
 				<td>
 					<div class="clearfix">
-					<div>#IFFileUpload()</div>
+					<div>#ACLIFFileUpload()</div>
 					<ul id="attachments_$!{portlet.ID}" class="attachments">
 						#foreach($record in $!result.AttachmentFileNameList )
-							<li data-fileid="s${record.FileId}" data-filename="$!{record.FileName}"><span>$!record.FileName</span><span class="deletebutton" onclick="aimluck.io.removeFileFromList(this.parentNode.parentNode,this.parentNode);">$l10n.MSGBOARD_DELETE_DO</span></li>
+							#ACLFileList($record)
 						#end
 					</ul>
 					</div>

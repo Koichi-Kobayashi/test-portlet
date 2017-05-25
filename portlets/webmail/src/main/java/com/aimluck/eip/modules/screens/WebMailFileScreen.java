@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -47,7 +47,7 @@ public class WebMailFileScreen extends RawScreen {
     .getLogger(WebMailFileScreen.class.getName());
 
   /**
-   * 
+   *
    * @param rundata
    * @return
    */
@@ -57,7 +57,7 @@ public class WebMailFileScreen extends RawScreen {
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @throws Exception
    */
@@ -92,7 +92,8 @@ public class WebMailFileScreen extends RawScreen {
 
       String fileName;
       boolean isMsie = ALEipUtils.isMsieBrowser(rundata);
-      if (isMsie) {
+      boolean isEdge = ALEipUtils.isEdgeBrowser(rundata);
+      if (isMsie || isEdge) {
         fileName =
           new String(
             msg.getFileName(attachmentIndex).getBytes("Windows-31J"),

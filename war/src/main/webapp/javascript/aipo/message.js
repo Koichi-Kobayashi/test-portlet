@@ -1,7 +1,6 @@
-
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +19,7 @@
 dojo.provide("aipo.message");
 
 aipo.message.currentRoomId = null;
+aipo.message.tmpMessageId = null;
 aipo.message.tmpRoomId = null;
 aipo.message.tmpPortletTitle = null;
 aipo.message.currentUserId = null;
@@ -36,6 +36,8 @@ aipo.message.isInit = false;
 aipo.message.isDirect = false;
 aipo.message.jumpCursor = null;
 aipo.message.isSearched = false;
+aipo.message.transactionIdList = [];
+
 
 aipo.message.setup = function(portletId, jslink, isMobile) {
     aipo.message.portletId = portletId;
@@ -95,7 +97,29 @@ aipo.message.init = function(portletId, jslink, isMobile) {
                             }
                         });
     }
-    aipo.message.reloadRoomList();
+    if ("" != aipo.message.getCookieIsLastRoomOrUser()) {
+    	if ("User" == aipo.message.getCookieIsLastRoomOrUser()) {
+
+    	    //Userを選んだ時もCookieから最後に選んだUserへのフォームが開いたままにしておくことができます。
+    	    aipo.message.currentUserId = aipo.message.getCookieRoomId("targetUserId=");
+    	    aipo.message.reloadRoomList(null, aipo.message.currentUserId);
+    	    aipo.message.selectTab("user");
+    	    aipo.message.selectUser(aipo.message.currentUserId);
+    	    currentRoomId = aipo.message.getCookieRoomId("targetUserId=");
+
+    	    }else if ("Room" == aipo.message.getCookieIsLastRoomOrUser()){
+
+    		//以下2行によりルームをリロード後もエラーなしで表示したままにできます。
+    	    aipo.message.currentRoomId = aipo.message.getCookieRoomId("lastRoomId=");
+    	    aipo.message.reloadRoomList(null,aipo.message.currentRoomId);
+    	    aipo.message.selectTab("room");
+    	    aipo.message.selectRoom(aipo.message.currentRoomId);
+    	    currentRoomId = aipo.message.getCookieRoomId("lastRoomId=");
+
+    	    }
+    }else{
+        aipo.message.reloadRoomList();
+    }
     aipo.message.isInit = true;
 }
 
@@ -120,7 +144,10 @@ aipo.message.reloadMessageList = function() {
         		}
                 aipo.message.jumpCursor = null;
         	} else {
-                aipo.message.read(aipo.message.currentRoomId);
+        		//メッセージのタブを開いている場合と、スマホ表示のメッセージ画面の場合
+        		if(!dojo.byId("dd_message") || dojo.hasClass("dd_message", "open")){
+        			aipo.message.read(aipo.message.currentRoomId);
+        		}
         	}
             aipo.message.fixDateLine();
         }
@@ -137,8 +164,17 @@ aipo.message.reloadMessageList = function() {
         screen += "&c=" + aipo.message.jumpCursor;
         screen += "&jump=1";
     }
+    //メッセージのタブを開いている場合と、スマホ表示のメッセージ画面の場合はデータを既読に更新する
+   if (!dojo.byId("dd_message") || dojo.hasClass("dd_message", "open") ){
+    	screen += "&is_read=T";
+    }else{
+    	screen += "&is_read=F";
+    }
+
+
     aipo.message.moreMessageLock = false;
     aipo.message.messagePane.viewPage(screen);
+
 }
 
 aipo.message.roomMemberPane = null;
@@ -432,17 +468,16 @@ aipo.message.swapRightMessage = function(){
     	dojo.forEach(dojo.query(".messageRightMessage"), function(item) {item.style.display=""});
     }
 }
-
 aipo.message.closeRightBlock = function(){
     var messageSideBlock = dojo.byId("messageSideBlock");
     var messageMainBlock = dojo.byId("messageMainBlock");
     var messageMainBlockEmpty = dojo.byId("messageMainBlockEmpty");
     var messageRightBlock = dojo.byId("messageRightPane");
     if (messageMainBlock && !aipo.message.isMobile) {
-        messageMainBlock.style["margin-right"] = "0px";
+        messageMainBlock.style["margin"] = "0px 0px 0px 280px";
     }
     if (messageMainBlockEmpty && !aipo.message.isMobile) {
-    	messageMainBlockEmpty.style["margin-right"] = "0px";
+    	messageMainBlockEmpty.style["margin"] = "0px 0px 0px 280px";
     }
     if(messageRightBlock) {
     	messageRightBlock.style.display="none"
@@ -579,6 +614,9 @@ aipo.message.updateUnreadCount = function() {
 aipo.message.swapView = function() {
     if (dojo.byId("portletsBody") && dojo.byId("dd_message")) {
         if (dojo.hasClass("dd_message", "open")) {
+            for(var key in aipo.schedule.scrollPositions){
+            	aipo.schedule.scrollPositions[key] = parseInt(dojo.byId('weeklyScrollPane_'+key)["scrollTop"]);
+            }
             dojo.byId("portletsBody").style.display = "none";
             var copyright = dojo.byId("copyright");
             if(copyright) {
@@ -590,17 +628,29 @@ aipo.message.swapView = function() {
                     && aipo.message.currentRoomId && !aipo.message.moreMessageLock) {
                 aipo.message.latestMessageList();
             }
+             aipo.message.selectRoom(aipo.message.currentRoomId);
         } else {
             dojo.byId("portletsBody").style.display = "";
             var copyright = dojo.byId("copyright");
             if(copyright) {
             	copyright.style.display = "";
             }
+            for(var key in aipo.schedule.scrollPositions) {
+            	if(aipo.schedule.scrollPositions[key] != null) {
+            	    dojo.byId('weeklyScrollPane_'+key).scrollTop = aipo.schedule.scrollPositions[key];
+            	}
+            }
+            for(var key in aipo.schedule.scrollNeeds) {
+            	aipo.calendar.populateWeeklySchedule(aipo.schedule.scrollNeeds[key]);
+            }
+            while(aipo.schedule.scrollNeeds.length > 0){
+             	aipo.schedule.scrollNeeds.pop();
+            }
         }
     }
 }
 
-
+//ルームかユーザーか選択している
 aipo.message.selectTab = function(tab) {
     var messageRoomTab = dojo.byId("messageRoomTab");
     var messageUserTab = dojo.byId("messageUserTab");
@@ -625,6 +675,7 @@ aipo.message.selectTab = function(tab) {
         dojo.removeClass(messageUserTab, "active");
         dojo.addClass(messageRoomContents, "active");
         dojo.removeClass(messageUserContents, "active");
+        dojo.byId("messageRoomSetting").style.display = "";
     }
 
     if ("user" == tab) {
@@ -642,6 +693,7 @@ aipo.message.selectTab = function(tab) {
     }
 }
 
+//Messageの右側のRoomの列からRoomを選択されたときに呼ばれています。
 aipo.message.inputHistory = {};
 aipo.message.selectRoom = function(room_id, scroll) {
     var messageSideBlock = dojo.byId("messageSideBlock");
@@ -651,10 +703,11 @@ aipo.message.selectRoom = function(room_id, scroll) {
     var messageForm = dojo.byId("messageForm");
     var messageRoom = dojo.byId("messageRoom" + room_id);
     var messageRoomType = dojo.byId("messageRoomType" + room_id);
+    var messageRoomAuthority = dojo.byId("messageRoomAuthority" + room_id);
     var messageRoomAvatar = dojo.byId("messageRoomAvatar");
     var messageRoomName = dojo.byId("messageRoomName");
-    var messageRoomSetting = dojo.byId("messageRoomSetting");
     var messageSearchForm = dojo.byId("messageSearchForm");
+
     if (messageForm && messageRoom) {
         if(aipo.message.isMobile) {
             dojo.removeClass(document.body, "messageRoomList");
@@ -696,17 +749,17 @@ aipo.message.selectRoom = function(room_id, scroll) {
             }
         }
 
-        messageRoomSetting.style.display = "G" == messageRoomType.innerHTML ? ""
-                : "none";
         dojo.style(dojo.byId("messageInputAttachment"), "display", "none");
         dojo.byId("attachments_global-" + aipo.message.portletId).innerHTML="";
 
         if (room_id == 0 && aipo.message.currentUserId) {
             messageForm.roomId.value = 0;
             messageForm.userId.value = aipo.message.currentUserId;
+            dojo.byId("messageRoomSetting").style.display = "none";
         } else {
             messageForm.userId.value = 0;
             messageForm.roomId.value = aipo.message.currentRoomId;
+            dojo.byId("messageRoomSetting").style.display = "";
         }
 
 		var pane = dojo.byId("messageSummary");
@@ -715,8 +768,16 @@ aipo.message.selectRoom = function(room_id, scroll) {
 		    aipo.message.scrollTo(pane, max < messageRoom.offsetTop ? max : messageRoom.offsetTop, 100);
 		}
 
+        aipo.message.fixMessageWindow();
         aipo.message.reloadRoomMemberList();
         aipo.message.reloadMessageList();
+        if (dojo.hasClass("messageRoomTab", "active")) {
+        	aipo.message.saveCookieIsLastRoomOrUser("Room");
+        } else if (dojo.hasClass("messageUserTab", "active")) {
+        	aipo.message.saveCookieIsLastRoomOrUser("User");
+        }
+        //cookieへ保存する名前とIDを引数に取ってと保存する。
+        aipo.message.saveCookieTargetId("lastRoomId",aipo.message.currentRoomId);
     }
 }
 
@@ -778,12 +839,14 @@ aipo.message.selectUser = function(user_id) {
         aipo.message.inputHistory[aipo.message.currentRoomId] = messageForm.message.value;
         aipo.message.inputHistory[0] = "";
         dojo.query(".messageUserlist li").forEach(function(item) {
-            dojo.removeClass(item, "active")
+            dojo.removeClass(item, "active");
         });
         if(!aipo.message.isMobile) {
             dojo.addClass(messageUser, "active");
         }
         aipo.message.reloadRoomList(null, user_id);
+        //ここでUserIdを保存
+        aipo.message.saveCookieTargetId("targetUserId", user_id);
     }
 }
 
@@ -802,6 +865,7 @@ aipo.message.clearInput = function() {
         messageForm.message.value = "";
         aipo.message.resizeInput(messageForm.message);
         aipo.message.focusInput();
+        dojo.byId('messageFormDiv').innerHTML = "";
     }
 }
 
@@ -813,7 +877,6 @@ aipo.message.focusInput = function() {
     	}catch(e){
     		//ignore
     	}
-
     }
 }
 
@@ -852,30 +915,7 @@ aipo.message.fixMessageWindow = function() {
 };
 
 aipo.message.onLoadMessageRoomDialog = function() {
-    var mpicker = dijit.byId("membernormalselect");
-    if (mpicker) {
-        var select = dojo.byId('init_memberlist');
-        var i;
-        var s_o = select.options;
-        if (s_o.length == 1 && s_o[0].value == "")
-            return;
-        for (i = 0; i < s_o.length; i++) {
-            mpicker.addOptionSync(s_o[i].value, s_o[i].text, true);
-        }
-    }
-    var btn_ma = dojo.byId("button_member_add");
-    if (btn_ma) {
-        dojo.connect(btn_ma, "onclick", function() {
-            aipo.message.changeMember();
-        });
-    }
-
-    var btn_mr = dojo.byId("button_member_remove");
-    if (btn_mr) {
-        dojo.connect(btn_mr, "onclick", function() {
-            aipo.message.changeMember();
-        });
-    }
+    aipo.widget.MemberFilterList.setup("memberfilterlist", "init_memberlist", "member_to", "member_authority_to");
     aipo.message.changeMember();
 };
 
@@ -883,7 +923,6 @@ aipo.message.changeMember = function() {
     var node = dojo.byId("memberFieldDisplay");
     if (node) {
         var HTML = "";
-        HTML += "<table class=\"w100\"><tbody><tr><td style=\"border:none;\">";
         var m_t = dojo.byId("member_to");
         if (m_t) {
             var t_o = m_t.options;
@@ -897,17 +936,35 @@ aipo.message.changeMember = function() {
                 }
             }
         }
-        HTML += "</td></tr></tbody></table>";
         node.innerHTML = HTML;
     }
 
     aipo.message.setWrapperHeight();
 }
 
+aipo.message.toggleMemberSelect = function(bool){
+    var node = dojo.byId("memberField");
+    var buttonOn = dojo.byId("memberSelectButtonOn");
+    var buttonOff = dojo.byId("memberSelectButtonOff");
+    if(bool) {
+        dojo.style(buttonOn, "display" , "none");
+        dojo.style(buttonOff, "display" , "block");
+        dojo.style(node, "display" , "block");
+    } else {
+        dojo.style(buttonOn, "display" , "block");
+        dojo.style(buttonOff, "display" , "none");
+        dojo.style(node, "display" , "none");
+    }
+    aipo.message.setWrapperHeight();
+}
+
+
 aipo.message.onReceiveMessage = function(msg) {
     if (!msg["error"]) {
         aimluck.io.disableForm(dojo.byId("messageForm"), false);
-        aipo.message.latestMessageList();
+        if(!aipo.message.moreMessageLock){
+            aipo.message.latestMessageList();
+        }
         aipo.message.clearInput();
         dojo.byId("messagePane").scrollTop = 0;
         dojo.style(dojo.byId("messageInputAttachment"), "display", "none");
@@ -921,7 +978,13 @@ aipo.message.onReceiveMessage = function(msg) {
                 aipo.message.reloadRoomList();
             }
             aipo.message.selectTab("room");
+            aipo.message.getCookieIsLastRoomOrUser("Room");
+            aipo.message.saveCookieIsLastRoomOrUser("Room");
+            aipo.message.saveCookieTargetId("lastRoomId",aipo.message.currentRoomId);
         }
+    }
+    else if (dojo.byId('messageFormDiv')){
+    	dojo.byId('messageFormDiv').innerHTML = msg["error"];
     }
 };
 
@@ -956,6 +1019,27 @@ aipo.message.onReceiveMessageRoomDelete = function(msg) {
     if (dojo.byId('messageDiv')) {
         dojo.byId('messageDiv').innerHTML =msg;
     }
+};
+
+aipo.message.removeNode = function(id) {
+	var message = dojo.byId("message" + id);
+	if(message) {
+		message.parentNode.removeChild(message);
+	}
+}
+
+aipo.message.onReceiveMessageDelete = function(msg) {
+	if (!msg) {
+		if (aipo.message.tmpMessageId) {
+			aipo.message.removeNode(aipo.message.tmpMessageId);
+			aipo.message.tmpMessageId = null;
+		} else {
+			aipo.message.reloadMessageList();
+		}
+	}
+    if (dojo.byId('messageListDiv')) {
+        dojo.byId('messageListDiv').innerHTML =msg;
+	}
 };
 
 aipo.message.setWrapperHeight = function() {
@@ -1037,6 +1121,10 @@ aipo.message.onFocus = function(input) {
 	}
 }
 
+/**
+ * 指定されたルームの未読を消します。
+ * ただし、データベースにはアクセスしていないので、これとは別にデータベースも書き換える必要があります。
+ */
 aipo.message.read = function(room_id) {
     var messageRoomUnreadCount = dojo.byId("messageRoomUnreadCount" + room_id);
     if (messageRoomUnreadCount) {
@@ -1143,6 +1231,7 @@ aipo.message.openDirect = function(user_id) {
 	    aipo.message.currentUserId = user_id;
 	    aipo.menu.toggleDropdown("message");
 	    aipo.message.selectTab("user");
+	    aipo.message.getCookieIsLastRoomOrUser("User");
 	}
 }
 
@@ -1167,6 +1256,7 @@ aipo.message.openDirectMessage = function(user_id) {
 			aipo.message.reloadUserList();
 		} else {
 		    aipo.message.selectTab("user");
+		    aipo.message.getCookieIsLastRoomOrUser("User");
 		}
 }
 
@@ -1205,7 +1295,11 @@ aipo.message.popupProfile = function(userId, event) {
 	    aipo.message.mobileUnderlay.show();
 	}
 	if(!profileHandle['body']) {
-		profileHandle['body'] = dojo.connect(dojo.query('body')[0], 'onmousedown', null, function(){
+		var body = dojo.query('body')[0];
+		if(aipo.userAgent.isIphone8_4_1()){
+			body = dojo.byId('wrapper');
+		}
+		profileHandle['body'] = dojo.connect(body, 'onmousedown', null, function(){
 			if (dojo.query('.profileMouseenter').length == 0) {
 				aipo.message.hideProfile();
 			}
@@ -1348,6 +1442,7 @@ aipo.message.jumpMessage = function(roomId, messageId){
 	aipo.message.jumpCursor = messageId;
 	aipo.message.selectTab('room');
 	aipo.message.selectRoom(roomId, true);
+	aipo.message.getCookieIsLastRoomOrUser("Room");
 }
 
 aipo.message.onFocusSearch = function() {
@@ -1394,4 +1489,76 @@ aipo.message.scrollTo = function(element, to, duration) {
 	    if (element.scrollTop == to) return;
 	    aipo.message.scrollTo(element, to, duration - 10);
 	  }, 10);
+}
+
+aipo.message.insertTransactionId = function(targetUserId){
+	function guid() {
+		  function s4() {
+		    return Math.floor((1 + Math.random()) * 0x10000)
+		      .toString(16)
+		      .substring(1).
+		      toUpperCase();
+		  }
+		  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+		    s4() + '-' + s4() + s4() + s4();
+		}
+	var transactionId=guid();
+	dojo.query("#messageForm"+targetUserId+" [name='transactionId']")[0].setAttribute('value', transactionId);
+	aipo.message.transactionIdList.push(transactionId);
+}
+
+aipo.message.removeTransactionId = function(transactionId){
+	var transactionIdPos = aipo.message.transactionIdList.indexOf(transactionId);
+	if(transactionIdPos==-1){
+		return false;
+	}
+	else{
+		aipo.message.transactionIdList.splice(transactionIdPos, 1);
+		return true;
+	}
+}
+
+//CookieにcurrentRoomIdあるいはUserIdを保存する
+// Room -> lastRoomId / User -> targetUserId
+aipo.message.saveCookieTargetId = function(cookieName, targetId){
+		var cookieValue = cookieName + 	"=" + targetId　+ ";" + "path=/;";
+		document.cookie = cookieValue;
+}
+
+//最後に選ばれたのが、RoomなのかUserなのかCookieへ保存する
+aipo.message.saveCookieIsLastRoomOrUser = function(cookieTarget){
+	var cookieValue = "lastIsRoomOrUser=" + cookieTarget + ";" + "path=/;";
+	document.cookie = cookieValue;
+}
+
+//最後に選ばれたのが、RoomなのかUserなのかCookieから取得する
+aipo.message.getCookieIsLastRoomOrUser = function(){
+	var allCookies = document.cookie;
+	var cookieName = "lastIsRoomOrUser="
+	var userOrRoom = "";
+
+	if (allCookies.indexOf(cookieName) != -1) {
+		var number = allCookies.indexOf(cookieName) + cookieName.length;
+		var number2 = allCookies.indexOf(";", number);
+		if (number2 == -1) {
+			number2 = allCookies.length;
+		}
+		userOrRoom = decodeURIComponent(allCookies.substring(number, number2));
+	}
+	return userOrRoom;
+}
+
+//CookieをからRoomのIdを取得する
+aipo.message.getCookieRoomId = function(cookieName) {
+	var allCookies = document.cookie;
+
+	if (allCookies.indexOf(cookieName) != -1) {
+		var number = allCookies.indexOf(cookieName) + cookieName.length;
+		var number2 = allCookies.indexOf(";", number);
+		if (number2 == -1) {
+			number2 = allCookies.length;
+		}
+		var room_id = decodeURIComponent(allCookies.substring(number, number2));
+	}
+	return room_id;
 }

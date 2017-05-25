@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -55,6 +55,7 @@ import com.aimluck.eip.common.ALEipPosition;
 import com.aimluck.eip.common.ALEipPost;
 import com.aimluck.eip.common.ALPageNotFoundException;
 import com.aimluck.eip.fileupload.beans.FileuploadLiteBean;
+import com.aimluck.eip.fileupload.util.FileuploadMinSizeException;
 import com.aimluck.eip.fileupload.util.FileuploadUtils;
 import com.aimluck.eip.fileupload.util.FileuploadUtils.ShrinkImageSet;
 import com.aimluck.eip.modules.actions.common.ALAction;
@@ -148,6 +149,14 @@ public class AccountUserFormData extends ALAbstractFormData {
   /** 顔写真 */
   private ALStringField photo = null;
 
+  /** プロフィール画像バリデートのサイズ(横幅) */
+  public static final int DEF_PHOTO_VALIDATE_WIDTH = 200;
+
+  /** プロフィール画像バリデートのサイズ(縦幅) */
+  public static final int DEF_PHOTO_VALIDATE_HEIGHT = 200;
+
+  private boolean photo_vali_flag = false;
+
   /** 添付ファイル */
   private FileuploadLiteBean filebean = null;
 
@@ -169,6 +178,9 @@ public class AccountUserFormData extends ALAbstractFormData {
   /** 管理者権限を付与するか */
   private ALStringField is_admin;
 
+  /** 社員コード */
+  private ALStringField code;
+
   /** */
   private boolean is_new_post;
 
@@ -183,11 +195,16 @@ public class AccountUserFormData extends ALAbstractFormData {
   /** 顔写真データ */
   private byte[] facePhoto;
 
+  private boolean isNewPhotoSpec = true;
+
   /** 顔写真データ(スマートフォン） */
   private byte[] facePhoto_smartphone;
 
   /** ログインしている人のユーザーID */
   private int login_uid;
+
+  /** アップデート対象のユーザーID */
+  private int target_uid;
 
   private boolean isSkipUsernameValidation = false;
 
@@ -324,6 +341,11 @@ public class AccountUserFormData extends ALAbstractFormData {
       .setFieldName(ALLocalizationUtils.getl10nFormat("ACCOUNT_ADMIN_ON"));
     is_admin.setTrim(true);
 
+    // 社員コード
+    code = new ALStringField();
+    code.setFieldName(ALLocalizationUtils.getl10nFormat("ACCOUNT_CODE"));
+    code.setTrim(true);
+
     post = new AccountPostFormData();
     post.setJoinMember(false);
     post.initField();
@@ -348,6 +370,9 @@ public class AccountUserFormData extends ALAbstractFormData {
         post.setFormData(rundata, context, msgList);
         position.setFormData(rundata, context, msgList);
 
+        ALBaseUser user = AccountUtils.getBaseUser(rundata, context);
+        target_uid = Integer.parseInt(user.getUserId());
+
         List<FileuploadLiteBean> fileBeanList =
           FileuploadUtils.getFileuploadList(rundata);
         if (fileBeanList != null && fileBeanList.size() > 0) {
@@ -363,10 +388,12 @@ public class AccountUserFormData extends ALAbstractFormData {
                 ALEipUtils.getUserId(rundata),
                 filebean,
                 acceptExts,
-                FileuploadUtils.DEF_THUMBNAIL_WIDTH,
-                FileuploadUtils.DEF_THUMBNAIL_HEIGHT,
+                FileuploadUtils.DEF_LARGE_THUMBNAIL_WIDTH,
+                FileuploadUtils.DEF_LARGE_THUMBNAIL_HEIGHT,
                 msgList,
-                false);
+                false,
+                DEF_PHOTO_VALIDATE_WIDTH,
+                DEF_PHOTO_VALIDATE_HEIGHT);
             if (bytesShrinkFilebean != null) {
               facePhoto = bytesShrinkFilebean.getShrinkImage();
             }
@@ -378,10 +405,12 @@ public class AccountUserFormData extends ALAbstractFormData {
                 ALEipUtils.getUserId(rundata),
                 filebean,
                 acceptExts,
-                FileuploadUtils.DEF_THUMBNAIL_WIDTH_SMARTPHONE,
-                FileuploadUtils.DEF_THUMBNAIL_HEIGHT_SMARTPHONE,
+                FileuploadUtils.DEF_NORMAL_THUMBNAIL_WIDTH,
+                FileuploadUtils.DEF_NORMAL_THUMBNAIL_HEIGHT,
                 msgList,
-                false);
+                false,
+                DEF_PHOTO_VALIDATE_WIDTH,
+                DEF_PHOTO_VALIDATE_HEIGHT);
             if (bytesShrinkFilebean2 != null) {
               facePhoto_smartphone = bytesShrinkFilebean2.getShrinkImage();
             }
@@ -391,6 +420,9 @@ public class AccountUserFormData extends ALAbstractFormData {
           }
         }
       }
+    } catch (FileuploadMinSizeException ex) {
+      // ignore
+      photo_vali_flag = true;
     } catch (Exception ex) {
       logger.error("AccountUserFormData.setFormData", ex);
       res = false;
@@ -457,6 +489,9 @@ public class AccountUserFormData extends ALAbstractFormData {
     // 携帯メール
     cellular_mail.setCharacterType(ALStringField.TYPE_ASCII);
 
+    // 社員コード
+    code.limitMaxLength(100);
+
     post.setValidator();
     position.setValidator();
   }
@@ -471,10 +506,38 @@ public class AccountUserFormData extends ALAbstractFormData {
   @Override
   protected boolean validate(List<String> msgList) {
     ArrayList<String> dummy = new ArrayList<String>();
+
+    if (!code.getValue().equals("")) {
+      SelectQuery<TurbineUser> query = Database.query(TurbineUser.class);
+      if (ALEipConstants.MODE_INSERT.equals(getMode())) {
+        Expression exp1 =
+          ExpressionFactory.matchExp(TurbineUser.CODE_PROPERTY, code);
+        query.setQualifier(exp1);
+      } else if (ALEipConstants.MODE_UPDATE.equals(getMode())) {
+        Expression exp1 =
+          ExpressionFactory.matchExp(TurbineUser.CODE_PROPERTY, code);
+        query.setQualifier(exp1);
+        Expression exp2 =
+          ExpressionFactory.noMatchDbExp(TurbineUser.USER_ID_PK_COLUMN, Integer
+            .valueOf(target_uid));
+        query.andQualifier(exp2);
+      }
+      ;
+      // 社員コードの重複チェック（削除済みのユーザーは含めない）
+      Expression exp3 =
+        ExpressionFactory.noMatchExp(TurbineUser.DISABLED_PROPERTY, "T");
+      query.andQualifier(exp3);
+      if (query.fetchList().size() > 0) {
+        msgList.add(ALLocalizationUtils.getl10nFormat(
+          "ACCOUNT_ALERT_CODE_DUP",
+          code));
+      }
+    }
+
     if (!isSkipUsernameValidation) {
       username.validate(msgList);
-      if (ALEipConstants.MODE_INSERT.equals(getMode())) {
-        try {
+      try {
+        if (ALEipConstants.MODE_INSERT.equals(getMode())) {
           Expression exp =
             ExpressionFactory.matchExp(
               TurbineUser.LOGIN_NAME_PROPERTY,
@@ -487,10 +550,10 @@ public class AccountUserFormData extends ALAbstractFormData {
               "ACCOUNT_ALERT_LOGINNAME_DUP",
               username));
           }
-        } catch (Exception ex) {
-          logger.error("AccountUserFormData.validate", ex);
-          return false;
         }
+      } catch (Exception ex) {
+        logger.error("AccountUserFormData.validate", ex);
+        return false;
       }
 
       if (!AccountUtils.isValidSymbolUserName(username.getValue())) {
@@ -618,7 +681,12 @@ public class AccountUserFormData extends ALAbstractFormData {
     }
 
     // 顔写真
-    if (filebean != null && filebean.getFileId() != 0 && facePhoto == null) {
+    if (photo_vali_flag) {
+      msgList
+        .add(ALLocalizationUtils.getl10nFormat("ACCOUNT_ALERT_PHOTO_SIZE"));
+    } else if (filebean != null
+      && filebean.getFileId() != 0
+      && facePhoto == null) {
       msgList.add(ALLocalizationUtils.getl10nFormat("ACCOUNT_ALERT_PHOTO"));
     }
 
@@ -724,6 +792,7 @@ public class AccountUserFormData extends ALAbstractFormData {
       } else {
         is_admin.setValue("false");
       }
+      code.setValue(user.getCode());
 
       if (user.getPhoto() != null) {
         filebean = new FileuploadLiteBean();
@@ -732,7 +801,12 @@ public class AccountUserFormData extends ALAbstractFormData {
         filebean.setFileId(0);
         filebean.setFileName(ALLocalizationUtils
           .getl10nFormat("ACCOUNT_OLD_PHOTO"));
+        filebean.setUserId(Integer.parseInt(user.getUserId()));
+        filebean.setPhotoModified(String.valueOf(user
+          .getPhotoModified()
+          .getTime()));
       }
+      isNewPhotoSpec = "N".equals(user.hasPhotoString());
 
       postList =
         AccountUtils.getPostBeanList(Integer.parseInt(user.getUserId()));
@@ -847,12 +921,15 @@ public class AccountUserFormData extends ALAbstractFormData {
             user.setPerm("isAdmin", false);
           }
         }
+        if (code.getValue() != null) {
+          user.setCode(code.getValue());
+        }
         if (filebean != null && filebean.getFileId() != 0) {
           // 顔写真を登録する．
           user.setPhotoSmartphone(facePhoto_smartphone);
           user.setPhoto(facePhoto);
-          user.setHasPhoto(true);
-          user.setHasPhotoSmartphone(true);
+          user.setHasPhoto("N");
+          user.setHasPhotoSmartphone("N");
           user.setPhotoModified(new Date());
           user.setPhotoModifiedSmartphone(new Date());
         }
@@ -972,6 +1049,10 @@ public class AccountUserFormData extends ALAbstractFormData {
         if (!dontUpdatePasswd) {
           JetspeedSecurity.forcePassword(user, password.getValue());
         } else {
+          /* パスワード変更日時がnullのときの処置 */
+          if (user.getPasswordChanged() == null) {
+            user.setPasswordChanged(user.getCreated());
+          }
           Expression exp =
             ExpressionFactory.matchDbExp(TurbineUser.USER_ID_PK_COLUMN, user
               .getUserId());
@@ -1025,16 +1106,16 @@ public class AccountUserFormData extends ALAbstractFormData {
             // 顔写真を登録する．
             user.setPhotoSmartphone(facePhoto_smartphone);
             user.setPhotoModifiedSmartphone(new Date());
-            user.setHasPhotoSmartphone(true);
+            user.setHasPhotoSmartphone("N");
             user.setPhoto(facePhoto);
             user.setPhotoModified(new Date());
-            user.setHasPhoto(true);
+            user.setHasPhoto("N");
           }
         } else {
           user.setPhoto(null);
-          user.setHasPhoto(false);
+          user.setHasPhoto("F");
           user.setPhotoModifiedSmartphone(null);
-          user.setHasPhotoSmartphone(false);
+          user.setHasPhotoSmartphone("F");
         }
 
         user.setEmail(email.getValue());
@@ -1046,6 +1127,9 @@ public class AccountUserFormData extends ALAbstractFormData {
           } else {
             user.setPerm("isAdmin", false);
           }
+        }
+        if (code.getValue() != null) {
+          user.setCode(code.getValue());
         }
 
         // ユーザーを更新
@@ -1090,11 +1174,12 @@ public class AccountUserFormData extends ALAbstractFormData {
           }
           currentUser.setFirstNameKana(user.getFirstNameKana());
           currentUser.setLastNameKana(user.getLastNameKana());
-          currentUser.setHasPhoto(user.hasPhoto());
+          currentUser.setHasPhoto(user.hasPhotoString());
           currentUser.setPhotoModified(user.getPhotoModified());
-          currentUser.setHasPhotoSmartphone(user.hasPhoto());
+          currentUser.setHasPhotoSmartphone(user.hasPhotoSmartphoneString());
           currentUser.setPhotoModifiedSmartphone(user
             .getPhotoModifiedSmartphone());
+          currentUser.setPasswordChanged(user.getPasswordChanged());
         }
 
         // イベントログに保存
@@ -1618,4 +1703,25 @@ public class AccountUserFormData extends ALAbstractFormData {
     this.isSkipUsernameValidation = isSkipUsernameValidation;
   }
 
+  public boolean isNewPhotoSpec() {
+    return isNewPhotoSpec;
+  }
+
+  /**
+   * @return code
+   */
+  public ALStringField getCode() {
+    return code;
+  }
+
+  /**
+   * ファイルアップロードアクセス権限チェック用メソッド。<br />
+   * ファイルアップのアクセス権限をチェックするかどうかを判定します。
+   *
+   * @return
+   */
+  @Override
+  public boolean isCheckAttachmentAuthority() {
+    return false;
+  }
 }

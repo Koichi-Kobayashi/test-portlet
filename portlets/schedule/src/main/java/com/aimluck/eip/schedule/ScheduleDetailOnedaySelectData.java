@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,7 @@ import com.aimluck.eip.util.ALLocalizationUtils;
 
 /**
  * １日スケジュール（グループ）の検索結果を管理するクラスです。
- * 
+ *
  */
 public class ScheduleDetailOnedaySelectData extends
     ScheduleOnedayGroupSelectData {
@@ -184,7 +184,9 @@ public class ScheduleDetailOnedaySelectData extends
         return rd;
       }
       if ("C".equals(record.getPublicFlag())
-        && (userid != record.getUserId().intValue())
+        && ("F".equals(record.getType()) || ("U".equals(record.getType()) && userid != record
+          .getUserId()
+          .intValue()))
         && (userid != record.getOwnerId().intValue())
         && !is_member) {
         rd.setName(ALLocalizationUtils.getl10n("SCHEDULE_CLOSE_PUBLIC_WORD"));

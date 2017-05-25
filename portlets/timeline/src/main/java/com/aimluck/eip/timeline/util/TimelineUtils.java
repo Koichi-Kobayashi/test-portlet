@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.aimluck.eip.timeline.util;
 
 import java.io.BufferedReader;
@@ -38,7 +37,9 @@ import org.apache.jetspeed.services.resources.JetspeedResources;
 import org.apache.turbine.services.TurbineServices;
 import org.apache.turbine.util.RunData;
 import org.apache.velocity.context.Context;
-import org.cyberneko.html.parsers.DOMParser;
+import org.apache.xerces.parsers.DOMParser;
+import org.apache.xerces.xni.parser.XMLDocumentFilter;
+import org.cyberneko.html.HTMLConfiguration;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -47,6 +48,7 @@ import org.xml.sax.InputSource;
 
 import com.aimluck.commons.utils.ALDeleteFileUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipTBlogFile;
+import com.aimluck.eip.cayenne.om.portlet.EipTScheduleMap;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimeline;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimelineFile;
 import com.aimluck.eip.cayenne.om.portlet.EipTTimelineLike;
@@ -134,6 +136,16 @@ public class TimelineUtils {
 
   /** 検索キーワード変数の識別子 */
   public static final String TARGET_KEYWORD = "keyword";
+
+  /** パラメータリセットの識別子 */
+  private static final String RESET_FLAG = "reset_params";
+
+  public static final String TARGET_GROUP_NAME = "target_group_name";
+
+  public static final String TARGET_DISPLAY_NAME = "target_display_name";
+
+  /** <code>SCHEDULEMAP_TYPE_USER</code> ユーザ */
+  public static final String SCHEDULEMAP_TYPE_USER = "U";
 
   /**
    * トピックに対する返信数を返します
@@ -401,7 +413,10 @@ public class TimelineUtils {
           TurbineUser.LAST_NAME_COLUMN));
         user.setHasPhoto("T".equals(Database.getFromDataRow(
           dataRow,
-          TurbineUser.HAS_PHOTO_COLUMN)));
+          TurbineUser.HAS_PHOTO_COLUMN))
+          || "N".equals(Database.getFromDataRow(
+            dataRow,
+            TurbineUser.HAS_PHOTO_COLUMN)));
 
         Object photoModified =
           Database.getFromDataRow(dataRow, TurbineUser.PHOTO_MODIFIED_COLUMN);
@@ -837,7 +852,8 @@ public class TimelineUtils {
   }
 
   public static Document getDocument(String string, String defaultCharset) {
-    DOMParser parser = new DOMParser();
+    HTMLConfiguration config = new HTMLConfiguration();
+    DOMParser parser = new DOMParser(config);
     try {
       if (string.indexOf(" ") != -1) {
         string = string.substring(0, string.indexOf(" "));
@@ -879,6 +895,25 @@ public class TimelineUtils {
 
       InputSource source = new InputSource(reader);
       parser.setFeature("http://xml.org/sax/features/namespaces", false);
+      parser.setProperty(
+        "http://cyberneko.org/html/properties/names/elems",
+        "default");
+      parser.setProperty(
+        "http://cyberneko.org/html/properties/names/attrs",
+        "default");
+      parser.setFeature(
+        "http://cyberneko.org/html/features/balance-tags",
+        false);
+      parser
+        .setFeature(
+          "http://cyberneko.org/html/features/balance-tags/ignore-outside-content",
+          true);
+      parser.setFeature(
+        "http://cyberneko.org/html/features/balance-tags/document-fragment",
+        true);
+      parser.setProperty(
+        "http://cyberneko.org/html/properties/filters",
+        new XMLDocumentFilter[0]);
       parser.parse(source);
 
       // documentからmetaタグのcharsetを読み込む
@@ -906,6 +941,26 @@ public class TimelineUtils {
             .getInputStream(), metaTagCharset));
         source = new InputSource(reader);
         parser.setFeature("http://xml.org/sax/features/namespaces", false);
+        parser.setProperty(
+          "http://cyberneko.org/html/properties/names/elems",
+          "default");
+        parser.setProperty(
+          "http://cyberneko.org/html/properties/names/attrs",
+          "default");
+        parser.setFeature(
+          "http://cyberneko.org/html/features/balance-tags",
+          false);
+        parser
+          .setFeature(
+            "http://cyberneko.org/html/features/balance-tags/ignore-outside-content",
+            true);
+        parser.setFeature(
+          "http://cyberneko.org/html/features/balance-tags/document-fragment",
+          true);
+        parser.setProperty(
+          "http://cyberneko.org/html/properties/filters",
+          new XMLDocumentFilter[0]);
+
         parser.parse(source);
         document = parser.getDocument();
         if (document == null) {
@@ -1075,7 +1130,7 @@ public class TimelineUtils {
 
   public static ResultList<EipTTimeline> getTimelineList(Integer userId,
       List<Integer> parentIds, String type, int page, int limit, int minId,
-      List<Integer> userIds) {
+      List<Integer> userIds, String keywordParam, String displayParam) {
 
     if (parentIds == null || parentIds.size() == 0) {
       return new ResultList<EipTTimeline>(
@@ -1085,9 +1140,19 @@ public class TimelineUtils {
         0);
     }
 
+    switch (displayParam) {
+      case "P":
+        type = "T";
+        break;
+      case "U":
+        type = "A";
+        break;
+    }
+    boolean hasKeyword = false;
     StringBuilder select = new StringBuilder();
 
     select.append("SELECT");
+    select.append(" DISTINCT ");
     select.append(" eip_t_timeline.app_id,");
     select.append(" eip_t_timeline.create_date,");
     select.append(" eip_t_timeline.external_id,");
@@ -1098,6 +1163,7 @@ public class TimelineUtils {
     select.append(" eip_t_timeline.timeline_type,");
     select.append(" eip_t_timeline.update_date,");
     select.append(" eip_t_timeline.timeline_id,");
+    select.append(" eip_t_timeline.pinned,");
 
     // ログインユーザーがいいね！をしているかどうか
     select
@@ -1107,13 +1173,23 @@ public class TimelineUtils {
       .append(" (SELECT COUNT(*) FROM eip_t_timeline_like t1 WHERE t1.timeline_id = eip_t_timeline.timeline_id) AS l_count");
 
     StringBuilder count = new StringBuilder();
-    count.append("SELECT count(eip_t_timeline.timeline_id) AS c ");
+    count.append("SELECT count( DISTINCT eip_t_timeline.timeline_id) AS c ");
 
     StringBuilder body = new StringBuilder();
-    body.append(" FROM eip_t_timeline WHERE ");
+    body.append(" FROM eip_t_timeline ");
+
+    if ((keywordParam != null) && (!keywordParam.equals(""))) {
+      hasKeyword = true;
+      body.append(" LEFT JOIN eip_t_timeline AS comment ");
+      body.append(" ON eip_t_timeline.timeline_id = comment.parent_id ");
+    }
+
+    body.append(" WHERE ");
+
     if (type != null) {
       body.append(" eip_t_timeline.timeline_type = #bind($type) AND ");
     }
+
     body.append(" eip_t_timeline.parent_id IN (");
     boolean isFirst = true;
     for (Integer num : parentIds) {
@@ -1146,12 +1222,20 @@ public class TimelineUtils {
       body.append(")");
     }
 
+    if (hasKeyword) {
+      body.append(" AND ");
+      body
+        .append("(eip_t_timeline.note LIKE #bind($keyword)  OR comment.note LIKE #bind($ckeyword))");
+    }
+
     StringBuilder last = new StringBuilder();
 
-    if ("T".equals(type)) {
-      last.append(" ORDER BY eip_t_timeline.create_date ASC");
+    if ("T".equals(type) && "".equals(displayParam)) {
+      last
+        .append(" ORDER BY eip_t_timeline.pinned DESC, eip_t_timeline.create_date ASC");
     } else {
-      last.append(" ORDER BY eip_t_timeline.update_date DESC");
+      last
+        .append(" ORDER BY eip_t_timeline.pinned DESC, eip_t_timeline.update_date DESC");
     }
 
     SQLTemplate<EipTTimeline> countQuery =
@@ -1160,6 +1244,11 @@ public class TimelineUtils {
         .param("user_id", Integer.valueOf(userId));
     if (type != null) {
       countQuery.param("type", type);
+    }
+
+    if (hasKeyword) {
+      countQuery.param("keyword", "%" + keywordParam + "%");
+      countQuery.param("ckeyword", "%" + keywordParam + "%");
     }
 
     int countValue = 0;
@@ -1195,6 +1284,11 @@ public class TimelineUtils {
         Integer.valueOf(userId));
     if (type != null) {
       query.param("type", type);
+    }
+
+    if (hasKeyword) {
+      query.param("keyword", "%" + keywordParam + "%");
+      query.param("ckeyword", "%" + keywordParam + "%");
     }
 
     List<DataRow> fetchList = query.fetchListAsDataRow();
@@ -1399,4 +1493,82 @@ public class TimelineUtils {
   public static String compressString(String src) {
     return ALCommonUtils.compressString(src, 50);
   }
+
+  /**
+   * @param rundata
+   * @param context
+   * @return
+   */
+  public static String getTargetKeyword(RunData rundata, Context context) {
+    String target_keyword = null;
+    String keywordParam = rundata.getParameters().getString(TARGET_KEYWORD);
+    target_keyword = ALEipUtils.getTemp(rundata, context, TARGET_KEYWORD);
+
+    if (keywordParam == null && (target_keyword == null)) {
+      ALEipUtils.setTemp(rundata, context, TARGET_KEYWORD, "");
+      target_keyword = "";
+    } else if (keywordParam != null) {
+      ALEipUtils.setTemp(rundata, context, TARGET_KEYWORD, keywordParam.trim());
+      target_keyword = keywordParam;
+    }
+    return target_keyword;
+  }
+
+  /**
+   * フィルターを初期化する．
+   *
+   * @param rundata
+   * @param context
+   * @param className
+   */
+  public static void resetKeyword(RunData rundata, Context context) {
+    ALEipUtils.setTemp(rundata, context, TARGET_KEYWORD, "");
+  }
+
+  /**
+   * 表示切り替えのリセットフラグがあるかを返す．
+   *
+   * @param rundata
+   * @param context
+   * @return
+   */
+  public static boolean hasResetFlag(RunData rundata, Context context) {
+    String resetflag = rundata.getParameters().getString(RESET_FLAG);
+    return resetflag != null;
+  }
+
+  /**
+   * userIdが一致し、scheduleId_listのいずれかに一致するeip_t_schedule_mapのデータを返す
+   *
+   * @param userId
+   * @param scheduleId_list
+   * @return
+   */
+  public static List<EipTScheduleMap> getRelatedEipTScheduleMap(int userId,
+      ArrayList<Integer> scheduleIdList) {
+    if (scheduleIdList != null && scheduleIdList.size() > 0) {
+      SelectQuery<EipTScheduleMap> mapquery =
+        Database.query(EipTScheduleMap.class);
+      Expression exp11 =
+        ExpressionFactory.inExp(
+          EipTScheduleMap.SCHEDULE_ID_PROPERTY,
+          scheduleIdList);
+      mapquery.setQualifier(exp11);
+      Expression exp12 =
+        ExpressionFactory.matchExp(EipTScheduleMap.USER_ID_PROPERTY, Integer
+          .valueOf(userId));
+      mapquery.andQualifier(exp12);
+      // 設備は除外する
+      Expression exp3 =
+        ExpressionFactory.matchExp(
+          EipTScheduleMap.TYPE_PROPERTY,
+          SCHEDULEMAP_TYPE_USER);
+      mapquery.andQualifier(exp3);
+      List<EipTScheduleMap> list = mapquery.fetchList();
+      return list;
+    } else {
+      return null;
+    }
+  }
+
 }

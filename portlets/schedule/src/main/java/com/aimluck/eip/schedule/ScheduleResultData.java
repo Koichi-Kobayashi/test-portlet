@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,12 +18,15 @@
  */
 package com.aimluck.eip.schedule;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALNumberField;
 import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
+import com.aimluck.eip.fileupload.beans.FileuploadBean;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALLocalizationUtils;
 
@@ -41,6 +44,9 @@ public class ScheduleResultData implements ALData, Cloneable {
 
   /** <code>type</code> 設備かどうか */
   private ALStringField type;
+
+  /** 添付ファイルリスト */
+  private List<FileuploadBean> attachmentFileList = null;
 
   /** <code>start_date</code> 開始時間 */
   private ALDateTimeField start_date;
@@ -112,6 +118,9 @@ public class ScheduleResultData implements ALData, Cloneable {
   /** <code>common_category_name</code> 共有カテゴリ名 */
   private ALStringField common_category_name;
 
+  /** <code>is_last_started</code> 最終開始済かどうか */
+  private boolean is_last_started;
+
   /*
    *
    */
@@ -126,6 +135,7 @@ public class ScheduleResultData implements ALData, Cloneable {
     start_date = new ALDateTimeField(format);
     end_date = new ALDateTimeField(format);
     common_category_name = new ALStringField();
+    attachmentFileList = new ArrayList<FileuploadBean>();
     is_owner = true;
     is_tmpreserve = false;
     is_duplicate = false;
@@ -138,6 +148,7 @@ public class ScheduleResultData implements ALData, Cloneable {
     is_dummy = false;
     is_daystart = false;
     is_term = false;
+    is_last_started = false;
   }
 
   /**
@@ -305,6 +316,24 @@ public class ScheduleResultData implements ALData, Cloneable {
   }
 
   /**
+   * ファイルリストを取得します。
+   *
+   * @return
+   */
+  public List<FileuploadBean> getAttachmentFileList() {
+    return attachmentFileList;
+  }
+
+  /**
+   * ファイルリストを設定します。
+   *
+   * @param list
+   */
+  public void setAttachmentFiles(List<FileuploadBean> list) {
+    attachmentFileList = list;
+  }
+
+  /**
    * オーナーかどうかを設定します。
    *
    * @param bool
@@ -377,7 +406,7 @@ public class ScheduleResultData implements ALData, Cloneable {
   }
 
   /**
-   * 重複スケジュールかどうかを設定島します。
+   * 重複スケジュールかどうかを設定します。
    *
    * @param bool
    */
@@ -664,6 +693,25 @@ public class ScheduleResultData implements ALData, Cloneable {
 
   public boolean isTerm() {
     return is_term;
+  }
+
+  /**
+   * スケジュールが開始されたか
+   *
+   * ・繰り返しで期間指定がある場合には最後のスケジュールが開始されたか判定する<br />
+   *
+   * @return
+   */
+  public boolean isLastStarted() {
+    return is_last_started;
+  }
+
+  /**
+   *
+   * @param bool
+   */
+  public void setLastStarted(boolean bool) {
+    is_last_started = bool;
   }
 
 }

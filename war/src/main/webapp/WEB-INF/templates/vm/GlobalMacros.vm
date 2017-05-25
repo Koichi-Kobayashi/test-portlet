@@ -1,6 +1,6 @@
 #*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -262,6 +262,11 @@ $theLink
       <td class="caption" $option>$text</td>
 #end
 
+#macro(ALtdcaptionTrAtt $text $option)
+    <tr $option>
+      <td class="caption">$text</td>
+#end
+
 #macro(ALtditem $text)
       <td>$text</td>
     </tr>
@@ -407,23 +412,14 @@ $l10n.SCHEDULE_ALERT_DONOT_REFLECT
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8,chrome=1" />
 <meta name="robots" content="noindex,follow" />
 <link type="image/x-icon" rel="shortcut icon" href="${external_resources_url}/images/favicon.ico?$!{utils.CacheBust}" />
+<link rel="mask-icon" sizes="any" href="$!{external_resources_url}/images/favicon.svg?$!{utils.CacheBust}" color="#ff9900"/>
 <link rel="stylesheet" type="text/css" href="${external_resources_url}/themes/${theme}/css/aui.css?$!{utils.CacheBust}"/>
 <link rel="stylesheet" type="text/css" href="${external_resources_url}/themes/${theme}/css/pre_print.css?$!{utils.CacheBust}"/>
 <link rel="stylesheet" type="text/css" href="${external_resources_url}/themes/${theme}/css/print.css?$!{utils.CacheBust}" media="print" />
 <link rel="stylesheet" type="text/css" href="${external_resources_url}/themes/$!{theme}/css/font-awesome.min.css?$!{utils.CacheBust}" />
 <!--
-#if($isXDomain == "true")
-<script type="text/javascript">
-  djConifg = {
-    xDomainBasePath: '${external_resources_url}/javascript'
-  };
-</script>
-<script type="text/javascript" src="${external_resources_url}/javascript/dojo/dojo.xd.js"></script>
-<script type="text/javascript" src="${external_resources_url}/javascript/aipo.xd.js"></script>
-#else
 <script type="text/javascript" src="${external_resources_url}/javascript/dojo/dojo.js"></script>
 <script type="text/javascript" src="${external_resources_url}/javascript/aipo.js"></script>
-#end
 <script type="text/javascript" src="${unlockeddomain_url}/gadgets/js/core:rpc:shindig-container.js?c=1"></script>
 <script type="text/javascript" src="${external_resources_url}/javascript/aipo/container.js"></script>
 <script type="text/javascript" src="${external_resources_url}/javascript/aipo/customize/form.js"></script>
@@ -610,6 +606,10 @@ $l10n.SCHEDULE_ALERT_DONOT_REFLECT
 
 #macro(ALajaxbuttonDelete $url $indicator_id $portlet_id $receive)
 	<input name="ajaxbuttonDelete" class="button" type="button" value="$l10n.COMMON_DELETE" onclick="aimluck.io.ajaxDeleteSubmit(this, '$!utils.escapeXML($url)', '$indicator_id', '$portlet_id', $receive);" />
+#end
+
+#macro(ALajaxbuttonMessageRoomDelete $url $indicator_id $portlet_id $receive)
+    <input name="ajaxbuttonDelete" class="button" type="button" value="$l10n.COMMON_DELETE" onclick="aimluck.io.ajaxMessageRoomDeleteSubmit(this, '$!utils.escapeXML($url)', '$indicator_id', '$portlet_id', $receive);" />
 #end
 
 #macro(ALajaxbuttonClose)
@@ -867,13 +867,17 @@ $item.get(0)
 #set($link=$!jslink.getPortletById("$portlet_id").addQueryData("template","$screen").addQueryData("view_date","$view_date").addQueryData("userid",""))
 #ALdialogheaderPrintAbstract($title $portlet_id $screen $view_date "" "aipo.common.hideDialog();" "$link")
 #end
-#macro(ALdialogheaderPrintSchedule $title $portlet_id $screen $view_date $userid)
-#set($link=$!jslink.getPortletById("$portlet_id").addQueryData("template","$screen").addQueryData("view_date","$view_date").addQueryData("userid","$userid"))
+#macro(ALdialogheaderPrintSchedule $title $portlet_id $screen $view_date $userid $entityid)
+#set($link=$!jslink.getPortletById("$portlet_id").addQueryData("template","$screen").addQueryData("view_date","$view_date").addQueryData("userid","$userid").addQueryData("entityid","$entityid"))
 #ALdialogheaderPrintAbstract($title $portlet_id $screen $view_date $userid "aipo.common.hideDialog();" "$link")
 #end
 #macro(ALdialogheaderPrintMail $title $portlet_id $screen $entityid)
 #set($link=$!jslink.getPortletById("$portlet_id").addQueryData("template","$screen").addQueryData("entityid","$entityid"))
 #ALdialogheaderPrintAbstract($title $portlet_id $screen $view_date "" "aipo.webmail.hideDialog();" "$link")
+#end
+#macro(ALdialogheaderPrintReport $title $portlet_id $screen $entityid)
+#set($link=$!jslink.getPortletById("$portlet_id").addQueryData("template","$screen").addQueryData("entityid","$entityid"))
+#ALdialogheaderPrintAbstract($title $portlet_id $screen $view_date "" "aipo.report.hideDialog();" "$link")
 #end
 #macro(ALdialogheaderPrintNote $title $portlet_id $screen $view_date)
 #set($link=$!jslink.getPortletById("$portlet_id").addQueryData("template","$screen").addQueryData("view_date","$view_date").addQueryData("userid",""))
@@ -882,6 +886,26 @@ $item.get(0)
 #macro(ALdialogheaderPrintTimeline $title $portlet_id $screen $view_date)
 #set($link=$!jslink.getPortletById("$portlet_id").addQueryData("template","$screen").addQueryData("view_date","$view_date").addQueryData("userid",""))
 #ALdialogheaderPrintAbstract($title $portlet_id $screen $view_date "" "aipo.timeline.hideDialog();" "$link")
+#end
+#macro(ALdialogheaderPrintToDo $title $portlet_id $screen $entityid)
+#set($link=$!jslink.getPortletById("$portlet_id").addQueryData("template","$screen").addQueryData("entityid","$entityid"))
+#ALdialogheaderPrintAbstract($title $portlet_id $screen $view_date "" "aipo.common.hideDialog();" "$link")
+#end
+#macro(ALdialogheaderPrintBlog $title $portlet_id $screen $entityid)
+#set($link=$!jslink.getPortletById("$portlet_id").addQueryData("template","$screen").addQueryData("entityid","$entityid"))
+#ALdialogheaderPrintAbstract($title $portlet_id $screen $view_date "" "aipo.common.hideDialog();" "$link")
+#end
+#macro(ALdialogheaderPrintProject $title $portlet_id $screen $entityid)
+#set($link=$!jslink.getPortletById("$portlet_id").addQueryData("template","$screen").addQueryData("entityid","$entityid"))
+#ALdialogheaderPrintAbstract($title $portlet_id $screen $view_date "" "aipo.common.hideDialog();" "$link")
+#end
+#macro(ALdialogheaderPrintProjectTask $title $portlet_id $screen $entityid)
+#set($link=$!jslink.getPortletById("$portlet_id").addQueryData("template","$screen").addQueryData("entityid","$entityid"))
+#ALdialogheaderPrintAbstract($title $portlet_id $screen $view_date "" "aipo.common.hideDialog();" "$link")
+#end
+#macro(ALdialogheaderPrintMsgboard $title $portlet_id $screen $entityid)
+#set($link=$!jslink.getPortletById("$portlet_id").addQueryData("template","$screen").addQueryData("entityid","$entityid"))
+#ALdialogheaderPrintAbstract($title $portlet_id $screen $view_date "" "aipo.common.hideDialog();" "$link")
 #end
 
 #macro(ALdialogheader $title)
@@ -1880,6 +1904,17 @@ $item.get(0)
 </iframe>
 #end
 
+#macro(ACLIFFileUpload)
+#if($result.hasAttachmentInsertAuthority())
+#IFFileUpload()
+#end
+#end
+
+#macro(ACLFileList $record)
+<li data-fileid="s${record.FileId}" data-filename="$!{record.FileName}"><span>$!record.FileName</span>#if($result.hasAttachmentDeleteAuthority())<span class="deletebutton" onclick="aimluck.io.removeFileFromList(this.parentNode.parentNode,this.parentNode);">$l10n.DELETE</span>#end</li>
+#end
+
+
 #macro(AuiInformation $title $text $cookie $flag)
 #if (${flag})
 <div class="auiInfo" id="$!{cookie}"><div class="inner clearfix">
@@ -1986,4 +2021,139 @@ $l10n.NOTIFICATION_SUCCESS_MESSAGE
 $utils.getl10nFormat1("NOTIFICATION_RECOMMEND_MESSAGE",${alias})<span style="display:inline-block;"><a href="javascript: void(0)" onclick="aipo.notification.openDialog(1);">$l10n.NOTIFICATION_REQUEST_PERMISSION_MESSAGE</a>。<a href="javascript: void(0)" onclick="aipo.notification.blockRequest();">$l10n.NOTIFICATION_OFF_MESSAGE</a>。</span>
 </div>
 </div>
+#end
+
+## ---------------------------------------------------------------------------
+##
+## Aipo Note Portlet
+##
+## ---------------------------------------------------------------------------
+#macro(ALnoteResultList $msg_type)
+#if($msg_type == "0")
+<div class="message">$l10n.NOTE_SENT_NOTE</div>
+#elseif($msg_type == "1")
+<div class="message">$l10n.NOTE_SENT_NOTE<br/>
+<span class="errmsg">$l10n.NOTE_ALERT_DONT_SEND_NOTE_FOR_NO_EMAIL</span></div>
+#elseif($msg_type == "2")
+<div class="message">$l10n.NOTE_SENT_NOTE<br/>
+<span class="errmsg">$l10n.NOTE_ALERT_DONT_SEND_NOTE_FOR_NO_CELLULAR_MAIL</span></div>
+#elseif($msg_type == "3")
+<div class="message">$l10n.NOTE_SENT_NOTE<br/>
+<span class="errmsg">$l10n.NOTE_ALERT_DONT_SEND_NOTE_FOR_NO_EMAIL_AND_CELLULAR_MAIL</span></div>
+#elseif($msg_type == "4")
+<div class="message">$l10n.NOTE_SENT_NOTE<br/>
+<span class="errmsg">$l10n.NOTE_ALERT_DONT_SEND_NOTE_FOR_NO_USER</span></div>
+#elseif($msg_type == "5")
+<div class="message">$l10n.NOTE_SENT_NOTE<br/>
+<span class="errmsg">$l10n.NOTE_ALERT_DONT_SEND_NOTE_FOR_NO_ADMIN</span>
+</div>
+#end
+#end
+
+#macro(ALsetSubject $record)
+#if ($!record.SubjectType.toString() == "0") #set ($subject = $!record.CustomSubject.toString()) #end
+#if ($!record.SubjectType.toString() == "1") #set ($subject = $l10n.NOTE_CALL_AGAIN) #end
+#if ($!record.SubjectType.toString()  == "2") #set ($subject = $l10n.NOTE_CALL_BACK) #end
+#if ($!record.SubjectType.toString()  == "3") #set ($subject = $l10n.NOTE_TELL_ME) #end
+#if ($!record.SubjectType.toString()  == "4") #set ($subject = $l10n.NOTE_TAKE_A_MESSAGE) #end
+#end
+
+#macro(ALsetEven $setEven)
+#if($setEven)
+#set($setEven = false)
+#else
+#set($setEven = true)
+#end
+#end
+
+## ---------------------------------------------------------------------------
+##
+## Aipo Note Portlet End
+##
+## ---------------------------------------------------------------------------
+
+
+#macro (ALOnedayLink $portletID $filter $record $class)
+#if($!isMaximize)
+#set ($screen = 'ScheduleListScreen')
+#else
+#set ($screen = 'ScheduleScreen')
+#end
+#ALtdheadheaderAtt("class='$class' nowrap='nowrap'")
+<a href="javascript:void(0);" onclick="aipo.schedule.setIndicator('$portletID');aipo.viewPage('$!utils.escapeXML($!jslink.getPortletById($portletID).addQueryData("template","$screen").addQueryData("tab","oneday-group").addQueryData("view_start",$record.Today).addQueryData("filter",$filter).addQueryData("filtertype","group"))', '$portletID');">
+$!{record.Date.Day} $!{record.Date.DayOfWeek}
+</a>
+#end
+
+#macro (ALOnedayLinkFacility $portletID $filter $record $class)
+#if($!isMaximize)
+#set ($screen = 'ScheduleListScreen')
+#else
+#set ($screen = 'ScheduleScreen')
+#end
+#ALtdheadheaderAtt("class='$class' nowrap='nowrap'")
+<a href="javascript:void(0);" onclick="aipo.schedule.setIndicator('$portletID');aipo.viewPage('$!utils.escapeXML($!jslink.getPortletById($portletID).addQueryData("template","$screen").addQueryData("tab","oneday-group").addQueryData("view_start",$record.Today).addQueryData("filter",$filter).addQueryData("filtertype","facilitygroup"))', '$portletID');">
+$!{record.Date.Day} $!{record.Date.DayOfWeek}
+</a>
+#end
+
+#macro (ALMonthlyOnedayLink $portletID $filter $record)
+#if($!isMaximize)
+#set ($screen = 'ScheduleListScreen')
+#else
+#set ($screen = 'ScheduleScreen')
+#end
+<a href="javascript:void(0);" onclick="aipo.schedule.setIndicator('$portletID');aipo.viewPage('$!utils.escapeXML($!jslink.getPortletById($portletID).addQueryData("template","$screen").addQueryData("tab","oneday-group").addQueryData("view_start",$record.Today).addQueryData("filter",$filter).addQueryData("filtertype","group"))', '$portletID');">
+$!{record.Date.Day}
+</a>
+#end
+
+#macro (ALMonthlyCalendarOnedayLink $portletID $filter $record)
+#set ($screen = 'ScheduleListScreen')
+<a href="javascript:void(0);" onclick="aipo.schedule.setIndicator('$portletID');aipo.viewPage('$!utils.escapeXML($!jslink.getPortletById($portletID).addQueryData("template","$screen").addQueryData("tab","oneday-group").addQueryData("view_start",$record.Today).addQueryData("filter",$filter).addQueryData("filtertype","group"))', '$portletID');">$!{record.Date.Day}</a>
+#end
+
+#macro(ALphotoheader)
+<div class="auiPooupThumbnail">
+ #end
+
+#macro(ALphotofooter)
+</div>
+ #end
+
+#macro(ALPooupName $result $portlet $edit_flag)
+  <div class="auiPooupName">
+    <strong>$!result.Detail.Name</strong>
+    <span>$result.getStringCR($result.Detail.NameKana)</span>
+    #if (${edit_flag})
+      #set($dlLink = $!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData('template','AccountPersonFormScreen')) )
+      <a class="auiButton" title="$l10n.ACCOUNT_DO_EDIT_ACCOUNT" href="javascript:void(0);" onclick="aipo.common.showDialog('$dlLink','$!portlet.ID','aipo.account_person.onLoadPersonInfoDialog');">$l10n.ACCOUNT_DO_EDIT_ACCOUNT</a>
+    #else
+      #if(!$!{result.Detail.isOwner()})
+        <a href="javascript:void(0)" class="auiButton" onclick="aipo.message.hideProfile();aipo.message.openDirect($!{result.Detail.UserId})"><i class="icon-comment-alt fcGray mr5"></i>$l10n.MESSAGE_DIRECT_MESSAGE</a>
+      #end
+    #end
+   </div>
+ #end
+
+#macro(AUIPooupHasPhoto $result $default_text_flag)
+  #if($!{result.Detail.hasPhoto()})
+    #if($!{result.Detail.isNewPhotoSpec()})
+      <img class="avatar" width="100" height="100" src="?template=FileuploadFacePhotoScreen&uid=$!{result.Detail.UserId}&size=normal&t=$!{result.Detail.PhotoModified}" srcset="?template=FileuploadFacePhotoScreen&uid=$!{result.Detail.UserId}&size=normal&t=$!{result.Detail.PhotoModified} 1x, ?template=FileuploadFacePhotoScreen&uid=$!{result.Detail.UserId}&size=large&t=$!{result.Detail.PhotoModified} 2x" alt="$l10n.USERLIST_PHOTO" />
+    #else
+      <img class="avatar" src="?template=FileuploadFacePhotoScreen&uid=$!{result.Detail.UserId}&t=$!{result.Detail.PhotoModified}" alt="$l10n.ACCOUNT_USER_PHOTO" />
+    #end
+  #else
+    #if (${default_text_flag})
+       $l10n.ACCOUNT_USER_NOT_CREATE
+    #else
+      <img class="avatar" src="themes/default/images/common/icon_user100.png" srcset="themes/default/images/common/icon_user100.png 1x, themes/default/images/common/icon_user100@2x.png 2x" alt="$l10n.ACCOUNT_USER_PHOTO" />
+     #end
+  #end
+#end
+
+#macro(ALSelectGroupDummy)
+  #if(${client.equals("IPHONE")} && (${clientVer.equals("9")} || ${clientVer.equals("1")}))
+  <optgroup disabled class="dummy" style="display: none;"></optgroup>
+  #end
 #end

@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -64,7 +64,15 @@ public class UserPopupScreen extends ALVelocityScreen {
         ALEipUtils.getTurbineUser(Integer.parseInt(entityid));
 
       String layout_template = null;
-      if (String.valueOf(user.getUserId().getValue()).equals(entityid)) {
+      int userId = 0;
+      try {
+        userId = Integer.parseInt(entityid);
+      } catch (Throwable ignore) {
+        //
+      }
+      if (userId < 4) {
+        layout_template = "portlets/html/ajax-userlist-popup-system.vm";
+      } else if (String.valueOf(user.getUserId().getValue()).equals(entityid)) {
         layout_template = "portlets/html/ajax-userlist-popup-owner.vm";
       } else if (!(entity_user.getDisabled().equals("F"))) {
         layout_template = "portlets/html/ajax-userlist-popup-disable.vm";

@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,7 @@ import com.aimluck.eip.util.ALLocalizationUtils;
 
 /**
  * タイムカード集計のフォームデータを管理するためのクラスです。 <br />
- * 
+ *
  */
 
 public class ExtTimecardSystemMapFormData extends ALAbstractFormData {
@@ -204,7 +204,7 @@ public class ExtTimecardSystemMapFormData extends ALAbstractFormData {
 
   /**
    * 詳細データを取得する抽象メソッドです。
-   * 
+   *
    * @param rundata
    * @param context
    * @return
@@ -222,7 +222,7 @@ public class ExtTimecardSystemMapFormData extends ALAbstractFormData {
   }
 
   /**
-   * 
+   *
    * @return
    */
   public ALNumberField getStartTimeHour() {
@@ -230,7 +230,7 @@ public class ExtTimecardSystemMapFormData extends ALAbstractFormData {
   }
 
   /**
-   * 
+   *
    * @return
    */
   public ALNumberField getStartTimeMinute() {
@@ -238,7 +238,7 @@ public class ExtTimecardSystemMapFormData extends ALAbstractFormData {
   }
 
   /**
-   * 
+   *
    * @return
    */
   public ALNumberField getEndTimeHour() {
@@ -246,7 +246,7 @@ public class ExtTimecardSystemMapFormData extends ALAbstractFormData {
   }
 
   /**
-   * 
+   *
    * @return
    */
   public ALNumberField getEndTimeMinute() {
@@ -254,7 +254,7 @@ public class ExtTimecardSystemMapFormData extends ALAbstractFormData {
   }
 
   /**
-   * 
+   *
    * @return
    */
   public ALNumberField getWorktimeIn() {
@@ -262,7 +262,7 @@ public class ExtTimecardSystemMapFormData extends ALAbstractFormData {
   }
 
   /**
-   * 
+   *
    * @return
    */
   public ALNumberField getWorktimeOut() {
@@ -270,7 +270,7 @@ public class ExtTimecardSystemMapFormData extends ALAbstractFormData {
   }
 
   /**
-   * 
+   *
    * @return
    */
   public ALNumberField getResttimeIn() {
@@ -278,11 +278,14 @@ public class ExtTimecardSystemMapFormData extends ALAbstractFormData {
   }
 
   /**
-   * 
+   *
    * @return
    */
   public ALNumberField getResttimeOut() {
     return this.resttime_out;
   }
 
+  public boolean isNewRule() {
+    return ExtTimecardUtils.isNewRule();
+  }
 }

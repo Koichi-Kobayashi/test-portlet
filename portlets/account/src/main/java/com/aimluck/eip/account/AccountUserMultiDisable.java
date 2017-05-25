@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,7 @@ import com.aimluck.eip.util.ALLocalizationUtils;
 
 /**
  * ユーザアカウントを複数無効化するためのクラス． <BR>
- * 
+ *
  */
 public class AccountUserMultiDisable extends ALAbstractCheckList {
 
@@ -51,7 +51,7 @@ public class AccountUserMultiDisable extends ALAbstractCheckList {
     .getLogger(AccountUserMultiDelete.class.getName());
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @param values
@@ -125,7 +125,6 @@ public class AccountUserMultiDisable extends ALAbstractCheckList {
         }
 
         // ユーザーを無効化
-        user.setPositionId(Integer.valueOf(0));
         user.setDisabled("N");
 
         // ワークフロー自動承認

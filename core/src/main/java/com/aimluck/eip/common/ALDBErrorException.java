@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ package com.aimluck.eip.common;
 
 /**
  * この例外は、データベースへのアクセス時にエラーが発生した場合にスローされます。 <br />
- * 
+ *
  */
 public class ALDBErrorException extends Exception {
 
@@ -28,5 +28,4 @@ public class ALDBErrorException extends Exception {
    *
    */
   private static final long serialVersionUID = -7293414426078181289L;
-
 }

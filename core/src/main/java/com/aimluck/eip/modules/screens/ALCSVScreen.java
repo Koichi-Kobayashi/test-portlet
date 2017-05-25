@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ import com.aimluck.eip.common.ALEipConstants;
 
 /**
  * ブラウザにCSVファイルを返すクラスです。 <br />
- * 
+ *
  */
 public abstract class ALCSVScreen extends RawScreen {
 
@@ -48,7 +48,7 @@ public abstract class ALCSVScreen extends RawScreen {
   private String csvFileEncoding = DEF_CSV_FILE_ENCODING;
 
   /**
-   * 
+   *
    * @param rundata
    * @throws Exception
    */
@@ -83,7 +83,7 @@ public abstract class ALCSVScreen extends RawScreen {
 
   /**
    * ファイルに'\"'を正しく出力するためのエスケープを加えます。 <br />
-   * 
+   *
    * @param str
    * @return
    */
@@ -101,7 +101,7 @@ public abstract class ALCSVScreen extends RawScreen {
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @return
    */

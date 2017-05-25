@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -150,8 +150,8 @@ public class CabinetAction extends ALBaseAction {
     list.add("entityid");
     list.add("folder_id");
     list.add("CabinetFileWord");
-    list.add("com.aimluck.eip.cabinet.CabinetFolderSelectDatasort");
-    list.add("com.aimluck.eip.cabinet.CabinetFileWordSelectDatasort");
+    list.add("CabinetFolderSelectDatasort");
+    list.add("CabinetFileWordSelectDatasort");
     list.add(CabinetUtils.TARGET_KEYWORD);
     ALEipUtils.removeTemp(rundata, context, list);
   }

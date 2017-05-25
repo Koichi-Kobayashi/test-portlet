@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -50,7 +50,7 @@ import com.aimluck.eip.services.customlocalization.ALLocalizationTool;
 
 /**
  * ユーザー情報、会社情報、部署情報、役職情報をメモリ上に保持するクラスです。 <br />
- * 
+ *
  */
 public class ALEipManager {
 
@@ -94,7 +94,7 @@ public class ALEipManager {
   private static String LOCALIZATION_PREFIX = "Localization";
 
   /**
-   * 
+   *
    * @return
    */
   public static ALEipManager getInstance() {
@@ -202,7 +202,8 @@ public class ALEipManager {
         eipUser.setAliasName(model.getFirstName(), model.getLastName());
         eipUser.setName(model.getLoginName());
         eipUser.setUserId(model.getUserId());
-        eipUser.setHasPhoto("T".equals(model.getHasPhoto()));
+        eipUser.setHasPhoto("T".equals(model.getHasPhoto())
+          || "N".equals(model.getHasPhoto()));
         eipUser.setPhotoModified(model.getPhotoModified() != null ? model
           .getPhotoModified()
           .getTime() : 0);
@@ -222,7 +223,7 @@ public class ALEipManager {
 
   /**
    * 会社情報を返します。
-   * 
+   *
    * @return
    */
   public Map<Integer, ALEipCompany> getCompanyMap() {
@@ -260,7 +261,7 @@ public class ALEipManager {
 
   /**
    * 部署情報を返します。
-   * 
+   *
    * @return
    */
   public Map<Integer, ALEipPost> getPostMap() {
@@ -278,7 +279,7 @@ public class ALEipManager {
     Map<Integer, ALEipPost> postMap = new LinkedHashMap<Integer, ALEipPost>();
     try {
       SelectQuery<EipMPost> query = Database.query(EipMPost.class);
-      query.orderAscending(EipMPost.POST_NAME_PROPERTY);
+      query.orderAscending(EipMPost.SORT_PROPERTY);
       List<EipMPost> list = query.fetchList();
       for (EipMPost record : list) {
         ALEipPost post = new ALEipPost();
@@ -300,7 +301,7 @@ public class ALEipManager {
 
   /**
    * 役職情報を返します。
-   * 
+   *
    * @return
    */
   public Map<Integer, ALEipPosition> getPositionMap() {
@@ -318,7 +319,9 @@ public class ALEipManager {
     Map<Integer, ALEipPosition> positionMap =
       new LinkedHashMap<Integer, ALEipPosition>();
     try {
-      List<EipMPosition> list = Database.query(EipMPosition.class).fetchList();
+      List<EipMPosition> list =
+        Database.query(EipMPosition.class).orderAscending(
+          EipMPosition.SORT_PROPERTY).fetchList();
       for (EipMPosition record : list) {
         ALEipPosition position = new ALEipPosition();
         position.initField();

@@ -1,6 +1,6 @@
 #*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,8 +31,14 @@
 		<span class="avatar">
 		#if($!record.isHasPhoto())
 			<img src="$!utils.escapeXML($jslink.getTemplate("FileuploadFacePhotoScreen").addQueryData("uid", $!record.UserId).addQueryData("t", "$!record.PhotoModified"))" alt="$!record.LastName $!record.FirstName" class="avatar_s"/>
+		#elseif("${record.UserId.Value}" == "1")
+			<img src="themes/default/images/common/icon_aipo100.png" alt="$!record.DisplayName" class="avatar_s"/>
+		#elseif("${record.UserId.Value}" == "2")
+			<img src="themes/default/images/common/icon_aipo100.png" alt="$!record.DisplayName" class="avatar_s"/>
+		#elseif("${record.UserId.Value}" == "3")
+			<img src="themes/default/images/common/icon_message100.png" alt="$!record.DisplayName" class="avatar_s"/>
 		#else
-			<img src="images/common/avatar_default3.png" alt="$!record.LastName $!record.FirstName" class="avatar_s"/>
+			<img src="themes/default/images/common/icon_user100.png" alt="$!record.LastName $!record.FirstName" class="avatar_s"/>
 		#end
 		</span>
 		<span class="name">$!record.LastName $!record.FirstName</span>
@@ -49,14 +55,20 @@
 			#if($!record.getRoomType().getValue() == "O")
 			#if($!record.isHasPhoto())
 				<img src="$!utils.escapeXML($jslink.getTemplate("FileuploadFacePhotoScreen").addQueryData("uid", $!record.UserId).addQueryData("t", "$!record.PhotoModified"))" alt="$!record.Name"  class="avatar_s"/>
-			#else
-				<img src="images/common/avatar_default3.png" alt="$!record.Name" class="avatar_s"/>
+			#elseif("${record.UserId.Value}" == "1")
+			    <img src="themes/default/images/common/icon_aipo100.png" alt="$!record.Name" class="avatar_s"/>
+		    #elseif("${record.UserId.Value}" == "2")
+		    	<img src="themes/default/images/common/icon_aipo100.png" alt="$!record.Name" class="avatar_s"/>
+		    #elseif("${record.UserId.Value}" == "3")
+		    	<img src="themes/default/images/common/icon_message100.png" alt="$!record.Name" class="avatar_s"/>
+		    #else
+				<img src="themes/default/images/common/icon_user100.png" alt="$!record.Name" class="avatar_s"/>
 			#end
 			#else
 			#if($!record.isHasPhoto())
 				<img src="$!utils.escapeXML($jslink.getTemplate("MessageFileuploadRoomPhotoScreen").addQueryData("rid", $!record.RoomId).addQueryData("t", "$!record.PhotoModified"))" alt="$!record.Name"  class="avatar_s"/>
 			#else
-				<img src="themes/default/images/common/group_default.png" alt="$!record.Name" class="avatar_s"/>
+				<img src="themes/default/images/common/icon_group100.png" alt="$!record.Name" class="avatar_s"/>
 			#end
 			#end
 			</span>
@@ -79,23 +91,29 @@
 		<a href="javascript: void(0)" onclick="aipo.message.popupProfile(${record.UserId.Value},arguments[0])">
 		#if($!record.isHasPhoto())
 			<img src="$!utils.escapeXML($jslink.getTemplate("FileuploadFacePhotoScreen").addQueryData("uid", $!record.UserId).addQueryData("t", "$!record.PhotoModified"))" alt="$!record.LastName $!record.FirstName" class="avatar_s"/>
+		#elseif("${record.UserId.Value}" == "1")
+			<img src="themes/default/images/common/icon_aipo100.png" alt="$!record.DisplayName" class="avatar_s"/>
+		#elseif("${record.UserId.Value}" == "2")
+			<img src="themes/default/images/common/icon_aipo100.png" alt="$!record.DisplayName" class="avatar_s"/>
+		#elseif("${record.UserId.Value}" == "3")
+			<img src="themes/default/images/common/icon_message100.png" alt="$!record.DisplayName" class="avatar_s"/>
 		#else
-			<img src="images/common/avatar_default3.png" alt="$!record.LastName $!record.FirstName" class="avatar_s"/>
+			<img src="themes/default/images/common/icon_user100.png" alt="$!record.LastName $!record.FirstName" class="avatar_s"/>
 		#end
 		</a>
 	</div>
 	<div class="messageContents">
-		<div class="name"><a href="javascript: void(0)" onclick="aipo.message.popupProfile(${record.UserId.Value},arguments[0])">$!record.LastName $!record.FirstName</a></div>
+		<div class="name"><a href="javascript: void(0)" onclick="aipo.message.popupProfile(${record.UserId.Value},arguments[0])">$!record.DisplayName</a></div>
 		<div class="body">$!record.MessageHtml
 		#if($!record.AttachmentFileList.size() != 0)
 				<div class="tlImageBlock clearfix">
-		#foreach( $attachmentFile in $!record.AttachmentFileList )#if($attachmentFile.isImage())<a href="javascript:aipo.fileupload.showImageDialog('?template=FileuploadViewScreen&screen=MessageFileRawScreen&entryid=$!{record.MessageId}&attachmentIndex=$!{attachmentFile.FileId}')"><img border="0" alt="$attachmentFile.FileName" title="$attachmentFile.FileName" src="?template=MessageFileThumbnailScreen&entityid=${record.MessageId}&attachmentIndex=${attachmentFile.FileId}"/></a>#else<a #if("$!{client}"=="IPHONE")target="_blank"#end href="?template=MessageFileRawScreen&entityid=$!record.MessageId&attachmentIndex=$attachmentFile.FileId&f=${attachmentFile.getURLEncodedValue()}">$result.getStringCR($attachmentFile.FileNameField)</a>
+		#foreach( $attachmentFile in $!record.AttachmentFileList )#if($attachmentFile.isImage())<a href="javascript:aipo.fileupload.showImageDialog('?template=FileuploadViewScreen&screen=MessageFileRawScreen&entryid=$!{record.MessageId}&attachmentIndex=$!{attachmentFile.FileId}')"><img border="0" alt="$attachmentFile.FileName" title="$attachmentFile.FileName" src="?template=MessageFileThumbnailScreen&entityid=${record.MessageId}&attachmentIndex=${attachmentFile.FileId}"/></a>#else<a #if("$!{client}"=="IPHONE" || $!attachmentFile.AcceptInline)target="_blank"#end href="?template=MessageFileRawScreen&entityid=$!record.MessageId&attachmentIndex=$attachmentFile.FileId&f=${attachmentFile.getURLEncodedValue()}">$result.getStringCR($attachmentFile.FileNameField)</a>
 		#end#end
 				</div>#end
 		</div>
 		<div class="time">
 			$!record.CreateDate&nbsp;
-			#if($!record.isOwner())<a href="javascript:void(0)" onclick="aipo.common.showDialog('$!jslink.getPortletById($!portlet.ID).addQueryData("template","MessageReadUserListScreen").addQueryData("m",$!record.MessageId)','$!portlet.ID',aipo.message.onLoadMessageReadUserList);" id="messageReadCount$!record.MessageId">#if($!record.isAllRead())$l10n.MESSAGE_ALL_READ#else$!{record.ReadCount}${l10n.MESSAGE_READ_COUNT}#end</a>#end
+			#if($!record.isOwner() && !$!record.isOneMember())<a href="javascript:void(0)" onclick="aipo.common.showDialog('$!jslink.getPortletById($!portlet.ID).addQueryData("template","MessageReadUserListScreen").addQueryData("m",$!record.MessageId)','$!portlet.ID',aipo.message.onLoadMessageReadUserList);" id="messageReadCount$!record.MessageId">#if($!record.isAllRead())$l10n.MESSAGE_ALL_READ#else$!{record.ReadCount}${l10n.MESSAGE_READ_COUNT}#end</a>#end
 			&nbsp;<a href="javascript:void(0)" onclick="aipo.message.jumpMessage($!record.RoomId,$!record.MessageId)">$l10n.MESSAGE_JUMP_MESSAGE</a>
 		</div>
 	</div>

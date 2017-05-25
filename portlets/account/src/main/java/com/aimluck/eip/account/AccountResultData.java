@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -44,8 +44,16 @@ public class AccountResultData implements ALData {
   /** 名前 */
   private ALStringField name;
 
+  private ALStringField first_name;
+
+  private ALStringField last_name;
+
   /** フリガナ（名前） */
   private ALStringField name_kana;
+
+  private ALStringField first_name_kana;
+
+  private ALStringField last_name_kana;
 
   /** メールアドレス */
   private ALStringField email;
@@ -95,6 +103,9 @@ public class AccountResultData implements ALData {
   /** FAX 番号 */
   private ALStringField company_fax_number;
 
+  /** 社員コード */
+  private ALStringField code;
+
   /** 作成日 */
   private ALStringField create_date;
 
@@ -112,6 +123,8 @@ public class AccountResultData implements ALData {
 
   private long photo_modified;
 
+  private boolean is_new_photo_spec;
+
   /**
    *
    *
@@ -120,6 +133,10 @@ public class AccountResultData implements ALData {
   public void initField() {
     user_id = new ALNumberField();
     user_name = new ALStringField();
+    first_name = new ALStringField();
+    last_name = new ALStringField();
+    first_name_kana = new ALStringField();
+    last_name_kana = new ALStringField();
     name = new ALStringField();
     name_kana = new ALStringField();
     email = new ALStringField();
@@ -131,10 +148,12 @@ public class AccountResultData implements ALData {
     post_id_list = new ArrayList<Integer>();
     position_name = new ALStringField();
     disabled = new ALStringField();
+    code = new ALStringField();
 
     has_photo = false;
     is_admin = false;
     is_owner = false;
+    is_new_photo_spec = false;
 
     company_id = new ALNumberField();
     company_name = new ALStringField();
@@ -159,6 +178,20 @@ public class AccountResultData implements ALData {
 
   public String getWbrName() {
     return ALCommonUtils.replaceToAutoCR(getName().toString());
+  }
+
+  /**
+   * @return
+   */
+  public ALStringField getFirstName() {
+    return first_name;
+  }
+
+  /**
+   * @return
+   */
+  public ALStringField getLastName() {
+    return last_name;
   }
 
   /**
@@ -191,6 +224,20 @@ public class AccountResultData implements ALData {
    */
   public void setName(String string) {
     name.setValue(string);
+  }
+
+  /**
+   * @param string
+   */
+  public void setFirstName(String string) {
+    first_name.setValue(string);
+  }
+
+  /**
+   * @param string
+   */
+  public void setLastName(String string) {
+    last_name.setValue(string);
   }
 
   /**
@@ -358,10 +405,46 @@ public class AccountResultData implements ALData {
   }
 
   /**
+   * @return
+   */
+  public ALStringField getFirstNameKana() {
+    return first_name_kana;
+  }
+
+  public String getWbrFirstNameKana() {
+    return ALCommonUtils.replaceToAutoCR(getFirstNameKana().toString());
+  }
+
+  /**
+   * @return
+   */
+  public ALStringField getLastNameKana() {
+    return last_name_kana;
+  }
+
+  public String getWbrLastNameKana() {
+    return ALCommonUtils.replaceToAutoCR(getLastNameKana().toString());
+  }
+
+  /**
    * @param string
    */
   public void setNameKana(String string) {
     name_kana.setValue(string);
+  }
+
+  /**
+   * @param string
+   */
+  public void setFirstNameKana(String string) {
+    first_name_kana.setValue(string);
+  }
+
+  /**
+   * @param string
+   */
+  public void setLastNameKana(String string) {
+    last_name_kana.setValue(string);
   }
 
   public boolean hasPhoto() {
@@ -389,7 +472,7 @@ public class AccountResultData implements ALData {
   /**
    * @return is_admin
    */
-  public boolean isOwnwer() {
+  public boolean isOwner() {
     return is_owner;
   }
 
@@ -619,6 +702,33 @@ public class AccountResultData implements ALData {
    */
   public void setMailSizeStr(String mail_size_str) {
     this.mail_size_str.setValue(mail_size_str);
+  }
+
+  public void setIsNewPhotoSpec(boolean is_new_photo_spec) {
+    this.is_new_photo_spec = is_new_photo_spec;
+  }
+
+  public boolean isNewPhotoSpec() {
+    return this.is_new_photo_spec;
+  }
+
+  /**
+   * @return code
+   */
+  public ALStringField getCode() {
+    return code;
+  }
+
+  public String getWbrCode() {
+    return ALCommonUtils.replaceToAutoCR(getCode().toString());
+  }
+
+  /**
+   * @param code
+   *          セットする code
+   */
+  public void setCode(String code) {
+    this.code.setValue(code);
   }
 
 }

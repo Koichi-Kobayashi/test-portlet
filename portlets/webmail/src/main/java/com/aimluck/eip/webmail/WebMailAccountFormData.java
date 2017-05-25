@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,6 +34,8 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.commons.utils.ALStringUtil;
 import com.aimluck.eip.cayenne.om.portlet.EipMMailAccount;
 import com.aimluck.eip.cayenne.om.portlet.EipTMail;
+import com.aimluck.eip.cayenne.om.portlet.EipTMailFilter;
+import com.aimluck.eip.cayenne.om.portlet.EipTMailFolder;
 import com.aimluck.eip.common.ALAbstractFormData;
 import com.aimluck.eip.common.ALDBErrorException;
 import com.aimluck.eip.common.ALEipConstants;
@@ -47,7 +49,6 @@ import com.aimluck.eip.modules.actions.common.ALAction;
 import com.aimluck.eip.modules.screens.WebMailAdminFormJSONScreen;
 import com.aimluck.eip.modules.screens.WebMailAdminFormScreen;
 import com.aimluck.eip.orm.Database;
-import com.aimluck.eip.orm.query.SQLTemplate;
 import com.aimluck.eip.orm.query.SelectQuery;
 import com.aimluck.eip.services.eventlog.ALEventlogConstants;
 import com.aimluck.eip.services.eventlog.ALEventlogFactoryService;
@@ -79,7 +80,7 @@ public class WebMailAccountFormData extends ALAbstractFormData {
   /** The value for the accountType field */
   private ALStringField account_type;
 
-  /** The value for the pop3serverName field */
+  /** The value for the smtpServerName field */
   private ALStringField smtpserver_name;
 
   /** The value for the pop3serverName field */
@@ -288,12 +289,12 @@ public class WebMailAccountFormData extends ALAbstractFormData {
     // SMTPサーバ名
     smtpserver_name.setNotNull(true);
     smtpserver_name.setCharacterType(ALStringField.TYPE_ASCII);
-    smtpserver_name.limitMaxLength(50);
+    smtpserver_name.limitMaxLength(60);
 
     // POP3サーバ名
     pop3server_name.setNotNull(true);
     pop3server_name.setCharacterType(ALStringField.TYPE_ASCII);
-    pop3server_name.limitMaxLength(50);
+    pop3server_name.limitMaxLength(60);
 
     // POP3用ユーザID
     pop3user_name.setNotNull(true);
@@ -451,7 +452,7 @@ public class WebMailAccountFormData extends ALAbstractFormData {
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -516,7 +517,7 @@ public class WebMailAccountFormData extends ALAbstractFormData {
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -556,7 +557,7 @@ public class WebMailAccountFormData extends ALAbstractFormData {
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -644,7 +645,7 @@ public class WebMailAccountFormData extends ALAbstractFormData {
   }
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @param msgList
@@ -683,12 +684,24 @@ public class WebMailAccountFormData extends ALAbstractFormData {
       Database.delete(account);
       Database.commit();
 
-      // delete from database
+      // delete from database eip_t_mail, eip_t_mail_folder, eip_t_mail_filter
+      String filterSql =
+        "DELETE FROM eip_t_mail_filter WHERE account_id = #bind($accountId)";
+      Database.sql(EipTMailFilter.class, filterSql).param(
+        "accountId",
+        account.getAccountId()).execute();
+
+      String folderSql =
+        "DELETE FROM eip_t_mail_folder WHERE account_id = #bind($accountId)";
+      Database.sql(EipTMailFolder.class, folderSql).param(
+        "accountId",
+        account.getAccountId()).execute();
+
       String sql =
-        "DELETE FROM eip_t_mail WHERE account_id = "
-          + String.valueOf(account.getAccountId());
-      SQLTemplate<EipTMail> sqlTemplate = Database.sql(EipTMail.class, sql);
-      sqlTemplate.execute();
+        "DELETE FROM eip_t_mail WHERE account_id = #bind($accountId)";
+      Database.sql(EipTMail.class, sql).param(
+        "accountId",
+        account.getAccountId()).execute();
 
       // セッション変数を削除する
       WebMailUtils.clearWebMailAccountSession(rundata, context);

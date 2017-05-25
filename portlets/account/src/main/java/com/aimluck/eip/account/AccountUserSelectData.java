@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -84,6 +84,9 @@ public class AccountUserSelectData extends
 
   protected ALStringField target_keyword;
 
+  /** <code>userid</code> ユーザーID */
+  private int userid;
+
   /**
    * 初期化します。
    *
@@ -103,6 +106,9 @@ public class AccountUserSelectData extends
     }
 
     target_keyword = new ALStringField();
+
+    // ログインユーザの ID を設定する．
+    userid = ALEipUtils.getUserId(rundata);
 
     super.init(action, rundata, context);
   }
@@ -239,11 +245,15 @@ public class AccountUserSelectData extends
               + "."
               + TurbineGroup.GROUP_ALIAS_NAME_PROPERTY,
             "%" + transWords[i] + "%");
+        Expression exp36 =
+          ExpressionFactory.likeExp(TurbineUser.CODE_PROPERTY, "%"
+            + transWords[i]
+            + "%");
 
         query.andQualifier(exp11.orExp(exp12).orExp(exp13).orExp(exp14).orExp(
           exp15).orExp(exp16).orExp(exp17).orExp(exp21).orExp(exp22).orExp(
           exp23).orExp(exp31).orExp(exp32).orExp(exp33).orExp(exp34).orExp(
-          exp35));
+          exp35).orExp(exp36));
       }
     }
 
@@ -428,7 +438,8 @@ public class AccountUserSelectData extends
         .getPositionId()
         .intValue()));
       rd.setDisabled(record.getDisabled());
-      rd.setHasPhoto("T".equals(record.getHasPhoto()));
+      rd.setHasPhoto("T".equals(record.getHasPhoto())
+        || "N".equals(record.getHasPhoto()));
       rd.setPhotoModified(record.getPhotoModified().getTime());
       rd.setEmail(record.getEmail());
 
@@ -447,7 +458,6 @@ public class AccountUserSelectData extends
   protected Object getResultDataDetail(ALBaseUser record) {
     try {
       Integer id = Integer.valueOf(record.getUserId());
-
       AccountResultData rd = new AccountResultData();
       rd.initField();
       rd.setUserId(Integer.valueOf(record.getUserId()).intValue());
@@ -472,7 +482,10 @@ public class AccountUserSelectData extends
       rd.setDisabled(record.getDisabled());
       rd.setIsAdmin(ALEipUtils.isAdmin(Integer.valueOf(record.getUserId())));
       rd.setHasPhoto(record.hasPhoto());
+      rd.setIsNewPhotoSpec("N".equals(record.hasPhotoString()));
       rd.setPhotoModified(record.getPhotoModified().getTime());
+      rd.setIsOwner(userid == Integer.valueOf(record.getUserId()));
+      rd.setCode(record.getCode());
 
       return rd;
     } catch (Exception ex) {
@@ -548,5 +561,16 @@ public class AccountUserSelectData extends
 
   public ALStringField getTargetKeyword() {
     return target_keyword;
+  }
+
+  /**
+   * ファイルアップロードアクセス権限チェック用メソッド。<br />
+   * ファイルアップのアクセス権限をチェックするかどうかを判定します。
+   *
+   * @return
+   */
+  @Override
+  public boolean isCheckAttachmentAuthority() {
+    return false;
   }
 }

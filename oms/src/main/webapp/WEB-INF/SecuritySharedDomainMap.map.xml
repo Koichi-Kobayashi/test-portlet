@@ -1,24 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-
-    Aipo is a groupware program developed by Aimluck,Inc.
-    Copyright (C) 2004-2015 Aimluck,Inc.
-    http://www.aipo.com
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
--->
 <data-map project-version="2.0">
 	<property name="defaultPackage" value="com.aimluck.eip.cayenne.om.security"/>
 	<db-entity name="turbine_group">
@@ -47,6 +27,7 @@
 		<db-attribute name="CELLULAR_MAIL" type="VARCHAR" length="99"/>
 		<db-attribute name="CELLULAR_PHONE" type="VARCHAR" length="15"/>
 		<db-attribute name="CELLULAR_UID" type="VARCHAR" length="99"/>
+		<db-attribute name="CODE" type="VARCHAR" length="255"/>
 		<db-attribute name="COMPANY_ID" type="INTEGER"/>
 		<db-attribute name="CONFIRM_VALUE" type="VARCHAR" length="99"/>
 		<db-attribute name="CREATED" type="TIMESTAMP"/>
@@ -114,6 +95,7 @@
 		<obj-attribute name="cellularMail" type="java.lang.String" db-attribute-path="CELLULAR_MAIL"/>
 		<obj-attribute name="cellularPhone" type="java.lang.String" db-attribute-path="CELLULAR_PHONE"/>
 		<obj-attribute name="cellularUid" type="java.lang.String" db-attribute-path="CELLULAR_UID"/>
+		<obj-attribute name="code" type="java.lang.String" db-attribute-path="CODE"/>
 		<obj-attribute name="companyId" type="java.lang.Integer" db-attribute-path="COMPANY_ID"/>
 		<obj-attribute name="confirmValue" type="java.lang.String" db-attribute-path="CONFIRM_VALUE"/>
 		<obj-attribute name="created" type="java.util.Date" db-attribute-path="CREATED"/>

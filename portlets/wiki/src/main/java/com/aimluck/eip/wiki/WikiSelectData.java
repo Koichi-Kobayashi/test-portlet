@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -544,8 +544,10 @@ public class WikiSelectData extends
       rd.setBaseInternalLink(baseImageLink);
       rd.setBaseImageRawLink(baseImageRawLink);
 
-      rd.setAttachmentFiles(WikiFileUtils
-        .getAttachmentFiles(record.getWikiId()));
+      if (hasAttachmentAuthority()) {
+        rd.setAttachmentFiles(WikiFileUtils.getAttachmentFiles(record
+          .getWikiId()));
+      }
 
       rd.setParentId(record.getParentId());
 
@@ -634,6 +636,10 @@ public class WikiSelectData extends
         rundata,
         context,
         ALAccessControlConstants.VALUE_ACL_DETAIL);
+      doCheckAttachmentAclPermission(
+        rundata,
+        context,
+        ALAccessControlConstants.VALUE_ACL_EXPORT);
       action.setMode(ALEipConstants.MODE_DETAIL);
 
       String sesFilter = ALEipUtils.getTemp(rundata, context, LIST_FILTER_STR);

@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -68,7 +68,7 @@ public class AccountEditSelectData extends
   }
 
   /**
-   * 
+   *
    * @param obj
    * @return
    */
@@ -78,7 +78,7 @@ public class AccountEditSelectData extends
   }
 
   /**
-   * 
+   *
    * @param record
    * @return
    */
@@ -112,11 +112,13 @@ public class AccountEditSelectData extends
       rd.setCompanyId(record.getCompanyId());
 
       rd.setHasPhoto(record.hasPhoto());
+      rd.setIsNewPhotoSpec("N".equals(record.hasPhotoString()));
       rd.setPhotoModified(record.getPhotoModified().getTime());
 
       rd.setPostIdList(postIds);
       rd.setPostNameList(postNames);
       rd.setPositionName(getPositionName(record.getPositionId()));
+      rd.setCode(record.getCode());
 
       EipMCompany company_data =
         AccountUtils.getEipMCompany(Long
@@ -139,7 +141,7 @@ public class AccountEditSelectData extends
   }
 
   /**
-   * 
+   *
    * @return
    */
   @Override
@@ -148,7 +150,7 @@ public class AccountEditSelectData extends
   }
 
   /**
-   * 
+   *
    * @param id
    * @return
    */
@@ -166,7 +168,7 @@ public class AccountEditSelectData extends
   }
 
   /**
-   * 
+   *
    * @param id
    * @return
    */
@@ -182,6 +184,17 @@ public class AccountEditSelectData extends
   public int getRandomNum() {
     SecureRandom random = new SecureRandom();
     return (random.nextInt() * 100);
+  }
+
+  /**
+   * ファイルアップロードアクセス権限チェック用メソッド。<br />
+   * ファイルアップのアクセス権限をチェックするかどうかを判定します。
+   *
+   * @return
+   */
+  @Override
+  public boolean isCheckAttachmentAuthority() {
+    return false;
   }
 
 }

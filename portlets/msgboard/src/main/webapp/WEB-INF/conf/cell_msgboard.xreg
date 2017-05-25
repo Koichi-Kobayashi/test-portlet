@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Aipo is a groupware program developed by Aimluck,Inc.
-    Copyright (C) 2004-2015 Aimluck,Inc.
+    Aipo is a groupware program developed by TOWN, Inc.
+    Copyright (C) 2004-2015 TOWN, Inc.
     http://www.aipo.com
 
     This program is free software: you can redistribute it and/or modify
@@ -59,8 +59,8 @@
             </meta-info>
         </parameter>
         <parameter name="p2a-sort.style" value="ListBox" hidden="true" cachedOnName="true" cachedOnValue="true"/>
-        <parameter name="p2a-sort.style.items" value="topic_name,category_name,owner_name,update_date" hidden="true" cachedOnName="true" cachedOnValue="true"/>
-        <parameter name="p2a-sort.style.values" value="トピック名,カテゴリ,作成者,更新日" hidden="true" cachedOnName="true" cachedOnValue="true"/>
+        <parameter name="p2a-sort.style.items" value="topic_name,category_name,owner_name,create_date,update_date" hidden="true" cachedOnName="true" cachedOnValue="true"/>
+        <parameter name="p2a-sort.style.values" value="トピック名,カテゴリ,作成者,作成日,更新日" hidden="true" cachedOnName="true" cachedOnValue="true"/>
         <parameter name="p2b-sort" value="response_old" type="style" hidden="false" cachedOnName="true" cachedOnValue="true">
             <meta-info>
                 <title>返信ソート方法</title>

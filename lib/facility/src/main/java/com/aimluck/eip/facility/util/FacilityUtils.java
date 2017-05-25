@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ import com.aimluck.eip.orm.query.SelectQuery;
 
 /**
  * 設備のユーティリティクラスです。 <br />
- * 
+ *
  */
 public class FacilityUtils {
 
@@ -133,7 +133,7 @@ public class FacilityUtils {
         Database.query(EipMFacilityGroup.class);
 
       List<EipMFacilityGroup> facility_list =
-        query.orderAscending(EipMFacilityGroup.GROUP_NAME_PROPERTY).fetchList();
+        query.orderAscending(EipMFacilityGroup.SORT_PROPERTY).fetchList();
 
       for (EipMFacilityGroup record : facility_list) {
         FacilityGroupLiteBean bean = new FacilityGroupLiteBean();

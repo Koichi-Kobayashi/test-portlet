@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,17 @@ public class EipTExtTimecardSystem extends _EipTExtTimecardSystem {
   }
 
   public void setSystemId(String id) {
-    setObjectId(new ObjectId("EipTExtTimecardSystem", SYSTEM_ID_PK_COLUMN,
-        Integer.valueOf(id)));
+    setObjectId(new ObjectId(
+      "EipTExtTimecardSystem",
+      SYSTEM_ID_PK_COLUMN,
+      Integer.valueOf(id)));
+  }
+
+  public boolean isDefaultHoliday() {
+    return getHolidayOfWeek().charAt(0) == 'A';
+  }
+
+  public String getOriginalHolidayOfWeek() {
+    return getHolidayOfWeek().substring(1, 10);
   }
 }

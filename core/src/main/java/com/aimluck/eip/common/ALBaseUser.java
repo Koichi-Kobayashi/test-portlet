@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -81,9 +81,13 @@ public class ALBaseUser extends
 
   public static final String HAS_PHOTO = "HAS_PHOTO";
 
+  public static final String PHOTO_TYPE = "PHOTO_TYPE";
+
   public static final String HAS_PHOTO_SMARTPHONE = "HAS_PHOTO_SMARTPHONE";
 
   public static final String MIGRATE_VERSION = "MIGRATE_VERSION";
+
+  public static final String CODE = "CODE";
 
   private static final JetspeedLogger logger = JetspeedLogFactoryService
     .getLogger(ALBaseUser.class.getName());
@@ -447,26 +451,34 @@ public class ALBaseUser extends
 
   public boolean hasPhoto() {
     String hasPhoto = (String) getPerm(HAS_PHOTO);
-    return "T".equals(hasPhoto);
+    return "T".equals(hasPhoto) || "N".equals(hasPhoto);
+  }
+
+  public String hasPhotoString() {
+    return (String) getPerm(HAS_PHOTO);
   }
 
   public boolean hasPhotoSmartphone() {
     String hasPhotoSmartphone = (String) getPerm(HAS_PHOTO_SMARTPHONE);
-    return "T".equals(hasPhotoSmartphone);
+    return "T".equals(hasPhotoSmartphone) || "N".equals(hasPhotoSmartphone);
+  }
+
+  public String hasPhotoSmartphoneString() {
+    return (String) getPerm(HAS_PHOTO_SMARTPHONE);
   }
 
   /**
    *
    */
-  public void setHasPhoto(boolean hasPhoto) {
-    setPerm(HAS_PHOTO, hasPhoto ? "T" : "F");
+  public void setHasPhoto(String hasPhoto) {
+    setPerm(HAS_PHOTO, hasPhoto);
   }
 
   /**
   *
   */
-  public void setHasPhotoSmartphone(boolean hasPhotoSmartphone) {
-    setPerm(HAS_PHOTO_SMARTPHONE, hasPhotoSmartphone ? "T" : "F");
+  public void setHasPhotoSmartphone(String hasPhotoSmartphone) {
+    setPerm(HAS_PHOTO_SMARTPHONE, hasPhotoSmartphone);
   }
 
   /**
@@ -513,5 +525,28 @@ public class ALBaseUser extends
    */
   public void setMigrateVersion(int id) {
     setPerm(MIGRATE_VERSION, Integer.valueOf(id));
+  }
+
+  /**
+   *
+   */
+  public String getCode() {
+    return (String) getPerm(CODE);
+  }
+
+  /**
+   *
+   */
+  public void setCode(String code) {
+    setPerm(CODE, code);
+  }
+
+  @Override
+  public Date getPasswordChanged() {
+    try {
+      return super.getPasswordChanged();
+    } catch (ClassCastException ignore) {
+      return null;
+    }
   }
 }

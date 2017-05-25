@@ -1,6 +1,6 @@
 /*
- * Aipo is a groupware program developed by Aimluck,Inc.
- * Copyright (C) 2004-2015 Aimluck,Inc.
+ * Aipo is a groupware program developed by TOWN, Inc.
+ * Copyright (C) 2004-2015 TOWN, Inc.
  * http://www.aipo.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -35,22 +35,25 @@ public class WorkflowFileRawScreen extends FileuploadRawScreen {
   private static final JetspeedLogger logger = JetspeedLogFactoryService
     .getLogger(WorkflowFileRawScreen.class.getName());
 
+  @Override
+  protected void init(RunData rundata) throws Exception {
+    EipTWorkflowFile workflowfile = WorkflowUtils.getEipTWorkflowFile(rundata);
+
+    setFilePath(WorkflowUtils.getSaveDirPath(
+      Database.getDomainName(),
+      workflowfile.getOwnerId().intValue())
+      + workflowfile.getFilePath());
+    setFileName(workflowfile.getFileName());
+  }
+
   /**
-   * 
+   *
    * @param rundata
    * @throws Exception
    */
   @Override
   protected void doOutput(RunData rundata) throws Exception {
     try {
-      EipTWorkflowFile workflowfile =
-        WorkflowUtils.getEipTWorkflowFile(rundata);
-
-      super.setFilePath(WorkflowUtils.getSaveDirPath(
-        Database.getDomainName(),
-        workflowfile.getOwnerId().intValue())
-        + workflowfile.getFilePath());
-      super.setFileName(workflowfile.getFileName());
       super.doOutput(rundata);
     } catch (Exception e) {
       logger.error("WorkflowFileRawScreen.doOutput", e);
