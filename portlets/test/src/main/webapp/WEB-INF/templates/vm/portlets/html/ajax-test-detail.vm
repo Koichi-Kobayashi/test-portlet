@@ -37,6 +37,8 @@ $!result.Detail.TestName
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
 #ALtablefooter()
+#ALtdcaption($l10.TODO_URL)
+#ALtditem($!result.Detail.url)
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
 #ALajaxbuttonEditCallback("$!jslink.getPortletById($!portlet.ID).addQueryData('template','TestFormScreen').addQueryData('entityid',$entityid)" "$!portlet.ID" "aipo.todo.onLoadTodoDialog")
