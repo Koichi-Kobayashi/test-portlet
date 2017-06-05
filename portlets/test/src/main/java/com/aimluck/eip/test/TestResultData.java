@@ -125,8 +125,8 @@ public class TestResultData implements ALData {
   /**
    * @return
    */
-  public String getUrl() {
-    return ALEipUtils.getMessageList(url.getValue());
+  public ALStringField getUrl() {
+    return url;
   }
 
   /**
@@ -205,8 +205,8 @@ public class TestResultData implements ALData {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
 
-public void setUrl(String compressString) {
-	// TODO 自動生成されたメソッド・スタブ
+public void setUrl(String string) {
+	url.setValue(string);
 
 }
 }

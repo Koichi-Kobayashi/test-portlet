@@ -369,7 +369,9 @@ public class TestSelectData extends
 
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);
-      rd.setUrl(record.getUrl());
+      rd.setUrl(ALCommonUtils.compressString(
+              record.getUrl(),
+              getStrLength()));
       return rd;
     } catch (Exception ex) {
       logger.error("test", ex);
