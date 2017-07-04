@@ -54,6 +54,10 @@ public class TestResultData implements ALData {
 
   /** ユーザID */
   private ALStringField user_id;
+  
+  /**URL*/
+  private ALStringField url;
+  
 
   /**
    * 期限状態（期限前/期限当日/期限後）． <br>
