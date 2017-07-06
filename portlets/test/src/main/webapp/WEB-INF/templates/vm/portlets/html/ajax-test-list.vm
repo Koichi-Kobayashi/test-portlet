@@ -97,6 +97,11 @@
 
 </tr>
 
+#ALtdcellheaderAtt('class="auiMTCaption"')
+<div>
+<a href="$record.Url">$!record.Url</a>
+</div>
+#ALtdcellfooter()
 
 #end
 #AUItablefooter()
