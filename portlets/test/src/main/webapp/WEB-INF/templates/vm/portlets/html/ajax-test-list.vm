@@ -84,6 +84,7 @@
 <tr>
 #ALtdheadAtt("#ALswitchCheckbox()" "class='thin center'")
 <th>#ALajaxsort('test_name' $l10n.TODO_TITLE $result 'TestListScreen')</th>
+<th>#ALajaxsort('test_name' $l10n.TEST_URL $result 'TestListScreen')</th>
 </tr>
 #foreach ($record in $result.List)
 <tr>
@@ -95,14 +96,13 @@
 </div>
 #ALtdcellfooter()
 
-</tr>
-
 #ALtdcellheaderAtt('class="auiMTCaption"')
 <div>
-<a href="$record.Url">$!record.Url</a>
+<a href="$!record.Url"></a>
 </div>
 #ALtdcellfooter()
 
+</tr>
 #end
 #AUItablefooter()
 <div class="auiSummaryMeta clearfix">
