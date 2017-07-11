@@ -38,9 +38,8 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.Note)
 
 #ALtdcaption($l10n.TEST_URL)
-#ALtditemheader()
-$!result.Detail.UrlDmain
-#ALtditemfooter()
+#ALtditem($!result.Detail.UrlDmain)
+
 
 #ALtdcaption($l10n.TEST_THUMBNAIL)
 #ALtditemheader()
