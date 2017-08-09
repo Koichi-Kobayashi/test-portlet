@@ -24,7 +24,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.lang.Object;
 
 import org.apache.cayenne.exp.Expression;
 import org.apache.cayenne.exp.ExpressionFactory;
@@ -263,6 +262,9 @@ public class TestFormData extends ALAbstractFormData {
       // 担当者
       user_id.setValue(test.getTurbineUser().getUserId());
 
+      //URL
+      url.setValue(test.getUrl());
+
     } catch (Exception ex) {
       logger.error("test", ex);
       return false;
@@ -341,6 +343,9 @@ public class TestFormData extends ALAbstractFormData {
       // メモ
       test.setNote(note.getValue());
 
+      // URL
+      test.setUrl(url.getValue());
+
       // 作成日
       test.setCreateDate(Calendar.getInstance().getTime());
       // 更新日
@@ -409,6 +414,8 @@ public class TestFormData extends ALAbstractFormData {
       test.setTurbineUser(tuser);
       // メモ
       test.setNote(note.getValue());
+      // URL
+      test.setUrl(url.getValue());
       // 更新日
       test.setUpdateDate(Calendar.getInstance().getTime());
       // Test を更新
@@ -465,6 +472,15 @@ public class TestFormData extends ALAbstractFormData {
    */
   public ALStringField getTestName() {
     return test_name;
+  }
+
+  /**
+   * URLを取得します。 <BR>
+   *
+   * @return
+   */
+  public ALStringField getUrl(){
+	  return url;
   }
 
   /**
