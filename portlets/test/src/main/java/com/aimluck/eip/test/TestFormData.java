@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.lang.Object;
 
 import org.apache.cayenne.exp.Expression;
 import org.apache.cayenne.exp.ExpressionFactory;
@@ -87,6 +88,8 @@ public class TestFormData extends ALAbstractFormData {
   /** メモ */
   private ALStringField note;
 
+  /** URL */
+  private ALStringField url;
 
   /** 現在の年 */
   private int currentYear;
@@ -178,6 +181,11 @@ public class TestFormData extends ALAbstractFormData {
     note = new ALStringField();
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
     note.setTrim(false);
+
+    //URL
+    url = new ALStringField();
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
+    url.setTrim(false);
   }
 
 
@@ -195,6 +203,8 @@ public class TestFormData extends ALAbstractFormData {
     note.limitMaxLength(1000);
     // 担当者ID必須項目
     user_id.setNotNull(true);
+    //URLの半角英数字限定制限
+    url.setCharacterType(3);
   }
 
   /**
@@ -218,6 +228,8 @@ public class TestFormData extends ALAbstractFormData {
     // タイトル
     test_name.validate(msgList);
     // メモ
+    note.validate(msgList);
+    //URL
     note.validate(msgList);
 
     return (msgList.size() == 0);
