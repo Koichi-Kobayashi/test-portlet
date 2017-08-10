@@ -183,7 +183,7 @@ public class TestFormData extends ALAbstractFormData {
 
     //URL
     url = new ALStringField();
-    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
+    url.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_URL"));
     url.setTrim(false);
   }
 
@@ -203,7 +203,7 @@ public class TestFormData extends ALAbstractFormData {
     // 担当者ID必須項目
     user_id.setNotNull(true);
     //URLの半角英数字限定制限
-    url.setCharacterType(ALStringField.TYPE_ALPHABET_NUMBER);
+    url.setCharacterType(ALStringField.TYPE_ASCII);
   }
 
   /**
@@ -229,7 +229,7 @@ public class TestFormData extends ALAbstractFormData {
     // メモ
     note.validate(msgList);
     //URL
-    note.validate(msgList);
+    url.validate(msgList);
 
     return (msgList.size() == 0);
 
