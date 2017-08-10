@@ -36,6 +36,8 @@ $!result.Detail.TestName
 #ALtdcellfooter()
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
+#ALtdcaption($l10n.TODO_URL)
+#ALtditem($!result.Detail.Url)
 #ALtablefooter()
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())

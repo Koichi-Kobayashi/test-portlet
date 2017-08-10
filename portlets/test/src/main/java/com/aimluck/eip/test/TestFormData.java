@@ -203,7 +203,7 @@ public class TestFormData extends ALAbstractFormData {
     // 担当者ID必須項目
     user_id.setNotNull(true);
     //URLの半角英数字限定制限
-    url.setCharacterType(3);
+    url.setCharacterType(ALStringField.TYPE_ALPHABET_NUMBER);
   }
 
   /**

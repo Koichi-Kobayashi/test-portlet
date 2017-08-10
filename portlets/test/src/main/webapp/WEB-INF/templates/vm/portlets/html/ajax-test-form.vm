@@ -53,11 +53,9 @@
 #ALtdcaption($!result.getFieldName("note"))
 #ALtditemheader()
 #ALtextarea('note' $!result.Note 10 40)
-
 #ALtdcaption($!result.getFieldName("url"))]
-#ALtditemheader("#ALtextfieldw100('url', $!result.TestName 50 'active')")
+#ALtditemheader("#ALtextfieldw100('url', $!result.Url 50 'active')")
 #ALtditemheader()
-
 #ALtditemfooter()
 #ALtablefooter()
 #ALbuttonheader()
