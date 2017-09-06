@@ -128,8 +128,13 @@ public class TestResultData implements ALData {
     note.setValue(string);
   }
 
+  public String getUrl(){
+	  return ALEipUtils.getMessageList(test_url.getValue());
+  }
+
+
   public void setUrl(String string){
-	  note.setValue(string);
+	  test_url.setValue(string);
   }
 
   /**
