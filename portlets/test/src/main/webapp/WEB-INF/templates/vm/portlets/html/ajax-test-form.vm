@@ -47,9 +47,12 @@
 <input type="hidden" name="mode" value="update" />
 <input type="hidden" name="user_id" value="$!result.loginUserId"/>
 #end
+
 #ALtableheaderWide()
 #ALtdcaption("#ALrequired($!result.getFieldName('test_name'))")
 #ALtditem("#ALtextfieldw100('test_name' $!result.TestName 50 'active')")
+#ALtdcaption($!result.getFieldName('test_url'))
+#ALtditem("#ALtextfieldw100('test_url' $!result.Url 50 'active')")
 #ALtdcaption($!result.getFieldName("note"))
 #ALtditemheader()
 #ALtextarea('note' $!result.Note 10 40)

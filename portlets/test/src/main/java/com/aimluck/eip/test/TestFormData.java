@@ -83,6 +83,8 @@ public class TestFormData extends ALAbstractFormData {
   /** 担当者ID */
   private ALNumberField user_id;
 
+  // url
+  private ALStringField test_url;
 
   /** メモ */
   private ALStringField note;
@@ -173,7 +175,10 @@ public class TestFormData extends ALAbstractFormData {
     user_id = new ALNumberField();
     user_id.setFieldName(ALLocalizationUtils
       .getl10n("TODO_SETFIELDNAME_PREPARED"));
-
+    // url
+    test_url = new ALStringField();
+    test_url.setFieldName(ALLocalizationUtils
+    	      .getl10n("TODO_SETFIELDNAME_URL"));
     // メモ
     note = new ALStringField();
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
@@ -195,6 +200,8 @@ public class TestFormData extends ALAbstractFormData {
     note.limitMaxLength(1000);
     // 担当者ID必須項目
     user_id.setNotNull(true);
+    // URLの文字の種類制限
+    test_url.setCharacterType(3);
   }
 
   /**
@@ -217,6 +224,8 @@ public class TestFormData extends ALAbstractFormData {
     boolean isStartDate = false;
     // タイトル
     test_name.validate(msgList);
+    // url
+    test_url.validate(msgList);
     // メモ
     note.validate(msgList);
 
@@ -244,7 +253,8 @@ public class TestFormData extends ALAbstractFormData {
       }
       // タイトル
       test_name.setValue(test.getTestName());
-
+      // url
+      test_url.setValue(test.getUrl());
       // メモ
       note.setValue(test.getNote());
 
@@ -280,6 +290,8 @@ public class TestFormData extends ALAbstractFormData {
       int entityId = test.getTestId();
       // タイトルの取得
       String testName = test.getTestName();
+      // urlの取得
+      String testurl = test.getUrl();
 
       // Testを削除
       Database.delete(test);
@@ -293,7 +305,7 @@ public class TestFormData extends ALAbstractFormData {
       ALEventlogFactoryService.getInstance().getEventlogHandler().log(
         entityId,
         ALEventlogConstants.PORTLET_TYPE_TODO,
-        testName);
+        testName,testurl);
 
     } catch (Throwable t) {
       Database.rollback();
@@ -326,6 +338,9 @@ public class TestFormData extends ALAbstractFormData {
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
 
+      // url
+      test.setUrl(test_url.getValue());
+
       // メモ
       test.setNote(note.getValue());
 
@@ -342,7 +357,7 @@ public class TestFormData extends ALAbstractFormData {
       ALEventlogFactoryService.getInstance().getEventlogHandler().log(
         test.getTestId(),
         ALEventlogConstants.PORTLET_TYPE_TODO,
-        test_name.getValue());
+        test_name.getValue(),test_url.getValue());
 
 
       // アクティビティの送信
@@ -395,6 +410,8 @@ public class TestFormData extends ALAbstractFormData {
       // ユーザーID
       TurbineUser tuser = Database.get(TurbineUser.class, user_id.getValue());
       test.setTurbineUser(tuser);
+      // url
+      test.setUrl(test_url.getValue());
       // メモ
       test.setNote(note.getValue());
       // 更新日
@@ -407,7 +424,7 @@ public class TestFormData extends ALAbstractFormData {
       ALEventlogFactoryService.getInstance().getEventlogHandler().log(
         test.getTestId(),
         ALEventlogConstants.PORTLET_TYPE_TODO,
-        test_name.getValue());
+        test_name.getValue(),test_url.getValue());
 
 
       // アクティビティの送信
@@ -454,6 +471,15 @@ public class TestFormData extends ALAbstractFormData {
   public ALStringField getTestName() {
     return test_name;
   }
+
+
+
+  public ALStringField getUrl(){
+	  return test_url;
+  }
+
+
+
 
   /**
    * アクセス権限チェック用メソッド。<br />
