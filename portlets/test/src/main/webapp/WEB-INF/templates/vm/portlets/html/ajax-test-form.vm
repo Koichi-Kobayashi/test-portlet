@@ -51,7 +51,7 @@
 #ALtableheaderWide()
 #ALtdcaption("#ALrequired($!result.getFieldName('test_name'))")
 #ALtditem("#ALtextfieldw100('test_name' $!result.TestName 50 'active')")
-#ALtdcaption(URL)
+#ALtdcaption("#ALrequired($!result.getFieldName('test_name'))")
 #ALtditem("#ALtextfieldw100('test_url' $!result.testurl 50 'active')")
 #ALtdcaption($!result.getFieldName("note"))
 #ALtditemheader()
