@@ -128,6 +128,10 @@ public class TestResultData implements ALData {
     note.setValue(string);
   }
 
+  public void setUrl(String string){
+	  note.setValue(string);
+  }
+
   /**
    * @return
    */

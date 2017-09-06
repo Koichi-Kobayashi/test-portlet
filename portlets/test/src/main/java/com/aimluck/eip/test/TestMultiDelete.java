@@ -116,6 +116,8 @@ public class TestMultiDelete extends ALAbstractCheckList {
         // カテゴリ名を取得
         String testName = test.getTestName();
 
+        String testUrl = test.getUrl();
+
         // Testを削除
         Database.delete(test);
         Database.commit();
@@ -124,7 +126,7 @@ public class TestMultiDelete extends ALAbstractCheckList {
         ALEventlogFactoryService.getInstance().getEventlogHandler().log(
           entityId,
           ALEventlogConstants.PORTLET_TYPE_TODO,
-          testName);
+          testName,testUrl);
       }
     } catch (Throwable t) {
       Database.rollback();

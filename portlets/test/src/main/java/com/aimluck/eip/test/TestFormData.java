@@ -201,7 +201,7 @@ public class TestFormData extends ALAbstractFormData {
     // 担当者ID必須項目
     user_id.setNotNull(true);
     // URLの文字の種類制限
-    test_url.setCharacterType(3);
+    test_url.setCharacterType(ALStringField.TYPE_ASCII);
   }
 
   /**
