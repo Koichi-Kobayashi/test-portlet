@@ -79,6 +79,7 @@ public class TestResultData implements ALData {
     test_id = new ALNumberField();
     test_name = new ALStringField();
     test_url = new ALStringField();
+    test_url.setTrim(true);
     note = new ALStringField();
     note.setTrim(false);
     create_date = new ALStringField();

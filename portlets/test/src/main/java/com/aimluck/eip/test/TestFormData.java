@@ -179,6 +179,7 @@ public class TestFormData extends ALAbstractFormData {
     test_url = new ALStringField();
     test_url.setFieldName(ALLocalizationUtils
     	      .getl10n("TODO_SETFIELDNAME_URL"));
+    test_url.setTrim(false);
     // メモ
     note = new ALStringField();
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
@@ -305,7 +306,7 @@ public class TestFormData extends ALAbstractFormData {
       ALEventlogFactoryService.getInstance().getEventlogHandler().log(
         entityId,
         ALEventlogConstants.PORTLET_TYPE_TODO,
-        testName,testurl);
+        testName);
 
     } catch (Throwable t) {
       Database.rollback();
@@ -424,7 +425,7 @@ public class TestFormData extends ALAbstractFormData {
       ALEventlogFactoryService.getInstance().getEventlogHandler().log(
         test.getTestId(),
         ALEventlogConstants.PORTLET_TYPE_TODO,
-        test_name.getValue(),test_url.getValue());
+        test_name.getValue());
 
 
       // アクティビティの送信

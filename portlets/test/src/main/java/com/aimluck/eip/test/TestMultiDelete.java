@@ -126,7 +126,7 @@ public class TestMultiDelete extends ALAbstractCheckList {
         ALEventlogFactoryService.getInstance().getEventlogHandler().log(
           entityId,
           ALEventlogConstants.PORTLET_TYPE_TODO,
-          testName,testUrl);
+          testName);
       }
     } catch (Throwable t) {
       Database.rollback();
