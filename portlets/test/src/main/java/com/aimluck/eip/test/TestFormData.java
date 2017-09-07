@@ -102,7 +102,7 @@ public class TestFormData extends ALAbstractFormData {
 
   /** 他人のTest編集権限を持つかどうか */
   private boolean hasAclInsertTestOther;
-  
+
   /** url **/
   private ALStringField url;
 
@@ -203,6 +203,8 @@ public class TestFormData extends ALAbstractFormData {
     note.limitMaxLength(1000);
     // 担当者ID必須項目
     user_id.setNotNull(true);
+    //半角英数記号に制限
+    url.setCharacterType(ALStringField.TYPE_ASCII);
   }
 
   /**
@@ -255,7 +257,7 @@ public class TestFormData extends ALAbstractFormData {
 
       // メモ
       note.setValue(test.getNote());
-      
+
       // url
       url.setValue(test.getUrl());
 
@@ -347,7 +349,7 @@ public class TestFormData extends ALAbstractFormData {
 
       // Testを登録
       Database.commit();
-      
+
       // url
       test.setUrl(url.getValue());
 
@@ -468,7 +470,7 @@ public class TestFormData extends ALAbstractFormData {
   public ALStringField getTestName() {
     return test_name;
   }
-  
+
   /**
    * URLを取得します。 <BR>
    *
