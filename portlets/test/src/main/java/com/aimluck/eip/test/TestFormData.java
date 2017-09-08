@@ -160,6 +160,7 @@ public class TestFormData extends ALAbstractFormData {
 
   }
 
+
   /**
    * 各フィールドを初期化します。 <BR>
    */
@@ -176,10 +177,10 @@ public class TestFormData extends ALAbstractFormData {
     user_id.setFieldName(ALLocalizationUtils
       .getl10n("TODO_SETFIELDNAME_PREPARED"));
     // url
-   // url = new ALStringField();
-    //url.setFieldName(ALLocalizationUtils
-    //	      .getl10n("TODO_SETFIELDNAME_URL"));
-   // url.setTrim(true);
+    url = new ALStringField();
+    url.setFieldName(ALLocalizationUtils
+    	      .getl10n("TODO_SETFIELDNAME_URL"));
+    url.setTrim(true);
     // メモ
     note = new ALStringField();
     note.setFieldName(ALLocalizationUtils.getl10n("TODO_SETFIELDNAME_MEMO"));
@@ -202,7 +203,7 @@ public class TestFormData extends ALAbstractFormData {
     // 担当者ID必須項目
     user_id.setNotNull(true);
     // URLの文字の種類制限
-    //url.setCharacterType(ALStringField.TYPE_ASCII);
+    url.setCharacterType(ALStringField.TYPE_ASCII);
   }
 
   /**
@@ -292,7 +293,7 @@ public class TestFormData extends ALAbstractFormData {
       // タイトルの取得
       String testName = test.getTestName();
       // urlの取得
-      String testurl = test.getUrl();
+     // String testurl = test.getUrl();
 
       // Testを削除
       Database.delete(test);

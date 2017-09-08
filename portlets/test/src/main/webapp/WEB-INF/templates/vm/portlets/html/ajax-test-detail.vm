@@ -34,13 +34,19 @@ $!result.Detail.TestName
 #ALtdcaption($l10n.COMMON_UPDATE_DATE)
 #ALtditem($!result.Detail.UpdateDate)
 #ALtdcellfooter()
-#ALtdcaption("URL")
+#ALtdcaption("$l10n.TODO_URL")
 #ALtditemheader()
-$!result.Detail.Url
+$!result.Detail.UrlDomain
 #ALtditemfooter()
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!{result.Detail.Note})
+
 #ALtablefooter()
+#ALtdcaption($l10n.TODO_THUMBNAIL)
+#ALtditemheader()
+<a href = "$!result.Detail.Url"><img title="$!result.Detail.Url" src="http://capture.heartrails.com/free?$!result.Detail.Url" alt="$!result.Detail.Url" width="200" height="200" /><a>
+#ALtditemfooter()
+#*サムネ作成中*#
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
 #ALajaxbuttonEditCallback("$!jslink.getPortletById($!portlet.ID).addQueryData('template','TestFormScreen').addQueryData('entityid',$entityid)" "$!portlet.ID" "aipo.todo.onLoadTodoDialog")

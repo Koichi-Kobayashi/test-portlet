@@ -20,7 +20,7 @@
 package com.aimluck.eip.test;
 
 import java.util.Date;
-
+import java.util.regex.Pattern;
 
 import com.aimluck.commons.field.ALDateTimeField;
 import com.aimluck.commons.field.ALNumberField;
@@ -28,7 +28,10 @@ import com.aimluck.commons.field.ALStringField;
 import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
+
 import java.net.URI;
+import java.net.URL;
+import java.net.MalformedURLException;
 /**
  * TestのResultDataです。 <BR>
  *
@@ -102,7 +105,7 @@ public class TestResultData implements ALData {
   }
 
   public String getUrl(){
-	return ALCommonUtils.replaceToAutoCR(url.toString());
+	return ALCommonUtils.normalizeURL(url.toString());
   }
 
   /**
@@ -208,4 +211,11 @@ public class TestResultData implements ALData {
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
   }
+
+
+  public String getUrlDomain() throws MalformedURLException{
+	  URL url2 = new URL(url.getValue());
+	  return url2.getProtocol()+"://"+url2.getHost();
+  }
 }
+
