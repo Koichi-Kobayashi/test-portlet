@@ -366,7 +366,9 @@ public class TestSelectData extends
         record.getTestName(),
         getStrLength()));
       rd.setUpdateDate(record.getUpdateDate());
-
+      rd.setUrl(ALCommonUtils.compressString(
+    	        record.getUrl(),
+    	        getStrLength()));
       rd.setAclEditTestOther(hasAclEditTestOther);
       rd.setAclDeleteTestOther(hasAclDeleteTestOther);
       return rd;
