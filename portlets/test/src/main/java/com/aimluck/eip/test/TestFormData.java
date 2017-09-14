@@ -202,7 +202,9 @@ public class TestFormData extends ALAbstractFormData {
     note.limitMaxLength(1000);
     // 担当者ID必須項目
     user_id.setNotNull(true);
-  }
+    //半角英数記号に制限
+    url.setCharacterType(ALStringField.TYPE_ASCII);
+    }
 
   /**
    * Testのフォームに入力されたデータの妥当性検証を行います。 <BR>
@@ -226,7 +228,8 @@ public class TestFormData extends ALAbstractFormData {
     test_name.validate(msgList);
     // メモ
     note.validate(msgList);
-
+    // url
+    url.validate(msgList);
     return (msgList.size() == 0);
 
   }
