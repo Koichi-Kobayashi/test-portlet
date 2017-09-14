@@ -35,6 +35,15 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.UpdateDate)
 #ALtdcellfooter()
 #ALtdcaption($l10n.TODO_MEMO)
+#ALtdcaption($l10n.TODO_URL)
+#ALtditemheader()
+<a href = "$!result.Detail.UrlThum"><img title="$!result.Detail.UrlThum" src="http://capture.heartrails.com/free?$!result.Detail.UrlThum" alt="$!result.Detail.UrlThum" width="300" height="200"/><a>
+#ALtditemfooter()
+#ALtditemheader()
+<div>
+#ALtditem($!result.Detail.UrlDomain)
+</div>
+#ALtditemfooter()
 #ALtditem($!result.Detail.Note)
 #ALtablefooter()
 #ALbuttonheader()

@@ -84,6 +84,7 @@ public class TestResultData implements ALData {
     update_date = new ALDateTimeField();
     is_self_test = false;
     url = new ALStringField();
+    url.setTrim(false);
   }
 
   /**
@@ -135,6 +136,10 @@ public class TestResultData implements ALData {
     public void setUrl(String string) {
         url.setValue(string);
     }
+
+    public String getUrlThum() {
+        return url.getValue();
+  }
 
   /**
    * @return
@@ -203,5 +208,10 @@ public class TestResultData implements ALData {
    */
   public void setAclDeleteTestOther(boolean hasAclDeleteTestOther) {
     this.hasAclDeleteTestOther = hasAclDeleteTestOther;
+  }
+
+  public String getUrlDomain() throws Exception {
+      URI u = new URI(url.getValue());
+      return u.getScheme()+"://"+u.getHost();
   }
 }

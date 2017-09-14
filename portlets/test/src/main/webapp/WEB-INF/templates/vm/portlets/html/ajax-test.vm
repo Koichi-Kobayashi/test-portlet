@@ -121,6 +121,7 @@
 </div>
 #ALtdcellfooter()
 #ALtdcellAtt("<div>$!record.UpdateDate</div>" 'class="right" nowrap="nowrap"')
+#ALtdcell($!record.Url)
 </tr>
 #end
 </tbody>
