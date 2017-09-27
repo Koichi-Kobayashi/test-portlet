@@ -98,6 +98,20 @@ public class TestResultData implements ALData {
   public String getTestName() {
     return ALCommonUtils.replaceToAutoCR(test_name.toString());
   }
+  
+  public String getUrlDomain(){
+      if(url.getURLEncodedValue().equals("")){
+          return "";
+      }
+      else{
+          try {
+                URI u = new URI(url.getValue());
+                return u.getScheme() + "://" + u.getHost();
+            } catch (URISyntaxException e) {
+                return "";
+            }
+      }
+  }  
 
   /**
    * @param i

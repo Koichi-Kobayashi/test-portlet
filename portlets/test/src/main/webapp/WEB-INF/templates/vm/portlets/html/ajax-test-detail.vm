@@ -38,6 +38,7 @@ $!result.Detail.TestName
 #ALtditem($!result.Detail.Note)
 #ALtablefooter()
 #ALtdcaption($l10n.TODO_THUMBNAIL)
+#ALtditem($!result.Detail.UrlDomain)
 #ALtditemheader()
 <a href = "$!result.Detail.UrlOriginal"><img title="$!result.Detail.UrlOriginal" src="http://capture.heartrails.com/free?$!result.Detail.UrlOriginal" alt="$!result.Detail.UrlOriginl" width="200" height="200" /><a>
 #ALtditemfooter()
