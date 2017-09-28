@@ -25,18 +25,30 @@
 <div id="messageDiv"></div>
 #ALajaxdetailformheader("ToDo")
 #ALtableheaderWide()
+
 #ALtdcaption("タイトル")
 #ALtditemheader()
 $!result.Detail.TestName
 #ALtditemfooter()
+
 #ALtdcaption($l10n.COMMON_CREATE_DATE)
 #ALtditem($!result.Detail.CreateDate)
+
 #ALtdcaption($l10n.COMMON_UPDATE_DATE)
 #ALtditem($!result.Detail.UpdateDate)
-#ALtdcellfooter()
+
+#ALtdcaption("ドメイン")
+#ALtditem($!result.Detail.UrlDomain)
+
 #ALtdcaption($l10n.TODO_MEMO)
 #ALtditem($!result.Detail.Note)
+
+#ALtdcaption($l10n.TODO_THUMBNAIL)
+#ALtditemheader()
+<a href = "$!result.Detail.Url2"><img title="$!result.Detail.Url2" src="http://capture.heartrails.com/free?$!result.Detail.Url2" alt="$!result.Detail.Url2" width="200" height="300" /><a>
+#ALtditemfooter()
 #ALtablefooter()
+
 #ALbuttonheader()
 #if($result.Detail.isSelfTest())
 #ALajaxbuttonEditCallback("$!jslink.getPortletById($!portlet.ID).addQueryData('template','TestFormScreen').addQueryData('entityid',$entityid)" "$!portlet.ID" "aipo.todo.onLoadTodoDialog")

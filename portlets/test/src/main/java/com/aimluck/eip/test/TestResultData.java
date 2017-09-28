@@ -29,6 +29,7 @@ import com.aimluck.eip.common.ALData;
 import com.aimluck.eip.util.ALCommonUtils;
 import com.aimluck.eip.util.ALEipUtils;
 import java.net.URI;
+import java.net.URISyntaxException;
 /**
  * TestのResultDataです。 <BR>
  *
@@ -99,6 +100,20 @@ public class TestResultData implements ALData {
     return ALCommonUtils.replaceToAutoCR(test_name.toString());
   }
 
+  public String getUrlDomain(){
+      if(url.getURLEncodedValue().equals("")){
+          return "";
+      }
+      else{
+          try {
+                URI u = new URI(url.getValue());
+                return u.getScheme() + "://" + u.getHost();
+            } catch (URISyntaxException e) {
+                return "";
+            }
+      }
+  }
+
   /**
    * @param i
    */
@@ -133,6 +148,10 @@ public class TestResultData implements ALData {
    */
   public ALStringField getCreateDate() {
     return create_date;
+  }
+
+  public String getUrl2() {
+      return url.getValue();
   }
 
   /**
